@@ -27,7 +27,7 @@ python3 tools/loomq_archive.py verify
 python3 tools/loomq_archive.py verify --remote
 ```
 
-`sync` fetches only each exact SHA over HTTPS. It validates all 58 manifest rows before the first fetch. It builds the complete result in isolated bare repositories and changes the managed worktree and index only after every submission passes. A second `sync` with unchanged inputs produces no staged or unstaged diff.
+`sync` fetches only each exact SHA over HTTPS. It validates all 58 manifest rows before the first fetch. It builds the complete result in isolated bare repositories. After every submission passes, it replaces the generated worktree and stages `archive/submissions.json` with the complete generated archive. A second `sync` with unchanged inputs produces no staged or unstaged diff.
 
 Edit only `archive/submissions.json` to change the roster. The sync tool owns all files under `archive/generated/` and removes stale generated paths.
 
