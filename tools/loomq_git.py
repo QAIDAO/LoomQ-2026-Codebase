@@ -614,11 +614,13 @@ class Repository:
             current_index = self.index_path.read_bytes()
             if current_index != initial_index:
                 raise GitArchiveError("repository index changed during sync")
+            index_mode = stat.S_IMODE(self.index_path.stat().st_mode)
             desired_bytes = desired_index.read_bytes()
             with os.fdopen(lock_fd, "wb", closefd=True) as lock_file:
                 lock_fd = None
                 lock_file.write(desired_bytes)
                 lock_file.flush()
+                os.fchmod(lock_file.fileno(), index_mode)
                 os.fsync(lock_file.fileno())
             if os.path.lexists(destination):
                 backup = destination.parent / f".loomq-generated-backup-{uuid.uuid4().hex}"

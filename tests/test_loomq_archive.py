@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import stat
 import subprocess
 import sys
 import tempfile
@@ -224,6 +225,18 @@ class ArchiveIntegrationTests(unittest.TestCase):
         self.assertEqual(
             "S README.md",
             git(self.repository.root, "ls-files", "-v", "README.md"),
+        )
+
+    def test_sync_preserves_index_permissions(self) -> None:
+        self.repository.index_path.chmod(0o664)
+
+        loomq_archive.sync_archive(
+            self.repository, self.manifest, source_loader=self.loader
+        )
+
+        self.assertEqual(
+            0o664,
+            stat.S_IMODE(self.repository.index_path.stat().st_mode),
         )
 
     def test_staged_verification_detects_symlink_tampering(self) -> None:
