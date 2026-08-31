@@ -8,6 +8,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 
 TOOLS = Path(__file__).resolve().parents[1] / "tools"
@@ -213,6 +214,18 @@ class ArchiveIntegrationTests(unittest.TestCase):
         self.assertEqual(index_before, self.repository.index_path.read_bytes())
         self.assertEqual(record_before, hashlib.sha256(record.read_bytes()).digest())
 
+    def test_sync_preserves_unrelated_index_flags(self) -> None:
+        git(self.repository.root, "update-index", "--skip-worktree", "README.md")
+
+        loomq_archive.sync_archive(
+            self.repository, self.manifest, source_loader=self.loader
+        )
+
+        self.assertEqual(
+            "S README.md",
+            git(self.repository.root, "ls-files", "-v", "README.md"),
+        )
+
     def test_staged_verification_detects_symlink_tampering(self) -> None:
         loomq_archive.sync_archive(
             self.repository, self.manifest, source_loader=self.loader
@@ -245,6 +258,48 @@ class ArchiveIntegrationTests(unittest.TestCase):
             loomq_archive.verify_archive(
                 self.repository, staged_manifest, staged=True
             )
+
+
+class TreeAuditTests(unittest.TestCase):
+    def test_duplicate_blob_is_read_once(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="loomq-test-") as temporary:
+            repository = Path(temporary) / "repository"
+            git(repository.parent, "init", os.fspath(repository))
+            blob_oid = git(
+                repository, "hash-object", "-w", "--stdin", input_bytes=b"shared\n"
+            )
+            tree_oid = git(
+                repository,
+                "mktree",
+                input_bytes=(
+                    f"100644 blob {blob_oid}\tfirst\n"
+                    f"100644 blob {blob_oid}\tsecond\n"
+                ).encode("ascii"),
+            )
+            git_dir = Path(git(repository, "rev-parse", "--absolute-git-dir"))
+            original_reader = loomq_git.ObjectReader
+            blob_reads = 0
+
+            class CountingObjectReader(original_reader):
+                def read(
+                    self, oid: str, expected_type: str | None = None
+                ) -> tuple[str, bytes]:
+                    nonlocal blob_reads
+                    result = super().read(oid, expected_type)
+                    if oid == blob_oid:
+                        blob_reads += 1
+                    return result
+
+            with mock.patch.object(loomq_git, "ObjectReader", CountingObjectReader):
+                audit = loomq_git.audit_existing_tree(
+                    git_dir,
+                    tree_oid,
+                    lfs_policy="pointer-only",
+                    gitlink_policy="pointer-only",
+                )
+
+            self.assertEqual(2, len(audit.root.entries))
+            self.assertEqual(1, blob_reads)
 
 
 if __name__ == "__main__":

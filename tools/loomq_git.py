@@ -326,7 +326,7 @@ def _audit_tree(
     object_oids: set[str] = set()
     lfs_paths: list[bytes] = []
     gitlink_paths: list[bytes] = []
-    blob_lfs: dict[str, bool] = {}
+    blob_metadata: dict[str, tuple[bool, bool]] = {}
     active_trees: set[str] = set()
 
     def walk(tree_oid: str, prefix: bytes) -> TreeNode:
@@ -375,14 +375,15 @@ def _audit_tree(
             if entry.mode in ("100644", "100755", "120000"):
                 object_oids.add(entry.oid)
                 try:
-                    if entry.oid not in blob_lfs:
+                    metadata = blob_metadata.get(entry.oid)
+                    if metadata is None:
                         _, blob = reader.read(entry.oid, "blob")
-                        blob_lfs[entry.oid] = _is_lfs_pointer(blob)
-                    else:
-                        _, blob = reader.read(entry.oid, "blob")
-                    if blob_lfs[entry.oid]:
+                        metadata = (_is_lfs_pointer(blob), b"\0" in blob)
+                        blob_metadata[entry.oid] = metadata
+                    is_lfs, contains_nul = metadata
+                    if is_lfs:
                         lfs_paths.append(path)
-                    if entry.mode == "120000" and b"\0" in blob:
+                    if entry.mode == "120000" and contains_nul:
                         issues.append(f"symlink target contains NUL at {_display_path(path)}")
                 except GitArchiveError as error:
                     issues.append(f"{_display_path(path)}: {error}")
@@ -523,11 +524,6 @@ class Repository:
             "GIT_ALTERNATE_OBJECT_DIRECTORIES": os.fspath(quarantine_git_dir / "objects"),
         }
         try:
-            base_tree = self.index_tree(index_file, quarantine_git_dir)
-            run_git(
-                ["-C", os.fspath(self.root), "read-tree", base_tree],
-                extra_env=env,
-            )
             managed = run_git(
                 ["-C", os.fspath(self.root), "ls-files", "-z", "--", "archive/generated"],
                 extra_env=env,
