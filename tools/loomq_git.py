@@ -510,6 +510,7 @@ class Repository:
         *,
         snapshots: Mapping[str, str],
         commit_blobs: Mapping[str, str],
+        manifest_blob: str,
         quarantine_git_dir: Path,
     ) -> tuple[Path, str, bytes]:
         initial_index = self.index_path.read_bytes()
@@ -560,6 +561,19 @@ class Repository:
                     "--index-info",
                 ],
                 input_bytes=index_info,
+                extra_env=env,
+            )
+            run_git(
+                [
+                    "-C",
+                    os.fspath(self.root),
+                    "update-index",
+                    "--add",
+                    "--cacheinfo",
+                    "100644",
+                    manifest_blob,
+                    "archive/submissions.json",
+                ],
                 extra_env=env,
             )
             for contestant_id, tree_oid in snapshots.items():

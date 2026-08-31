@@ -157,8 +157,18 @@ class ArchiveIntegrationTests(unittest.TestCase):
         )
 
     def test_sync_verify_commit_and_noop_rerun(self) -> None:
+        manifest_path = self.repository.root / "archive/submissions.json"
+        manifest_data = json.loads(manifest_path.read_text(encoding="utf-8"))
+        manifest_path.write_text(
+            json.dumps(manifest_data, separators=(",", ":")) + "\n",
+            encoding="utf-8",
+        )
         report = loomq_archive.sync_archive(
             self.repository, self.manifest, source_loader=self.loader
+        )
+        self.assertEqual(
+            manifest_path.read_text(encoding="utf-8"),
+            git(self.repository.root, "show", ":archive/submissions.json") + "\n",
         )
         self.assertEqual(1, report.lfs_count)
         self.assertEqual(1, report.gitlink_count)
@@ -212,6 +222,29 @@ class ArchiveIntegrationTests(unittest.TestCase):
         os.symlink("outside", link)
         with self.assertRaisesRegex(loomq_archive.ArchiveError, "symlink differs"):
             loomq_archive.verify_archive(self.repository, self.manifest, staged=True)
+
+    def test_staged_manifest_is_loaded_from_index_projection(self) -> None:
+        loomq_archive.sync_archive(
+            self.repository, self.manifest, source_loader=self.loader
+        )
+        manifest_path = self.repository.root / "archive/submissions.json"
+        manifest_data = json.loads(manifest_path.read_text(encoding="utf-8"))
+        manifest_data["submissions"][0]["contestant_id"] = "other"
+        manifest_path.write_text(
+            json.dumps(manifest_data, indent=2) + "\n", encoding="utf-8"
+        )
+        git(self.repository.root, "add", "archive/submissions.json")
+
+        staged_tree = self.repository.index_tree()
+        staged_manifest = loomq_archive.load_manifest_from_tree(
+            self.repository.git_dir, staged_tree, expected_count=1
+        )
+
+        self.assertEqual(("other",), staged_manifest.ids)
+        with self.assertRaisesRegex(loomq_archive.ArchiveError, "missing.*other"):
+            loomq_archive.verify_archive(
+                self.repository, staged_manifest, staged=True
+            )
 
 
 if __name__ == "__main__":

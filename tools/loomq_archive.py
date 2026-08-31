@@ -181,11 +181,16 @@ def _strict_object(pairs: Sequence[tuple[str, object]]) -> dict[str, object]:
     return result
 
 
-def load_manifest(path: Path, *, expected_count: Optional[int] = EXPECTED_SUBMISSION_COUNT) -> Manifest:
+def _parse_manifest(
+    data: bytes,
+    source: str,
+    *,
+    expected_count: Optional[int] = EXPECTED_SUBMISSION_COUNT,
+) -> Manifest:
     try:
-        raw = json.loads(path.read_text(encoding="utf-8"), object_pairs_hook=_strict_object)
-    except (OSError, UnicodeError, json.JSONDecodeError) as error:
-        raise ManifestError(f"cannot parse {path}: {error}") from error
+        raw = json.loads(data.decode("utf-8"), object_pairs_hook=_strict_object)
+    except (UnicodeError, json.JSONDecodeError) as error:
+        raise ManifestError(f"cannot parse {source}: {error}") from error
     if not isinstance(raw, dict):
         raise ManifestError("manifest root must be an object")
     expected_keys = {"schema_version", "submission_count", "policies", "submissions"}
@@ -234,6 +239,35 @@ def load_manifest(path: Path, *, expected_count: Optional[int] = EXPECTED_SUBMIS
             f"submission count drift: expected {expected_count}, found {manifest.submission_count}"
         )
     return manifest
+
+
+def load_manifest(path: Path, *, expected_count: Optional[int] = EXPECTED_SUBMISSION_COUNT) -> Manifest:
+    try:
+        data = path.read_bytes()
+    except OSError as error:
+        raise ManifestError(f"cannot read {path}: {error}") from error
+    return _parse_manifest(data, os.fspath(path), expected_count=expected_count)
+
+
+def load_manifest_from_tree(
+    git_dir: Path,
+    root_tree: str,
+    *,
+    expected_count: Optional[int] = EXPECTED_SUBMISSION_COUNT,
+) -> Manifest:
+    issues: list[str] = []
+    archive = _required_tree(git_dir, root_tree, b"archive", "archive", issues)
+    if archive is None:
+        raise ManifestError("cannot find archive/submissions.json in selected tree")
+    manifest_entry = _entry_named(
+        loomq_git.list_tree(git_dir, archive.oid), b"submissions.json"
+    )
+    if manifest_entry is None or manifest_entry.mode not in {"100644", "100755"}:
+        raise ManifestError("archive/submissions.json is not a regular file in selected tree")
+    with loomq_git.ObjectReader(git_dir) as reader:
+        _, data = reader.read(manifest_entry.oid, "blob")
+    source = f"{root_tree}:archive/submissions.json"
+    return _parse_manifest(data, source, expected_count=expected_count)
 
 
 def _https_loader(spec: SubmissionSpec, git_dir: Path) -> None:
@@ -297,6 +331,18 @@ def sync_archive(
     metadata = os.lstat(archive_directory)
     if not stat.S_ISDIR(metadata.st_mode) or stat.S_ISLNK(metadata.st_mode):
         raise ArchiveError("archive must be a real directory")
+    manifest_path = repository.root / MANIFEST_RELATIVE_PATH
+    try:
+        manifest_bytes = manifest_path.read_bytes()
+    except OSError as error:
+        raise ManifestError(f"cannot read {manifest_path}: {error}") from error
+    worktree_manifest = _parse_manifest(
+        manifest_bytes,
+        os.fspath(manifest_path),
+        expected_count=manifest.submission_count,
+    )
+    if worktree_manifest != manifest:
+        raise ManifestError("supplied manifest differs from archive/submissions.json")
     with tempfile.TemporaryDirectory(prefix="loomq-quarantine-") as quarantine_name:
         quarantine_git_dir = Path(quarantine_name) / "archive.git"
         loomq_git.initialize_bare(quarantine_git_dir)
@@ -307,13 +353,15 @@ def sync_archive(
             )
             for contestant_id, commit in desired.commit_objects.items()
         }
-        all_objects = set(commit_blob_oids.values())
+        manifest_blob_oid = loomq_git.write_blob(quarantine_git_dir, manifest_bytes)
+        all_objects = set(commit_blob_oids.values()) | {manifest_blob_oid}
         for audit in desired.audits.values():
             all_objects.update(audit.object_oids)
         repository.import_objects(quarantine_git_dir, sorted(all_objects))
         desired_index, desired_tree, initial_index = repository.create_desired_index(
             snapshots=desired.snapshot_trees,
             commit_blobs=commit_blob_oids,
+            manifest_blob=manifest_blob_oid,
             quarantine_git_dir=quarantine_git_dir,
         )
         generated_temp = Path(
@@ -363,9 +411,12 @@ def verify_archive(
     *,
     staged: bool = False,
     remote: bool = False,
+    selected_tree: Optional[str] = None,
     source_loader: SourceLoader = _https_loader,
 ) -> VerificationReport:
-    tree_oid = repository.index_tree() if staged else repository.head_tree()
+    tree_oid = selected_tree or (
+        repository.index_tree() if staged else repository.head_tree()
+    )
     projection = _verify_projection(repository.git_dir, tree_oid, manifest)
     if staged:
         worktree_issues = loomq_git.verify_generated_worktree(
@@ -619,16 +670,21 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     arguments = _parser().parse_args(argv)
     try:
         repository = loomq_git.Repository.discover(Path.cwd())
-        manifest = load_manifest(repository.root / MANIFEST_RELATIVE_PATH)
         if arguments.command == "sync":
+            manifest = load_manifest(repository.root / MANIFEST_RELATIVE_PATH)
             report = sync_archive(repository, manifest)
             print(_format_report("staged", report))
         else:
+            selected_tree = (
+                repository.index_tree() if arguments.staged else repository.head_tree()
+            )
+            manifest = load_manifest_from_tree(repository.git_dir, selected_tree)
             report = verify_archive(
                 repository,
                 manifest,
                 staged=arguments.staged,
                 remote=arguments.remote,
+                selected_tree=selected_tree,
             )
             source = "staged archive" if arguments.staged else "committed archive"
             if arguments.remote:
