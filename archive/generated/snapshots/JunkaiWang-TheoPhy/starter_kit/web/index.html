@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="LoomQ 零依赖量子电路实验台">
+  <title>LoomQ · 量子电路实验台</title>
+  <link rel="icon" href="/favicon.ico" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/enhancements.css">
+</head>
+<body>
+  <a class="skip-link" href="#quantum-guide">跳到量子入门</a>
+  <header class="masthead">
+    <a class="brand" href="#top" aria-label="LoomQ 首页">
+      <span class="brand-mark" aria-hidden="true">LQ</span>
+      <span><strong>LoomQ</strong><small>量子电路实验台</small></span>
+    </a>
+    <p class="status"><span aria-hidden="true"></span> 本地运行 · 凭据不离开电脑</p>
+  </header>
+
+  <main id="top">
+    <section id="quantum-guide" class="quantum-guide" aria-labelledby="quantum-guide-title" tabindex="-1">
+      <div class="quantum-guide-heading">
+        <div>
+          <p class="eyebrow">量子村庄 · RPG 前导手册</p>
+          <h1 id="quantum-guide-title">先认识量子世界，<br><em>再开始冒险。</em></h1>
+          <p>这不是一段预先录好的动画。每次按下测量，页面都会用公开的 OpenQASM 电路在本地精确模拟器中计算，再把 0/1 映射成两面世界贴图。</p>
+        </div>
+        <ol id="quantum-guide-lessons" class="quantum-guide-lessons" aria-label="量子入门四课"></ol>
+      </div>
+      <div class="quantum-guide-lab">
+        <article class="quantum-guide-coin" aria-labelledby="quantum-guide-coin-title">
+          <div class="quantum-guide-face-wrap">
+            <img id="quantum-guide-face" src="/assets/quantum-guide/village-face.png" alt="量子硬币尚未测量">
+            <span id="quantum-guide-face-state" class="quantum-guide-face-state">未测量 · 两面都在可能之中</span>
+          </div>
+          <div class="quantum-guide-coin-copy">
+            <span class="inquiry-label">第一关 · 量子硬币</span>
+            <h2 id="quantum-guide-coin-title">一次测量，选择一条世界线</h2>
+            <p id="quantum-guide-copy">H 门把硬币放进叠加态。测量前，村庄与宇宙都保留为可能；测量后，结果会落在其中一面。</p>
+            <button id="quantum-guide-measure" class="primary" type="button">测量这枚硬币</button>
+            <p id="quantum-guide-status" class="quantum-guide-status" role="status" aria-live="polite">准备好后，亲手测一次。</p>
+            <p class="quantum-guide-source">来源：<strong>本地精确模拟器</strong> · 电路与概率可展开复核 · <a href="#evidence-map">真机实验室证据</a></p>
+          </div>
+        </article>
+        <aside class="quantum-guide-concept" aria-label="概念提示">
+          <span class="inquiry-label">你会带进 RPG 的规则</span>
+          <div id="quantum-guide-concept-copy">
+            <h3>从比特到测量</h3>
+            <p>普通比特像落地的硬币；量子比特在测量前用概率描述可能结果。游戏里的两种贴图，是这个规则的可见入口。</p>
+          </div>
+          <code id="quantum-guide-qasm">H → measure q[0] → c[0]</code>
+          <a class="story-secondary" href="#agent-title">让 Agent 帮我设计下一次实验</a>
+        </aside>
+      </div>
+    </section>
+
+    <section class="story-hero" aria-labelledby="hero-title">
+      <img src="/assets/quantum-world-journey.png" alt="一位初学者从观测站走向由量子电路线构成的分岔世界，手中拿着实验护照">
+      <div class="story-hero-copy">
+        <p class="eyebrow">Quantum World · 序章</p>
+        <p class="story-kicker">实验日志 001 · 删掉 CX 之后，会发生什么？</p>
+        <h1 id="hero-title">先做一次实验，<br><em>再解释结果。</em></h1>
+        <p class="intro">你是这次实验的观测者。先猜 H 和 CX 会让两个量子比特怎样变化，再只改变一扇门，用两组本地运行结果修正自己的判断。</p>
+        <nav class="story-actions" aria-label="Quantum World 快速入口">
+          <a class="story-primary" href="#inquiry-world">进入第一章</a>
+          <a class="story-secondary" href="#evidence-map">我想先看证据</a>
+        </nav>
+        <p class="story-boundary">主视觉是旅程隐喻；结论只来自下方可重放实验，不把插画当作量子态证明。</p>
+      </div>
+      <ol id="story-chapters" class="story-chapters" aria-label="三幕探究旅程">
+        <li data-story-chapter="predict" class="current"><span>第一幕</span><strong>在分岔以前</strong><small>先留下预测</small></li>
+        <li data-story-chapter="experiment" class="upcoming"><span>第二幕</span><strong>只拨动一扇门</strong><small>运行 A/B 实验</small></li>
+        <li data-story-chapter="conclude" class="upcoming"><span>第三幕</span><strong>带证据归来</strong><small>审计结论并领取护照</small></li>
+      </ol>
+      <p id="story-progress-copy" class="story-progress-copy" role="status" aria-live="polite">第一幕：先留下你的预测。</p>
+    </section>
+
+    <section id="inquiry-world" class="inquiry-world" aria-labelledby="inquiry-title" tabindex="-1">
+      <div class="inquiry-heading">
+        <div>
+          <p class="eyebrow">Quantum World · 第一个探究任务</p>
+          <h2 id="inquiry-title">H 和 CX 分别做了什么？</h2>
+          <p>不需要先学 QASM。先预测，再运行对照实验；系统只改变 CX，最后请你根据两组结果选择结论。</p>
+        </div>
+        <ol class="inquiry-route" aria-label="探究步骤">
+          <li><span>1</span>预测</li>
+          <li><span>2</span>实验</li>
+          <li><span>3</span>结论</li>
+          <li><span>4</span>护照</li>
+        </ol>
+      </div>
+
+      <div class="inquiry-prompt">
+        <div>
+          <span class="inquiry-label">研究问题</span>
+          <strong>删掉 CX 后，Bell 电路的测量结果会怎样变化？</strong>
+          <p>实验 A 保留 H 和 CX；实验 B 保留 H、暂时禁用 CX。其他条件相同。</p>
+        </div>
+        <label for="inquiry-prediction">运行前，我的预测
+          <select id="inquiry-prediction">
+            <option value="not-sure">我还不确定，先观察</option>
+            <option value="h-opens-branches">H 已经建立分支，CX 改变相关结构</option>
+            <option value="cx-opens-branches">CX 才建立最初的两个分支</option>
+          </select>
+        </label>
+        <button id="run-inquiry" class="primary" type="button">运行 A/B 对照实验</button>
+        <p id="inquiry-status" role="status" aria-live="polite">尚未运行；实验完全在本地完成。</p>
+      </div>
+
+      <div id="inquiry-results" class="inquiry-results" hidden>
+        <div class="inquiry-comparison">
+          <article class="inquiry-experiment">
+            <header><span>实验 A · 完整 Bell</span><strong>H + CX</strong></header>
+            <div id="inquiry-control-chart" class="inquiry-chart" aria-label="完整 Bell 电路测量分布"></div>
+            <p id="inquiry-control-observation">等待实验结果。</p>
+          </article>
+          <article class="inquiry-experiment variant">
+            <header><span>实验 B · 只改一个条件</span><strong>H，禁用 CX</strong></header>
+            <div id="inquiry-variant-chart" class="inquiry-chart" aria-label="禁用 CX 后的测量分布"></div>
+            <p id="inquiry-variant-observation">等待实验结果。</p>
+          </article>
+        </div>
+        <div class="inquiry-finding" aria-live="polite">
+          <span class="inquiry-label">证据读法</span>
+          <strong id="inquiry-finding-title">等待比较</strong>
+          <p id="inquiry-finding-copy"></p>
+          <code id="inquiry-divergence">first divergence —</code>
+        </div>
+        <div class="inquiry-conclusion">
+          <label for="inquiry-conclusion">根据结果，我的结论
+            <select id="inquiry-conclusion">
+              <option value="h-opens-branches-cx-correlates">H 建立分支，CX 改变两个比特的相关结构</option>
+              <option value="cx-opens-branches">CX 建立了最初的两个分支</option>
+              <option value="proves-nonlocality">这次 Z 基实验完整证明了 Bell 非定域性</option>
+            </select>
+          </label>
+          <button id="audit-inquiry" class="secondary" type="button">用实验审计结论</button>
+          <div id="inquiry-audit" class="inquiry-audit" role="status" aria-live="polite">
+            选择一条结论，让系统指出证据支持到哪里。
+          </div>
+          <a id="download-inquiry" class="proof-download" href="#" aria-disabled="true">下载可重放实验护照 JSON</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="evidence-map" class="evidence-map" aria-labelledby="evidence-map-title" tabindex="-1">
+      <div class="evidence-map-header">
+        <div>
+          <p class="eyebrow">证据附录 · 90 秒审计路径</p>
+          <h2 id="evidence-map-title">每项结论都能复核</h2>
+          <p>这里列出 API 返回、失败边界和下载材料，便于复查刚才的结论。</p>
+        </div>
+        <div class="judge-choices" aria-label="快速入口">
+          <a class="judge-choice" href="#evidence-map">1 分钟看证据</a>
+          <a class="judge-choice" href="#workspace">3 分钟跑示例</a>
+          <a class="judge-choice" href="https://github.com/JunkaiWang-TheoPhy/LoomQ-2026/tree/main/starter_kit/evidence" target="_blank" rel="noreferrer">查看原始材料</a>
+        </div>
+      </div>
+      <div class="hardware-proofline" aria-label="已归档真机证据">
+        <a href="https://github.com/JunkaiWang-TheoPhy/LoomQ-2026/blob/main/starter_kit/evidence/files/originq-result.json" target="_blank" rel="noreferrer">
+          <span>OriginQ · finite-shot counts</span>
+          <strong>悟空 180 · 9D182F…</strong>
+          <small>1000 shots · Bell 理想支持集 95.8% · 原始 JSON + manifest</small>
+        </a>
+        <a href="https://github.com/JunkaiWang-TheoPhy/LoomQ-2026/blob/main/starter_kit/evidence/files/spinq-result.msgpack" target="_blank" rel="noreferrer">
+          <span>SpinQ · provider probabilities</span>
+          <strong>2 比特核磁真机 · G-260824-0001</strong>
+          <small>不伪造 shots/置信区间 · 原始 MessagePack + 无损解码</small>
+        </a>
+      </div>
+      <div class="judge-tour-launch">
+        <button id="run-judge-tour" class="primary" type="button">一键运行 6 项本地证据</button>
+        <p id="judge-tour-status" role="status" aria-live="polite">尚未运行；不需要模型密钥或平台账号。</p>
+      </div>
+      <nav id="judge-tour" class="judge-tour" aria-label="90 秒评委导览">
+        <a href="#workspace" data-tour-step="run">运行与 ProofTrace <span id="tour-run-status">未运行</span></a>
+        <a href="#counterfactual-panel" data-tour-step="compare">首个因果分歧 <span id="tour-compare-status">未运行</span></a>
+        <a href="#assert-panel" data-tour-step="assert">统计断言 <span id="tour-assert-status">未运行</span></a>
+        <a href="#witness-panel" data-tour-step="witness">Witness Chain <span id="tour-witness-status">未运行</span></a>
+        <a href="#hybrid-panel" data-tour-step="hybrid">Mid-circuit 路径 <span id="tour-hybrid-status">未运行</span></a>
+        <a href="#prompt-contract-panel" data-tour-step="contract">Prompt Contract <span id="tour-contract-status">未运行</span></a>
+      </nav>
+      <ol class="question-checklist">
+        <li class="question-item">
+          <h3>编译有没有改坏电路?</h3>
+          <p>点击 <a href="#proof-panel">ProofTrace：这次转译改了什么</a>，会看到三种目标平台都能回读同一份电路，还有可下载的证书。</p>
+        </li>
+        <li class="question-item">
+          <h3>测量后程序会走哪条路?</h3>
+          <p>点击 <a href="#hybrid-panel">列出所有可能分支</a>，会看到每条路径的概率、可达/不可达结果和死路径。</p>
+        </li>
+        <li class="question-item">
+          <h3>不会 QASM 能不能用?</h3>
+          <p>点击修复一段错误 QASM，会看到 Agent 先给出可运行答案，再由同一页的本地规则校验。</p>
+        </li>
+      </ol>
+    </section>
+
+    <section class="task-switcher" aria-labelledby="task-title">
+      <div>
+        <p class="eyebrow">四条上手路径</p>
+        <h2 id="task-title">你现在想完成什么？</h2>
+      </div>
+      <div class="task-grid">
+        <button class="task-card" data-task="learn"><span>01 · LEARN</span><strong>第一次理解量子电路</strong><small>加载 Bell 例子，先看每扇门怎样改变结果</small></button>
+        <button class="task-card" data-task="build"><span>02 · BUILD</span><strong>编写并运行 QASM</strong><small>编辑电路、转译三种后端、查看概率</small></button>
+        <button class="task-card" data-task="repair"><span>03 · REPAIR</span><strong>修复一段错误 QASM</strong><small>把问题交给受确定性校验约束的 Agent</small></button>
+        <button class="task-card" data-task="backend"><span>04 · MATCH</span><strong>选择合适的后端</strong><small>按比特数、费用和排队比较 SpinQ、本源和 Braket</small></button>
+      </div>
+      <div id="lesson" class="lesson" tabindex="-1">
+        <strong>Bell 态只需要两步：</strong>H 门让 q[0] 同时保留 0 和 1 的振幅；CX 再把 q[1] 与它关联。测量时主要得到 00 和 11，这证明模拟结果具有经典相关性；单靠 Z 基测量不能完整证明真机纠缠。
+      </div>
+    </section>
+
+    <section id="workspace" class="workspace" aria-label="量子电路实验台" tabindex="-1">
+      <div class="editor-panel">
+        <div class="panel-heading">
+          <div><span class="index">01</span><h2>量子电路实验台</h2></div>
+          <div class="examples" role="group" aria-label="示例电路">
+            <button class="chip active" data-example="bell">Bell 纠缠</button>
+            <button class="chip" data-example="ghz">GHZ 三比特</button>
+            <button class="chip" data-example="w">W 三比特</button>
+            <button class="chip" data-example="uniform">均匀叠加</button>
+            <button class="chip" data-example="interference">相位干涉</button>
+            <button class="chip" data-example="deutsch">Deutsch–Jozsa</button>
+            <button class="chip" data-example="grover">Grover 搜索</button>
+            <button class="chip" data-example="qft">QFT 四比特</button>
+          </div>
+        </div>
+
+        <div id="circuit" class="circuit" aria-label="量子电路预览"></div>
+
+        <label class="code-label" for="qasm">OpenQASM 2.0 <span>可直接编辑</span></label>
+        <textarea id="qasm" spellcheck="false" aria-describedby="qasm-help"></textarea>
+        <p id="qasm-help" class="hint">q[0] 是最低位；测量结果按 c[n-1]…c[0] 显示。</p>
+
+        <div class="controls">
+          <label>目标平台
+            <select id="target">
+              <option value="spinq">SpinQ</option>
+              <option value="originq">本源 OriginQ</option>
+              <option value="braket">AWS Braket</option>
+            </select>
+          </label>
+          <label>测量次数
+            <select id="shots">
+              <option>128</option><option>512</option><option selected>1024</option><option>4096</option>
+            </select>
+          </label>
+          <button id="run" class="primary"><span aria-hidden="true">▶</span> 运行电路</button>
+        </div>
+      </div>
+
+      <aside class="result-panel" aria-labelledby="result-title">
+        <div class="panel-heading">
+          <div><span class="index">02</span><h2 id="result-title">测量结果</h2></div>
+          <span id="backend" class="backend">等待运行</span>
+        </div>
+        <div id="empty" class="empty-state">
+          <div class="orbit" aria-hidden="true"><i></i><i></i><i></i></div>
+          <strong>结果会在这里展开</strong>
+          <p>点击“运行电路”，本地状态向量模拟器会给出可复现的测量计数。</p>
+        </div>
+        <div id="results" hidden>
+          <div id="chart" class="chart" aria-label="测量概率柱状图"></div>
+          <table id="result-table">
+            <caption>测量结果文本表</caption>
+            <thead><tr><th scope="col">量子态</th><th scope="col">计数</th><th scope="col">概率</th></tr></thead>
+            <tbody id="result-rows"></tbody>
+          </table>
+          <p id="explanation" class="explanation"></p>
+          <details id="proof-panel" class="proof-panel" open>
+            <summary>
+              <strong>ProofTrace：这次转译改了什么</strong>
+              <span id="proof-status">等待证明</span>
+            </summary>
+            <p id="proof-scope" class="proof-scope"></p>
+            <dl class="proof-semantic">
+              <div>
+                <dt>所有基列都查过了吗？</dt>
+                <dd id="proof-semantic-basis">—</dd>
+              </div>
+              <div>
+                <dt>是不是同一个全局相位？</dt>
+                <dd id="proof-semantic-phase">—</dd>
+              </div>
+              <div>
+                <dt>最大误差有多大？</dt>
+                <dd id="proof-semantic-error">—</dd>
+              </div>
+              <div>
+                <dt>这是不是形式化证明？</dt>
+                <dd id="proof-semantic-bound">—</dd>
+              </div>
+            </dl>
+            <dl class="proof-metrics">
+              <div><dt>量子门</dt><dd id="proof-gates">—</dd></div>
+              <div><dt>深度</dt><dd id="proof-depth">—</dd></div>
+              <div><dt>双比特门</dt><dd id="proof-two-qubit">—</dd></div>
+              <div><dt>来源覆盖</dt><dd id="proof-lineage">—</dd></div>
+            </dl>
+            <strong class="proof-label">三后端独立回读</strong>
+            <ul id="proof-targets" class="proof-targets"></ul>
+            <strong class="proof-label">已应用的可证明重写</strong>
+            <ol id="proof-rewrites" class="proof-rewrites"></ol>
+            <a id="download-proof" class="proof-download" href="#" aria-disabled="true">下载证明证书 JSON</a>
+          </details>
+          <details id="state-trace" class="state-trace" aria-label="逐门量子状态" open>
+            <summary class="trace-heading">
+              <strong>逐门状态故事</strong>
+              <span>振幅包含概率看不到的相位</span>
+            </summary>
+            <ol id="trace-steps"></ol>
+          </details>
+          <details>
+            <summary>查看目标平台原生指令</summary>
+            <pre id="native"></pre>
+          </details>
+        </div>
+      </aside>
+    </section>
+
+    <section id="counterfactual-panel" class="counterfactual" aria-labelledby="counterfactual-title">
+      <div class="counterfactual-heading">
+        <div>
+          <p class="eyebrow">改一扇门试试看</p>
+          <h2 id="counterfactual-title">删掉一扇门，结果从哪一步开始变?</h2>
+        </div>
+        <p>上方当前电路是参考答案。修改候选电路后，LoomQ 会逐门比较精确状态，定位第一个因果分歧，而不只比较最后一张概率图。</p>
+      </div>
+      <div class="counterfactual-grid">
+        <div>
+          <label class="code-label" for="candidate-qasm">候选电路 <span>默认把 Bell 的 CX 改成 X</span></label>
+          <textarea id="candidate-qasm" spellcheck="false" aria-describedby="candidate-help"></textarea>
+          <p id="candidate-help" class="hint">可先运行默认示例；也可以复制上方当前电路，再自行删除或替换一扇门。</p>
+          <div class="counterfactual-controls">
+            <button id="copy-reference" class="ghost-button" type="button">复制当前电路</button>
+            <button id="load-counterexample" class="ghost-button" type="button">加载 Bell 反例</button>
+            <button id="run-compare" class="secondary" type="button">比较因果差异</button>
+          </div>
+        </div>
+        <div id="compare-result" class="compare-result" tabindex="-1" aria-live="polite">
+          <span id="compare-status" class="backend">等待比较</span>
+          <strong id="compare-summary">同一张结果图，可能隐藏不同的中间量子态。</strong>
+          <p id="compare-explanation">点击“比较因果差异”，查看首个分歧门与最终分布距离。</p>
+          <dl class="compare-metrics">
+            <div><dt>首个分歧门</dt><dd id="compare-gate">—</dd></div>
+            <div><dt>最大振幅差</dt><dd id="compare-amplitude">—</dd></div>
+            <div><dt>分布 TV 距离</dt><dd id="compare-distance">—</dd></div>
+          </dl>
+          <p id="compare-operations" class="audit-note">参考门与候选门将在这里并列显示。</p>
+          <p id="compare-scope" class="audit-note">本地精确比较不诊断真实硬件噪声来源。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="witness-panel" class="witness-panel" aria-labelledby="witness-title" tabindex="-1">
+      <div class="witness-heading">
+        <div>
+          <p class="eyebrow">统一证据链</p>
+          <h2 id="witness-title">同一份电路的证据怎么对上号</h2>
+        </div>
+        <p>同一次审计把 ProofTrace 谱系、反事实首门分歧、断言读取位和 Hybrid 分支来源对齐到 g1 / m1 等稳定 witness ID。</p>
+      </div>
+      <div class="witness-actions">
+        <button id="run-witness" class="secondary" type="button">生成统一审计链</button>
+        <a id="download-witness" class="proof-download" href="#" aria-disabled="true">下载 Witness Chain JSON</a>
+        <span id="witness-status" class="backend">等待审计</span>
+      </div>
+      <p id="witness-integrity" class="audit-note">内容地址 SHA-256 会在本地重算；它用于发现归档篡改，不是身份签名。</p>
+      <ol id="witness-chain" class="witness-chain" aria-live="polite"></ol>
+    </section>
+
+    <section class="evidence-lab" aria-labelledby="evidence-title">
+      <div class="evidence-header">
+        <div>
+          <p class="eyebrow">先看结论，再展开技术细节</p>
+          <h2 id="evidence-title">断言与分支证据</h2>
+        </div>
+        <p class="evidence-copy">页面只报告本地精确结论、有限 shots 置信区间或 provider 概率对比；任何偏差都不归因具体噪声机制。</p>
+      </div>
+
+      <div class="evidence-grid">
+        <section id="assert-panel" class="evidence-card" aria-labelledby="assert-title">
+          <div class="panel-heading">
+            <div><span class="index">03</span><h3 id="assert-title">断言报告</h3></div>
+            <span id="assert-mode" class="backend">等待检查</span>
+          </div>
+          <p class="hint">复用上方当前 QASM。留空 observed 时走本地精确断言；填写 observed 后转为谨慎执行诊断，不归因具体噪声机制。</p>
+          <label class="code-label" for="assertions-input">assertions JSON <span>support / parity / uniformity</span></label>
+          <textarea id="assertions-input" spellcheck="false" aria-describedby="assert-help"></textarea>
+          <p id="assert-help" class="hint">shots 留空时把 observed 当作 provider 概率；填写 shots 时按有限采样区间解释 pass / fail / inconclusive。</p>
+          <label class="code-label" for="observed-input">observed JSON <span>可选</span></label>
+          <textarea id="observed-input" spellcheck="false" placeholder='{"00": 48, "11": 47, "01": 3, "10": 2}'></textarea>
+          <div class="evidence-controls">
+            <label>shots
+              <input id="observed-shots" type="number" min="1" max="100000" step="1" placeholder="100">
+            </label>
+            <button id="run-assert" class="secondary" type="button">生成断言报告</button>
+          </div>
+          <p id="assert-caveat" class="audit-note">等待断言结果。该报告只说明数据与本地参考是否一致，不归因具体噪声机制。</p>
+          <ul id="assert-results" class="audit-list"></ul>
+        </section>
+
+        <section id="hybrid-panel" class="evidence-card" aria-labelledby="hybrid-title">
+          <div class="panel-heading">
+            <div><span class="index">04</span><h3 id="hybrid-title">Hybrid 分支回放</h3></div>
+            <span id="hybrid-path" class="backend">等待回放</span>
+          </div>
+          <p class="hint">这里先说明哪条路径会发生、概率是多少、会得到哪些结果；源码条件真假、machine jump、branch events 与哈希留在技术细节里。</p>
+          <label class="code-label" for="hybrid-source">Hybrid-QASM 源码 <span>含 classical 块</span></label>
+          <textarea id="hybrid-source" spellcheck="false"></textarea>
+          <div class="evidence-controls">
+            <label>measurement_bits
+              <input id="hybrid-bits" type="text" value="[1, 0]" aria-describedby="hybrid-help">
+            </label>
+            <button id="run-hybrid" class="secondary" type="button">回放 Hybrid 分支</button>
+            <label>max_outcomes
+              <input id="hybrid-max-outcomes" type="number" min="1" max="256" step="1" value="256">
+            </label>
+            <button id="run-hybrid-path" class="secondary" type="button">列出所有可能分支</button>
+          </div>
+          <p id="hybrid-help" class="hint">bit 顺序直接对应 c[0], c[1], …；branch path 使用 ifN:T / ifN:F 标记源码条件真假，而不是机器跳转真假。</p>
+          <p id="hybrid-caveat" class="audit-note">等待 Hybrid 回放结果。</p>
+          <ol id="hybrid-branches" class="audit-list"></ol>
+          <ol id="hybrid-events" class="audit-list compact"></ol>
+          <details id="hybrid-path-panel" class="path-certificate">
+            <summary>查看可重算的 Hybrid 路径证书</summary>
+            <p id="hybrid-path-summary" class="audit-note">等待路径证书。</p>
+            <div id="hybrid-path-overview" class="path-summary-grid"></div>
+            <a id="download-hybrid-path" class="proof-download path-download" href="#" aria-disabled="true">下载路径证书 JSON</a>
+            <ol id="hybrid-path-probabilities" class="audit-list"></ol>
+            <ol id="hybrid-path-unreachable" class="audit-list compact"></ol>
+          </details>
+          <details>
+            <summary>查看 Hybrid 汇编与最终寄存器</summary>
+            <pre id="hybrid-assembly"></pre>
+            <pre id="hybrid-registers"></pre>
+          </details>
+        </section>
+      </div>
+    </section>
+
+    <section id="prompt-contract-panel" class="prompt-contract-panel" aria-labelledby="prompt-contract-title" tabindex="-1">
+      <div>
+        <p class="eyebrow">模型调用前先锁定请求</p>
+        <h2 id="prompt-contract-title">这句话会被系统怎样理解?</h2>
+        <p>模型和结果验证器读取同一份确定性合同。摘要用于发现内容变化，不是身份签名，也不宣称某个后端唯一兼容。</p>
+      </div>
+      <div class="prompt-contract-controls">
+        <label for="contract-prompt">自然语言请求</label>
+        <input id="contract-prompt" maxlength="20000" value="Which free 20-qubit simulator on OriginQ needs no account?">
+        <button id="inspect-prompt-contract" class="secondary" type="button">检查 Prompt Contract</button>
+        <span id="prompt-contract-status" class="backend">等待检查</span>
+      </div>
+      <div id="prompt-contract-result" class="prompt-contract-result" aria-live="polite">
+        <p>运行后显示任务类型、目标态、平台与账号约束，以及服务端重建结果。</p>
+      </div>
+    </section>
+
+    <section class="agent" aria-labelledby="agent-title">
+      <div><p class="eyebrow">需要时再用 Agent</p><h2 id="agent-title">用自然语言描述下一块电路</h2><p>Agent 的回答会经过门集、语法与目标态分布三重确定性校验。</p></div>
+      <form id="agent-form">
+        <label class="sr-only" for="prompt">自然语言需求</label>
+        <input id="prompt" placeholder="例如：生成三比特 W 态并测量" autocomplete="off" maxlength="20000" aria-describedby="prompt-help">
+        <button class="secondary">发送给 Agent</button>
+        <p id="prompt-help">支持生成、修复与后端选择；需要通过环境变量配置模型，密钥不会写入浏览器或仓库。</p>
+      </form>
+      <div class="conversation-tools">
+        <span id="conversation-status">当前为新会话</span>
+        <button id="clear-conversation" type="button">清空上下文</button>
+      </div>
+      <pre id="agent-reply" class="agent-reply" hidden></pre>
+      <div id="agent-error" class="agent-error" role="alert" hidden></div>
+    </section>
+  </main>
+
+  <footer><span>LoomQ 2026</span><span>OpenQASM → Native IR → Verified Counts</span></footer>
+  <div id="notice" class="notice" role="status" aria-live="polite"></div>
+  <script src="/inquiry.js" defer></script>
+  <script src="/quantum-guide.js" defer></script>
+  <script src="/app.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+# LoomQ Submission Configuration
+# Starter Kit contract version v1.0
+
+team_id: "casccjy67"  
+team_name: "jovian"  
+
+starter_kit_version: "v1.0"
+
+# 参赛 Level (勾选你完成的级别)
+levels:
+  L1: true    # 通用中间层 (45分)
+  L2: true    # 智能体 (30分)
+  L3: true    # 混合编译 (15分)
+
+# 运行时需求
+runtime:
+  language: "python"
+  python_version: ">=3.11"
+  dependencies_file: "requirements.txt"
+
+# 网络需求
+network:
+  L1_run: false      # L1 本地模拟器不需要网络
+  L1_real_machine: false  # 真机需要网络 (如有则改为true)
+  L2_agent: true      # L2 需要访问 LLM 服务 (由组委会注入)
+  L3_compile: false   # L3 纯本地编译
+
+# 后端覆盖
+backends:
+  spinq:
+    simulator: true
+    real_machine: false
+  originq:
+    simulator: true
+    real_machine: false
+  braket:
+    simulator: true
+    real_machine: false
+
+# L2 配置 (不硬编码，运行时从环境变量注入)
+llm_config:
+  env_base_url: "LOOMQ_LLM_BASE_URL"
+  env_api_key: "LOOMQ_LLM_API_KEY"
+  env_model: "LOOMQ_LLM_MODEL"
+
+# 可复现性
+reproducibility:
+  setup_command: "pip install -r requirements.txt"
+  test_command: "python -m starter_kit.tests.test_transpile"
+  demo_command: 'python -c "from starter_kit.adapter import run; from starter_kit.tests.circuits import BELL_STATE; print(run(BELL_STATE, \"braket\", shots=8192))"'

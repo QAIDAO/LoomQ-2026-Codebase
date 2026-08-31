@@ -1,0 +1,10 @@
+{
+  "platform": "spinq_cloud",
+  "backend": "spinq_cloud_qpu",
+  "platform_code": "gemini_vp",
+  "shots": 8192,
+  "task_name": "LoomQ-2026-Bell",
+  "task_desc": "Bell state on SpinQ Gemini 2-qubit NMR real chip (LoomQ competition evidence)",
+  "host": "http://cloud.spinq.cn:6060",
+  "timeout_seconds": 3600
+}

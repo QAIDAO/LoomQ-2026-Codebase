@@ -1,0 +1,5 @@
+backend id                   kind      qubits  queue          cost
+braket_local_simulator       simulator     25  none           free
+originq_local_simulator      simulator     30  none           free
+spinq_taurus_simulator       simulator     24  none           free
+  {"llm": "absent", "engine": {"shots": 8192, "concurrency": 4}, "plugins_disabled": [], "real_machine_credentials": "none"}

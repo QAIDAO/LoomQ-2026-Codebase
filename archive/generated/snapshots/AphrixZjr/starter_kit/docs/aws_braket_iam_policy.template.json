@@ -1,0 +1,55 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ReadSelectedBraketDevice",
+      "Effect": "Allow",
+      "Action": "braket:GetDevice",
+      "Resource": "REPLACE_WITH_FULL_QPU_DEVICE_ARN"
+    },
+    {
+      "Sid": "CreateTasksOnlyOnSelectedDevice",
+      "Effect": "Allow",
+      "Action": "braket:CreateQuantumTask",
+      "Resource": [
+        "REPLACE_WITH_FULL_QPU_DEVICE_ARN",
+        "arn:aws:braket:REPLACE_REGION:REPLACE_ACCOUNT_ID:quantum-task/*"
+      ]
+    },
+    {
+      "Sid": "ReadOwnBraketTasks",
+      "Effect": "Allow",
+      "Action": "braket:GetQuantumTask",
+      "Resource": "arn:aws:braket:REPLACE_REGION:REPLACE_ACCOUNT_ID:quantum-task/*"
+    },
+    {
+      "Sid": "InspectDedicatedResultBucket",
+      "Effect": "Allow",
+      "Action": "s3:GetBucketLocation",
+      "Resource": "arn:aws:s3:::REPLACE_BUCKET"
+    },
+    {
+      "Sid": "ListDedicatedResultPrefix",
+      "Effect": "Allow",
+      "Action": "s3:ListBucket",
+      "Resource": "arn:aws:s3:::REPLACE_BUCKET",
+      "Condition": {
+        "StringLike": {
+          "s3:prefix": [
+            "REPLACE_PREFIX",
+            "REPLACE_PREFIX/*"
+          ]
+        }
+      }
+    },
+    {
+      "Sid": "ReadWriteDedicatedResultPrefix",
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:PutObject"
+      ],
+      "Resource": "arn:aws:s3:::REPLACE_BUCKET/REPLACE_PREFIX/*"
+    }
+  ]
+}

@@ -1,0 +1,372 @@
+"""Grounded L2 agent with QASM validation and one bounded repair turn."""
+
+from __future__ import annotations
+
+import json
+import math
+import re
+from pathlib import Path
+from typing import Any, Callable, Dict, List
+
+from .prompt_contract import (
+    build_prompt_contract,
+    classify_task,
+    extract_backend_constraints,
+    extract_qubit_count,
+    extract_state_goal,
+    extract_state_spec,
+)
+from .qasm import QASMError, parse_qasm
+from .simulator import probabilities
+
+
+ChatCompletion = Callable[[List[Dict[str, Any]]], Dict[str, Any]]
+_QASM_BLOCK = re.compile(
+    r"OPENQASM\s+2\.0;.*?(?=^\s*```|\Z)", re.DOTALL | re.MULTILINE | re.IGNORECASE
+)
+
+
+def normalize_history(history: object) -> List[Dict[str, str]]:
+    """Validate a bounded sequence of completed user/assistant turns."""
+    if history is None:
+        return []
+    if not isinstance(history, list):
+        raise ValueError("history must be a list")
+    if len(history) > 8:
+        raise ValueError("history supports at most 8 messages")
+    if len(history) % 2:
+        raise ValueError("history must contain completed user/assistant pairs")
+    normalized: List[Dict[str, str]] = []
+    total_characters = 0
+    for index, message in enumerate(history):
+        expected_role = "user" if index % 2 == 0 else "assistant"
+        if not isinstance(message, dict) or set(message) != {"role", "content"}:
+            raise ValueError("history messages require only role and content")
+        if message.get("role") != expected_role:
+            raise ValueError("history roles must alternate user then assistant")
+        content = message.get("content")
+        if not isinstance(content, str) or not content.strip():
+            raise ValueError("history content must be a non-empty string")
+        if len(content) > 20_000:
+            raise ValueError("each history message is limited to 20000 characters")
+        total_characters += len(content)
+        normalized.append({"role": expected_role, "content": content})
+    if total_characters > 40_000:
+        raise ValueError("history is limited to 40000 characters")
+    return normalized
+
+
+def _capability_payload() -> Dict[str, Any]:
+    path = Path(__file__).resolve().parents[1] / "backend_capabilities.json"
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _capability_table() -> str:
+    return json.dumps(_capability_payload(), ensure_ascii=False, indent=2)
+
+
+def _system_prompt() -> str:
+    return """你是 LoomQ 量子计算助理。你的输出会由确定性程序验证。
+
+任务边界：
+1. 若用户要求生成或修复量子电路，返回完整可执行的 OpenQASM 2.0。必须包含
+   OPENQASM 2.0、qelib1.inc、qreg、creg 和测量；门只能使用
+   h, x, s, sdg, t, tdg, rz, ry, cx, cu1, swap, ccx。保留用户声明的目标态。
+2. 若用户要求选择后端，只能依据下方官方能力表。回答中必须原样包含恰好一个
+   规范后端标识（id 字段），不要写出被排除后端的 id；所选后端必须同时满足
+   比特数、硬件种类、排队和费用约束。
+3. 不编造运行结果、job ID、平台能力或账号状态。不要输出 API Key。
+4. 对零基础用户使用简洁中文解释，但把可机读 QASM 放在独立代码块中。
+
+官方后端能力表：
+""" + _capability_table()
+
+
+def _assistant_content(response: Dict[str, Any]) -> str:
+    try:
+        content = response["choices"][0]["message"]["content"]
+    except (KeyError, IndexError, TypeError) as exc:
+        raise RuntimeError("LoomQ L2 API returned no assistant content") from exc
+    if not isinstance(content, str) or not content.strip():
+        raise RuntimeError("LoomQ L2 API returned no assistant content")
+    return content
+
+
+def _expects_qasm(prompt: str) -> bool:
+    return classify_task(prompt) != "backend"
+
+
+def _qasm_from_reply(reply: str) -> str:
+    match = _QASM_BLOCK.search(reply)
+    if not match:
+        raise QASMError("response contains no OpenQASM 2.0 program")
+    return match.group(0).strip()
+
+
+def _qubit_count(prompt: str) -> int | None:
+    return extract_qubit_count(prompt)
+
+
+def _requested_qubits(prompt: str, default: int | None = None) -> int | None:
+    return _qubit_count(prompt) or default
+
+
+def _state_goal(prompt: str) -> tuple[str, int] | None:
+    return extract_state_goal(prompt)
+
+
+def _expected_distribution(prompt: str, name: str, qubits: int) -> Dict[str, float]:
+    if name in ("Bell", "GHZ"):
+        return {"0" * qubits: 0.5, "1" * qubits: 0.5}
+    if name == "W":
+        probability = 1.0 / qubits
+        return {
+            format(1 << index, f"0{qubits}b"): probability for index in range(qubits)
+        }
+    if name == "uniform superposition":
+        probability = 1.0 / (1 << qubits)
+        return {
+            format(index, f"0{qubits}b"): probability for index in range(1 << qubits)
+        }
+    if name == "computational basis":
+        spec = extract_state_spec(prompt)
+        if spec is None or "basis_bits" not in spec:
+            raise ValueError("computational-basis target is missing a bit string")
+        return {spec["basis_bits"]: 1.0}
+    raise ValueError(f"unsupported target-state family: {name}")
+
+
+def _validate_state_goal(prompt: str, qasm: str) -> None:
+    goal = _state_goal(prompt)
+    if goal is None:
+        return
+    name, qubits = goal
+    circuit = parse_qasm(qasm)
+    if circuit.num_qubits != qubits or circuit.num_clbits != qubits:
+        raise QASMError(
+            f"{name} request requires exactly {qubits} qubits and {qubits} classical bits"
+        )
+    observed = probabilities(circuit)
+    expected = _expected_distribution(prompt, name, qubits)
+    states = set(observed) | set(expected)
+    distance = math.sqrt(
+        sum(
+            (math.sqrt(observed.get(state, 0.0)) - math.sqrt(expected.get(state, 0.0)))
+            ** 2
+            for state in states
+        )
+    ) / math.sqrt(2.0)
+    if 1.0 - distance < 0.999999:
+        raise QASMError(f"QASM does not prepare the requested {name} target state")
+
+
+def _validate_qasm_reply(prompt: str, reply: str) -> None:
+    qasm = _qasm_from_reply(reply)
+    parse_qasm(qasm)
+    _validate_state_goal(prompt, qasm)
+
+
+def _backend_constraints(prompt: str) -> tuple[int | None, bool, bool, bool, bool]:
+    constraints = extract_backend_constraints(prompt)
+    kinds = constraints["kinds"]
+    return (
+        constraints["minimum_qubits"],
+        constraints["no_queue"],
+        constraints["free"],
+        "qpu" in kinds,
+        "simulator" in kinds,
+    )
+
+
+def _compatible_backends(prompt: str) -> List[Dict[str, Any]]:
+    constraints = extract_backend_constraints(prompt)
+    qubits, no_queue, free, qpu, simulator = _backend_constraints(prompt)
+    compatible: List[Dict[str, Any]] = []
+    for backend in _capability_payload()["backends"]:
+        if qubits is not None and backend["max_qubits"] < qubits:
+            continue
+        if no_queue and backend["queue"] != "none":
+            continue
+        if free and not backend["cost"].startswith("free"):
+            continue
+        if qpu and backend["kind"] != "qpu":
+            continue
+        if simulator and backend["kind"] != "simulator":
+            continue
+        if constraints["platforms"] and backend["platform"] not in constraints["platforms"]:
+            continue
+        if constraints["requires_account"] is False and backend["requires_account"]:
+            continue
+        if constraints["local_only"]:
+            searchable = " ".join(
+                str(backend.get(field, "")) for field in ("id", "name", "notes")
+            ).lower()
+            if not any(term in searchable for term in ("local", "本地", "无需联网")):
+                continue
+        compatible.append(backend)
+    return compatible
+
+
+def _validate_backend_reply(prompt: str, reply: str) -> None:
+    contract_constraints = extract_backend_constraints(prompt)
+    qubits, no_queue, free, qpu, simulator = _backend_constraints(prompt)
+    backends = _capability_payload()["backends"]
+    all_ids = [backend["id"] for backend in backends]
+    compatible = [backend["id"] for backend in _compatible_backends(prompt)]
+    mentioned = [
+        backend_id
+        for backend_id in all_ids
+        if re.search(r"\b" + re.escape(backend_id) + r"\b", reply)
+    ]
+    if len(mentioned) != 1 or mentioned[0] not in compatible:
+        requirements = []
+        if qubits is not None:
+            requirements.append(f">={qubits} qubits")
+        if no_queue:
+            requirements.append("queue=none")
+        if free:
+            requirements.append("cost=free")
+        if qpu:
+            requirements.append("kind=qpu")
+        if simulator:
+            requirements.append("kind=simulator")
+        if contract_constraints["platforms"]:
+            requirements.append("platform=" + "|".join(contract_constraints["platforms"]))
+        if contract_constraints["requires_account"] is False:
+            requirements.append("requires_account=false")
+        if contract_constraints["local_only"]:
+            requirements.append("execution=local")
+        detail = ", ".join(requirements) or "official backend id"
+        raise ValueError(
+            "backend recommendation must contain exactly one compatible canonical id "
+            f"and no other canonical ids ({detail}); compatible ids: "
+            + (", ".join(compatible) if compatible else "none")
+        )
+
+
+def _deterministic_backend_reply(prompt: str) -> str | None:
+    """Choose a compatible canonical ID after model replies fail validation."""
+    compatible = _compatible_backends(prompt)
+    if not compatible:
+        return None
+    selected = compatible[0]
+    return (
+        f"Selected `{selected['id']}` from the official capability table; "
+        f"kind={selected['kind']}, max_qubits={selected['max_qubits']}, "
+        f"queue={selected['queue']}, cost={selected['cost']}."
+    )
+
+
+def _validate_reply(prompt: str, reply: str) -> None:
+    if _expects_qasm(prompt):
+        _validate_qasm_reply(prompt, reply)
+    else:
+        _validate_backend_reply(prompt, reply)
+
+
+def _deterministic_state_reply(prompt: str) -> str | None:
+    goal = _state_goal(prompt)
+    if goal is None:
+        return None
+    name, qubits = goal
+    operations: List[str] = []
+    if name in ("Bell", "GHZ"):
+        operations.append("h q[0];")
+        operations.extend(f"cx q[0],q[{index}];" for index in range(1, qubits))
+    elif name == "W":
+        operations.append("x q[0];")
+        for control in range(qubits - 1):
+            target = control + 1
+            half_angle = math.acos(1.0 / math.sqrt(qubits - control))
+            operations.extend(
+                [
+                    f"ry({half_angle:.17g}) q[{target}];",
+                    f"cx q[{control}],q[{target}];",
+                    f"ry({-half_angle:.17g}) q[{target}];",
+                    f"cx q[{control}],q[{target}];",
+                    f"cx q[{target}],q[{control}];",
+                ]
+            )
+    elif name == "uniform superposition":
+        operations.extend(f"h q[{index}];" for index in range(qubits))
+    elif name == "computational basis":
+        spec = extract_state_spec(prompt)
+        if spec is None or "basis_bits" not in spec:
+            return None
+        operations.extend(
+            f"x q[{index}];"
+            for index, bit in enumerate(reversed(spec["basis_bits"]))
+            if bit == "1"
+        )
+    else:
+        return None
+    body = "\n".join(operations)
+    return f"""```qasm
+OPENQASM 2.0;
+include "qelib1.inc";
+qreg q[{qubits}];
+creg c[{qubits}];
+{body}
+measure q -> c;
+```"""
+
+
+def chat(
+    prompt: str,
+    completion: ChatCompletion,
+    history: object = None,
+) -> str:
+    if not isinstance(prompt, str) or not prompt.strip():
+        raise ValueError("prompt must be a non-empty string")
+
+    contract = build_prompt_contract(prompt)
+    model_contract = {
+        "task_kind": contract["task_kind"],
+        "state_goal": contract["state_goal"],
+        "backend_constraints": contract["backend_constraints"],
+    }
+    messages: List[Dict[str, Any]] = [
+        {
+            "role": "system",
+            "content": (
+                _system_prompt()
+                + "\n\nLOOMQ_PROMPT_CONTRACT（确定性解析，回答与校验均须满足）：\n"
+                + json.dumps(model_contract, ensure_ascii=False, sort_keys=True)
+            ),
+        },
+        *normalize_history(history),
+        {"role": "user", "content": prompt},
+    ]
+    first = _assistant_content(completion(messages))
+    try:
+        _validate_reply(prompt, first)
+        return first
+    except (QASMError, ValueError) as exc:
+        messages.extend(
+            [
+                {"role": "assistant", "content": first},
+                {
+                    "role": "user",
+                    "content": (
+                        "确定性校验未通过："
+                        + str(exc)
+                        + "。请重新回答，并严格满足原始任务、官方能力表和输出格式。"
+                    ),
+                },
+            ]
+        )
+
+    repaired = _assistant_content(completion(messages))
+    try:
+        _validate_reply(prompt, repaired)
+    except (QASMError, ValueError) as exc:
+        fallback = (
+            _deterministic_state_reply(prompt)
+            if _expects_qasm(prompt)
+            else _deterministic_backend_reply(prompt)
+        )
+        if fallback is not None:
+            _validate_reply(prompt, fallback)
+            return fallback
+        raise RuntimeError(f"model reply failed deterministic validation after retry: {exc}") from exc
+    return repaired

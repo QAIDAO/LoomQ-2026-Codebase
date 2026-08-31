@@ -1,0 +1,38 @@
+{
+  "backend": "WK_C180_2",
+  "claim_boundary": "At the level of the provider-reconstructed density-matrix point estimate, the two-qubit state is entangled under the PPT criterion. No statistical confidence interval is claimed.",
+  "density_matrix_shape": [
+    4,
+    4
+  ],
+  "eigenvalues": [
+    -1.3380630810053264e-16,
+    7.171494354225103e-18,
+    0.040364042385516656,
+    0.9596359576144833
+  ],
+  "fidelity_absolute_difference": 5.500314492756786e-08,
+  "hermiticity_max_abs_residual": 3.469446951953614e-18,
+  "independent_phi_plus_fidelity": {
+    "imag": 0.0,
+    "real": 0.9524489449968551
+  },
+  "is_psd_within_tolerance": true,
+  "job_id": "F7287E16E8478E4DB5051105468DB638",
+  "negativity": 0.45609676845032693,
+  "partial_transpose_subsystem": "B",
+  "ppt_2x2_note": "For a two-qubit state, PPT is necessary and sufficient for separability.",
+  "ppt_eigenvalues": [
+    -0.45609676845032693,
+    0.41869714201233504,
+    0.4952490597407442,
+    0.5421505666972477
+  ],
+  "provider_state_fidelity": 0.952449,
+  "psd_tolerance": 1e-09,
+  "raw_provider_response_sha256": "9f7b903131aa5b82876ba14518152de4e06006e01156c3fdbe8a0afdd18a7d50",
+  "trace": {
+    "imag": 0.0,
+    "real": 1.0
+  }
+}

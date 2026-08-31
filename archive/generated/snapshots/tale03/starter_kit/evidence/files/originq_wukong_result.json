@@ -1,0 +1,30 @@
+{
+  "backend": "originq_wukong",
+  "job_id": "EC100A9E1CCE2596F25F7293995FF104",
+  "shots": 8192,
+  "counts": {
+    "00": 3888,
+    "01": 137,
+    "10": 235,
+    "11": 3932
+  },
+  "bit_order": "little",
+  "timestamp": "2026-08-18T21:53:25.376+08:00",
+  "meta": {
+    "transpiled_gates": 2,
+    "depth": 2
+  },
+  "raw_platform_result": {
+    "taskId": "EC100A9E1CCE2596F25F7293995FF104",
+    "status": "Completed",
+    "createTime": "2026-08-18 21:53:25.376",
+    "endTime": "2026-08-18 21:53:29.446",
+    "machineTime": "2.78",
+    "probabilities": {
+      "00": 0.4746094,
+      "01": 0.0167236,
+      "10": 0.0286865,
+      "11": 0.4799804
+    }
+  }
+}

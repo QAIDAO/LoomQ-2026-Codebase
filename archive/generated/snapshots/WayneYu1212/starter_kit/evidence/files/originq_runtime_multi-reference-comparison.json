@@ -1,0 +1,24 @@
+{
+  "circuit": "H(0), CX(0,1), H(0), CX(0,1), measure",
+  "qasm_path": "evidence/files/originq_runtime_multi-hardware-bell.qasm",
+  "job_id": "8575222FE2C04A065B38B9DEE5BA9AEE",
+  "shots": 1000,
+  "reference_distribution": {
+    "00": 0.25,
+    "01": 0.25,
+    "10": 0.25,
+    "11": 0.25
+  },
+  "hardware_distribution": {
+    "00": 0.209,
+    "01": 0.278,
+    "10": 0.302,
+    "11": 0.211
+  },
+  "metrics": {
+    "total_variation_distance": 0.08,
+    "classical_fidelity": 0.993326,
+    "hellinger_distance": 0.057815
+  },
+  "interpretation": "The ideal Multi circuit (H, CX, H, CX) maps |00> to a uniform superposition over all four computational basis states (each 0.25). The real-QPU distribution is close to uniform (TVD < 0.1), consistent with the intended circuit. This is a computational-basis distribution comparison only; it does not by itself witness entanglement."
+}

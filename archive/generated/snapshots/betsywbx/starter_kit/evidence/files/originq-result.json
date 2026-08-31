@@ -1,0 +1,21 @@
+{
+  "backend": "originq_WK_C180",
+  "job_id": "959CD11FB04417BF96280FCA8AEE7D5E",
+  "shots": 8192,
+  "counts": {
+    "000": 3913,
+    "001": 0,
+    "010": 0,
+    "011": 0,
+    "100": 0,
+    "101": 3,
+    "110": 2,
+    "111": 4274
+  },
+  "bit_order": "little",
+  "timestamp": "2026-08-21T01:12:40.984267Z",
+  "meta": {
+    "transpiled_gates": 3,
+    "depth": -1
+  }
+}

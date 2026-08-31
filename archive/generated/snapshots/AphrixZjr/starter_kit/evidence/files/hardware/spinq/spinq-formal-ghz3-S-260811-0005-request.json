@@ -1,0 +1,22 @@
+{
+  "schema_version": "loomq-spinq-hardware-request-v1",
+  "provider": "SpinQ Cloud",
+  "sdk_api": "spinqit-0.2.4",
+  "source_snapshot": "60af4a954e0058331a41e085bf252f93c39c0eac",
+  "provenance": "reconstructed from the archived runner source, raw mode/circuit fields, submitted QASM, and read-only task metadata",
+  "job_id": "S-260811-0005",
+  "platform": "triangulum_vp",
+  "shots": 8192,
+  "measured_qubits": [0, 1, 2],
+  "measurement_map": [
+    {"qubit": 0, "classical": 0},
+    {"qubit": 1, "classical": 1},
+    {"qubit": 2, "classical": 2}
+  ],
+  "task_name": "LoomQ L1 formal ghz3",
+  "task_description": "LoomQ L1 hardware evidence; ghz3",
+  "source_qasm_file": "spinq-formal-ghz3-S-260811-0005-source.qasm",
+  "source_qasm_sha256": "af9200346cd403c8b67db2a89b266117404b2a001a5c0fddea5d6ff656321a08",
+  "submitted_qasm_file": "spinq-formal-ghz3-S-260811-0005-submitted.qasm",
+  "submitted_qasm_sha256": "2fc4afc51fc9426ff8c9dbe6798e8460ca3c62f3a39a98fa152b728301853814"
+}

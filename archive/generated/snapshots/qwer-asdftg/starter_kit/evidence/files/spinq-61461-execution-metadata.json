@@ -1,0 +1,26 @@
+{
+  "provider": "spinq",
+  "backend": "gemini_vp",
+  "machine_code": "Gemini-pro-1",
+  "task_id": 61461,
+  "task_code": "G-260824-0003",
+  "status": "S",
+  "shots": 8192,
+  "start_time": "2026-08-24T03:35:39.885+00:00",
+  "end_time": "2026-08-24T03:37:12.132+00:00",
+  "timecost": 3.0,
+  "raw_probabilities": {
+    "00": 0.42627488,
+    "11": 0.47071908,
+    "01": 0.07507503,
+    "10": 0.027931
+  },
+  "probability_sum": "0.99999999",
+  "derived_counts": {
+    "00": 3492,
+    "01": 615,
+    "10": 229,
+    "11": 3856
+  },
+  "counts_derivation": "SpinQ Gemini NMR returns normalized hardware probabilities; integer counts were deterministically reconstructed for 8192 shots using Hamilton's largest-remainder method. Raw probabilities are preserved."
+}

@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <title>LoomQ · 第一次量子实验</title>
+  <script>
+    document.documentElement.dataset.theme =
+      localStorage.getItem("loomq-theme") ||
+      (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+  </script>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="motion/loomq-motion.css">
+</head>
+<body>
+  <a class="skip-link" href="#mainContent">跳到实验内容</a>
+
+  <header class="app-header">
+    <a class="brand" href="#" id="brandHome" aria-label="返回 LoomQ 学习首页">
+      <span class="brand-mark" aria-hidden="true">LQ<span>/</span></span>
+      <span><strong>LoomQ</strong><small>quantum learning studio</small></span>
+    </a>
+    <div class="header-utilities">
+      <div class="prototype-label" role="status">
+        <span aria-hidden="true">◇</span> studio mode · 本地模拟
+      </div>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false">
+        <span aria-hidden="true">☼</span><b>浅色模式</b>
+      </button>
+    </div>
+  </header>
+
+  <nav class="studio-nav" aria-label="LoomQ Studio 场景导航">
+    <button type="button" data-studio-nav="home"><span>01</span> 看见量子</button>
+    <button type="button" data-studio-nav="learn"><span>02</span> 动手实验</button>
+    <button type="button" data-studio-nav="create"><span>03</span> 创造一个现象</button>
+    <button type="button" data-studio-nav="history"><span>04</span> 执行记录</button>
+    <p><i aria-hidden="true"></i> local-first</p>
+  </nav>
+
+  <aside class="course-sidebar" id="courseSidebar" aria-labelledby="courseSidebarTitle" hidden>
+    <p class="eyebrow" id="courseSidebarTitle">课程目录</p>
+    <ol id="courseSidebarList" aria-label="课程实验"></ol>
+  </aside>
+
+  <main id="mainContent" class="main-content">
+    <p id="liveStatus" class="sr-only" aria-live="polite"></p>
+
+    <section class="screen is-active story-screen" data-screen="welcome" aria-labelledby="welcomeTitle">
+      <div class="quantum-story" id="quantumStory">
+        <div class="story-stage" aria-hidden="true">
+          <canvas id="quantumStoryCanvas"></canvas>
+          <div class="story-fallback-field"></div>
+          <p class="story-coordinate">LOOMQ / FIELD 01<br>SCROLL-DRIVEN QUANTUM MAP</p>
+          <ol class="story-meter">
+            <li>序章</li><li>经典</li><li>叠加</li><li>干涉</li><li>测量</li>
+          </ol>
+        </div>
+
+        <div class="story-frames">
+          <article class="story-frame story-frame-intro is-current" data-story-scene="0" aria-current="step">
+            <div class="story-copy">
+              <p class="eyebrow">LoomQ / Chapter 00</p>
+              <h1 id="welcomeTitle">量子计算，<br><span>究竟改变了什么？</span></h1>
+              <p>从一个确定的 0 开始，看门操作如何改变状态、路径如何干涉，以及测量为何只留下一个结果。</p>
+            </div>
+            <span class="story-scroll-cue"><span class="sr-only">向下滚动</span><i aria-hidden="true">↓</i></span>
+          </article>
+
+          <article class="story-frame story-frame-classical" data-story-scene="1">
+            <div class="story-copy">
+              <p class="story-index">01 / CLASSICAL BIT</p>
+              <h2>经典 bit 只有一个当前值。</h2>
+              <p>现在是 <strong>0</strong>。NOT 可以把它变为 1，但任一时刻，读到的值都是确定的。</p>
+              <dl class="story-fact">
+                <div><dt>当前状态</dt><dd>0</dd></div>
+                <div><dt>读出结果</dt><dd>一定得到 0</dd></div>
+              </dl>
+            </div>
+          </article>
+
+          <article class="story-frame story-frame-superposition" data-story-scene="2">
+            <div class="story-copy">
+              <p class="story-index">02 / AMPLITUDES</p>
+              <h2>测量之前，0 和 1 各有一个振幅。</h2>
+              <p>这不是两个预先藏好的答案。振幅的大小影响测量概率，方向表示相位。</p>
+              <dl class="story-fact">
+                <div><dt>路径 |0⟩</dt><dd>振幅 α</dd></div>
+                <div><dt>路径 |1⟩</dt><dd>振幅 β</dd></div>
+              </dl>
+            </div>
+          </article>
+
+          <article class="story-frame story-frame-interference" data-story-scene="3">
+            <div class="story-copy">
+              <p class="story-index">03 / PHASE + INTERFERENCE</p>
+              <h2>路径相遇时，会增强，也会抵消。</h2>
+              <p>相位决定它们如何相加。同向增强，反向抵消；算法借此放大需要的结果。</p>
+              <div class="phase-legend" aria-label="同相时相长，反相时相消">
+                <span><i></i> 同相 · 相长</span>
+                <span><i></i> 反相 · 相消</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="story-frame story-frame-measurement" data-story-scene="4">
+            <div class="story-copy story-copy-final">
+              <p class="story-index">04 / MEASUREMENT</p>
+              <h2>一次测量，一个答案。重复运行，形成分布。</h2>
+              <p>Bell 电路重复运行后，结果主要落在 00 和 11。每根柱子汇总的是多次独立测量。</p>
+              <div class="story-counts" role="img" aria-label="Bell 理想分布：00 和 11 较高，01 和 10 接近零">
+                <span style="--story-count: 92%"><i></i><b>00</b></span>
+                <span style="--story-count: 8%"><i></i><b>01</b></span>
+                <span style="--story-count: 8%"><i></i><b>10</b></span>
+                <span style="--story-count: 92%"><i></i><b>11</b></span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+      <section class="story-next" aria-labelledby="storyNextTitle">
+        <p class="eyebrow">Next / Try it</p>
+        <h2 id="storyNextTitle">现在，亲手改变一个量子状态。</h2>
+        <p>从引导实验开始，或者直接描述你想观察的现象。</p>
+        <div class="hero-actions">
+          <button class="button button-primary" id="startButton" type="button">浏览课程实验 <span>→</span></button>
+          <button class="button button-quiet" id="customIdeaButton" type="button">进入自由实验室</button>
+        </div>
+        <details class="course-map" id="courseMap">
+          <summary>查看 6 个课程实验</summary>
+          <ol id="courseList" aria-live="polite" aria-busy="true">
+            <li><b>··</b><span>正在连接 L1 课程服务<small>课程不会从外部网站加载</small></span></li>
+          </ol>
+          <p class="service-status service-error" id="courseStatus" role="alert" hidden></p>
+        </details>
+      </section>
+    </section>
+    <section class="screen" data-screen="course" aria-labelledby="courseTitle" hidden>
+      <div class="environment-label environment-simulator"><span aria-hidden="true">▣</span> 可操作课程 · 每次运行都来自 L1 模拟器</div>
+      <p class="eyebrow" id="courseOrder">系统实验</p>
+      <h1 id="courseTitle">正在读取课程</h1>
+      <p class="section-lead" id="courseSummary">课程加载后，你可以先预测、改变实验设置并亲自运行。</p>
+
+      <div class="course-main">
+        <div class="course-workbench">
+        <section class="course-brief course-lab">
+          <div class="course-question">
+            <p class="eyebrow">本节问题</p>
+            <h2 class="course-hook" id="courseHook">等待课程问题。</h2>
+            <p id="courseGoal">等待课程数据。</p>
+          </div>
+          <details class="course-terms"><summary>本节概念</summary><div class="concept-chips" id="courseConcepts" aria-label="本节关键词"></div></details>
+          <fieldset class="experiment-switcher" id="courseExperimentCards">
+            <legend class="sr-only">实验情景</legend>
+          </fieldset>
+          <label class="sr-only" for="courseExperiment">当前实验情景</label>
+          <select class="sr-only" id="courseExperiment" tabindex="-1" aria-hidden="true"></select>
+          <p class="inline-message service-error" id="courseError" role="alert" hidden></p>
+        </section>
+      </div>
+
+      <section class="course-animation" aria-labelledby="courseAnimationTitle">
+        <div>
+          <p class="eyebrow">实验步骤</p>
+          <h2 id="courseAnimationTitle">一步一步看懂这个实验</h2>
+        </div>
+        <div class="step-explainer" aria-live="polite">
+          <div class="step-heading">
+            <span id="courseStepCount">第 1 / 1 步</span>
+            <h3 id="courseStepTitle" tabindex="-1">准备实验</h3>
+          </div>
+          <p id="courseStepExplanation">选择情景后，这里会解释当前图中发生了什么。</p>
+        </div>
+        <div class="animation-stage" id="courseAnimationStage" aria-label="等待实验步骤图解"></div>
+        <div class="step-dots" id="courseStepDots" aria-label="图解步骤"></div>
+        <div class="animation-actions step-controls">
+          <button class="button button-quiet" id="courseStepBack" type="button">← 上一步</button>
+          <button class="button button-secondary" id="courseAnimate" type="button" aria-pressed="false">自动演示</button>
+          <button class="button button-primary" id="courseStepNext" type="button">下一步 →</button>
+        </div>
+      </section>
+
+      <section class="course-result" id="courseResult" aria-live="polite" aria-busy="true">
+        <div class="agent-result-heading"><h2>当前情景的实验结果</h2><span id="courseResultStatus">正在自动运行…</span></div>
+        <div class="course-result-grid">
+          <figure>
+            <figcaption>测量直方图</figcaption>
+            <div class="agent-counts" id="courseCounts" role="img" aria-label="等待实验结果"></div>
+          </figure>
+          <section>
+            <h3>测量前的理论概率</h3>
+            <dl class="probability-list" id="courseProbabilities"></dl>
+          </section>
+        </div>
+        <p class="course-explanation" id="courseExplanation"></p>
+      </section>
+
+      <div class="screen-actions">
+        <button class="button button-quiet" id="courseBack" type="button">上一节实验</button>
+        <button class="button button-secondary" id="courseNext" type="button">下一节实验</button>
+      </div>
+      </div>
+    </section>
+
+    <section class="screen" data-screen="playground" aria-labelledby="playgroundTitle" hidden>
+      <div class="environment-label environment-simulator"><span aria-hidden="true">✦</span> 自由实验室 · 真实 L2 智能体 + L1 确定性复核</div>
+      <p class="eyebrow">L2 · 从学习走向自己的尝试</p>
+      <h1 id="playgroundTitle">描述你想看到的现象，LoomQ 帮你把它变成实验</h1>
+      <p class="section-lead">描述目标或粘贴需要修复的 QASM；模型生成方案，L1 负责解析与验证。</p>
+
+      <form id="playgroundForm" class="playground-form">
+        <fieldset class="mode-cards">
+          <legend>从哪里开始？</legend>
+          <label><input type="radio" name="playgroundMode" value="generate" checked><span><strong>从一个想法开始</strong><small>描述想观察的现象或结果</small></span></label>
+          <label><input type="radio" name="playgroundMode" value="repair"><span><strong>修好已有实验</strong><small>说明原意并粘贴代码</small></span></label>
+          <label><input type="radio" name="playgroundMode" value="execute"><span><strong>执行已有代码</strong><small>直接验证并选择运行环境</small></span></label>
+        </fieldset>
+
+        <div id="playgroundPromptEditor">
+          <label for="playgroundPrompt" id="playgroundPromptLabel">你希望实验表现出什么现象？</label>
+          <textarea id="playgroundPrompt" rows="4" placeholder="例如：我想让三枚量子硬币每次随机，但测量后总是一起得到 000 或 111"></textarea>
+        </div>
+        <div id="repairEditor" hidden>
+          <label for="repairQasm" id="repairQasmLabel">粘贴需要修复的 OpenQASM 2.0</label>
+          <textarea id="repairQasm" rows="9" spellcheck="false" placeholder="OPENQASM 2.0;\ninclude &quot;qelib1.inc&quot;;\n..."></textarea>
+        </div>
+        <div class="prompt-suggestions" id="promptSuggestions" aria-label="可直接使用的实验想法">
+          <button type="button" data-suggestion-mode="generate" data-suggestion="把 Bell 实验改成 3 qubit GHZ，并解释结果">三枚一起变化</button>
+          <button type="button" data-suggestion-mode="generate" data-suggestion="制备 Bell 态，让两枚 qubit 各自随机，但测量结果始终相同">随机但保持同值</button>
+          <button type="button" data-suggestion-mode="generate" data-suggestion="让两枚 qubit 彼此独立且等概率叠加，使 00、01、10、11 四种结果等概率出现">四种结果等概率</button>
+          <button type="button" data-suggestion-mode="generate" data-suggestion="让一枚 qubit 经过 H-RZ(pi)-H 干涉后，测量结果确定为 1">相位抵消后得到 1</button>
+        </div>
+        <button class="button button-primary" id="playgroundRun" type="submit" disabled>让智能体规划并验证</button>
+      </form>
+
+      <section class="playground-output" id="playgroundOutput" aria-live="polite" hidden>
+        <div class="agent-result-heading">
+          <h2 id="agentResultTitle">智能体生成结果</h2>
+          <span id="agentStatus">等待任务</span>
+        </div>
+        <p class="inline-message service-error" id="agentError" role="alert" hidden></p>
+        <div id="agentResultContent" hidden>
+          <section class="agent-proposal" id="agentProposal" hidden>
+            <h3>你的实验提案</h3>
+            <p id="agentProposalSummary"></p>
+            <ul id="agentProposalChecks"></ul>
+          </section>
+          <section class="agent-answer">
+            <h3 id="agentAnswerTitle">结论</h3>
+            <pre id="agentAnswer"></pre>
+          </section>
+          <section class="agent-code" id="agentCodeBlock" hidden>
+            <div class="agent-block-heading"><h3>OpenQASM 2.0</h3><button class="button button-quiet" id="agentCopy" type="button">复制代码</button></div>
+            <pre><code id="agentQasm"></code></pre>
+          </section>
+        </div>
+        <div class="agent-actions">
+          <button class="button button-quiet" id="agentRetry" type="button" disabled>重试上次任务</button>
+          <button class="button button-secondary" id="agentAdopt" type="button" hidden>采用为可编辑草稿</button>
+        </div>
+      </section>
+
+      <section class="environment-chooser" id="environmentChooser" aria-labelledby="environmentChooserTitle" hidden>
+        <p class="eyebrow">运行环境 · L2-SELECT</p>
+        <h2 id="environmentChooserTitle">选择并运行当前电路</h2>
+        <fieldset class="environment-preferences">
+          <legend>运行方式</legend>
+          <label><input type="radio" name="executionKind" value="simulator" checked> 免费立即运行</label>
+          <label><input type="radio" name="executionKind" value="qpu"> 使用已配置真机</label>
+          <label><input type="radio" name="executionKind" value="custom"> 配置我的真机</label>
+        </fieldset>
+        <form class="hardware-config" id="hardwareConfig" hidden>
+          <label>配置名称<input id="hardwareLabel" type="text" maxlength="60" placeholder="例如：我的本源账号" autocomplete="off"></label>
+          <label>平台
+            <select id="hardwarePlatform">
+              <option value="originq">本源悟空 180</option>
+              <option value="spinq">SpinQ 云真机</option>
+            </select>
+          </label>
+          <div class="hardware-fields" id="originqFields">
+            <label>API Token<input id="originqToken" type="password" autocomplete="off"></label>
+            <label>Backend<input id="originqBackend" type="text" value="WK_C180_2" autocomplete="off"></label>
+          </div>
+          <div class="hardware-fields" id="spinqFields" hidden>
+            <label>用户名<input id="spinqUsername" type="text" autocomplete="off"></label>
+            <label>私钥文件<input id="spinqPrivateKey" type="file" accept=".pem,.key,.txt"></label>
+            <label>服务地址<input id="spinqHost" type="url" placeholder="https://..." autocomplete="off"></label>
+            <label>平台代码<input id="spinqPlatformCode" type="text" autocomplete="off"></label>
+          </div>
+          <p class="hardware-security-note">凭据仅保存在当前 LoomQ 后端进程内存中，不写入文件、SQLite 或任务记录；服务关闭或重启后自动清除。</p>
+          <div class="agent-actions">
+            <button class="button button-secondary" id="hardwareSave" type="submit">保存配置</button>
+          </div>
+          <p class="feedback" id="hardwareConfigStatus" aria-live="polite"></p>
+        </form>
+        <section class="hardware-profiles" id="hardwareProfiles" hidden>
+          <div class="agent-result-heading">
+            <h3>我的真机配置</h3>
+            <span id="hardwareProfileCount"></span>
+          </div>
+          <div class="hardware-profile-list" id="hardwareProfileList"></div>
+        </section>
+        <div class="environment-list" id="environmentList" aria-live="polite"><p>正在检查本机配置…</p></div>
+        <div class="agent-actions">
+          <button class="button button-primary" id="environmentRun" type="button">在所选环境运行</button>
+          <button class="button button-quiet" id="environmentRefresh" type="button">重新检查</button>
+        </div>
+        <p class="feedback" id="environmentStatus" aria-live="polite"></p>
+        <section class="hardware-current" id="hardwareCurrent" hidden aria-live="polite">
+          <div class="agent-result-heading">
+            <h3>当前真机任务</h3>
+            <span id="hardwareCurrentState"></span>
+          </div>
+          <dl class="hardware-task-facts">
+            <div><dt>任务 ID</dt><dd><code id="hardwareCurrentTaskId"></code></dd></div>
+            <div><dt>平台任务 ID</dt><dd><code id="hardwareCurrentProviderId">等待平台返回</code></dd></div>
+            <div><dt>当前阶段</dt><dd id="hardwareCurrentStage"></dd></div>
+            <div><dt>已等待</dt><dd id="hardwareCurrentElapsed"></dd></div>
+          </dl>
+        </section>
+        <section class="environment-result" id="environmentResult" hidden>
+          <div class="agent-result-heading">
+            <h3>所选环境的运行结果</h3>
+            <span id="environmentResultBadge"></span>
+          </div>
+          <div class="agent-counts" id="environmentCounts" role="img" aria-label="等待所选环境返回结果"></div>
+          <p class="result-provenance" id="environmentProvenance"></p>
+        </section>
+      </section>
+
+      <dialog class="hardware-confirm" id="hardwareConfirm">
+        <form method="dialog">
+          <p class="eyebrow">REAL QPU CONFIRMATION</p>
+          <h2>确认提交真机任务</h2>
+          <dl>
+            <div><dt>平台</dt><dd id="hardwareConfirmPlatform"></dd></div>
+            <div><dt>shots</dt><dd>1024</dd></div>
+          </dl>
+          <p>任务可能排队并消耗平台额度；关闭网页不会撤销已提交任务。</p>
+          <div class="agent-actions">
+            <button class="button button-quiet" value="cancel">取消</button>
+            <button class="button button-primary" id="hardwareConfirmSubmit" value="confirm">确认并提交</button>
+          </div>
+        </form>
+      </dialog>
+
+      <div class="screen-actions">
+        <button class="button button-quiet" type="button" data-back="welcome">返回首页</button>
+        <button class="button button-secondary" id="playgroundReset" type="button">清空并尝试另一个想法</button>
+      </div>
+    </section>
+
+    <section class="screen history-screen" data-screen="history" aria-labelledby="historyTitle" hidden>
+      <div class="environment-label environment-hardware"><span aria-hidden="true">◎</span> 本机用户 · SQLite 任务账本</div>
+      <p class="eyebrow">04 · HARDWARE HISTORY</p>
+      <h1 id="historyTitle">真机执行记录</h1>
+      <p class="section-lead">本机保存的任务状态、执行代码与真机结果。</p>
+      <section class="hardware-history" id="hardwareHistory">
+        <div class="agent-result-heading">
+          <h2>任务列表</h2>
+          <button class="button button-quiet" id="hardwareHistoryRefresh" type="button">刷新</button>
+        </div>
+        <div class="hardware-history-list" id="hardwareHistoryList">
+          <p>暂无真机执行记录。</p>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <button class="back-to-top" id="courseBackToTop" type="button" aria-label="回到课程顶部" hidden>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 3c3 2 4.5 5.2 4.5 8.2L14 14h-4l-2.5-2.8C7.5 8.2 9 5 12 3Z"></path>
+      <circle cx="12" cy="9" r="1.5"></circle>
+      <path d="M9.5 14 7 17.5l3-.7M14.5 14l2.5 3.5-3-.7M12 17v4"></path>
+    </svg>
+  </button>
+
+  <footer>
+    <p>LoomQ · L1 本地模拟 · L2 智能体</p>
+  </footer>
+
+  <script src="motion/loomq-motion.iife.js" defer></script>
+  <script src="quantum-story.iife.js" defer></script>
+  <script src="app.js" defer></script>
+</body>
+</html>

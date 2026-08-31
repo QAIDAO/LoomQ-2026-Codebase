@@ -1,0 +1,18 @@
+{
+  "backend": "originq_real",
+  "job_id": "9AF78C69756E262144E19CC897A4D328",
+  "shots": 1000,
+  "counts": {
+    "00": 485,
+    "01": 3,
+    "10": 0,
+    "11": 512
+  },
+  "bit_order": "little",
+  "timestamp": "2026-08-09T13:06:32.512572+00:00",
+  "meta": {
+    "timestamp_source": "client_submit_utc",
+    "device": "WK_C180",
+    "counts_source": "probabilities"
+  }
+}

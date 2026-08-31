@@ -1,0 +1,20 @@
+{
+  "schema_version": "loomq-spinq-hardware-request-v1",
+  "provider": "SpinQ Cloud",
+  "sdk_api": "spinqit-0.2.4",
+  "source_snapshot": "60af4a954e0058331a41e085bf252f93c39c0eac",
+  "provenance": "reconstructed from archived source/submitted QASM and read-only task metadata; original task name and description were not queried",
+  "job_id": "S-260811-0003",
+  "platform": "triangulum_vp",
+  "shots": 100,
+  "measured_qubits": [0, 1, 2],
+  "measurement_map": [
+    {"qubit": 0, "classical": 0},
+    {"qubit": 1, "classical": 2},
+    {"qubit": 2, "classical": 1}
+  ],
+  "source_qasm_file": "spinq-resume-bit_order-S-260811-0003-source.qasm",
+  "source_qasm_sha256": "bd08aed4fbccc1c6aba8b49fa8a2643574bbddb0ec86eed2c58e3f25ccbbaf87",
+  "submitted_qasm_file": "spinq-resume-bit_order-S-260811-0003-submitted.qasm",
+  "submitted_qasm_sha256": "cb3b1bf9b858c4d854ede87cae9dae5c0c4a2cfa5cd583926ae88dae92a3c5ce"
+}

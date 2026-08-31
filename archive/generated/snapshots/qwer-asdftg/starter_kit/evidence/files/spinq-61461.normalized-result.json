@@ -1,0 +1,16 @@
+{
+  "backend": "spinq",
+  "job_id": "61461",
+  "shots": 8192,
+  "counts": {
+    "00": 3492,
+    "10": 615,
+    "01": 229,
+    "11": 3856
+  },
+  "bit_order": "little",
+  "timestamp": "2026-08-24T03:35:39.885000+00:00",
+  "meta": {
+    "provider": "spinq"
+  }
+}

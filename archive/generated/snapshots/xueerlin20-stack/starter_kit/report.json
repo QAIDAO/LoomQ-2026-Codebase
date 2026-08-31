@@ -1,0 +1,247 @@
+{
+  "contract_version": "1.0",
+  "suite": "public",
+  "generated_at": "2026-08-14T12:51:23.612498+00:00",
+  "summary": {
+    "passed": 39,
+    "failed": 0,
+    "total": 39
+  },
+  "cases": [
+    {
+      "case_id": "l1:bell.qasm:spinq",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 1.0
+    },
+    {
+      "case_id": "l1:bell.qasm:originq",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 0.998446
+    },
+    {
+      "case_id": "l1:bell.qasm:braket",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 0.997238
+    },
+    {
+      "case_id": "l1:ghz3.qasm:spinq",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 1.0
+    },
+    {
+      "case_id": "l1:ghz3.qasm:originq",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 0.993785
+    },
+    {
+      "case_id": "l1:ghz3.qasm:braket",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 0.991886
+    },
+    {
+      "case_id": "l1:ghz5.qasm:spinq",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 1.0
+    },
+    {
+      "case_id": "l1:ghz5.qasm:originq",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 0.99672
+    },
+    {
+      "case_id": "l1:ghz5.qasm:braket",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 0.993094
+    },
+    {
+      "case_id": "l1:grover3.qasm:spinq",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 1.0
+    },
+    {
+      "case_id": "l1:grover3.qasm:originq",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 0.98563
+    },
+    {
+      "case_id": "l1:grover3.qasm:braket",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 0.982453
+    },
+    {
+      "case_id": "l1:qft4.qasm:spinq",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 1.0
+    },
+    {
+      "case_id": "l1:qft4.qasm:originq",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 0.980641
+    },
+    {
+      "case_id": "l1:qft4.qasm:braket",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 0.984164
+    },
+    {
+      "case_id": "l1:test1:spinq",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 1.0
+    },
+    {
+      "case_id": "l1:test1:originq",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 0.993274
+    },
+    {
+      "case_id": "l1:test1:braket",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 0.983905
+    },
+    {
+      "case_id": "l1:test2:spinq",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 0.999792
+    },
+    {
+      "case_id": "l1:test2:originq",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 0.988905
+    },
+    {
+      "case_id": "l1:test2:braket",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 0.994272
+    },
+    {
+      "case_id": "l1:test3:spinq",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 0.999831
+    },
+    {
+      "case_id": "l1:test3:originq",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 0.984982
+    },
+    {
+      "case_id": "l1:test3:braket",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 0.990772
+    },
+    {
+      "case_id": "l1:test4:spinq",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 0.999826
+    },
+    {
+      "case_id": "l1:test4:originq",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 0.993127
+    },
+    {
+      "case_id": "l1:test4:braket",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 0.990397
+    },
+    {
+      "case_id": "l1:test5:spinq",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 1.0
+    },
+    {
+      "case_id": "l1:test5:originq",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 1.0
+    },
+    {
+      "case_id": "l1:test5:braket",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 1.0
+    },
+    {
+      "case_id": "l1:test6:spinq",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 0.999826
+    },
+    {
+      "case_id": "l1:test6:originq",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 0.986361
+    },
+    {
+      "case_id": "l1:test6:braket",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 0.994844
+    },
+    {
+      "case_id": "l1:test7:spinq",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 0.999962
+    },
+    {
+      "case_id": "l1:test7:originq",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 0.989306
+    },
+    {
+      "case_id": "l1:test7:braket",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 0.99211
+    },
+    {
+      "case_id": "l1:test8:spinq",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 0.999802
+    },
+    {
+      "case_id": "l1:test8:originq",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 0.990868
+    },
+    {
+      "case_id": "l1:test8:braket",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 0.995843
+    }
+  ],
+  "notice": "Public self-check only; this report is not an official score."
+}

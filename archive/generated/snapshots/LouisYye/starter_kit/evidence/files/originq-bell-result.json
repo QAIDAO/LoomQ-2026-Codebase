@@ -1,0 +1,24 @@
+{
+  "backend": "originq_wukong",
+  "job_id": "FFA39889E42949045D8C2192EF616D50",
+  "shots": 1024,
+  "counts": {
+    "00": 531,
+    "01": 0,
+    "10": 1,
+    "11": 492
+  },
+  "bit_order": "little",
+  "timestamp": "2026-08-24T17:14:06.223664+00:00",
+  "meta": {
+    "is_mock": false,
+    "device": "origin_180",
+    "raw_result_path": "evidence/files/originq-bell-raw.json",
+    "probabilities_returned_by_sdk": {
+      "00": 0.5189357,
+      "01": 2.09e-05,
+      "10": 0.0007325,
+      "11": 0.4803105
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "provider": "Origin Quantum Cloud (QPanda3 Runtime)",
+  "job_id": "2C68A9D3E2F6626B55EEC966DBC3CE2B",
+  "api_path": "qpanda3_runtime.RuntimeService.query_task",
+  "source_result_kind": "probabilities",
+  "raw_sdk_response": {
+    "errCode": 0,
+    "taskResult": [
+      "{\"value\":[0.4578574,0.0001633,0.0000594,0.5419198],\"key\":[\"0x0\",\"0x1\",\"0x2\",\"0x3\"]}"
+    ],
+    "taskType": "sample",
+    "task_status": "finished"
+  },
+  "probabilities": {
+    "00": 0.4578574,
+    "01": 0.0001633,
+    "10": 0.0000594,
+    "11": 0.5419198
+  },
+  "note": "Raw JSON returned by qpanda3_runtime.RuntimeService.query_task on 2026-08-22. No provider CSV is exported by this API path."
+}

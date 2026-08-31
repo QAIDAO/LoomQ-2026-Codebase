@@ -1,0 +1,44 @@
+{
+  "schema_version": "loomq-spinq-hardware-summary-v1",
+  "backend": "spinq-cloud-hardware",
+  "job_id": "S-260811-0005",
+  "shots": 8192,
+  "counts": {
+    "000": 3520,
+    "110": 426,
+    "011": 156,
+    "100": 310,
+    "001": 145,
+    "111": 3484,
+    "101": 92,
+    "010": 59
+  },
+  "bit_order": "little",
+  "timestamp": "2026-08-11T06:45:47.257Z",
+  "circuit": "ghz3",
+  "mode": "formal",
+  "counts_normalization": "probabilities-largest-remainder",
+  "meta": {
+    "provider": "SpinQ Cloud",
+    "device_code": "triangulum_vp",
+    "sdk_api": "spinqit-0.2.4",
+    "result_kind": "probabilities",
+    "counts_normalization": "probabilities-largest-remainder",
+    "provider_shots": 8192,
+    "provider_shots_verified": true,
+    "measured_qubits": [0, 1, 2],
+    "measurement_map": [
+      {"qubit": 0, "classical": 0},
+      {"qubit": 1, "classical": 1},
+      {"qubit": 2, "classical": 2}
+    ],
+    "source_qasm_sha256": "af9200346cd403c8b67db2a89b266117404b2a001a5c0fddea5d6ff656321a08",
+    "submitted_qasm_sha256": "2fc4afc51fc9426ff8c9dbe6798e8460ca3c62f3a39a98fa152b728301853814",
+    "raw_evidence_file": "spinq-formal-ghz3-S-260811-0005-raw.json",
+    "timestamp_source": "spinq-task-metadata.json created_at (provider createdTime)"
+  },
+  "source_qasm_file": "spinq-formal-ghz3-S-260811-0005-source.qasm",
+  "submitted_qasm_file": "spinq-formal-ghz3-S-260811-0005-submitted.qasm",
+  "request_file": "spinq-formal-ghz3-S-260811-0005-request.json",
+  "task_metadata_file": "spinq-task-metadata.json"
+}

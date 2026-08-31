@@ -1,0 +1,2 @@
+spinqit==0.2.4
+pyqpanda==3.8.5

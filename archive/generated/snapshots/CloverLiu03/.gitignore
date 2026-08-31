@@ -1,0 +1,12 @@
+.DS_Store
+.DStore
+**/ .DS_Store
+**/.DS_Store
+**/.DStore
+__pycache__/
+*.py[cod]
+.obsidian
+.claude
+CLAUDE.md
+.env
+.keyfile

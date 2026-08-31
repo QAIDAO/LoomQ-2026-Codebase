@@ -1,0 +1,44 @@
+{
+  "schema_version": "loomq-spinq-hardware-summary-v1",
+  "backend": "spinq-cloud-hardware",
+  "job_id": "S-260811-0003",
+  "shots": 100,
+  "counts": {
+    "000": 0,
+    "110": 0,
+    "101": 0,
+    "010": 1,
+    "001": 0,
+    "111": 0,
+    "011": 99,
+    "100": 0
+  },
+  "bit_order": "little",
+  "timestamp": "2026-08-11T06:37:20.476Z",
+  "circuit": "bit_order",
+  "mode": "resume",
+  "counts_normalization": "probabilities-largest-remainder",
+  "meta": {
+    "provider": "SpinQ Cloud",
+    "device_code": "triangulum_vp",
+    "sdk_api": "spinqit-0.2.4",
+    "result_kind": "probabilities",
+    "counts_normalization": "probabilities-largest-remainder",
+    "provider_shots": 100,
+    "provider_shots_verified": true,
+    "measured_qubits": [0, 1, 2],
+    "measurement_map": [
+      {"qubit": 0, "classical": 0},
+      {"qubit": 1, "classical": 2},
+      {"qubit": 2, "classical": 1}
+    ],
+    "source_qasm_sha256": "bd08aed4fbccc1c6aba8b49fa8a2643574bbddb0ec86eed2c58e3f25ccbbaf87",
+    "submitted_qasm_sha256": "cb3b1bf9b858c4d854ede87cae9dae5c0c4a2cfa5cd583926ae88dae92a3c5ce",
+    "raw_evidence_file": "spinq-resume-bit_order-S-260811-0003-raw.json",
+    "timestamp_source": "spinq-task-metadata.json created_at (provider createdTime)"
+  },
+  "source_qasm_file": "spinq-resume-bit_order-S-260811-0003-source.qasm",
+  "submitted_qasm_file": "spinq-resume-bit_order-S-260811-0003-submitted.qasm",
+  "request_file": "spinq-resume-bit_order-S-260811-0003-request.json",
+  "task_metadata_file": "spinq-task-metadata.json"
+}

@@ -1,0 +1,3 @@
+# The scored Python 3.10 path uses only the standard library.
+# Vendor QPU tools are optional, credential-gated, and isolated under
+# scripts/hardware; they are intentionally not imported by adapter.py.

@@ -1,0 +1,25 @@
+# --- 系统与缓存 ---
+.DS_Store
+.DStore
+**/ .DS_Store
+**/.DS_Store
+**/.DStore
+__pycache__/
+*.py[cod]
+
+# --- 凭证与密钥：任何位置出现都不入库（防误放，双重保险）---
+.env
+*.env
+.env.*
+*.pem
+*.key
+secrets*
+*credential*
+
+# --- 真机工具链（开发侧，不属于评测物）---
+tools/qpu/.venv/
+tools/qpu/.env
+
+# --- 本地产物 ---
+report*.json
+*.log

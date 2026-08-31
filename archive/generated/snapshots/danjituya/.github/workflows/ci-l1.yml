@@ -1,0 +1,78 @@
+# L1/L2 自主验证流水线（Linux 容器，等价官方评测环境）
+#
+# 每次 push 到 main（或手动触发）时，在 ubuntu-latest 容器内：
+#   pip install -r starter_kit/requirements.txt（与官方容器逐版本一致）
+#   然后跑：12门×2后端验收、12门矩阵、L2模板验证、公开评测 L1+L3
+#
+# 这相当于"官方 Linux 容器"的本地复现：不需要本机安装 Docker，
+# 结果在 仓库 → Actions → "L1 container verification" 页面查看。
+
+name: L1 container verification
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  l1-verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install system dependency (pyqpanda needs libcurl4)
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libcurl4
+
+      - name: Setup Python 3.10 (same as official container)
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install pinned dependencies
+        run: pip install -r starter_kit/requirements.txt
+
+      - name: Run reviewer acceptance test (12 gates x 2 backends)
+        working-directory: starter_kit
+        run: python test_l1_gates.py
+
+      - name: Run 12x2 gate matrix vs exact oracle
+        run: python tests/l1_gate_matrix.py
+
+      - name: Run Random-Circuit x3 fidelity (braket,originq, >=0.97)
+        run: python tests/random_circuit_check.py
+
+      - name: Run L2 template validator (zero-dependency)
+        working-directory: starter_kit
+        run: python verify_l2.py
+
+      - name: Run per-gate fidelity diagnostic (0.9924 source)
+        run: python tests/l1_gate_diag.py --shots 8192
+
+      - name: Run L3 full test suite (public + 5 custom groups)
+        run: python tests/l3_suite.py
+
+      - name: Run Grover marker check (exhaustive 8 markers, fidelity>=0.97)
+        run: python tests/grover_marker_check.py
+
+      - name: Run Round2 patch check (CRY/CRX/CRZ + 中文纠缠)
+        run: python tests/round2_patch_check.py
+
+      - name: Run L2 review P0 checks (quantifier misparse + backend false positive)
+        run: python tests/l2_review_p0_check.py
+
+      - name: Run L3 random fuzz (200 cases x exhaustive injection)
+        run: python tests/l3_fuzz.py 200 42
+
+      - name: Run QRVE Bonus tests (6 E2E + 4 built-in)
+        working-directory: starter_kit
+        run: python test_qrve_bonus.py
+
+      - name: Run public evaluator L1 (braket,originq) + L3
+        run: |
+          python starter_kit/evaluator.py --level l1 --target braket,originq
+          python starter_kit/evaluator.py --level l3

@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>QuantumHelper · 模型配置</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+.config-form{display:flex;flex-direction:column;gap:18px}
+.field{display:flex;flex-direction:column;gap:7px}
+.field label{font-size:13px;font-weight:700;color:var(--text-secondary)}
+.field .hint{font-size:12px;color:var(--text-tertiary);line-height:1.5}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+.security-note{margin-top:18px;padding:14px 16px;border:1px solid rgba(92,143,181,.22);border-radius:14px;background:var(--blue-soft);color:var(--blue-text);font-size:13px;line-height:1.6}
+#status{margin-top:16px}
+@media(max-width:760px){.actions .btn{width:100%}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header class="topbar">
+  <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span>QuantumHelper</a>
+  <div class="top-meta"><span>运行时 LLM 配置</span><span class="mode"><i class="mode-dot"></i>仅本次运行</span></div>
+</header>
+
+<section class="hero">
+  <div class="eyebrow">模型服务设置</div>
+  <h1>把模型服务接到<span class="hero-em">本次运行</span></h1>
+  <p class="hero-text">在这里填写 OpenAI 兼容接口的地址、密钥和模型名。配置只保存在当前 server 进程内存中，重启后回到环境变量。</p>
+</section>
+
+<main>
+  <section class="layout">
+    <article class="card main-card">
+      <div class="section-head"><div class="kicker">连接信息</div><h2 class="section-title">Base URL / API Key / Model</h2></div>
+      <div class="section-body">
+        <form class="config-form" id="configForm" autocomplete="off">
+          <div class="field">
+            <label for="baseUrl">Base URL</label>
+            <input class="form-input" id="baseUrl" type="text" inputmode="url" spellcheck="false"
+                   placeholder="https://api.example.com/v1">
+            <span class="hint">OpenAI 兼容接口的根地址，例如 https://api.openai.com/v1。</span>
+          </div>
+          <div class="field">
+            <label for="apiKey">API Key</label>
+            <input class="form-input" id="apiKey" type="password" autocomplete="new-password" spellcheck="false"
+                   placeholder="sk-...">
+            <span class="hint">密钥只发送给本服务并保存在进程内存，不会写入浏览器存储或前端文件。</span>
+          </div>
+          <div class="field">
+            <label for="model">Model</label>
+            <input class="form-input" id="model" type="text" spellcheck="false"
+                   placeholder="deepseek-v4-flash">
+            <span class="hint">模型名需与所填服务支持的名称一致。</span>
+          </div>
+          <div class="actions">
+            <button type="button" class="btn primary" id="saveBtn">保存到本次运行</button>
+            <button type="button" class="btn secondary" id="testBtn">测试连接</button>
+            <button type="button" class="btn secondary" id="clearBtn">清除本次配置</button>
+          </div>
+        </form>
+        <div id="status" class="status status--info" role="status" aria-live="polite" hidden></div>
+        <div class="security-note">
+          安全说明（任务书 §21）：API Key <strong>只保存在当前 server 进程内存</strong>，绝不会写入浏览器 localStorage、前端静态文件或 JavaScript。
+          若后续需要“保存到本机 .env”，将作为独立功能提供，并且只在用户显式选择、且 .env 已加入 .gitignore 时才会写入。
+          当前优先级：运行时配置 → LOOMQ_LLM_* 环境变量 → 未配置。
+        </div>
+      </div>
+    </article>
+
+    <aside class="card side-card">
+      <div class="kicker">当前状态</div>
+      <h2 class="side-title">生效配置</h2>
+      <div class="summary-list">
+        <div class="summary-item"><span class="summary-name">来源</span><span class="summary-value" id="cfgSource">未配置</span></div>
+        <div class="summary-item"><span class="summary-name">模型</span><span class="summary-value" id="cfgModel">—</span></div>
+        <div class="summary-item"><span class="summary-name">地址</span><span class="summary-value" id="cfgBaseUrl">—</span></div>
+        <div class="summary-item"><span class="summary-name">密钥</span><span class="summary-value" id="cfgKey">未提供</span></div>
+      </div>
+    </aside>
+  </section>
+</main>
+</div>
+
+<script>
+(() => {
+  'use strict';
+
+  const $ = id => document.getElementById(id);
+  const baseUrl = $('baseUrl'), apiKey = $('apiKey'), model = $('model');
+  const status = $('status'), saveBtn = $('saveBtn'), testBtn = $('testBtn'), clearBtn = $('clearBtn');
+
+  const SOURCE_LABEL = { runtime: '本次运行', environment: '环境变量', none: '未配置' };
+
+  function showStatus(message, kind) {
+    status.hidden = false;
+    status.textContent = message;
+    status.className = 'status ' + (kind || 'status--info');
+  }
+  function showNotice(message, kind) { showStatus(message, kind); }
+
+  function readForm() {
+    return {
+      base_url: baseUrl.value.trim(),
+      api_key: apiKey.value,
+      model: model.value.trim()
+    };
+  }
+
+  function validate(values) {
+    if (!values.base_url) { showNotice('请填写 Base URL。', 'status--danger'); return null; }
+    if (!values.api_key) { showNotice('请填写 API Key。', 'status--danger'); return null; }
+    if (!values.model) { showNotice('请填写模型名。', 'status--danger'); return null; }
+    return values;
+  }
+
+  async function post(path, body) {
+    const response = await fetch(path, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    let payload = null;
+    try { payload = await response.json(); } catch (_) { /* non-JSON (404 static page) */ }
+    return { status: response.status, ok: response.ok, payload };
+  }
+
+  function notWired(result) {
+    // Wave 3 尚未接入 /api/config* 路由时，server 返回 404。
+    return result.status === 404 ||
+      (result.payload && (result.payload.code === 'NOT_FOUND' || result.payload.error === '接口不存在'));
+  }
+
+  saveBtn.addEventListener('click', async () => {
+    const values = validate(readForm());
+    if (!values) return;
+    saveBtn.disabled = true; saveBtn.textContent = '正在保存…';
+    try {
+      const result = await post('/api/config', values);
+      if (notWired(result)) {
+        showNotice('保存接口将在 Wave 3 接入 server 后可用；当前不会保存任何内容。', 'status--warning');
+      } else if (result.ok && result.payload && result.payload.ok) {
+        showNotice('已保存到本次运行（仅内存）。', 'status--success');
+        // The server summary is enough after save; do not retain the secret in
+        // the page DOM or browser form history.
+        baseUrl.value = ''; apiKey.value = ''; model.value = '';
+        refreshStatus();
+      } else {
+        showNotice((result.payload && (result.payload.error || result.payload.message)) || '保存失败，请重试。', 'status--danger');
+      }
+    } catch (_) {
+      showNotice('无法连接到本地服务，请确认 server 正在运行。', 'status--danger');
+    } finally {
+      saveBtn.disabled = false; saveBtn.textContent = '保存到本次运行';
+    }
+  });
+
+  testBtn.addEventListener('click', async () => {
+    const draft = readForm();
+    const hasDraft = Boolean(draft.base_url || draft.api_key || draft.model);
+    const values = hasDraft ? validate(draft) : {};
+    if (!values) return;
+    testBtn.disabled = true; testBtn.textContent = '正在测试…';
+    showNotice('正在连接模型服务…', 'status--info');
+    try {
+      const result = await post('/api/config/test', values);
+      if (notWired(result)) {
+        showNotice('测试接口将在 Wave 3 接入 server 后可用。', 'status--warning');
+      } else if (result.ok && result.payload && result.payload.ok === true) {
+        const latency = result.payload.latency_ms != null ? `（${result.payload.latency_ms} ms）` : '';
+        showNotice('✓ API 连接正常' + latency, 'status--success');
+      } else {
+        const message = (result.payload && (result.payload.message || result.payload.error)) || '连接失败，请检查配置。';
+        showNotice(message, 'status--danger');
+      }
+    } catch (_) {
+      showNotice('无法连接到本地服务，请确认 server 正在运行。', 'status--danger');
+    } finally {
+      testBtn.disabled = false; testBtn.textContent = '测试连接';
+    }
+  });
+
+  clearBtn.addEventListener('click', async () => {
+    clearBtn.disabled = true;
+    try {
+      const response = await fetch('/api/config', { method: 'DELETE' });
+      let payload = null;
+      try { payload = await response.json(); } catch (_) { /* not wired yet */ }
+      baseUrl.value = ''; apiKey.value = ''; model.value = '';
+      if (response.status === 404 || (payload && payload.code === 'NOT_FOUND')) {
+        showNotice('清除接口将在 Wave 3 接入 server 后可用；当前仅清空本页输入。', 'status--warning');
+      } else if (response.ok) {
+        showNotice('已清除本次运行配置。', 'status--success');
+      } else {
+        showNotice('清除失败，请重试。', 'status--danger');
+      }
+      refreshStatus();
+    } catch (_) {
+      baseUrl.value = ''; apiKey.value = ''; model.value = '';
+      showNotice('已清空本页输入（本地服务不可用）。', 'status--warning');
+    } finally {
+      clearBtn.disabled = false;
+    }
+  });
+
+  async function refreshStatus() {
+    try {
+      const response = await fetch('/api/config/status');
+      let payload = null;
+      try { payload = await response.json(); } catch (_) { /* not wired yet */ }
+      const config = payload && (payload.config || payload);
+      if (response.ok && config && typeof config.configured === 'boolean') {
+        const sourceLabel = SOURCE_LABEL[config.source] || config.source || '未配置';
+        const stateLabel = config.available ? ' · 可用' : (config.configured ? ' · 已配置但未启用' : '');
+        $('cfgSource').textContent = sourceLabel + stateLabel;
+        $('cfgModel').textContent = config.model || '—';
+        $('cfgBaseUrl').textContent = config.base_url || '—';
+        $('cfgKey').textContent = config.api_key_present ? '已提供' : '未提供';
+      } else {
+        $('cfgSource').textContent = '接口待接入';
+        $('cfgModel').textContent = '—'; $('cfgBaseUrl').textContent = '—'; $('cfgKey').textContent = '—';
+      }
+    } catch (_) {
+      $('cfgSource').textContent = '服务不可用';
+    }
+  }
+  refreshStatus();
+})();
+</script>
+</body>
+</html>

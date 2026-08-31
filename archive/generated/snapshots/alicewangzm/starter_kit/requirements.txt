@@ -1,0 +1,8 @@
+# Pinned exactly for reproducible grading (fixed Linux container, Python 3.10).
+#
+# NOTE: amazon-braket-sdk is intentionally NOT listed. It forces
+# antlr4-python3-runtime>=4.13, but spinqit==0.2.4 requires antlr4==4.9.2, and
+# the two cannot coexist in one environment (spinqit fails to import). The two
+# active simulator backends are therefore spinq (spinqit) and originq (pyqpanda).
+spinqit==0.2.4
+pyqpanda==3.8.5

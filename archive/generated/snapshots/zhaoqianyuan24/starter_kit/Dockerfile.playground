@@ -1,0 +1,35 @@
+FROM python:3.10-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libcurl4 \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /workspace/loomq/starter_kit
+
+COPY requirements.txt ./requirements.txt
+RUN python -m pip install --no-cache-dir -r requirements.txt
+
+# The Playground uses the same adapter.run() path for optional remote hardware.
+# Keep the formal evaluator image unchanged; this product image may include the
+# provider submitter needed for SpinQ Cloud.
+COPY requirements-hardware.txt ./requirements-hardware.txt
+RUN python -m pip install --no-cache-dir -r requirements-hardware.txt
+
+# spinqit-mcp-tools pins newer generic packages than the local SpinQit SDK.
+# Restore the SDK-compatible versions after installing the cloud submitter so
+# local SpinQ simulation remains a reliable fallback when no QPU is selected.
+RUN python -m pip install --no-cache-dir --force-reinstall --no-deps \
+    autograd==1.5.0 \
+    autoray==0.6.1 \
+    pycryptodome==3.11.0 \
+    python-igraph==0.9.10 \
+    igraph==0.9.10
+
+COPY . .
+
+EXPOSE 4173
+
+CMD ["python", "product_service.py", "--host", "0.0.0.0", "--port", "4173"]

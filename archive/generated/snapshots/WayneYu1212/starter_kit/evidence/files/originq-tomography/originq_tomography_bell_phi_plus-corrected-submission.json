@@ -1,0 +1,14 @@
+{
+  "attempt": 2,
+  "backend": "WK_C180_2",
+  "input_kind": "corrected measured Bell Phi+ tomography input",
+  "job_id": "F7287E16E8478E4DB5051105468DB638",
+  "logical_input_sha256": "ae0cd142574796138ef95bd28378ae0a56b611999e3e31369cdacefe51a7b825",
+  "program_measurement_gate": "PASS",
+  "requested_physical_qubits": [
+    49,
+    58
+  ],
+  "shots": 1000,
+  "submission": "accepted_by_sdk"
+}

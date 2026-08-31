@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>QuantumHelper · 场景示例</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+.scene-layout{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:18px;align-items:start;padding-bottom:72px}
+.demo{padding:24px;border:1px solid var(--primary-line);border-radius:18px;background:linear-gradient(180deg,rgba(94,99,182,.07),rgba(255,255,255,.82))}
+.demo-title{margin:9px 0 0;font-size:22px;line-height:1.35;font-weight:760;text-wrap:balance}
+.visual{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:20px}
+.box{min-height:74px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(25,26,30,.08);border-radius:14px;background:#fff;color:var(--text);font-weight:760}
+.box.target{border-color:var(--primary-line);background:var(--primary-soft);color:var(--primary-deep);box-shadow:0 10px 22px rgba(94,99,182,.08)}
+.reason{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}.reason-card{padding:17px;border:1px solid rgba(25,26,30,.07);border-radius:14px;background:rgba(255,255,255,.62)}.reason-card strong{display:block;margin-bottom:6px;font-size:14px}.reason-card span{color:var(--text-2);font-size:13px;line-height:1.6}
+.type-list{margin-top:18px;border-top:1px solid rgba(25,26,30,.08)}.type-item{display:flex;align-items:center;justify-content:space-between;min-height:54px;border-bottom:1px solid rgba(25,26,30,.08);color:var(--text-2);font-size:13px}.type-item.active{color:var(--primary-dark);font-weight:760}
+@media(max-width:980px){.scene-layout{grid-template-columns:1fr}.side-card{position:static}}@media(max-width:760px){.reason{grid-template-columns:1fr}.visual{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header class="topbar">
+  <a class="brand" href="index.html"><div class="logo"><span></span></div>QuantumHelper</a>
+  <div class="top-meta"><span>场景示例</span><span class="mode"><i class="mode-dot"></i>任务引导</span></div>
+</header>
+
+<section class="hero">
+  <div class="eyebrow"><span id="eyebrow">场景 · 查找</span></div>
+  <h1><span id="heroTitle">在很多候选中，<span class="hero-em">找到目标</span></span></h1>
+  <p class="hero-text"><span id="heroText">先用一个小问题理解它是什么，再决定要不要继续。</span></p>
+</section>
+<main><section class="scene-layout">
+<article class="card main-card"><div class="section-head"><div class="kicker">一个小例子</div><h2 class="section-title" id="sceneTitle"></h2></div><div class="section-body"><div class="demo"><div class="kicker" id="demoLabel"></div><div class="demo-title" id="demoTitle"></div><div class="visual" id="visual"></div></div><div class="reason"><div class="reason-card"><strong>这个问题的结构</strong><span id="r1"></span></div><div class="reason-card"><strong>继续后会做什么</strong><span id="r2"></span></div></div></div></article>
+<aside class="card side-card"><div class="kicker">当前场景</div><h2 class="side-title" id="sideTitle"></h2><div class="type-list"><a class="type-item" data-type="search" href="?type=search">查找 <span>→</span></a><a class="type-item" data-type="opt" href="?type=opt">优化 <span>→</span></a><a class="type-item" data-type="measure" href="?type=measure">测量 <span>→</span></a><a class="type-item" data-type="relation" href="?type=relation">关联 <span>→</span></a></div><div class="action-block"><button class="btn primary" id="useExample">查看教学演示 →</button><a class="btn secondary" href="agent.html">交给 Agent 处理我的任务</a></div></aside>
+</section></main></div>
+<script>
+const type=new URLSearchParams(location.search).get('type')||'search';
+const all={
+ search:{name:'查找',hero:'在很多候选中，<span class="hero-em">找到目标</span>',text:'当候选很多、判断条件明确时，可以先把问题整理成搜索任务。',title:'8 个编号中有 1 个被标记，找到它',label:'8 个候选',demo:'目标只有一个，但一开始不知道它在哪',boxes:['00','01','02','03','04','05','06','07'],target:[6],r1:'候选很多，目标条件明确。',r2:'把候选范围和判断条件转换成搜索方案。',task:'我有 8 个候选编号，其中只有一个满足条件，希望找到它。',goal:'找到满足条件的目标候选',output:'目标编号'},
+ opt:{name:'优化',hero:'从很多方案中，<span class="hero-em">选一个更合适的</span>',text:'当方案很多、每个方案都有成本或冲突时，可以整理成优化问题。',title:'给几项任务安排顺序，让冲突尽量少',label:'4 个候选方案',demo:'不是找唯一正确答案，而是比较哪个方案更好',boxes:['方案 A','方案 B','方案 C','方案 D'],target:[2],r1:'存在多个可行方案，需要比较成本或冲突。',r2:'把目标和限制条件转成可比较的评分。',task:'我有几项任务需要安排顺序，希望尽量减少时间冲突。',goal:'找到冲突更少的安排方案',output:'较优方案'},
+ measure:{name:'测量',hero:'同一条线路，<span class="hero-em">为什么会出现不同结果</span>',text:'量子线路的单次测量不是完整答案，重复运行后的分布才更有信息。',title:'重复运行同一条线路，比较各结果出现次数',label:'测量结果',demo:'关注的是分布，而不是某一次测量',boxes:['00','01','10','11'],target:[0,3],r1:'输入是已有线路，输出是重复测量后的统计分布。',r2:'确认线路和运行次数，然后直接执行并统计。',task:'我已经有一个量子线路，希望重复运行并比较各个测量结果出现的频率。',goal:'获得量子线路的测量结果分布',output:'测量分布'},
+ relation:{name:'关联',hero:'让两个量子比特，<span class="hero-em">表现出关联</span>',text:'先观察哪些结果总是一起出现，再理解线路怎样建立这种关系。',title:'让两个量子比特更常同时得到 00 或 11',label:'重点结果',demo:'如果关联成功，00 和 11 会明显更常出现',boxes:['00','01','10','11'],target:[0,3],r1:'关注多个量子比特的测量结果是否共同变化。',r2:'构造关联线路，再通过结果分布验证。',task:'我想让两个量子比特产生关联，并通过测量结果验证这种关系。',goal:'观察两个量子比特之间的结果关联',output:'关联后的测量分布'}
+};
+const d=all[type]||all.search;
+eyebrow.textContent='场景 · '+d.name;heroTitle.innerHTML=d.hero;heroText.textContent=d.text;sceneTitle.textContent=d.title;demoLabel.textContent=d.label;demoTitle.textContent=d.demo;r1.textContent=d.r1;r2.textContent=d.r2;sideTitle.textContent=d.name;
+document.querySelectorAll('.type-item').forEach(x=>x.classList.toggle('active',x.dataset.type===type));
+d.boxes.forEach((x,i)=>{const e=document.createElement('div');e.className='box'+(d.target.includes(i)?' target':'');e.textContent=x;visual.appendChild(e)});
+useExample.onclick=()=>{localStorage.setItem('qh_task',d.task);localStorage.setItem('qh_type',d.name);localStorage.setItem('qh_goal',d.goal);localStorage.setItem('qh_output',d.output);location.href='custom-plan.html'};
+</script></body>
+</html>

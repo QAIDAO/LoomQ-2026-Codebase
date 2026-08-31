@@ -1,0 +1,15 @@
+services:
+  loomq:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: loomq-all-levels:local
+    ports:
+      - "${LOOMQ_WEB_PORT:-8765}:8765"
+    environment:
+      LOOMQ_LLM_BASE_URL: "${LOOMQ_LLM_BASE_URL:-}"
+      LOOMQ_LLM_API_KEY: "${LOOMQ_LLM_API_KEY:-}"
+      LOOMQ_LLM_MODEL: "${LOOMQ_LLM_MODEL:-}"
+      LOOMQ_LLM_TIMEOUT_SECONDS: "${LOOMQ_LLM_TIMEOUT_SECONDS:-120}"
+    init: true
+    restart: unless-stopped

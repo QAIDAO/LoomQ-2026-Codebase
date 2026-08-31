@@ -1,0 +1,2 @@
+[PASS] l3:public-branch: public branch semantics passed
+{"passed": 1, "failed": 0, "total": 1}

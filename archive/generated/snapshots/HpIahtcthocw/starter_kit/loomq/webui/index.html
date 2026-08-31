@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LoomQ · 五分钟，跑出你的第一个量子实验</title>
+<meta name="description" content="不需要懂物理，不需要写代码。用中文说出你想做的事，在真实的量子计算机上跑一次。">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand__mark" aria-hidden="true"></span>
+    <div>
+      <b>LoomQ</b>
+      <span>量子接入平权计划</span>
+    </div>
+  </div>
+
+  <div class="clock" id="clock" hidden>
+    <span class="clock__label">已用时</span>
+    <b class="clock__time" id="clock-time">0:00</b>
+    <span class="clock__of">/ 目标 5:00</span>
+  </div>
+
+  <nav class="rail" id="rail" aria-label="进度">
+    <button class="rail__step" data-goto="pick"><i>1</i><span>选一个</span></button>
+    <button class="rail__step" data-goto="result"><i>2</i><span>看结果</span></button>
+    <button class="rail__step" data-goto="ask"><i>3</i><span>自己说</span></button>
+    <button class="rail__step" data-goto="quiz"><i>4</i><span>验收</span></button>
+  </nav>
+</header>
+
+<main id="main">
+
+  <!-- 0 · 开场 ------------------------------------------------------------ -->
+  <section class="stage stage--intro is-active" id="stage-intro">
+    <div class="intro">
+      <p class="intro__eyebrow">给完全没接触过量子计算的人</p>
+      <h1 class="intro__title">五分钟，跑出你的<br>第一个量子实验</h1>
+      <p class="intro__lede">
+        不需要懂物理，不需要写代码，也不需要知道什么叫量子比特。
+        往下读三句话，然后我们就开始。
+      </p>
+
+      <ol class="facts">
+        <li class="fact">
+          <span class="fact__n">01</span>
+          <div>
+            <b>普通电脑里的一个「比特」，同一时刻只能是 0 或者 1。</b>
+            <p>量子计算机里的比特不一样：它可以同时「既是 0 又是 1」，
+              直到你去看它的那一刻，才随机定成其中一个。全称叫「量子比特」，
+              下面一律简称比特。</p>
+          </div>
+        </li>
+        <li class="fact">
+          <span class="fact__n">02</span>
+          <div>
+            <b>所谓写量子程序，就是排好一串操作去摆布这些比特，最后把它们读出来。</b>
+            <p>这一串操作画成图就叫「电路」，其中的一步叫「门」，最后读出来那一下叫「测量」。
+              每读一次只得到一个答案，所以要把整件事重复很多遍，看哪个答案出现得多。</p>
+          </div>
+        </li>
+        <li class="fact">
+          <span class="fact__n">03</span>
+          <div>
+            <b>接下来每跑一次，你都会看到同样的三段。</b>
+            <p>一张图：机器按顺序做了哪几步；一组横条：重复很多遍之后，每种答案各出现了多少次；
+              最后一段话：这个结果说明了什么。</p>
+          </div>
+        </li>
+      </ol>
+
+      <div class="intro__act">
+        <button class="btn btn--primary btn--lg" id="btn-start">读完了，开始计时</button>
+        <span class="intro__hint" id="intro-hint">计时只是为了验证「五分钟够不够」，随时可以停</span>
+      </div>
+
+      <details class="aside">
+        <summary>顺便一提，LoomQ 是什么</summary>
+        <p>
+          全世界的量子计算机分属好几家，每家说自己的语言——为量旋那台机器写的程序，
+          换到本源或者亚马逊的机器上要整个重写。LoomQ 是夹在中间的那层翻译：
+          一份代码进去，自动翻成三家各自的方言，结果按同一种格式回来。
+        </p>
+        <p>
+          再往上加一层：你用中文说一句话，它变成电路、跑起来，再用人话告诉你结果什么意思。
+          这个页面就是那层东西的入口。跑完最后一步，我会再跟你说一遍你到底做了什么。
+        </p>
+      </details>
+    </div>
+  </section>
+
+  <!-- 1 · 选一个 ---------------------------------------------------------- -->
+  <section class="stage stage--center" id="stage-pick">
+    <h2 class="stage__title">先跑一个现成的</h2>
+    <p class="stage__lede">三个都是量子计算里最经典的实验。点哪个都行，一秒出结果。</p>
+    <div class="cards" id="cards"></div>
+    <p class="stage__foot">
+      想直接用自己的话描述？<button class="link" data-goto="ask">跳到第三步</button>
+    </p>
+  </section>
+
+  <!-- 2 · 结果 ------------------------------------------------------------ -->
+  <section class="stage" id="stage-result">
+    <div class="running" id="running">
+      <div class="running__spin" aria-hidden="true"></div>
+      <b id="running-title">正在运行</b>
+      <div class="running__wait" id="running-wait" hidden></div>
+      <ul class="running__log" id="running-log"></ul>
+    </div>
+
+    <div class="result" id="result" hidden>
+      <div class="result__head">
+        <div>
+          <div class="result__eyebrow" id="r-backend"></div>
+          <h2 class="result__title" id="r-title"></h2>
+          <div class="result__term" id="r-term" hidden></div>
+        </div>
+        <button class="btn" id="btn-again">换一个跑</button>
+      </div>
+
+      <p class="result__intent" id="r-intent"></p>
+
+      <div class="pending" id="r-pending" hidden>
+        <div class="pending__title">
+          <span class="pending__dot"></span>这份是普通电脑先算的，真机还在排队
+        </div>
+        <p class="pending__hint">同一个电路已经送进深圳那台真的量子计算机了。它一次来回要一两分钟，
+          等它回来这一屏会自动换成真机的数据，并且告诉你两边差在哪。
+          这段时间可以先把下面的电路图和结果看一遍。</p>
+        <p class="pending__wait" id="r-pending-wait"></p>
+      </div>
+
+      <div class="fallback" id="r-fallback" hidden>
+        <div class="fallback__title" id="r-fallback-title"></div>
+        <p class="fallback__hint" id="r-fallback-hint"></p>
+        <p class="fallback__detail" id="r-fallback-detail"></p>
+      </div>
+
+      <section class="block">
+        <h3 class="block__title">一、机器按顺序做了这几步</h3>
+        <p class="block__note">这张图行内叫「电路图」。每一横行是一个比特，从左往右是时间；
+          一个方块就是对它做的一步操作，行内管这一步叫「门」。把鼠标停在方块上，会告诉你这一步在做什么。</p>
+        <div class="scroller"><div id="r-circuit"></div></div>
+        <div class="meta" id="r-meta"></div>
+      </section>
+
+      <section class="block">
+        <h3 class="block__title">二、同样的事重复做，每种答案出现了多少次</h3>
+        <p class="block__note" id="r-shots"></p>
+        <div id="r-bars"></div>
+        <p class="legend" id="r-legend"></p>
+      </section>
+
+      <section class="block">
+        <h3 class="block__title">三、这意味着什么</h3>
+        <p class="block__note" id="r-explain-lead" hidden></p>
+        <p class="prose" id="r-explain"></p>
+        <div id="r-noise"></div>
+      </section>
+
+      <div class="nextbar">
+        <div>
+          <b id="next-title">下一步</b>
+          <span id="next-note"></span>
+        </div>
+        <div class="nextbar__act">
+          <button class="btn" id="btn-alt" hidden></button>
+          <button class="btn btn--primary" id="btn-next"></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · 自己说 ---------------------------------------------------------- -->
+  <section class="stage stage--center" id="stage-ask">
+    <h2 class="stage__title">现在换你说</h2>
+    <p class="stage__lede">用中文描述你想做的事。不用管术语，说人话就行。</p>
+
+    <div class="asker">
+      <div class="asker__main">
+        <textarea id="ask-input" rows="3" placeholder="比如：让三个比特全都纠缠起来"></textarea>
+        <div class="chips" id="ask-chips"></div>
+        <div class="asker__act">
+          <button class="btn btn--primary btn--lg" id="btn-ask">生成并运行</button>
+          <span class="asker__hint" id="ask-hint"></span>
+        </div>
+      </div>
+
+      <aside class="scope">
+        <div class="scope__col">
+          <h3>它听得懂这些</h3>
+          <ul>
+            <li>要几个比特，让它们变成什么状态——纠缠、均匀随机、某个指定的概率</li>
+            <li>在多少种可能里挑出哪一个（这类搜索问题正是量子的强项）</li>
+            <li>在现成的例子上改：「刚才那个改成四个比特」</li>
+          </ul>
+        </div>
+        <div class="scope__col">
+          <h3>它做不到这些</h3>
+          <ul>
+            <li>现实里的具体活儿，比如算房贷、写文案——量子电路只能做数学结构</li>
+            <li>超过十来个比特的电路，模拟器算得动但会很慢，真机更是只有 2 到 8 个</li>
+            <li>说不清要什么的时候。含糊的描述换来的电路多半也不是你想要的</li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- 4 · 验收 ------------------------------------------------------------ -->
+  <section class="stage" id="stage-quiz">
+    <h2 class="stage__title">最后三个问题</h2>
+    <p class="stage__lede">
+      跑通不算数，能说清楚才算。这三题都不考公式，答案就在你刚才看到的东西里。
+    </p>
+    <div id="quiz"></div>
+    <div class="quizfoot" id="quiz-foot" hidden>
+      <p class="prose" id="quiz-verdict"></p>
+
+      <section class="coda">
+        <h3 class="coda__title">所以你刚才做的是什么</h3>
+        <p class="prose" id="coda-did"></p>
+        <p class="prose">
+          这条链路上，原本每一环都要专门知识：懂量子力学才写得出电路，
+          懂各家 SDK 才提交得了任务，懂实验物理才读得懂噪声。
+          LoomQ 做的事，就是把这三道门槛收进这一个页面。
+        </p>
+        <p class="prose coda__blunt" id="coda-blunt"></p>
+        <p class="prose">
+          所以这件作品的价值不在于让你今天就用量子机干成什么活，而在于证明这条路走得通：
+          等这些机器真的能用了，门口不该只站着物理博士。
+        </p>
+      </section>
+
+      <button class="btn btn--primary btn--lg" id="btn-cert">生成完成凭证</button>
+    </div>
+  </section>
+
+</main>
+
+<!-- 侧栏：后端与真机 ------------------------------------------------------- -->
+<aside class="dock" id="dock" hidden>
+  <button class="dock__toggle" id="dock-toggle">运行环境</button>
+  <div class="dock__body" id="dock-body">
+    <div class="dock__row">
+      <span>重复测量</span>
+      <select id="sel-shots">
+        <option value="256">256 次</option>
+        <option value="1024" selected>1024 次</option>
+        <option value="4096">4096 次</option>
+      </select>
+    </div>
+    <div class="dock__row">
+      <span>运行在</span>
+      <select id="sel-backend"></select>
+    </div>
+    <p class="dock__note" id="dock-note"></p>
+  </div>
+</aside>
+
+<!-- 完成凭证 --------------------------------------------------------------- -->
+<div class="veil" id="veil-cert" hidden>
+  <div class="sheet">
+    <canvas id="cert-canvas" class="sheet__canvas"></canvas>
+    <div class="sheet__act">
+      <button class="btn" id="cert-close">返回</button>
+      <button class="btn btn--primary" id="cert-save">保存图片</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" hidden></div>
+
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+name: LoomQ Competition Docker Test
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - main
+    paths:
+      - "starter_kit/**"
+      - ".github/workflows/docker-test.yml"
+
+  pull_request:
+    paths:
+      - "starter_kit/**"
+      - ".github/workflows/docker-test.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  docker-test:
+    name: Docker build and competition tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build competition image
+        working-directory: starter_kit
+        run: |
+          docker build \
+            --pull \
+            --no-cache \
+            -t loomq-submission:test \
+            .
+
+      - name: Show Python version
+        run: |
+          docker run --rm \
+            loomq-submission:test \
+            python --version
+
+      - name: Check Python dependencies
+        run: |
+          docker run --rm \
+            loomq-submission:test \
+            python -m pip check
+
+      - name: Check adapter import isolation
+        run: |
+          docker run --rm \
+            loomq-submission:test \
+            python - <<'PY'
+          import sys
+          import adapter
+
+          print("adapter import: OK")
+
+          failed = False
+
+          for name in (
+              "spinqit",
+              "pyqpanda",
+              "braket",
+          ):
+              loaded = name in sys.modules
+              print(
+                  f"{name:10s}",
+                  "LOADED" if loaded else "not loaded",
+              )
+
+              if loaded:
+                  failed = True
+
+          if failed:
+              raise SystemExit(
+                  "Backend SDK was eagerly imported."
+              )
+          PY
+
+      - name: Check backend SDK imports
+        run: |
+          docker run --rm \
+            loomq-submission:test \
+            python - <<'PY'
+          import spinqit
+          import pyqpanda
+          import braket
+
+          print("SpinQit import: OK")
+          print("pyQPanda import: OK")
+          print("Braket import: OK")
+          PY
+
+      - name: Run L1 public evaluator
+        run: |
+          docker run --rm \
+            loomq-submission:test \
+            python evaluator.py \
+              --level l1 \
+              --target spinq,braket,originq \
+              --shots 8192
+
+      - name: Run L3 public evaluator
+        run: |
+          docker run --rm \
+            loomq-submission:test \
+            python evaluator.py \
+              --level l3
+
+      - name: Run L3 compiler regression
+        run: |
+          docker run --rm \
+            loomq-submission:test \
+            python tests/check_l3_compiler.py
+
+      - name: Run L3 fuzz regression
+        run: |
+          docker run --rm \
+            loomq-submission:test \
+            python tests/check_l3_fuzz.py

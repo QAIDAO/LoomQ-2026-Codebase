@@ -1,0 +1,11 @@
+# 依赖锁定（精确版本，正式评测据此在固定 Linux 容器内 pip install）
+#
+# ⚠️ 为什么没有 amazon-braket-sdk：
+#   braket 的核心包 amazon-braket-default-simulator 硬锁定
+#   antlr4-python3-runtime==4.13.2，而 spinqit 硬锁定 ==4.9.2，
+#   两者不可共存，pip 会直接报依赖冲突（连环境都装不上）。
+#   故本中间层以 spinq + originq 作为"入门档双后端"（也是评委默认 --target）。
+#   braket 的转译/执行代码仍在 adapter.py 中，如需启用请放到独立环境安装。
+
+spinqit==0.2.4
+pyqpanda==3.8.5

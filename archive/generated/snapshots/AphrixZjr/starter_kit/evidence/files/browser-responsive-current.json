@@ -1,0 +1,265 @@
+{
+    "generated_at_utc":  "2026-08-10T17:25:10.6817957Z",
+    "browser":  {
+                    "name":  "Microsoft Edge headless via Chrome DevTools Protocol",
+                    "version":  "151.0.4129.72"
+                },
+    "server":  {
+                   "entrypoint":  "docker compose -f starter_kit/compose.yaml up -d",
+                   "image_id":  "sha256:f597adbde7a36676a197fa6307bced61f80ec17cfec8ce5d5d444954e93cad37",
+                   "health_status":  "ok",
+                   "connected_local_backends":  [
+                                                    "spinq_taurus_simulator",
+                                                    "originq_local_simulator",
+                                                    "braket_local_simulator"
+                                                ]
+               },
+    "checker":  {
+                    "script":  "browser_responsive_check.mjs",
+                    "command":  "node starter_kit/browser_responsive_check.mjs",
+                    "app_url":  "http://127.0.0.1:8765/",
+                    "cdp_endpoint":  "http://127.0.0.1:9333",
+                    "prerequisite":  "Start a Chromium-family browser with --remote-debugging-port=9333 and a temporary --user-data-dir."
+                },
+    "checks":  [
+                   {
+                       "label":  "1366x768",
+                       "viewport":  {
+                                        "width":  1366,
+                                        "height":  768,
+                                        "device_scale_factor":  1
+                                    },
+                       "title":  "LoomQ",
+                       "blank":  false,
+                       "inner_width":  1366,
+                       "inner_height":  768,
+                       "device_pixel_ratio":  1,
+                       "document":  {
+                                        "scroll_width":  1366,
+                                        "scroll_height":  768
+                                    },
+                       "horizontal_overflow":  false,
+                       "vertical_scrollable":  false,
+                       "error_overlay":  false,
+                       "key_regions_fit_horizontally":  true,
+                       "regions":  [
+                                       {
+                                           "selector":  ".global-header",
+                                           "present":  true,
+                                           "left":  0,
+                                           "right":  1366,
+                                           "width":  1366,
+                                           "fits_horizontally":  true
+                                       },
+                                       {
+                                           "selector":  ".goal-card",
+                                           "present":  true,
+                                           "left":  12,
+                                           "right":  1354,
+                                           "width":  1342,
+                                           "fits_horizontally":  true
+                                       },
+                                       {
+                                           "selector":  ".workspace",
+                                           "present":  true,
+                                           "left":  12,
+                                           "right":  1354,
+                                           "width":  1342,
+                                           "fits_horizontally":  true
+                                       },
+                                       {
+                                           "selector":  ".dialog-dock",
+                                           "present":  true,
+                                           "left":  12,
+                                           "right":  1354,
+                                           "width":  1342,
+                                           "fits_horizontally":  true
+                                       }
+                                   ],
+                       "runtime_errors":  [
+
+                                          ]
+                   },
+                   {
+                       "label":  "1280x720",
+                       "viewport":  {
+                                        "width":  1280,
+                                        "height":  720,
+                                        "device_scale_factor":  1
+                                    },
+                       "title":  "LoomQ",
+                       "blank":  false,
+                       "inner_width":  1280,
+                       "inner_height":  720,
+                       "device_pixel_ratio":  1,
+                       "document":  {
+                                        "scroll_width":  1280,
+                                        "scroll_height":  720
+                                    },
+                       "horizontal_overflow":  false,
+                       "vertical_scrollable":  false,
+                       "error_overlay":  false,
+                       "key_regions_fit_horizontally":  true,
+                       "regions":  [
+                                       {
+                                           "selector":  ".global-header",
+                                           "present":  true,
+                                           "left":  0,
+                                           "right":  1280,
+                                           "width":  1280,
+                                           "fits_horizontally":  true
+                                       },
+                                       {
+                                           "selector":  ".goal-card",
+                                           "present":  true,
+                                           "left":  8,
+                                           "right":  1272,
+                                           "width":  1264,
+                                           "fits_horizontally":  true
+                                       },
+                                       {
+                                           "selector":  ".workspace",
+                                           "present":  true,
+                                           "left":  8,
+                                           "right":  1272,
+                                           "width":  1264,
+                                           "fits_horizontally":  true
+                                       },
+                                       {
+                                           "selector":  ".dialog-dock",
+                                           "present":  true,
+                                           "left":  8,
+                                           "right":  1272,
+                                           "width":  1264,
+                                           "fits_horizontally":  true
+                                       }
+                                   ],
+                       "runtime_errors":  [
+
+                                          ]
+                   },
+                   {
+                       "label":  "1024-css-pixels",
+                       "viewport":  {
+                                        "width":  1024,
+                                        "height":  768,
+                                        "device_scale_factor":  1
+                                    },
+                       "title":  "LoomQ",
+                       "blank":  false,
+                       "inner_width":  1024,
+                       "inner_height":  768,
+                       "device_pixel_ratio":  1,
+                       "document":  {
+                                        "scroll_width":  1009,
+                                        "scroll_height":  2321
+                                    },
+                       "horizontal_overflow":  false,
+                       "vertical_scrollable":  true,
+                       "error_overlay":  false,
+                       "key_regions_fit_horizontally":  true,
+                       "regions":  [
+                                       {
+                                           "selector":  ".global-header",
+                                           "present":  true,
+                                           "left":  0,
+                                           "right":  994,
+                                           "width":  994,
+                                           "fits_horizontally":  true
+                                       },
+                                       {
+                                           "selector":  ".goal-card",
+                                           "present":  true,
+                                           "left":  12,
+                                           "right":  982,
+                                           "width":  970,
+                                           "fits_horizontally":  true
+                                       },
+                                       {
+                                           "selector":  ".workspace",
+                                           "present":  true,
+                                           "left":  12,
+                                           "right":  982,
+                                           "width":  970,
+                                           "fits_horizontally":  true
+                                       },
+                                       {
+                                           "selector":  ".dialog-dock",
+                                           "present":  true,
+                                           "left":  12,
+                                           "right":  982,
+                                           "width":  970,
+                                           "fits_horizontally":  true
+                                       }
+                                   ],
+                       "runtime_errors":  [
+
+                                          ]
+                   },
+                   {
+                       "label":  "200-percent-zoom-equivalent",
+                       "viewport":  {
+                                        "width":  640,
+                                        "height":  360,
+                                        "device_scale_factor":  2
+                                    },
+                       "title":  "LoomQ",
+                       "blank":  false,
+                       "inner_width":  640,
+                       "inner_height":  360,
+                       "device_pixel_ratio":  2,
+                       "document":  {
+                                        "scroll_width":  625,
+                                        "scroll_height":  2220
+                                    },
+                       "horizontal_overflow":  false,
+                       "vertical_scrollable":  true,
+                       "error_overlay":  false,
+                       "key_regions_fit_horizontally":  true,
+                       "regions":  [
+                                       {
+                                           "selector":  ".global-header",
+                                           "present":  true,
+                                           "left":  0,
+                                           "right":  625,
+                                           "width":  625,
+                                           "fits_horizontally":  true
+                                       },
+                                       {
+                                           "selector":  ".goal-card",
+                                           "present":  true,
+                                           "left":  8,
+                                           "right":  617,
+                                           "width":  609,
+                                           "fits_horizontally":  true
+                                       },
+                                       {
+                                           "selector":  ".workspace",
+                                           "present":  true,
+                                           "left":  8,
+                                           "right":  617,
+                                           "width":  609,
+                                           "fits_horizontally":  true
+                                       },
+                                       {
+                                           "selector":  ".dialog-dock",
+                                           "present":  true,
+                                           "left":  8,
+                                           "right":  617,
+                                           "width":  609,
+                                           "fits_horizontally":  true
+                                       }
+                                   ],
+                       "runtime_errors":  [
+
+                                          ]
+                   }
+               ],
+    "key_regions":  [
+                        ".global-header",
+                        ".goal-card",
+                        ".workspace",
+                        ".dialog-dock"
+                    ],
+    "note":  "The dedicated agent-browser CLI was unavailable, so the installed Edge browser was driven through CDP without installing or downloading dependencies. The 200% check uses a 640x360 CSS viewport at deviceScaleFactor 2 as a reproducible zoom-equivalent layout stress; it is not reported as a native browser zoom event."
+}

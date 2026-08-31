@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <meta name="description" content="LoomQ 零基础量子实验室">
+  <title>LoomQ</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到实验内容</a>
+  <header class="global-header">
+    <div class="brand"><span class="brand-mark" aria-hidden="true">LQ</span><span>LoomQ</span></div>
+    <span class="status-chip"><i class="live-dot" aria-hidden="true"></i>本地运行</span>
+    <div class="header-actions">
+      <button id="tutorial-toggle" class="quiet" type="button" aria-pressed="false" aria-label="开始 Bell 实验引导">开始 Bell 引导</button>
+      <button id="help-button" class="quiet" type="button" aria-expanded="false" aria-controls="dialog-dock">键盘帮助</button>
+      <button id="color-button" class="quiet preference-toggle" type="button" aria-pressed="false">色觉辅助：已关闭</button>
+      <button id="motion-button" class="quiet motion-toggle preference-toggle" type="button" aria-pressed="false">减少动态：已关闭</button>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <section class="goal-card" aria-labelledby="goal-title">
+      <h1 id="goal-title">未设定</h1>
+      <button id="edit-goal" class="quiet" type="button">编辑目标</button>
+    </section>
+
+    <ol id="stage-track" class="stage-track" aria-label="Bell 引导八个阶段" hidden></ol>
+
+    <section id="guide-card" class="guide-card" aria-labelledby="guide-title" hidden>
+      <div class="guide-index" id="guide-index">1 / 8</div>
+      <h2 id="guide-title">先把目标说清楚</h2>
+      <button id="primary-action" class="primary" type="button" title="仅将当前阶段预设指令填入 Agent 对话框；发送后才会推进实验">填入本阶段指令</button>
+      <button id="explain-button" class="text-button" type="button" aria-expanded="false" aria-controls="evidence-explanation">解释</button>
+      <button id="exit-guide" class="quiet" type="button">退出引导</button>
+    </section>
+
+    <div id="workspace" class="workspace">
+      <section class="experiment-panel panel" aria-labelledby="circuit-title">
+        <div class="panel-heading">
+          <h2 id="circuit-title">电路</h2>
+          <span id="revision-label" class="revision">版本 1</span>
+        </div>
+
+        <div id="circuit-canvas" class="circuit-canvas" role="img" aria-labelledby="circuit-title circuit-description"></div>
+        <p id="circuit-description" class="sr-description">两条量子线路 q[0] 与 q[1]。</p>
+        <p id="bit-order" class="bit-order">经典位序 c[1]c[0]</p>
+
+        <div class="lower-workspace">
+          <section class="qasm-pane" aria-labelledby="qasm-title">
+            <div class="pane-heading"><h3 id="qasm-title">OpenQASM 2.0</h3><button id="validate-button" class="text-button" type="button">验证</button></div>
+            <label class="sr-only" for="qasm-editor">OpenQASM 电路代码</label>
+            <textarea id="qasm-editor" spellcheck="false"></textarea>
+            <div class="inline-actions">
+              <button id="apply-qasm" type="button">检查</button>
+              <button id="preview-repair" class="quiet" type="button">修复</button>
+              <button id="undo-button" class="quiet" type="button" disabled>撤销</button>
+              <button id="redo-button" class="quiet" type="button" disabled>重做</button>
+            </div>
+            <div id="diagnostic" class="diagnostic" role="status"></div>
+            <pre id="repair-diff" class="repair-diff" tabindex="0" hidden></pre>
+            <button id="apply-repair" class="primary small" type="button" hidden>应用修复</button>
+          </section>
+
+          <section id="results-pane" class="results-pane" aria-labelledby="results-title">
+            <div class="pane-heading">
+              <h3 id="results-title">运行结果</h3>
+              <div class="run-controls"><label for="shots-input">shots</label><input id="shots-input" type="number" min="1" max="100000" value="1024"><button id="run-button" class="primary" type="button">运行</button></div>
+            </div>
+            <div id="results-empty" class="pane-empty">运行后在这里查看结果。</div>
+            <div id="results-panel" hidden>
+              <p id="result-summary"></p>
+              <div id="counts-chart" class="counts-chart" role="img" aria-label="测量计数柱状图"></div>
+              <table>
+                <caption class="sr-only">测量结果数据表</caption>
+                <thead><tr><th scope="col">位串</th><th scope="col">计数</th><th scope="col">实际</th><th scope="col">理想</th></tr></thead>
+                <tbody id="counts-table"></tbody>
+              </table>
+              <div class="boundary"><strong>结论边界</strong><p id="result-boundary"></p></div>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <aside class="evidence-panel panel" aria-labelledby="evidence-title">
+        <h2 id="evidence-title">证据</h2>
+        <div class="evidence-tabs" role="tablist" aria-label="证据视图">
+          <button id="evidence-tab-validation" class="evidence-tab active" type="button" role="tab" aria-selected="true" aria-controls="evidence-validation" data-evidence="validation">验证</button>
+          <button id="evidence-tab-explanation" class="evidence-tab" type="button" role="tab" aria-selected="false" aria-controls="evidence-explanation" data-evidence="explanation">解释</button>
+          <button id="evidence-tab-backend" class="evidence-tab" type="button" role="tab" aria-selected="false" aria-controls="evidence-backend" data-evidence="backend">运行位置</button>
+          <button id="evidence-tab-hardware" class="evidence-tab" type="button" role="tab" aria-selected="false" aria-controls="evidence-hardware" data-evidence="hardware">真机复盘</button>
+        </div>
+
+        <section id="evidence-validation" class="evidence-view" role="tabpanel" aria-labelledby="evidence-tab-validation">
+          <div id="validation-list" class="validation-list">
+            <p class="empty-state">同步 QASM 后检查语法、寄存器、量子门和测量结构。</p>
+          </div>
+        </section>
+
+        <section id="evidence-explanation" class="evidence-view explanations" role="tabpanel" aria-labelledby="evidence-tab-explanation" hidden>
+          <details open><summary>电路结构</summary><p id="operation-explanation">当前 QASM 尚未形成可解析的电路描述。</p></details>
+          <details><summary>执行环境</summary><p id="context-explanation">当前尚未运行。运行位置视图会区分本地模拟器与需要账号、网络或排队的真机后端。</p></details>
+        </section>
+
+        <section id="evidence-backend" class="evidence-view" role="tabpanel" aria-labelledby="evidence-tab-backend" hidden>
+          <div id="backend-summary" class="backend-summary"><span aria-hidden="true">◉</span><div><strong id="backend-name">LoomQ 内置状态向量参考模拟器</strong><small id="backend-id">loomq_reference_simulator · 当前执行器</small></div></div>
+          <button id="recommend-button" class="text-button" type="button">选择或比较后端</button>
+          <div id="backend-list" class="backend-list" hidden></div>
+        </section>
+
+        <section id="evidence-hardware" class="evidence-view" role="tabpanel" aria-labelledby="evidence-tab-hardware" hidden>
+          <p id="hardware-evidence-notice" class="archive-notice">正在读取仓库内的已归档真机摘要。</p>
+          <div id="hardware-evidence-circuits" class="hardware-evidence-circuits"></div>
+          <div class="boundary"><strong>结论边界</strong><p id="hardware-evidence-boundary"></p></div>
+        </section>
+      </aside>
+    </div>
+
+    <section id="dialog-dock" class="dialog-dock panel" aria-labelledby="dialog-title">
+      <div class="dialog-heading">
+        <div><h2 id="dialog-title">Agent</h2><span id="agent-status" class="agent-status">检查服务</span></div>
+        <button id="close-secondary" class="quiet" type="button" hidden>收起</button>
+      </div>
+      <div id="agent-surface" class="agent-surface">
+        <div id="agent-conversation" class="agent-conversation" role="log" aria-live="polite">
+          <div class="agent-message assistant">可以直接描述目标、询问当前电路，或请求一个修改提案。修改在确认前不会应用。</div>
+        </div>
+        <form id="agent-form" class="agent-composer">
+          <label class="sr-only" for="agent-input">给 Agent 的消息</label>
+          <textarea id="agent-input" rows="1" placeholder="例如：解释当前电路，或帮我生成三比特 GHZ 态"></textarea>
+          <button id="agent-send" class="primary" type="submit">发送</button>
+        </form>
+        <section id="agent-proposal" class="agent-proposal" aria-labelledby="agent-proposal-title" hidden>
+          <div class="proposal-heading"><strong id="agent-proposal-title">修改提案</strong><span id="agent-proposal-kind"></span></div>
+          <p id="agent-proposal-summary"></p>
+          <p id="agent-proposal-safety" class="proposal-safety"></p>
+          <pre id="agent-proposal-diff" tabindex="0" hidden></pre>
+          <div class="proposal-actions"><button id="agent-apply" class="primary" type="button">应用</button><button id="agent-reject" type="button">取消</button></div>
+        </section>
+      </div>
+      <div id="shortcut-help" class="dialog-content" hidden>
+        <kbd>Tab</kbd> 移动焦点；<kbd>Enter</kbd> 或 <kbd>Space</kbd> 激活；自动修改均可撤销。
+      </div>
+    </section>
+  </main>
+  <div id="live-region" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+  <script src="app.js" defer></script>
+</body>
+</html>

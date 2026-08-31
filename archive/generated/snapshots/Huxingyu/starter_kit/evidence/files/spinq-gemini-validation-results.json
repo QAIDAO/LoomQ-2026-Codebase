@@ -1,0 +1,203 @@
+{
+  "generated_at": "2026-08-22T05:50:00+00:00",
+  "platform": "SpinQ Cloud",
+  "machine": "Gemini-pro-1",
+  "note": "云平台结果 bit order 为 q0q1；原始概率含真机噪声。",
+  "tasks": [
+    {
+      "name": "hw-x-q0",
+      "job_id": "G-260822-0015",
+      "task_id": 61410,
+      "platform_code": "gemini_vp",
+      "platform_name": "2Qubit核磁量子计算机",
+      "machine_code": "Gemini-pro-1",
+      "machine_id": 10,
+      "simulator": false,
+      "shots": 1024,
+      "source_code": "OPENQASM 2.0;\nqreg q[2];\ncreg c[2];\nx q[0];",
+      "created_time": "2026-08-21T21:50:39.351+00:00",
+      "start_time": "2026-08-21T21:50:39.371+00:00",
+      "end_time": "2026-08-21T21:52:12.182+00:00",
+      "raw_result": {
+        "00": 0.04483374,
+        "11": 0.00985211,
+        "01": 0.00985211,
+        "10": 0.93546204
+      },
+      "expected_probability": {
+        "01": 1.0
+      }
+    },
+    {
+      "name": "hw-h-q0",
+      "job_id": "G-260822-0016",
+      "task_id": 61411,
+      "platform_code": "gemini_vp",
+      "platform_name": "2Qubit核磁量子计算机",
+      "machine_code": "Gemini-pro-1",
+      "machine_id": 10,
+      "simulator": false,
+      "shots": 1024,
+      "source_code": "OPENQASM 2.0;\nqreg q[2];\ncreg c[2];\nh q[0];",
+      "created_time": "2026-08-21T21:50:39.661+00:00",
+      "start_time": "2026-08-21T21:52:17.651+00:00",
+      "end_time": "2026-08-21T21:54:01.339+00:00",
+      "raw_result": {
+        "00": 0.47188789,
+        "11": 0.02857818,
+        "01": 0.02775909,
+        "10": 0.47177484
+      },
+      "expected_probability": {
+        "00": 0.50098,
+        "01": 0.49902
+      }
+    },
+    {
+      "name": "hw-x-cx-11",
+      "job_id": "G-260822-0017",
+      "task_id": 61412,
+      "platform_code": "gemini_vp",
+      "platform_name": "2Qubit核磁量子计算机",
+      "machine_code": "Gemini-pro-1",
+      "machine_id": 10,
+      "simulator": false,
+      "shots": 1024,
+      "source_code": "OPENQASM 2.0;\nqreg q[2];\ncreg c[2];\nx q[0];\ncx q[0],q[1];",
+      "created_time": "2026-08-21T21:50:39.952+00:00",
+      "start_time": "2026-08-21T21:54:06.648+00:00",
+      "end_time": "2026-08-21T21:55:49.273+00:00",
+      "raw_result": {
+        "00": 0.06480568,
+        "11": 0.78794516,
+        "01": 0.08244348,
+        "10": 0.06480568
+      },
+      "expected_probability": {
+        "11": 1.0
+      }
+    },
+    {
+      "name": "hw-h-x-cx-anti-bell",
+      "job_id": "G-260822-0018",
+      "task_id": 61413,
+      "platform_code": "gemini_vp",
+      "platform_name": "2Qubit核磁量子计算机",
+      "machine_code": "Gemini-pro-1",
+      "machine_id": 10,
+      "simulator": false,
+      "shots": 1024,
+      "source_code": "OPENQASM 2.0;\nqreg q[2];\ncreg c[2];\nh q[0];\nx q[1];\ncx q[0],q[1];",
+      "created_time": "2026-08-21T21:50:40.260+00:00",
+      "start_time": "2026-08-21T21:55:54.683+00:00",
+      "end_time": "2026-08-21T21:57:37.176+00:00",
+      "raw_result": {
+        "00": 0.05471425,
+        "11": 0.03436319,
+        "01": 0.46563681,
+        "10": 0.44528575
+      },
+      "expected_probability": {
+        "01": 0.497955,
+        "10": 0.502045
+      }
+    },
+    {
+      "name": "hw-x-swap",
+      "job_id": "G-260822-0019",
+      "task_id": 61414,
+      "platform_code": "gemini_vp",
+      "platform_name": "2Qubit核磁量子计算机",
+      "machine_code": "Gemini-pro-1",
+      "machine_id": 10,
+      "simulator": false,
+      "shots": 1024,
+      "source_code": "OPENQASM 2.0;\nqreg q[2];\ncreg c[2];\nx q[0];\nswap q[0],q[1];",
+      "created_time": "2026-08-21T21:50:40.556+00:00",
+      "start_time": "2026-08-21T21:57:42.708+00:00",
+      "end_time": "2026-08-21T21:59:26.292+00:00",
+      "raw_result": {
+        "00": 0.01695167,
+        "11": 0.041005,
+        "01": 0.92509165,
+        "10": 0.01695167
+      },
+      "expected_probability": {
+        "10": 1.0
+      }
+    },
+    {
+      "name": "hw-ry-pi2",
+      "job_id": "G-260822-0020",
+      "task_id": 61415,
+      "platform_code": "gemini_vp",
+      "platform_name": "2Qubit核磁量子计算机",
+      "machine_code": "Gemini-pro-1",
+      "machine_id": 10,
+      "simulator": false,
+      "shots": 1024,
+      "source_code": "OPENQASM 2.0;\nqreg q[2];\ncreg c[2];\nry(pi/2) q[0];",
+      "created_time": "2026-08-21T21:50:40.853+00:00",
+      "start_time": "2026-08-21T21:59:31.734+00:00",
+      "end_time": "2026-08-21T22:01:14.378+00:00",
+      "raw_result": {
+        "00": 0.47603306,
+        "11": 0.02487464,
+        "01": 0.02325467,
+        "10": 0.47583762
+      },
+      "expected_probability": {
+        "00": 0.49987,
+        "01": 0.50013
+      }
+    },
+    {
+      "name": "hw-h-rz-pi-h",
+      "job_id": "G-260822-0021",
+      "task_id": 61416,
+      "platform_code": "gemini_vp",
+      "platform_name": "2Qubit核磁量子计算机",
+      "machine_code": "Gemini-pro-1",
+      "machine_id": 10,
+      "simulator": false,
+      "shots": 1024,
+      "source_code": "OPENQASM 2.0;\nqreg q[2];\ncreg c[2];\nh q[0];\nrz(pi) q[0];\nh q[0];",
+      "created_time": "2026-08-21T21:50:41.154+00:00",
+      "start_time": "2026-08-21T22:01:19.723+00:00",
+      "end_time": "2026-08-21T22:03:02.326+00:00",
+      "raw_result": {
+        "00": 0.06901165,
+        "11": 0.0,
+        "01": 0.0,
+        "10": 0.93098835
+      },
+      "expected_probability": {
+        "01": 1.0
+      }
+    },
+    {
+      "name": "hw-cu1-phase",
+      "job_id": "G-260822-0022",
+      "task_id": 61417,
+      "platform_code": "gemini_vp",
+      "platform_name": "2Qubit核磁量子计算机",
+      "machine_code": "Gemini-pro-1",
+      "machine_id": 10,
+      "simulator": false,
+      "shots": 1024,
+      "source_code": "OPENQASM 2.0;\nqreg q[2];\ncreg c[2];\nh q[0];\nx q[1];\ncu1(pi) q[0],q[1];\nh q[0];",
+      "created_time": "2026-08-21T21:50:41.442+00:00",
+      "start_time": "2026-08-21T22:03:07.783+00:00",
+      "end_time": "2026-08-21T22:04:50.967+00:00",
+      "raw_result": {
+        "00": 0.02985674,
+        "11": 0.87570432,
+        "01": 0.05281755,
+        "10": 0.04162139
+      },
+      "expected_probability": {
+        "11": 1.0
+      }
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "generated_by": "starter_kit/scripts/compute_bell_witness.py",
+  "date": "2026-08-22",
+  "device": "Origin Wukong 180-2 (WK_C180_2)",
+  "physical_qubits": [
+    49,
+    58
+  ],
+  "requested_shots_per_experiment": 1000,
+  "source_result_kind": "provider_probabilities",
+  "statistical_inference": "not_computed",
+  "statistical_inference_reason": "Provider responses contain probabilities rather than raw shot counts; an independently justified sampling model is unavailable.",
+  "theory_verification": "separable bound |Cxx|+|Czz|<=1 and fidelity formula verified programmatically over 220k random separable states and all four Bell states before hardware use",
+  "experiments": {
+    "z": {
+      "job_id": "2C68A9D3E2F6626B55EEC966DBC3CE2B",
+      "probabilities": {
+        "00": 0.4578574,
+        "01": 0.0001633,
+        "10": 5.94e-05,
+        "11": 0.5419198
+      },
+      "ideal_sign": 1,
+      "correlation": 0.9995545
+    },
+    "x": {
+      "job_id": "CA80432C12CFA2EBB33AC9A14C3AFF20",
+      "probabilities": {
+        "00": 0.5205638,
+        "01": 0.000221,
+        "10": 1e-07,
+        "11": 0.4792149
+      },
+      "ideal_sign": 1,
+      "correlation": 0.9995576
+    },
+    "y": {
+      "job_id": "5ABEAE903BE47DDEDCDEFABFBE162904",
+      "probabilities": {
+        "00": 0.0006148,
+        "01": 0.4752383,
+        "10": 0.524088,
+        "11": 5.88e-05
+      },
+      "ideal_sign": -1,
+      "correlation": -0.9986527
+    }
+  },
+  "two_setting_witness": {
+    "formula": "|Cxx| + |Czz|",
+    "separable_bound": 1.0,
+    "value": 1.9991121,
+    "point_estimate_exceeds_bound": true,
+    "establishes_entanglement": false
+  },
+  "bell_state_fidelity": {
+    "formula": "F_Phi+ = (1 + Cxx - Cyy + Czz) / 4",
+    "separable_threshold": 0.5,
+    "value": 0.9994412,
+    "point_estimate_exceeds_threshold": true,
+    "establishes_fidelity_threshold": false
+  },
+  "conclusion": "The preserved provider probabilities give point estimates above the two-setting and fidelity thresholds, but do not by themselves establish a statistical entanglement or fidelity claim without raw counts or a documented provider uncertainty model."
+}

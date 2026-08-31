@@ -1,0 +1,28 @@
+{
+  "backend": "spinq_cloud_qpu",
+  "job_id": "G-260806-0004",
+  "shots": 1024,
+  "counts": {
+    "00": 48,
+    "11": 0,
+    "10": 0,
+    "01": 976
+  },
+  "bit_order": "little",
+  "timestamp": "2026-08-06T23:45:53+0800",
+  "meta": {
+    "platform_code": "gemini_vp",
+    "platform_name": "2Qubit核磁量子计算机",
+    "submitted_at": "2026-08-06T23:42:42+0800",
+    "platform_raw_kind": "probabilities",
+    "bit_order_note": "量旋返回的位串是 q0 在左，与赛题规范相反；本文件的 counts 已按规范翻转为 c[n-1]…c[0]。原始未翻转的数据见 platform_raw。",
+    "platform_raw": {
+      "00": 0.04701124,
+      "11": 0.0,
+      "01": 0.0,
+      "10": 0.95298876
+    },
+    "submitted_ir": "OpenQASM 2.0（由本提交的中间层输出，spinq 目标）",
+    "emitted_qasm": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[2];\ncreg c[2];\nx q[0];\nmeasure q[0] -> c[0];\nmeasure q[1] -> c[1];\n"
+  }
+}

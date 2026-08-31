@@ -1,0 +1,8 @@
+# LoomQ L1 依赖（精确锁定版本，供官方 Linux 容器复现构建）
+# 三个后端本地模拟器 SDK：
+#   - spinq:   量旋 SpinQit（OpenQASM 2.0 原生）
+#   - originq: 本源 pyqpanda（CPUQVM 本地模拟器）
+#   - braket:  AWS Braket LocalSimulator（OpenQASM 3.0）
+spinqit==0.2.4
+pyqpanda==3.8.5
+amazon-braket-sdk==1.99.0

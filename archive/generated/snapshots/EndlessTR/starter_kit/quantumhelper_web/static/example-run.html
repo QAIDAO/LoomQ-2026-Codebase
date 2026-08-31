@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>QuantumHelper · 示例运行</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+.runbox{padding:24px;border:1px solid var(--primary-line);border-radius:17px;background:linear-gradient(180deg,rgba(94,99,182,.06),rgba(255,255,255,.84))}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.step{padding:17px;border:1px solid rgba(25,26,30,.07);border-radius:14px;background:#fff}.step.active{background:var(--primary-soft);border-color:var(--primary-line)}.step.done{background:var(--green-soft);border-color:rgba(99,130,113,.18)}.step strong{display:block;margin-top:18px;font-size:15px}.step span{font-size:11px;color:var(--text-2)}
+.exec{margin-top:16px}.row{display:flex;justify-content:space-between;gap:16px;margin-bottom:9px;font-size:13px;font-weight:700}.track{height:8px;border-radius:999px;background:rgba(25,26,30,.07);overflow:hidden}.fill{width:0;height:100%;background:linear-gradient(90deg,var(--primary),#7378c7);transition:width .35s var(--ease)}
+.run-btn{width:100%;margin-top:15px;min-height:50px;border-radius:14px;background:var(--primary);color:#fff;font-weight:760;cursor:pointer;box-shadow:0 12px 24px rgba(94,99,182,.18)}.run-btn:disabled{background:var(--green);box-shadow:none}
+@media(max-width:760px){.steps{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header class="topbar">
+  <a class="brand" href="index.html"><div class="logo"><span></span></div>QuantumHelper</a>
+  <div class="top-meta"><span>示例任务</span><span class="mode"><i class="mode-dot"></i>任务引导</span></div>
+</header><nav class="progress cols-4" aria-label="流程"><div class="progress-step done"><i>✓</i>理解任务</div><div class="progress-step done"><i>✓</i>查看线路</div><div class="progress-step active"><i>3</i>运行实验</div><div class="progress-step"><i>4</i>读取结果</div></nav>
+
+<section class="hero">
+  <div class="eyebrow">运行</div>
+  <h1>把线路交给模拟器，<span class="hero-em">运行 1024 次</span></h1>
+  <p class="hero-text">运行过程只展示真正有用的状态：准备、执行、汇总。完成后再进入结果页。</p>
+</section>
+<main><section class="layout"><article class="card main-card"><div class="section-head"><div class="kicker">运行过程</div><h2 class="section-title">准备、执行、汇总</h2></div><div class="section-body"><div class="runbox"><div class="steps"><div class="step active" id="s1"><span>01</span><strong>准备线路</strong></div><div class="step" id="s2"><span>02</span><strong>模拟执行</strong></div><div class="step" id="s3"><span>03</span><strong>汇总测量</strong></div></div><div class="exec"><div class="row"><span id="status">等待开始</span><span id="pct">0%</span></div><div class="track"><div class="fill" id="fill"></div></div><button class="run-btn" id="runBtn">开始运行</button></div></div></div></article><aside class="card side-card"><div class="kicker">运行设置</div><h2 class="side-title">本次直接使用本地模拟器</h2><div class="summary-list"><div class="summary-item"><span class="summary-name">后端</span><span class="summary-value" id="backend">本地模拟器</span></div><div class="summary-item"><span class="summary-name">shots</span><span class="summary-value">1024</span></div></div><div class="action-block"><a class="btn primary disabled" id="resultLink" href="example-result.html">查看结果 →</a><a class="btn secondary" href="example-circuit.html">返回上一页</a></div></aside></section></main></div>
+<script>
+const steps=[s1,s2,s3],wait=ms=>new Promise(r=>setTimeout(r,ms));
+function state(i,c){steps[i].classList.remove('active','done');if(c)steps[i].classList.add(c)}
+runBtn.onclick=async()=>{runBtn.disabled=true;runBtn.textContent='运行中';status.textContent='正在准备';fill.style.width='18%';pct.textContent='18%';await wait(450);state(0,'done');state(1,'active');status.textContent='正在执行';fill.style.width='68%';pct.textContent='68%';await wait(850);state(1,'done');state(2,'active');status.textContent='正在汇总';fill.style.width='92%';pct.textContent='92%';await wait(550);state(2,'done');status.textContent='运行完成';fill.style.width='100%';pct.textContent='100%';runBtn.textContent='运行完成';resultLink.classList.remove('disabled')};
+</script></body>
+</html>

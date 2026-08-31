@@ -1,0 +1,44 @@
+#!/usr/bin/env python3
+"""LoomQ submission adapter contract v1.0."""
+
+from typing import Any, Dict, List, Tuple
+
+try:
+    from .loomq_l1 import emit_target, parse_qasm2
+    from .loomq_l1.runner import run_isolated
+    from .loomq_l2 import agent_chat as _agent_chat
+    from .loomq_l3 import compile_hybrid as _compile_hybrid
+except ImportError:
+    from loomq_l1 import emit_target, parse_qasm2
+    from loomq_l1.runner import run_isolated
+    from loomq_l2 import agent_chat as _agent_chat
+    from loomq_l3 import compile_hybrid as _compile_hybrid
+
+
+SUPPORTED_TARGETS = ("spinq", "originq", "braket")
+
+
+def transpile(qasm_str: str, target: str) -> str:
+    """Translate OpenQASM 2.0 into the target backend's native representation."""
+    if target not in SUPPORTED_TARGETS:
+        raise ValueError("unsupported target: %s" % target)
+    return emit_target(parse_qasm2(qasm_str), target)
+
+
+def run(qasm_str: str, target: str, shots: int) -> Dict[str, Any]:
+    """Execute a circuit and return the unified result schema from the rules."""
+    if target not in SUPPORTED_TARGETS:
+        raise ValueError("unsupported target: %s" % target)
+    if not isinstance(shots, int) or isinstance(shots, bool) or shots <= 0:
+        raise ValueError("shots must be a positive integer")
+    return run_isolated(parse_qasm2(qasm_str), target, shots)
+
+
+def agent_chat(prompt: str) -> str:
+    """Run the model-assisted, locally verified Level 2 agent."""
+    return _agent_chat(prompt)
+
+
+def compile_hybrid(hybrid_qasm_str: str) -> Tuple[List[str], str]:
+    """Optional L3 entry point. Return quantum operations and RISC-V assembly."""
+    return _compile_hybrid(hybrid_qasm_str)

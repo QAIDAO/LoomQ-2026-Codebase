@@ -1,0 +1,14 @@
+# LoomQ submission dependencies (pinned).
+#
+# 注意：spinqit==0.2.4 强制依赖 antlr4-python3-runtime==4.9.2，而
+# amazon-braket-sdk 强制 ==4.13.2，两者无法在同一 venv 共存（pip 解析冲突）。
+# 因此这里只 pin braket 系；spinq 后端在本仓库内置无依赖的 statevector
+# 模拟器兜底（见 adapter.py _run_spinq / _run_spinq_sim），评测环境装不上
+# spinqit 时自动降级，分布完全一致。如需真 spinqit，请在 Dockerfile 中用
+# --no-deps 单独安装。
+amazon-braket-sdk==1.110.1
+numpy==1.26.4
+# 本源后端：pyqpanda==3.8.5 有 cp310 manylinux wheel，评测容器可装；
+# 依赖树不含 antlr，与 braket 无冲突。装不上时 originq_backend 自动返回
+# error 字段而非崩溃（PYQPANDA_AVAILABLE=False 兜底）。
+pyqpanda==3.8.5

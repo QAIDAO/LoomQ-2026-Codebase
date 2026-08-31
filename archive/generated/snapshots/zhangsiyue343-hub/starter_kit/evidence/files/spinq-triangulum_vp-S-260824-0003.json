@@ -1,0 +1,51 @@
+{
+  "provider": "spinq",
+  "platform": "triangulum_vp",
+  "job_id": "S-260824-0003",
+  "timestamp": "2026-08-24T03:45:54Z",
+  "shots": 8192,
+  "circuit_qasm": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[3];\ncreg c[3];\nh q[0];\ncx q[0],q[1];\ncx q[1],q[2];\nmeasure q -> c;\n",
+  "counts": {
+    "000": 3098,
+    "011": 349,
+    "110": 374,
+    "001": 583,
+    "100": 412,
+    "111": 2623,
+    "101": 429,
+    "010": 324
+  },
+  "probabilities": {
+    "000": 0.37820778,
+    "011": 0.04260082,
+    "110": 0.04568066,
+    "001": 0.07117203,
+    "100": 0.05032086,
+    "111": 0.32015077,
+    "101": 0.0523219,
+    "010": 0.03954519
+  },
+  "unified_schema": {
+    "backend": "spinq_cloud_qpu",
+    "job_id": "S-260824-0003",
+    "shots": 8192,
+    "counts": {
+      "000": 3098,
+      "011": 349,
+      "110": 374,
+      "001": 583,
+      "100": 412,
+      "111": 2623,
+      "101": 429,
+      "010": 324
+    },
+    "bit_order": "little",
+    "timestamp": "2026-08-24T03:45:54Z",
+    "meta": {
+      "platform": "triangulum_vp",
+      "qubits_count": 3,
+      "transpiled_gates": 6,
+      "raw_result_file": null
+    }
+  }
+}

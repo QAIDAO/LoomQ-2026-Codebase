@@ -1,0 +1,14 @@
+{
+  "provider": "originq",
+  "backend": "WK_C180",
+  "chip_id": "WK_C180",
+  "job_id": "8FEAB29CDEF92F47DD115E023FAF329B",
+  "shots": 8192,
+  "selected_physical_qubits": [
+    157,
+    166
+  ],
+  "submitted_at": "2026-08-24T03:03:18.765401Z",
+  "qasm_path": "starter_kit/circuits/bell.qasm",
+  "qasm_sha256": "26594a7df50cc16b354391a5cdac02f56725bc1b0688c7f4c47ebce3b34e2773"
+}

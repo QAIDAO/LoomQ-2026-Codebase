@@ -1,0 +1,15 @@
+{
+  "backend": "originq_cloud_full_amplitude",
+  "job_id": "see-meta",
+  "shots": 0,
+  "counts": {
+    "00": 0,
+    "1011": 0
+  },
+  "bit_order": "little",
+  "timestamp": "2026-08-04T14:34:31Z",
+  "meta": {
+    "note": "cloud simulator (not QPU)",
+    "raw": "{'00': 0.497, '11': 0.503}"
+  }
+}

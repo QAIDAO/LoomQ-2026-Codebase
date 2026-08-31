@@ -1,0 +1,26 @@
+name: Archive verification
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+env:
+  GIT_LFS_SKIP_SMUDGE: "1"
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the archive
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          fetch-depth: 1
+          lfs: false
+          submodules: false
+      - name: Run unit and integration tests
+        run: python3 -m unittest discover -s tests -v
+      - name: Verify committed proofs offline
+        run: python3 tools/loomq_archive.py verify

@@ -1,0 +1,62 @@
+{
+  "circuit": "bell",
+  "classical_bits": 2,
+  "completed_at": "2026-08-03T06:10:38.161319+00:00",
+  "device_id": "WK_C180",
+  "job_id": "9F1D641D6D92B2B8FACD91AD3F760FFD",
+  "origin_ir_file": "originq-bell-9F1D641D6D92B2B8FACD91AD3F760FFD.originir",
+  "origin_ir_sha256": "ed374f48b97fb94fb947211d37c6ab9e67728cd3ee9cf1e1337aa3d5c4ac41b8",
+  "provider": "originq",
+  "qasm_file": "originq-bell-9F1D641D6D92B2B8FACD91AD3F760FFD.qasm",
+  "qubits": 2,
+  "resume_only": true,
+  "resumed_at": "2026-08-03T06:10:37.503155+00:00",
+  "schema_version": 1,
+  "sdk": "pyqpanda3 0.4.0 QCloud",
+  "sdk_response": {
+    "origin_data": {
+      "code": 10000,
+      "message": "success",
+      "obj": {
+        "QMachineType": null,
+        "QProg": [
+          null
+        ],
+        "aioTimeStamp": "9:1785736448249;8:1785736445149;7:1785736444853;2:1785736447122;",
+        "chipId": "WK_C180",
+        "cirExecuteTime": null,
+        "errCode": 0,
+        "measureQubitSize": [
+          2
+        ],
+        "measureQubits": [],
+        "pilotTaskId": "9A20CB8791F142B981891C37622FB55C",
+        "pulseTime": null,
+        "qpuRunTime": 39,
+        "requiredCore": "0",
+        "startTime": 1785736444697,
+        "taskCalMethod": "1",
+        "taskFrom": "4",
+        "taskId": "9F1D641D6D92B2B8FACD91AD3F760FFD",
+        "taskResult": [
+          "{\"value\":[0.4108273,0.0000113,0.0003842,0.5887771],\"key\":[\"0x0\",\"0x1\",\"0x2\",\"0x3\"]}"
+        ],
+        "taskState": "3",
+        "taskType": "0",
+        "totalTime": 3654
+      },
+      "success": true
+    },
+    "result": {
+      "00": 0.4108273,
+      "01": 1.13e-05,
+      "10": 0.0003842,
+      "11": 0.5887771
+    },
+    "result_kind": "probabilities",
+    "status": 3
+  },
+  "shots": 100,
+  "task_name": "LoomQ-L1-bell",
+  "terminal_state": "FINISHED"
+}

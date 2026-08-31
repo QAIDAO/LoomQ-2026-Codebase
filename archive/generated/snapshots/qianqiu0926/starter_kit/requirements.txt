@@ -1,0 +1,2 @@
+# LoomQ core, UI, tests and L2 transport use only Python 3.10 standard library.
+# Intentionally no third-party runtime dependencies.

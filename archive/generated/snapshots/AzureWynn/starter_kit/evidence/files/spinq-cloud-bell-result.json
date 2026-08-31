@@ -1,0 +1,15 @@
+{
+  "backend": "spinq_cloud_qpu",
+  "platform": "gemini_vp",
+  "circuit": "bell",
+  "job_id": "G-260817-0005",
+  "shots": 1024,
+  "counts": {
+    "00": 462,
+    "11": 458,
+    "01": 30,
+    "10": 74
+  },
+  "timestamp": "2026-08-17T08:13:27.011967+00:00",
+  "note": "raw result from SpinQ Cloud; task_code traceable on platform console"
+}

@@ -1,0 +1,24 @@
+{
+  "platform": "spinq",
+  "experiment": "bell",
+  "experiment_label": "贝尔态（两比特纠缠），不是 Deutsch 电路",
+  "backend": "2比特核磁量子计算机",
+  "job_id": "61302",
+  "task_code": "G-260814-0001",
+  "status": "运行成功",
+  "created_at": "2026-08-14 09:12:17 +08:00",
+  "started_at": "2026-08-14 09:12:17 +08:00",
+  "ended_at": "2026-08-14 09:13:51 +08:00",
+  "shots": null,
+  "shots_note": "Official msgpack is projection probabilities only (sum to 1); NMR ensemble readout, no integer shot count on the task page.",
+  "source": "云平台",
+  "qasm": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[2];\nh q[0];\ncx q[0],q[1];\n",
+  "probabilities": {
+    "00": 0.4243644,
+    "01": 0.02228071,
+    "10": 0.05090786,
+    "11": 0.50244704
+  },
+  "official_msgpack": "starter_kit/evidence/files/spinq-task_result_G-260814-0001.msgpack",
+  "task_url": "https://cloud.spinq.cn/circuitDesign/taskResult/61302"
+}

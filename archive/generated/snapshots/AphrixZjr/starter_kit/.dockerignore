@@ -1,0 +1,40 @@
+__pycache__/
+*.py[cod]
+report.json
+vendor/
+.spinq_probe.py
+.env*
+*.env
+*.env.*
+*.pem
+*.key
+.aws/
+**/.aws/
+.hardware-private/
+
+# Repository evidence is submitted with the source archive, not executed in the
+# runtime image.  The Web replay needs exactly four normalized, non-sensitive
+# formal summaries; keep every raw result, request, QASM and dynamic record out
+# of the build context.
+evidence/*
+!evidence/files/
+evidence/files/*
+!evidence/files/hardware/
+evidence/files/hardware/*
+!evidence/files/hardware/originq/
+!evidence/files/hardware/spinq/
+evidence/files/hardware/originq/**
+!evidence/files/hardware/originq/originq-bell-21E79A08CED67A08B9FFB8DC109DABD8-summary.json
+!evidence/files/hardware/originq/originq-ghz3-5F5EB24ADDB266E77E8A52A478D8AAF2-summary.json
+evidence/files/hardware/spinq/**
+!evidence/files/hardware/spinq/spinq-formal-bell-S-260811-0004-summary.json
+!evidence/files/hardware/spinq/spinq-formal-ghz3-S-260811-0005-summary.json
+docs/acceptance/verification.md
+
+# CI logs are runner artifacts, never image inputs.
+ci-logs/
+
+# Local hardware recovery/failure state is never part of a submission image.
+evidence/files/braket/*-prepared.json
+evidence/files/braket/*-submitted.json
+evidence/files/**/*-failed-*.json

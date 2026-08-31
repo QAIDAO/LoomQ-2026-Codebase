@@ -1,0 +1,18 @@
+{
+  "backend": "WK_C180_2",
+  "job_id": "EE7D22A38D5A9F246A2031BC7A31C3AD",
+  "logical_preparation_sha256": "7d44e21c07f288034b521edb642e70a4664d05b87b182d9d3604593e45ceee0b",
+  "provider_status": "JobStatus.FAILED",
+  "provider_timing_info": {
+    "cirExecuteTime": "null",
+    "pulseTime": "null",
+    "qpuRunTime": "null",
+    "totalTime": "null"
+  },
+  "raw_provider_response_sha256": "0005071c5be003e58725fefb862b78249e28dc91eadcd1a98de28e8995d1c74d",
+  "requested_physical_qubits": [
+    49,
+    58
+  ],
+  "shots": 1000
+}

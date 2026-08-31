@@ -1,0 +1,14 @@
+{
+  "backend": "braket_local_simulator",
+  "platform": "braket",
+  "job_id": "b18ebd6d-cf17-4248-9d0d-ac860a909a5f",
+  "shots": 8192,
+  "counts": {
+    "11": 4127,
+    "00": 4065
+  },
+  "bit_order": "little",
+  "timestamp": "2026-08-06T16:34:53.899710Z",
+  "circuit_file": "bell.qasm",
+  "note": "按赛题第七节与 backend_capabilities.json：braket 允许以 LocalSimulator 替代付费云端真机；job_id 为 LocalSimulator 任务标识"
+}

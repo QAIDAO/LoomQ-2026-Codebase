@@ -1,0 +1,48 @@
+
+—— ① 自然语言生成电路 ——
+你：帮我生成一个 3 比特 GHZ 最大纠缠态并进行全测量
+…
+已生成 3 比特 电路（来源：template，自验：distribution matches ideal (ghz)）
+
+```qasm
+OPENQASM 2.0;
+include "qelib1.inc";
+qreg q[3];
+creg c[3];
+h q[0];
+cx q[0], q[1];
+cx q[1], q[2];
+measure q -> c;
+```
+
+  测量结果分布（2048 shots）：
+  111      51.0%  ████████████
+  000      49.0%  ████████████
+
+
+—— ② 智能修复报错代码 ——
+你：我想制备一个贝尔态，但这段代码报错了，帮我修好：H q[0]; CX q[0] q[1]（未定义寄存器且门名大小写错误）
+…
+已修复 2 比特 电路（来源：intent-template，自验：distribution matches ideal (bell)）
+
+```qasm
+OPENQASM 2.0;
+include "qelib1.inc";
+qreg q[2];
+creg c[2];
+h q[0];
+cx q[0], q[1];
+measure q -> c;
+```
+
+  测量结果分布（2048 shots）：
+  00       50.1%  ████████████
+  11       49.9%  ████████████
+
+
+—— ③ 智能选择后端 ——
+你：我需要运行一个 15 比特电路，而且要求零排队等待、完全免费，选哪个平台？
+…
+推荐后端：originq_local_simulator
+同样满足条件的候选：braket_local_simulator, spinq_taurus_simulator
+上限受本机内存约束，30 为评测基准值；可接悟空真机 72 比特：容量 30 比特，排队情况 none，费用 free，无需排队即可本地运行。

@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>QuantumHelper · 量子任务工作台</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="shell app-shell">
+  <header class="topbar app-nav">
+    <a class="brand" id="homeLogo" href="index.html" aria-label="返回 QuantumHelper 首页"><span class="brand-mark" aria-hidden="true"></span>QuantumHelper</a>
+    <nav class="workspace-nav" id="workspaceNav" aria-label="任务导航" hidden>
+      <button class="btn secondary nav-action nav-action--back" id="backHomeBtn" type="button">← 返回首页</button>
+      <button class="btn secondary nav-action nav-action--new" id="newTaskBtn" type="button">＋ 新建任务</button>
+    </nav>
+    <nav class="top-meta" aria-label="辅助导航"><a href="example-task.html">第一次使用</a><a href="config.html">配置模型</a><span class="mode"><i class="mode-dot" aria-hidden="true"></i>自然语言入口</span></nav>
+  </header>
+
+  <main>
+    <section class="hero home-hero" aria-labelledby="homeTitle">
+      <div class="eyebrow">QuantumHelper Agent</div>
+      <h1 id="homeTitle">把你想做的事情告诉我。<br><span class="hero-em">我来把它变成一个量子任务。</span></h1>
+      <p class="hero-text">不需要会写 QASM，也不需要先选择算法或运行平台。描述你的目标，QuantumHelper 会帮你生成、检查、解释并运行线路。</p>
+
+      <form class="prompt-composer" id="agentStartForm" novalidate>
+        <label class="kicker" for="agentInput">描述你的任务</label>
+        <textarea class="agent-textarea" id="agentInput" name="prompt" rows="4" maxlength="8000" aria-describedby="composerHint agentInputError" placeholder="跟 QuantumHelper 说说你想完成什么……&#10;&#10;例如：做一个最简单的实验，看看两个量子比特为什么会一起变化"></textarea>
+        <p class="small-copy" id="composerHint">按 Enter 换行，按 Ctrl / Cmd + Enter 发送。</p>
+        <p class="status status--danger" id="agentInputError" role="alert" aria-live="polite" hidden></p>
+        <div class="composer-actions"><span class="small-copy">示例只会填入输入框，由你确认后发送。</span><button class="btn primary" id="agentBtn" type="submit">发送 →</button></div>
+      </form>
+      <button class="btn secondary" id="continueTaskBtn" type="button" hidden>继续当前任务 →</button>
+
+      <div class="chip-row" aria-label="示例任务">
+        <button class="prompt-chip" type="button" data-prompt="生成一个贝尔态并进行全测量">做一个两比特纠缠的例子</button>
+        <button class="prompt-chip" type="button" data-prompt="我想制备一个贝尔态，但这段代码报错了，请帮我修复：H q[0]; CX q[0] q[1]">修复一段报错的量子代码</button>
+        <button class="prompt-chip" type="button" data-prompt="我需要运行一个 15 比特电路，要求零排队并且免费，请选择后端">帮我挑一个运行的地方（免费、不用排队）</button>
+      </div>
+    </section>
+
+    <section aria-labelledby="inspirationTitle">
+      <div class="section-header">
+        <div><div class="kicker">Prompt inspirations</div><h2 class="section-heading" id="inspirationTitle">不知道怎么描述？可以从这些问题开始</h2></div>
+        <p class="small-copy">选择一个例子，我会帮你把它变成一个量子任务。</p>
+      </div>
+      <div class="inspiration-grid">
+        <button class="inspiration-card" type="button" data-scenario-id="measurement" data-prompt="给我做一个最简单的单量子比特实验，让我看看为什么重复测量会得到不同结果。"><span class="kicker">01 · 叠加与测量</span><strong class="card-heading">看看一个量子比特为什么会得到不同结果</strong><span class="body-copy">用一个 H 门和重复测量，理解最基础的量子随机性。</span></button>
+        <button class="inspiration-card" type="button" data-scenario-id="correlation" data-prompt="给我做一个最简单的 Bell 实验，并解释两个量子比特的结果为什么会关联。"><span class="kicker">02 · 两比特关联</span><strong class="card-heading">看看两个量子比特怎样一起变化</strong><span class="body-copy">用 Bell 实验理解两个量子比特之间的关联。</span></button>
+        <button class="inspiration-card" type="button" data-prompt="帮我检查这段 OpenQASM："><span class="kicker">03 · 修复线路</span><strong class="card-heading">有一段量子代码跑不起来？</strong><span class="body-copy">粘贴 OpenQASM，我会定位问题并给出修复建议。</span></button>
+        <button class="inspiration-card" type="button" data-prompt="帮我选择一个运行后端。我希望……"><span class="kicker">04 · 选择后端</span><strong class="card-heading">不知道该在哪里运行？</strong><span class="body-copy">告诉我线路规模、费用和排队要求，我会根据能力表筛选运行环境。</span></button>
+      </div>
+      <div class="chip-row" aria-label="了解更多" style="margin-top:var(--space-4)">
+        <span class="small-copy">还想了解量子计算能解决什么类型的问题？</span>
+        <button class="prompt-chip" type="button" data-scenario-id="search" data-prompt="查找类问题（比如在很多候选中找到目标）在量子计算里怎么对应？">了解更多：查找</button>
+        <button class="prompt-chip" type="button" data-scenario-id="optimization" data-prompt="优化类问题（比如排程、路线、资源分配）在量子计算里怎么对应？">了解更多：优化</button>
+      </div>
+    </section>
+
+    <section class="beginner-banner" aria-labelledby="beginnerTitle">
+      <div><div class="kicker">第一次接触量子计算？</div><h2 class="card-heading" id="beginnerTitle">3 分钟做出你的第一个量子实验结果。</h2><p class="small-copy">不用写代码 · 不用选算法 · 先使用模拟器</p></div>
+      <a class="btn secondary" href="example-task.html">从这个示例开始 →</a>
+    </section>
+
+    <section class="direct" aria-labelledby="directTitle">
+      <h2 class="card-heading" id="directTitle">已经有 OpenQASM？</h2>
+      <div class="direct-list"><a class="direct-item" href="circuit-import.html"><span class="direct-index">QASM</span><span><strong class="direct-title">导入已有量子线路</strong><span class="direct-desc">直接进入线路检查、后端选择和运行。</span></span><span aria-hidden="true">→</span></a></div>
+    </section>
+
+    <section class="workspace-layout" id="agentWorkspace" data-state="active" aria-label="当前量子任务工作台" hidden>
+      <aside class="conversation-pane" data-region="conversation" aria-labelledby="conversationTitle">
+        <header class="section-head">
+          <div class="kicker">Conversation</div>
+          <h2 class="card-heading" id="conversationTitle">和 QuantumHelper 交流</h2>
+        </header>
+        <div class="conversation-scroll">
+          <div class="message-list" id="conversationMessages" role="log" aria-live="polite" aria-relevant="additions text"></div>
+          <div id="conversationStatus" class="status status--info" role="status" aria-live="polite" hidden></div>
+          <div id="errorSummary" class="error-summary status status--danger" role="alert" aria-live="assertive" hidden></div>
+          <details class="developer-details" id="developerDetails" hidden>
+            <summary>技术详情</summary>
+            <pre class="technical-code code-panel" id="developerErrorCode"></pre>
+          </details>
+        </div>
+        <form class="conversation-composer" id="followUpForm" novalidate>
+          <label class="small-copy" for="followUpInput">继续修改任务或提问</label>
+          <textarea class="agent-textarea" id="followUpInput" name="follow_up" rows="3" maxlength="8000" aria-describedby="followUpHint followUpError" placeholder="继续修改任务或问我这个线路的问题…"></textarea>
+          <p class="small-copy" id="followUpHint">按 Enter 换行，按 Ctrl / Cmd + Enter 发送。</p>
+          <p class="status status--danger" id="followUpError" role="alert" aria-live="polite" hidden></p>
+          <div class="composer-actions"><span class="small-copy" id="currentRevisionLabel"></span><button class="btn primary" id="followUpBtn" type="submit">发送 →</button></div>
+        </form>
+      </aside>
+
+      <div class="task-workspace" id="taskWorkspace" aria-label="当前任务详情">
+        <section class="workspace-section" id="taskCard" data-region="task" aria-labelledby="taskCardTitle">
+          <div class="task-summary-head">
+            <div><div class="kicker">Current task</div><h2 class="card-heading" id="taskCardTitle">我理解的任务</h2></div>
+            <span class="status status--success task-updated-flag" id="taskUpdatedFlag" hidden>已更新</span>
+          </div>
+          <div id="taskFields" hidden></div>
+          <p class="small-copy" id="taskOriginalPrompt" hidden></p>
+          <div id="taskConstraints" hidden></div>
+          <div id="taskUnderstandingError" class="status status--warning" role="status" hidden></div>
+          <button class="btn secondary" id="editTaskBtn" type="button" hidden>修改理解</button>
+        </section>
+
+        <section class="workspace-section" id="inspectionSection" data-region="inspection" aria-labelledby="inspectionTitle" hidden>
+          <div class="kicker">Inspection</div>
+          <h2 class="card-heading" id="inspectionTitle">正在检查的代码</h2>
+          <div class="small-copy">这是你刚粘贴来检查的代码，与当前任务线路是两回事。</div>
+          <pre class="code-panel" id="inspectedCode" style="margin-top:var(--space-3)"></pre>
+          <div id="inspectionDiagnostics" class="action-block" style="margin-top:var(--space-3)"></div>
+        </section>
+
+        <section class="workspace-section" id="circuitSection" data-region="circuit" aria-labelledby="circuitTitle">
+          <div class="kicker">Circuit</div>
+          <h2 class="card-heading" id="circuitTitle">生成的量子线路</h2>
+          <div class="circuit-panel" id="circuitCanvas" role="group" aria-label="当前量子线路图" hidden></div>
+          <div id="circuitEmptyState" class="small-copy" hidden></div>
+          <div id="circuitError" class="status status--danger" role="alert" hidden></div>
+        </section>
+
+        <section class="workspace-section" id="explanationSection" data-region="explanation" aria-labelledby="explanationTitle">
+          <div class="kicker">Explanation</div>
+          <h2 class="card-heading" id="explanationTitle">这条线路是怎么工作的？</h2>
+          <ol id="explanationSteps" hidden></ol>
+          <div id="explanationDetail" hidden></div>
+          <div id="explanationError" class="status status--warning" role="status" hidden></div>
+        </section>
+
+        <section class="workspace-section" id="validationSection" data-region="validation" aria-labelledby="validationTitle">
+          <div class="kicker">Validation</div>
+          <h2 class="card-heading" id="validationTitle">线路检查</h2>
+          <div id="validationCard" role="status" aria-live="polite" hidden></div>
+          <div id="validationIssues" hidden></div>
+          <div id="validationActions" class="action-block" hidden></div>
+        </section>
+
+        <section class="workspace-section" id="repairSection" data-region="repair" aria-labelledby="repairTitle" hidden>
+          <div class="kicker">Repair</div>
+          <h2 class="card-heading" id="repairTitle">线路修复建议</h2>
+          <!-- 美化方案 §14: 错误定位必须先于修复建议出现。 -->
+          <div id="repairIssues" hidden></div>
+          <div class="repair-card" id="repairRecommendation">
+            <span class="kicker">推荐</span>
+            <details id="repairDiffDisclosure">
+              <summary>查看修改对比</summary>
+              <div>
+                <h3 class="card-heading">修复前</h3>
+                <pre class="code-panel" id="repairBeforeCode"></pre>
+              </div>
+              <div>
+                <h3 class="card-heading">建议修改</h3>
+                <pre class="code-panel" id="repairAfterCode"></pre>
+              </div>
+            </details>
+            <div id="repairStatus" role="status" aria-live="polite" hidden></div>
+            <div class="action-block">
+              <button class="btn primary" id="applyRepairBtn" type="button">应用修复</button>
+              <button class="btn secondary" id="keepOriginalBtn" type="button">保留原代码</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="workspace-section" id="qasmSection" data-region="qasm" aria-labelledby="qasmTitle">
+          <div class="kicker">Circuit Code</div>
+          <h2 class="card-heading" id="qasmTitle">电路代码</h2>
+          <div id="qasmMeta" class="small-copy" hidden></div>
+          <details id="qasmDisclosure" hidden>
+            <summary>查看标准代码与后端代码</summary>
+            <div class="circuit-code-grid">
+              <section class="circuit-code-view" aria-labelledby="standardCodeTitle">
+                <h3 class="code-view-title" id="standardCodeTitle">标准 OpenQASM 2.0</h3>
+                <p class="small-copy">跨后端统一输入；线路图、解释和校验均以此为准。</p>
+                <pre class="code-panel notranslate" id="qasmCode" translate="no" spellcheck="false"></pre>
+                <button class="btn secondary" id="copyQasmBtn" type="button">复制标准代码</button>
+              </section>
+              <section class="circuit-code-view" aria-labelledby="adapterCodeTitle">
+                <h3 class="code-view-title" id="adapterCodeTitle">SpinQ adapter 代码</h3>
+                <p class="small-copy" id="adapterCodeMeta">由服务端 adapter 从标准代码转译。</p>
+                <pre class="code-panel notranslate" id="adapterCode" translate="no" spellcheck="false"></pre>
+                <button class="btn secondary" id="copyAdapterCodeBtn" type="button">复制后端代码</button>
+              </section>
+            </div>
+          </details>
+        </section>
+
+        <section class="workspace-section" id="backendSection" data-region="backend" aria-labelledby="backendTitle">
+          <div class="kicker">Backend</div>
+          <h2 class="card-heading" id="backendTitle">推荐运行环境</h2>
+          <div id="backendRequirements" hidden></div>
+          <!-- 美化方案 §15/§16: 不再是"大 Card → 蓝 Card → 内部小 Card"，
+               推荐用 typography + divider，只有关键徽章保留胶囊样式。 -->
+          <div id="recommendedBackendCard" hidden>
+            <div id="backendRecommendation" hidden></div>
+            <p class="status status--warning" id="backendDirectRunWarning" role="status" hidden>当前 QuantumHelper 不能从本地 adapter 直接向这台真机提交任务。</p>
+          </div>
+          <div id="backendAlternatives" hidden></div>
+          <div id="backendError" class="status status--warning" role="status" hidden></div>
+          <details class="hardware-guide" id="hardwareGuide" hidden>
+            <summary>如何在真机上继续？</summary>
+            <p class="body-copy">QuantumHelper 已经完成线路生成、QASM 检查和本地模拟预览准备。</p>
+            <ol>
+              <li>登录推荐平台，并根据平台当前的任务提交流程创建量子任务。</li>
+              <li>在“<a href="#qasmSection">电路代码</a>”中查看标准 OpenQASM 2.0 与所选后端的 adapter 代码。</li>
+              <li>按照平台当前支持的输入格式使用该线路，并选择推荐的真实硬件。</li>
+              <li>设置本任务所需的 shots，提交后等待真机结果。</li>
+              <li>将真机结果与本页的本地模拟结果比较；模拟结果不能反映真实硬件噪声与误差。</li>
+            </ol>
+          </details>
+        </section>
+
+        <section class="workspace-section" id="runSection" data-region="run" aria-labelledby="runTitle">
+          <div class="kicker">Run</div>
+          <h2 class="card-heading" id="runTitle">本地结果预览</h2>
+          <p class="body-copy">在提交真机之前，可以先使用本地模拟器检查线路是否正常，并查看理想情况下的结果趋势。</p>
+          <div class="status status--info measurement-visualization-note" id="measurementVisualizationNotice">
+            电路不要求必须包含测量；没有测量也可以完成线路检查。只有加入测量操作后，本地模拟器才能返回 counts 并显示结果可视化。
+          </div>
+          <div id="executionBackendSummary" class="execution-source" hidden>
+            <span class="small-copy">这一次实际使用</span>
+            <strong id="executionBackendName"></strong>
+          </div>
+          <div id="runSettings" hidden></div>
+          <div id="runProgress" role="status" aria-live="polite" hidden></div>
+          <div id="runActions" class="action-block" hidden></div>
+          <div id="runError" class="status status--danger" role="alert" hidden></div>
+        </section>
+
+        <section class="workspace-section result-panel" id="resultSection" data-region="result" aria-labelledby="resultTitle" hidden>
+          <div class="kicker">Result</div>
+          <h2 class="card-heading" id="resultTitle">本地模拟结果</h2>
+          <div class="status status--info result-empty-state" id="resultEmptyState" role="status" hidden>
+            <strong>当前电路没有测量，因此没有可视化结果。</strong>
+            <p>这不代表电路有错误。电路可以只描述量子态演化；如需查看柱状图和测量概率，请先加入测量操作。</p>
+          </div>
+          <!-- 美化方案 §17: 结论优先——先说结论，再看柱状图，来源信息放最后的 info strip。 -->
+          <p id="resultConclusion" class="result-conclusion" hidden></p>
+          <div class="result-bars" id="resultChart" role="list" aria-label="本地模拟测量结果分布" aria-live="polite" hidden></div>
+          <div id="resultComparison" hidden></div>
+          <div id="resultExplanation" hidden></div>
+          <div class="result-source-banner status status--info" id="resultSourceBanner" role="status" hidden>
+            <strong id="resultSourceName"></strong>
+            <p class="result-disclaimer" id="resultSourceDisclaimer"></p>
+          </div>
+          <div id="resultError" class="status status--danger" role="alert" hidden></div>
+        </section>
+      </div>
+    </section>
+  </main>
+</div>
+<script src="workspace-state.js?v=20260823-5"></script>
+<script src="app.js?v=20260823-5"></script>
+</body>
+</html>

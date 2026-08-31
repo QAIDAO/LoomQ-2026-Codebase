@@ -1,0 +1,27 @@
+{
+  "provider": "originq",
+  "platform": "Origin Quantum Cloud (Runtime)",
+  "device": "Origin Wukong 180-2",
+  "device_id": "WK_C180_2",
+  "physical_qubits": [
+    49,
+    58
+  ],
+  "job_id": "8575222FE2C04A065B38B9DEE5BA9AEE",
+  "requested_shots": 1000,
+  "result_kind": "provider_probabilities",
+  "timestamp_status": "not exposed by the captured Runtime API response",
+  "per_shot_counts_status": "provider returned probabilities only; per-shot counts unavailable; no counts fabricated",
+  "circuit_kind": "multi",
+  "sdk_versions": {
+    "qpanda3_runtime": "1.0.2",
+    "pyqpanda3": "0.4.1"
+  },
+  "command": "originq_runtime submission (RuntimeService / WK_C180_2) via ad-hoc circuit submission script on 2026-08-21; see starter_kit/hardware/originq_runtime_real.py for the reusable runner",
+  "api_path": "qpanda3_runtime.RuntimeService / circuit_chunking_submit + query_task (compatibility workaround)",
+  "compatibility_workaround": "high-level sample() returned None on QPanda3 Runtime 1.0.2; lower-level flow used",
+  "qasm_path": "evidence/files/originq_runtime_multi-hardware-bell.qasm",
+  "raw_result_path": "evidence/files/originq_runtime_multi-hardware-result.raw.json",
+  "normalized_result_path": "evidence/files/originq_runtime_multi-hardware-result.normalized.json",
+  "test_fixture": false
+}

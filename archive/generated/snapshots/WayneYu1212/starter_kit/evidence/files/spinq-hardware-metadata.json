@@ -1,0 +1,29 @@
+{
+  "provider": "spinq",
+  "platform": "SpinQ Cloud",
+  "device": "SpinQ Cloud 2-qubit NMR quantum computer",
+  "job_id": "G-260820-0008",
+  "platform_task_id": "61373",
+  "task_url": "https://cloud.spinq.cn/circuitDesign/taskResult/61373",
+  "shots": null,
+  "shots_note": "N/A — SpinQ NMR task page and export expose ensemble projection probabilities; no discrete shot count was provided, so none is fabricated.",
+  "result_kind": "probabilities",
+  "submitted_at": "2026-08-20T19:13:25+08:00",
+  "started_at": "2026-08-20T19:13:42+08:00",
+  "completed_at": "2026-08-20T19:15:15+08:00",
+  "qasm_path": "evidence/files/spinq-hardware-bell.qasm",
+  "raw_qasm_path": "evidence/files/spinq-hardware-bell.raw.qasm.gz",
+  "raw_result_path": "evidence/files/spinq-hardware-result.raw.json",
+  "raw_binary_path": "evidence/files/spinq-hardware-result.raw.msgpack",
+  "normalized_result_path": "evidence/files/spinq-hardware-result.normalized.json",
+  "task_screenshot_path": "evidence/files/spinq-hardware-task.png",
+  "source_hashes": {
+    "raw_qasm_sha256": "87caa60d19fc97a663aecf1bad22f0ddc3b77aabcea89eb2e150016ebc623a15",
+    "raw_qasm_gzip_sha256": "ca04572644bcf120648d461e7aa9ea116aa08c44e34a049873de158f1241dbf3",
+    "normalized_qasm_sha256": "728dfa162f433caf06878bd07c87b4a6299ea198a2ea68f22c8235dc41860b84",
+    "raw_msgpack_sha256": "b7a66c66a5d69aaeda2857a8ba99d08f1f0a214671c02740be434ea3aa72d195",
+    "redacted_task_screenshot_sha256": "10d34efdce1ca6ada3974770bdec8cab1fdcdbdb8db814f21924a70bb1df067d"
+  },
+  "privacy_redaction": "The account/phone area was removed from the screenshot; task/result pixels are otherwise preserved.",
+  "test_fixture": false
+}

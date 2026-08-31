@@ -1,0 +1,66 @@
+{
+  "package": "originq",
+  "job_id": "D0C7F490B43D9B04FDF19ABF3DB8B342",
+  "device_id": null,
+  "device": "Origin Wukong 180-2",
+  "physical_qubits": [
+    49,
+    58
+  ],
+  "shots": 1000,
+  "circuit": "Bell (CZ variant): H(q0), H(q1), CZ(q0,q1), H(q1), measure",
+  "data_source": "Legacy QCloud API (accepted #55 canonical)",
+  "missing_provider_exports": "none",
+  "files": [
+    {
+      "name": "originq-hardware-bell.qasm",
+      "sha256": "b83288d04f54fad40c776df9eb949e5cbf660b0dd67dd9eddbc301b0e19d8432",
+      "size_bytes": 112
+    },
+    {
+      "name": "originq-hardware-circuit-logical.svg",
+      "sha256": "eba0d89770e33a1308a5eb6d848cd3d0f347f3cbe908f2de38153ae31a591176",
+      "size_bytes": 4648
+    },
+    {
+      "name": "originq-hardware-circuit-physical.svg",
+      "sha256": "95110dcd1432361e052a786ac5830cb20c29a8c6d826543fbca02f34572a3450",
+      "size_bytes": 6606
+    },
+    {
+      "name": "originq-hardware-metadata.json",
+      "sha256": "d93a87300ca1aaf0ce71cc8c0b2ed36db54a004afa70f8524eac0429603cdaa2",
+      "size_bytes": 1645
+    },
+    {
+      "name": "originq-hardware-result.normalized.json",
+      "sha256": "87cfb77c8b23a6baccdf75b9979d5c2d54982cffffa92f76af65b6c7f5fa0658",
+      "size_bytes": 593
+    },
+    {
+      "name": "originq-hardware-result.raw.csv",
+      "sha256": "934772c966c3e889d2615d6528ff9012e9e4dc31aa11d614be47510ed3263bb4",
+      "size_bytes": 67
+    },
+    {
+      "name": "originq-hardware-result.raw.json",
+      "sha256": "4616e632a168b1dd04fc9e0f5fbc0407e3d7f6bb6edff02d4a1fe353e09f3d11",
+      "size_bytes": 484
+    },
+    {
+      "name": "originq-hardware-task.png",
+      "sha256": "bdd5d91c2bd647675c57a9bb677abc224eb5a3345e31368922f644cc2bf1852a",
+      "size_bytes": 130190
+    },
+    {
+      "name": "originq-manifest.json",
+      "sha256": "d35fd4824a6c70792d9a041044ce2268cb411c8f350843986b97df93bee560f3",
+      "size_bytes": 2160
+    },
+    {
+      "name": "originq-reproducibility-summary.json",
+      "sha256": "a0fd4b83f52fe46cd791828014befd46d54100047ace7e124f4be17b148a7ea0",
+      "size_bytes": 3070
+    }
+  ]
+}

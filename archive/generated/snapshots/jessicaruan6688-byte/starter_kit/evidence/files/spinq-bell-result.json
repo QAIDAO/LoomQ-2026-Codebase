@@ -1,0 +1,31 @@
+{
+  "backend": "spinq_cloud_qpu",
+  "job_id": "G-260809-0018",
+  "platform_name": "量旋云 · 2比特核磁量子计算机",
+  "task_url": "https://cloud.spinq.cn/circuitDesign/taskResult/61210",
+  "status": "运行成功",
+  "created_at": "2026-08-09T11:13:59+08:00",
+  "started_at": "2026-08-09T11:14:30+08:00",
+  "ended_at": "2026-08-09T11:15:32+08:00",
+  "bit_order": "little",
+  "circuit_qasm_path": "evidence/files/spinq-bell.qasm",
+  "screenshot_path": "evidence/files/spinq-bell-hardware-result.png",
+  "notes": "Hardware Bell (H+CX). Platform chart reports probabilities (experiment vs simulation). Exact shot count not shown on result header; bars show dominant 00/11 peaks with NISQ noise on 01/10. Empty-circuit job G-260802-0004 is NOT used for scoring.",
+  "probabilities_experiment_approx_from_chart": {
+    "00": 0.45,
+    "01": 0.15,
+    "10": 0.05,
+    "11": 0.50
+  },
+  "probabilities_simulation": {
+    "00": 0.5,
+    "01": 0.0,
+    "10": 0.0,
+    "11": 0.5
+  },
+  "meta": {
+    "source": "spinq-web-ui",
+    "has_h_and_cx": true,
+    "empty_circuit": false
+  }
+}

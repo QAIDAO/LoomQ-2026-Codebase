@@ -1,0 +1,1748 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LoomQ · 量子Kitty</title>
+<style>
+/* LoomQ web entry — Korean soft-pastel × robo-advisor */
+:root {
+  --bg: #FBF5EF;
+  --card: #FFFFFF;
+  --ink: #433D3B;
+  --ink-soft: #8C8180;
+  --coral: #F27E63;
+  --coral-deep: #E4674C;
+  --peach: #FFDCD2;
+  --butter: #FFEDCB;
+  --mint: #CDEBD6;
+  --lavender: #E3DAF7;
+  --line: #F0E4DB;
+  --radius: 24px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  font-family: "Pretendard Variable", Pretendard, -apple-system, "Segoe UI",
+    "Malgun Gothic", "Microsoft YaHei", sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(900px 500px at 85% -10%, #FFE9DD 0%, transparent 60%),
+    radial-gradient(700px 420px at -10% 30%, #FFF3E0 0%, transparent 55%),
+    radial-gradient(600px 400px at 50% 110%, #EFE7FA 0%, transparent 55%),
+    var(--bg);
+  letter-spacing: .01em;
+}
+.sky { max-width: 1240px; margin: 0 auto; padding: 20px 22px 12px; }
+
+/* ---------- top bar ---------- */
+.topbar { display: flex; flex-wrap: wrap; gap: 14px;
+  align-items: center; justify-content: space-between; }
+.brand { display: flex; align-items: center; gap: 14px; }
+.brand-text h1 { font-size: 26px; font-weight: 800; letter-spacing: -.02em; }
+.brand-text h1 em {
+  font-style: normal; color: var(--coral); margin-left: 4px; }
+.brand-text p { color: var(--ink-soft); font-size: 13px; margin-top: 2px; }
+
+.mascot { position: relative; width: 64px; height: 64px; }
+.orb {
+  width: 58px; height: 58px; border-radius: 50%;
+  background:
+    radial-gradient(circle at 32% 28%, #FFD9C8 0%, #FFB49A 45%, #F27E63 100%);
+  box-shadow: inset -4px -6px 10px rgba(160,60,35,.18),
+              0 8px 18px rgba(242,126,99,.30);
+  animation: floaty 3.6s ease-in-out infinite;
+  position: relative;
+}
+.face { position: absolute; inset: 0; }
+.eye {
+  position: absolute; top: 24px; width: 7px; height: 9px;
+  background: #5A3730; border-radius: 50%;
+  animation: blink 4.2s infinite;
+}
+.eye:first-child { left: 17px; } .eye:last-of-type { right: 17px; }
+.blush { position: absolute; top: 34px; width: 9px; height: 5px;
+  background: rgba(255,255,255,.65); border-radius: 50%; filter: blur(1px); }
+.blush.l { left: 10px; } .blush.r { right: 10px; }
+.mouth { position: absolute; top: 33px; left: 25px; width: 9px; height: 5px;
+  border-bottom: 2.4px solid #5A3730; border-radius: 0 0 10px 10px; }
+@keyframes floaty { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+@keyframes blink { 0%,92%,100%{transform:scaleY(1)} 95%{transform:scaleY(.15)} }
+
+.steps { display: flex; align-items: center; gap: 8px;
+  background: var(--card); padding: 10px 16px; border-radius: 999px;
+  box-shadow: 0 6px 16px rgba(120,80,60,.08); font-size: 13.5px; }
+.step b { color: var(--coral); margin-right: 2px; }
+.arrow { color: #E4C9B8; }
+
+/* ---------- layout ---------- */
+.grid { display: grid; grid-template-columns: minmax(380px,7fr) minmax(340px,6fr);
+  gap: 18px; margin-top: 18px; align-items: start; }
+@media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+.card { background: var(--card); border-radius: var(--radius);
+  box-shadow: 0 10px 30px rgba(140,95,70,.09); padding: 18px; }
+.chat-card { display: flex; flex-direction: column; min-height: 74vh; }
+.lab { display: grid; gap: 18px; }
+
+/* ---------- chat ---------- */
+.chat-head, .panel-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  margin-bottom: 12px; }
+.chat-head h2, .panel-head h2 { font-size: 17px; font-weight: 800; }
+.badge { background: var(--lavender); color: #6A56A8; font-size: 11.5px;
+  padding: 3px 10px; border-radius: 999px; font-weight: 700; }
+.sub { color: var(--ink-soft); font-size: 12px; }
+
+.chat { flex: 1; overflow-y: auto; display: flex; flex-direction: column;
+  gap: 12px; padding: 6px 2px 12px; scroll-behavior: smooth; }
+.msg { display: flex; }
+.msg.bot { justify-content: flex-start; }
+.msg.user { justify-content: flex-end; }
+.bubble {
+  max-width: 84%; padding: 11px 15px; font-size: 14.5px; line-height: 1.65;
+  white-space: pre-wrap; word-break: break-word;
+  animation: pop .25s ease-out; }
+@keyframes pop { from { opacity: 0; transform: translateY(6px) scale(.98);}
+                 to { opacity: 1; transform: none; } }
+.msg.bot .bubble { background: #FBF3EC; border: 1.5px solid var(--line);
+  border-radius: 4px 20px 20px 20px; }
+.msg.user .bubble { background: linear-gradient(135deg,#FFD9CD,#FFC9BC);
+  border-radius: 20px 4px 20px 20px; color: #6E3B2C; font-weight: 600; }
+.bubble code { background: #fff; padding: 1px 6px; border-radius: 6px;
+  border: 1px solid var(--line); font-size: 13px; }
+.typing .bubble { display: flex; gap: 5px; align-items: center; }
+.typing i { width: 7px; height: 7px; border-radius: 50%;
+  background: var(--coral); opacity: .5; animation: bounce 1s infinite; }
+.typing i:nth-child(2) { animation-delay: .15s; }
+.typing i:nth-child(3) { animation-delay: .3s; }
+@keyframes bounce { 0%,100%{ transform: translateY(0); opacity:.4;}
+                    50% { transform: translateY(-5px); opacity: 1;} }
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 10px; }
+.chip { border: 1.5px solid var(--line); background: #FFFBF7; color: var(--ink);
+  border-radius: 999px; padding: 7px 13px; font-size: 13px; cursor: pointer;
+  transition: all .15s ease; }
+.chip:hover { background: var(--peach); border-color: #F6BEAC;
+  transform: translateY(-1px); }
+
+.composer { display: flex; gap: 10px; }
+#ask { flex: 1; border: 2px solid var(--line); border-radius: 999px;
+  padding: 12px 18px; font-size: 14.5px; outline: none; background: #FFFDFB;
+  transition: border-color .15s; font-family: inherit; }
+#ask:focus { border-color: var(--coral); }
+.send { border: none; cursor: pointer; background: linear-gradient(135deg,
+  var(--coral), var(--coral-deep)); color: #fff; font-weight: 800;
+  font-size: 15px; padding: 0 22px; border-radius: 999px;
+  box-shadow: 0 6px 14px rgba(228,103,76,.35); transition: transform .12s; }
+.send:hover { transform: scale(1.05); }
+.send:disabled { filter: grayscale(.4); opacity: .6; cursor: wait; }
+
+/* ---------- circuit panel ---------- */
+.circuit { min-height: 130px; background: #FFFDFA;
+  border: 1.5px dashed #EBD9CC; border-radius: 18px; padding: 12px;
+  overflow-x: auto; }
+.circuit.empty { display: flex; align-items: center; justify-content: center; }
+.placeholder { color: #C4A99B; font-size: 13px; text-align: center;
+  line-height: 1.8; }
+.circuit svg text { font-family: inherit; }
+
+/* ---------- run & result ---------- */
+.target-pick { font-size: 12.5px; color: var(--ink-soft);
+  display: flex; gap: 6px; align-items: center; }
+.target-pick select { border: 1.5px solid var(--line); border-radius: 10px;
+  padding: 4px 8px; font-family: inherit; font-size: 12.5px; color: var(--ink);
+  background: #FFFBF7; outline: none; }
+.run-btn { width: 100%; border: none; cursor: pointer; margin-top: 2px;
+  background: linear-gradient(135deg,#7FC8A9,#5FB48D); color: #fff;
+  font-size: 15px; font-weight: 800; padding: 12px; border-radius: 999px;
+  box-shadow: 0 6px 14px rgba(95,180,141,.30); transition: transform .12s; }
+.run-btn:hover:not(:disabled) { transform: scale(1.02); }
+.run-btn:disabled { filter: grayscale(.75); opacity: .5; cursor: not-allowed; }
+.result { margin-top: 12px; min-height: 150px; background: #FFFDFA;
+  border: 1.5px dashed #EBD9CC; border-radius: 18px; padding: 14px; }
+.result.empty { display: flex; align-items: center; justify-content: center; }
+.bar-row { display: flex; align-items: center; gap: 10px; margin: 7px 0; }
+.bar-key { font-family: Consolas, monospace; font-size: 12.5px; width: 52px;
+  color: var(--ink); text-align: right; }
+.bar-track { flex: 1; height: 16px; background: #F7EEE7; border-radius: 999px;
+  overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 999px; width: 0;
+  transition: width .8s cubic-bezier(.2,.8,.2,1); }
+.bar-val { font-size: 12px; color: var(--ink-soft); width: 44px; }
+.run-note { font-size: 12px; color: var(--ink-soft); margin-top: 8px;
+  text-align: right; }
+
+.qasm-wrap { margin-top: 12px; }
+.qasm-wrap summary { cursor: pointer; font-size: 13px; color: var(--coral-deep);
+  font-weight: 700; user-select: none; }
+.qasm-wrap pre { margin-top: 8px; background: #453B38; color: #FCE9DF;
+  border-radius: 14px; padding: 14px; font-size: 12.5px; line-height: 1.6;
+  overflow-x: auto; font-family: Consolas, monospace; }
+
+.err-bubble { background: #FFF0EC !important; border-color: #F6C1B2 !important;
+  color: #B4573F !important; }
+
+/* ---------- desktop pet Kitty ---------- */
+#pet { position: fixed; right: 26px; bottom: 22px; z-index: 60;
+  cursor: grab; touch-action: none; user-select: none;
+  filter: drop-shadow(0 10px 16px rgba(160,90,60,.28)); }
+#pet:active { cursor: grabbing; }
+#pet.hop { animation: hop .5s ease; }
+@keyframes hop { 0%,100%{ transform: translateY(0);} 40%{ transform: translateY(-14px);} }
+.orb.kitty-orb { background: none; box-shadow: none;
+  animation: floaty 3.6s ease-in-out infinite; }
+.k-eyes { transform-box: fill-box; transform-origin: center;
+  animation: blink 4.2s infinite; }
+@keyframes blink { 0%,92%,100%{ transform: scaleY(1);} 95%{ transform: scaleY(.12);} }
+.k-tail { transform-box: fill-box; transform-origin: 90% 90%;
+  animation: wag 2.6s ease-in-out infinite; }
+@keyframes wag { 0%,100%{ transform: rotate(0deg);} 50%{ transform: rotate(13deg);} }
+.pet-bubble { position: absolute; bottom: calc(100% + 8px); right: 4px;
+  background: #fff; border: 1.5px solid var(--line);
+  border-radius: 14px 14px 4px 14px; padding: 8px 12px; font-size: 12.5px;
+  color: var(--ink); white-space: nowrap;
+  box-shadow: 0 8px 18px rgba(140,95,70,.16); animation: pop .25s ease-out; }
+.pet-bubble[hidden] { display: none; }
+.pet-bubble::after { content: ''; position: absolute; right: 18px; top: 100%;
+  border: 7px solid transparent; border-top-color: #fff; }
+
+/* ---------- footer ---------- */
+.foot { display: flex; flex-wrap: wrap; gap: 10px;
+  justify-content: space-between; color: #BBA79B; font-size: 11.5px;
+  padding: 16px 4px 20px; }
+
+/* ══════════ 开场：像素 Kitty ══════════ */
+body { padding-bottom: 92px; } /* 给右下角桌宠留位，避免遮住内容 */
+body.intro-open { overflow: hidden; }
+#intro { position: fixed; inset: 0; z-index: 300; display: flex;
+  align-items: center; justify-content: center; text-align: center;
+  background:
+    radial-gradient(2px 2px at 12% 22%, #FFE9D8 0%, transparent 60%),
+    radial-gradient(1.6px 1.6px at 78% 12%, #CBD6FF 0%, transparent 60%),
+    radial-gradient(2px 2px at 32% 74%, #FFD3C2 0%, transparent 60%),
+    radial-gradient(1.4px 1.4px at 88% 58%, #FFF2E2 0%, transparent 60%),
+    radial-gradient(1.8px 1.8px at 55% 38%, #E7D9FF 0%, transparent 60%),
+    radial-gradient(1.5px 1.5px at 68% 86%, #FFD9CB 0%, transparent 60%),
+    radial-gradient(1000px 600px at 70% -10%, #2B2350 0%, transparent 65%),
+    radial-gradient(800px 520px at 10% 110%, #14304A 0%, transparent 60%),
+    linear-gradient(160deg, #171233 0%, #1F183F 55%, #101A33 100%);
+  transition: opacity .55s ease, transform .55s ease, visibility .55s;
+}
+#intro.bye { opacity: 0; transform: scale(1.14); visibility: hidden;
+  pointer-events: none; }
+.intro-inner { display: flex; flex-direction: column; align-items: center;
+  gap: 14px; padding: 20px; }
+#intro-cat { image-rendering: pixelated; width: min(600px, 88vw); height: auto;
+  filter: drop-shadow(0 14px 30px rgba(120,110,220,.45));
+  animation: catfloat 3s ease-in-out infinite .2s; }
+.pixel-cat { image-rendering: pixelated; display: block; }
+#brand-cat { width: 44px; height: 34px; }
+#pet-canvas { width: 88px; height: 69px;
+  filter: drop-shadow(0 10px 18px rgba(242,126,99,.35)); }
+@keyframes catfloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+#intro-title { font-size: clamp(34px, 7vw, 54px); font-weight: 900;
+  color: #FFF3EA; letter-spacing: .06em; min-height: 1.2em;
+  text-shadow: 0 0 18px rgba(255,157,120,.75), 0 0 42px rgba(255,157,120,.35); }
+#intro-sub { color: #C9B8E8; font-size: 15px; }
+#intro-go { margin-top: 8px; border: none; cursor: pointer;
+  font-family: inherit; font-size: 16.5px; font-weight: 800; color: #3A1E14;
+  background: linear-gradient(135deg,#FFD9CD,#FF9D78);
+  padding: 13px 34px; border-radius: 999px;
+  box-shadow: 0 0 0 rgba(255,157,120,.55), 0 12px 28px rgba(242,126,99,.4);
+  animation: gopulse 1.8s ease-in-out infinite; transition: transform .15s; }
+#intro-go:hover { transform: scale(1.05); }
+@keyframes gopulse { 0%,100%{ box-shadow: 0 0 0 0 rgba(255,157,120,.45),
+    0 12px 28px rgba(242,126,99,.4);} 50%{ box-shadow: 0 0 0 14px
+    rgba(255,157,120,0), 0 12px 28px rgba(242,126,99,.4);} }
+.intro-hint { color: #8F82B8; font-size: 11.5px; }
+
+/* 面板入场：开场结束后依次浮现 */
+.grid > *, .topbar, .foot { opacity: 0; transform: translateY(26px); }
+body.app-in .grid > *, body.app-in .topbar, body.app-in .foot {
+  opacity: 1; transform: none;
+  transition: opacity .6s ease, transform .6s ease; }
+body.app-in .topbar { transition-delay: .05s; }
+body.app-in .grid > *:nth-child(1) { transition-delay: .18s; }
+body.app-in .grid > *:nth-child(2) { transition-delay: .30s; }
+body.app-in .grid > *:nth-child(3) { transition-delay: .42s; }
+body.app-in .foot { transition-delay: .55s; }
+@media (prefers-reduced-motion: reduce) {
+  .grid > *, .topbar, .foot { opacity: 1 !important; transform: none !important;
+    transition: none !important; } }
+
+/* ---------- XP 头部 ---------- */
+.xp-chip { display: flex; align-items: center; gap: 9px;
+  background: var(--card); padding: 9px 16px; border-radius: 999px;
+  box-shadow: 0 6px 16px rgba(120,80,60,.08); font-size: 12.5px; }
+.xp-rank { font-weight: 800; color: #B0722A; white-space: nowrap; }
+.xp-bar { width: 110px; height: 9px; background: #F3E8DE;
+  border-radius: 999px; overflow: hidden; }
+.xp-fill { height: 100%; width: 0%; border-radius: 999px;
+  background: linear-gradient(90deg,#FFC46B,#FF9D78);
+  transition: width .6s cubic-bezier(.2,.8,.2,1); }
+.xp-num { color: var(--ink-soft); font-weight: 700; }
+
+/* ---------- 宽屏：学习区保持双栏居中 ---------- */
+@media (min-width: 1240px) {
+  .grid { grid-template-columns: minmax(380px,7fr) minmax(340px,6fr);
+    max-width: 1180px; margin-left: auto; margin-right: auto; }
+}
+@media (max-width: 1239px) and (min-width: 901px) {
+  .grid { grid-template-columns: minmax(380px,7fr) minmax(340px,6fr); }
+  .quest { grid-column: 1 / -1; }
+}
+.chat-card { min-height: auto; max-height: 78vh; }
+
+/* ---------- 量子试炼 ---------- */
+.quest { background: linear-gradient(175deg, #FFFFFF 0%, #FBF4EE 100%);
+  border: 1.5px solid #F3E2D4; }
+.lvl-rail { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 13px; }
+.lvl-node { border: 2px solid var(--line); background: #FFFBF7;
+  border-radius: 13px; min-width: 44px; padding: 6px 9px; cursor: pointer;
+  font-family: inherit; font-size: 12.5px; font-weight: 800;
+  color: var(--ink-soft); position: relative; transition: all .15s; }
+.lvl-node.done { border-color: #9CCDAF; background: #EFF8F1; color: #3E7A57; }
+.lvl-node.cur { border-color: var(--coral); background: #FFF0E8;
+  color: var(--coral-deep); transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(242,126,99,.25); }
+.lvl-node.lock { opacity: .45; cursor: not-allowed; }
+.lvl-node small { display: block; font-size: 9.5px; font-weight: 700;
+  color: #E0B23C; letter-spacing: 1px; margin-top: 1px; }
+.q-goal { background: #FFF6EF; border: 1.5px dashed #F3CDB6;
+  border-radius: 14px; padding: 11px 14px; font-size: 13.5px;
+  line-height: 1.7; color: #6E4A38; margin-bottom: 11px; }
+.q-goal b { color: var(--coral-deep); }
+.q-target { background: #FFFDFA; border: 1.5px solid #F0E4DB;
+  border-radius: 14px; padding: 10px 12px; margin-bottom: 11px; }
+.q-target h3 { font-size: 11.5px; color: var(--ink-soft); margin-bottom: 6px;
+  letter-spacing: .08em; }
+.tgt-row { display: flex; align-items: center; gap: 8px; margin: 4px 0; }
+.tgt-key { font-family: Consolas, monospace; font-size: 12px;
+  width: 40px; text-align: right; color: var(--ink); }
+.tgt-track { flex: 1; height: 10px; background: #F6EEE7;
+  border-radius: 999px; overflow: hidden; }
+.tgt-fill { height: 100%; background: linear-gradient(90deg,#CBB4E8,#9F86D6);
+  border-radius: 999px; }
+.tgt-val { font-size: 11px; color: var(--ink-soft); width: 38px; }
+.q-slots { display: flex; gap: 7px; flex-wrap: wrap; min-height: 46px;
+  background: #FFFDFA; border: 1.5px dashed #EBD9CC; border-radius: 14px;
+  padding: 8px 10px; align-items: center; margin-bottom: 11px; }
+.q-slots .slot-empty { color: #C4A99B; font-size: 12px; }
+.gate-chip-in { display: inline-flex; align-items: center; gap: 5px;
+  background: linear-gradient(135deg,#FFF1E8,#FFE3D4);
+  border: 1.5px solid #F3BEA4; color: #8A4A30; border-radius: 10px;
+  padding: 6px 10px; font-size: 12.5px; font-weight: 800;
+  animation: pop .2s ease-out; }
+.q-pad { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.q-gate { border: 2px solid #EAD9CE; background: #FFFDFA; cursor: pointer;
+  font-family: inherit; border-radius: 13px; padding: 9px 13px;
+  display: flex; flex-direction: column; align-items: center; gap: 1px;
+  transition: all .13s; }
+.q-gate b { font-size: 17px; color: #5FA483; }
+.q-gate.cx b { color: #6A56A8; }
+.q-gate.z b { color: #6A56A8; }
+.q-gate span { font-size: 10.5px; color: var(--ink-soft); }
+.q-gate:hover:not(:disabled) { border-color: var(--coral);
+  transform: translateY(-2px); box-shadow: 0 8px 16px rgba(242,126,99,.18); }
+.q-gate:disabled { opacity: .4; cursor: not-allowed; }
+.q-actions { display: flex; gap: 9px; }
+.q-btn { border: none; cursor: pointer; font-family: inherit;
+  border-radius: 999px; padding: 10px 18px; font-size: 13.5px;
+  font-weight: 800; transition: transform .13s; }
+.q-btn:active { transform: scale(.96); }
+.q-btn.ghost { background: #F6EEE7; color: var(--ink-soft); }
+.q-btn.go { flex: 1; color: #fff;
+  background: linear-gradient(135deg,#8E79E8,#6A56A8);
+  box-shadow: 0 8px 18px rgba(106,86,168,.35); }
+.q-btn.go:disabled { filter: grayscale(.6); opacity: .5; cursor: not-allowed; }
+.q-bars { margin-top: 12px; }
+.q-msg { margin-top: 10px; font-size: 13px; line-height: 1.65;
+  border-radius: 12px; padding: 9px 13px; display: none; }
+.q-msg.show { display: block; animation: pop .25s ease-out; }
+.q-msg.ok { background: #EFF8F1; color: #3E7A57;
+  border: 1.5px solid #CDE8D6; }
+.q-msg.no { background: #FFF4EF; color: #B4573F;
+  border: 1.5px solid #F6CDBC; }
+.badges { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px;
+  padding-top: 12px; border-top: 1.5px dashed var(--line); }
+.badge-pill { font-size: 11px; font-weight: 800; border-radius: 999px;
+  padding: 5px 12px; background: #F3EDFC; color: #6A56A8;
+  border: 1.5px solid #DFD3F5; }
+.badge-pill.off { background: #F5F1EC; color: #BBA79B;
+  border-color: #EAE0D6; filter: grayscale(1); }
+.fx-pixel { position: fixed; z-index: 250; width: 9px; height: 9px;
+  pointer-events: none; animation: fxdrop .9s ease-in forwards; }
+@keyframes fxdrop { 0%{ transform: translate(0,0) scale(1); opacity: 1;}
+  100%{ transform: translate(var(--fx), var(--fy)) scale(.4); opacity: 0;} }
+
+/* ══════════ 分区式布局：聊天学习｜知识卡｜试炼 ══════════ */
+html { scroll-behavior: smooth; }
+main { display: block; }
+.band { padding: 36px 4px 8px; scroll-margin-top: 92px; }
+.band-alt { background: linear-gradient(180deg, #FFF9F3, #FFF3EB);
+  border: 1.5px solid #F6E7DA; border-radius: 28px;
+  margin: 28px 4px 0; padding: 32px 20px 18px; }
+.band-head { max-width: 1180px; margin: 0 auto 18px; }
+.band-head h2 { font-size: 23px; font-weight: 900; letter-spacing: .02em; }
+.band-head p { color: var(--ink-soft); font-size: 13.5px; margin-top: 4px; }
+.learn-grid { max-width: 1180px; margin: 0 auto; }
+.quest { max-width: 720px; margin: 0 auto; }
+
+/* 吸顶导航 */
+.topbar { position: sticky; top: 0; z-index: 130;
+  background: rgba(255,250,245,.88); backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 8px 24px rgba(140,95,70,.09); }
+.site-nav { display: flex; gap: 4px; background: var(--card);
+  padding: 5px; border-radius: 999px;
+  box-shadow: 0 6px 16px rgba(120,80,60,.08); }
+.nav-link { text-decoration: none; color: var(--ink-soft); font-size: 13.5px;
+  font-weight: 800; padding: 8px 14px; border-radius: 999px;
+  white-space: nowrap; transition: all .15s; }
+.nav-link:hover { background: #FFF0E8; color: var(--coral-deep); }
+.nav-link.active { background: linear-gradient(135deg, #FFE3D4, #FFD2BC);
+  color: #8A4A30; }
+
+/* 试跑徽章（单一量旋后端） */
+.sim-badge { background: #EFF6F1; color: #3E7A57; border: 1.5px solid #CFE8D8;
+  border-radius: 999px; font-size: 11.5px; font-weight: 800; padding: 4px 12px; }
+
+/* ---------- 知识卡 Quiz ---------- */
+.quiz-wrap { max-width: 580px; margin: 0 auto; text-align: center; }
+.quiz-top { display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 14px; }
+.quiz-dots { display: flex; gap: 6px; flex-wrap: wrap; }
+.dot { width: 9px; height: 9px; border-radius: 50%; background: #EADCD2;
+  transition: all .2s; }
+.dot.done { background: #7FBF98; transform: scale(1.15); }
+.quiz-score { font-size: 12.5px; font-weight: 800; color: var(--ink-soft); }
+.flip-zone { perspective: 1300px; height: 250px; cursor: pointer;
+  margin-bottom: 16px; }
+.kcard { position: relative; width: 100%; height: 100%;
+  transform-style: preserve-3d;
+  transition: transform .55s cubic-bezier(.35, .15, .25, 1); }
+.kcard.flipped { transform: rotateY(180deg); }
+.kface { position: absolute; inset: 0; backface-visibility: hidden;
+  -webkit-backface-visibility: hidden; border-radius: 24px;
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; gap: 14px; padding: 26px 30px; }
+.kfront { background: linear-gradient(160deg, #FFFFFF, #FFF2E9);
+  border: 2px solid #F3D8C6; box-shadow: 0 16px 38px rgba(242,126,99,.15); }
+.kback { transform: rotateY(180deg);
+  background: linear-gradient(160deg, #F4EEFD, #EAE0F8);
+  border: 2px solid #DCCEF2; box-shadow: 0 16px 38px rgba(106,86,168,.14); }
+.kface p { font-size: 17.5px; line-height: 1.75; font-weight: 800;
+  color: var(--ink); }
+.kback p { font-weight: 600; font-size: 15px; line-height: 1.85;
+  color: #4E3D78; }
+.ktag { position: absolute; top: 14px; left: 18px; font-size: 11px;
+  font-weight: 800; letter-spacing: .1em; padding: 3px 11px;
+  border-radius: 999px; background: #FFE9DE; color: #B4573F; }
+.kback .ktag { background: #E4DBF6; color: #6A56A8; }
+.k-hint { position: absolute; bottom: 13px; right: 19px; font-size: 11.5px;
+  color: #CBA996; font-weight: 700; }
+.quiz-actions { display: flex; gap: 10px; justify-content: center; }
+.quiz-actions .q-btn.go { flex: 0 1 200px; }
+.quiz-foot { display: flex; gap: 10px; justify-content: center; margin-top: 14px; }
+.mini-btn { border: 1.5px solid var(--line); background: #FFFBF7; cursor: pointer;
+  font-family: inherit; font-size: 11.5px; font-weight: 800;
+  color: var(--ink-soft); border-radius: 999px; padding: 6px 13px;
+  transition: all .13s; }
+.mini-btn:hover { border-color: var(--coral); color: var(--coral-deep); }
+
+/* 入场动画适配分区结构（覆盖旧的三栏级联） */
+.band, main > .band-alt { opacity: 0; transform: translateY(26px);
+  transition: opacity .5s ease, transform .55s cubic-bezier(.2,.7,.25,1); }
+body.app-in .band, body.app-in main > .band-alt { opacity: 1; transform: none; }
+body.app-in #learn { transition-delay: .08s; }
+body.app-in #cards { transition-delay: .2s; }
+body.app-in #game { transition-delay: .3s; }
+
+@media (max-width: 900px) {
+  .site-nav { order: 3; width: 100%; justify-content: center; }
+  .band { padding: 26px 2px 6px; }
+  .flip-zone { height: 280px; }
+}
+
+</style>
+</head>
+<body>
+<!-- ══════════ 开场：像素 Kitty 展开式入场 ══════════ -->
+<div id="intro">
+  <div class="intro-stars" aria-hidden="true"></div>
+  <div class="intro-inner">
+    <canvas id="intro-cat" width="232" height="168"></canvas>
+    <h1 id="intro-title" aria-label="量子Kitty"></h1>
+    <p id="intro-sub">我是量子Kitty，你的量子计算学习搭子～</p>
+    <button id="intro-go">▶ 开始学习</button>
+    <span class="intro-hint">任意处点击可跳过</span>
+  </div>
+</div>
+
+<div class="sky">
+  <header class="topbar">
+    <div class="brand">
+      <div class="mascot" aria-hidden="true">
+        <div class="orb kitty-orb"><canvas id="brand-cat" class="pixel-cat" width="19" height="15"></canvas></div>
+      </div>
+      <div class="brand-text">
+        <h1>LoomQ <em>量子Kitty</em></h1>
+        <p>陪你把人话变成量子魔法 ✨</p>
+      </div>
+    </div>
+    <nav class="site-nav" aria-label="页面导航">
+      <a href="#learn" class="nav-link active">💬 聊天学习</a>
+      <a href="#cards" class="nav-link">🃏 知识卡</a>
+      <a href="#game" class="nav-link">🎮 试炼游戏</a>
+    </nav>
+    <div class="xp-chip" id="xp-chip" title="完成试炼关卡可获得经验值">
+      <span class="xp-rank" id="xp-rank">见习猫</span>
+      <div class="xp-bar"><div class="xp-fill" id="xp-fill"></div></div>
+      <span class="xp-num" id="xp-num">Lv.1</span>
+    </div>
+  </header>
+
+  <main>
+    <!-- ══════════ Banner 1：聊天学习 ══════════ -->
+    <section id="learn" class="band">
+      <div class="band-head">
+        <h2>💬 聊天学习</h2>
+        <p>说出想法 ➜ 看电路织好 ➜ 按下试跑，三步就上手</p>
+      </div>
+      <div class="grid learn-grid">
+        <!-- 左：对话 -->
+        <section class="card chat-card" aria-label="对话区">
+          <div class="chat-head">
+            <h2>和Kitty聊天</h2>
+            <span class="badge">AI 智能体</span>
+          </div>
+          <div id="chat" class="chat" role="log" aria-live="polite">
+            <div class="msg bot">
+              <div class="bubble">你好呀！我是<b>量子Kitty</b> 🐱 一只薛定谔的猫。<br>
+提问之前，我处于「又困又精神」的叠加态哦～不用懂物理，说人话就好：<br>
+「帮我变出一个贝尔态」或「这段代码好像坏了，陪我一起修修」</div>
+            </div>
+          </div>
+          <div class="chips" id="chips">
+            <button class="chip" data-q="帮我生成一个贝尔态电路">🌟 变出贝尔态</button>
+            <button class="chip" data-q="生成3比特GHZ态">🍬 GHZ三胞胎</button>
+            <button class="chip" data-q="我要在真机上跑72比特的电路，用哪个后端？">🏭 72比特去哪台机器跑？</button>
+            <button class="chip" data-q="什么是量子叠加态？我完全没学过物理">📖 什么是叠加态？</button>
+          </div>
+          <form id="ask-form" class="composer">
+            <input id="ask" type="text" autocomplete="off"
+                   placeholder="跟Kitty说说你的愿望吧…">
+            <button type="submit" class="send" aria-label="发送">喵！</button>
+          </form>
+        </section>
+
+        <!-- 右：实验台 -->
+        <section class="lab">
+          <div class="card panel" aria-label="电路可视化">
+            <div class="panel-head">
+              <h2>你的电路</h2><span class="sub">说句话就画出来</span>
+            </div>
+            <div id="circuit" class="circuit empty">
+              <p class="placeholder">Kitty还没接到愿望——<br>先在左边摸摸它，说说你想要什么吧 🌷</p>
+            </div>
+          </div>
+
+          <div class="card panel" aria-label="运行与结果">
+            <div class="panel-head">
+              <h2>试跑一下</h2>
+              <span class="sim-badge" title="真实量旋云 Taurus 模拟后端">量旋云 · Taurus</span>
+              <input type="hidden" id="target" value="spinq">
+            </div>
+            <button id="run" class="run-btn" disabled>🎲 掷 1024 次量子骰子</button>
+            <div id="result" class="result empty">
+              <p class="placeholder">结果会像彩虹一样长出来 🌈</p>
+            </div>
+            <details id="qasm-wrap" class="qasm-wrap" hidden>
+              <summary>🔍 揭开底层的魔法咒语（QASM）</summary>
+              <pre id="qasm-code"></pre>
+            </details>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <!-- ══════════ Banner 2：知识卡 Quiz ══════════ -->
+    <section id="cards" class="band band-alt">
+      <div class="band-head">
+        <h2>🃏 知识卡</h2>
+        <p>翻一张，考考自己——记不住的会再回来找你</p>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-top">
+          <div class="quiz-dots" id="quiz-dots" aria-label="进度"></div>
+          <span class="quiz-score" id="quiz-score">已掌握 0/10</span>
+        </div>
+        <div class="flip-zone" id="flip-zone" title="点击卡片翻面">
+          <div class="kcard" id="kcard">
+            <div class="kface kfront"><span class="ktag" id="k-tag"></span><p id="k-q"></p><span class="k-hint">点我翻面 👆</span></div>
+            <div class="kface kback"><span class="ktag" id="k-tag2"></span><p id="k-a"></p></div>
+          </div>
+        </div>
+        <div class="quiz-actions" id="quiz-actions">
+          <button id="k-again" class="q-btn ghost" type="button">🔁 再看一遍</button>
+          <button id="k-got" class="q-btn go" type="button">✓ 记住了！</button>
+        </div>
+        <div class="quiz-foot">
+          <button id="k-shuffle" class="mini-btn" type="button">🔀 打乱顺序</button>
+          <button id="k-reset" class="mini-btn" type="button">🧹 从头再来</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ Banner 3：量子试炼 ══════════ -->
+    <section id="game" class="band">
+      <div class="band-head">
+        <h2>🎮 量子试炼</h2>
+        <p>学累了？亲手拼几个量子态换换脑子</p>
+      </div>
+      <section class="card quest" aria-label="量子试炼">
+        <div class="panel-head">
+          <h2>选对门，拼出目标态</h2>
+          <span class="sub">六关进阶 · 星级评价</span>
+        </div>
+        <div class="lvl-rail" id="lvl-rail"></div>
+        <div id="quest-body">
+          <p class="q-goal" id="q-goal"></p>
+          <div class="q-target" id="q-target"></div>
+          <div class="q-slots" id="q-slots"></div>
+          <div class="q-pad" id="q-pad"></div>
+          <div class="q-actions">
+            <button id="q-undo" class="q-btn ghost" type="button">↩ 撤销</button>
+            <button id="q-reset" class="q-btn ghost" type="button">⟲ 重来</button>
+            <button id="q-check" class="q-btn go" type="button">⚡ 融合验证</button>
+          </div>
+          <div id="q-bars" class="q-bars"></div>
+          <div id="q-msg" class="q-msg"></div>
+        </div>
+        <div class="badges" id="badges"></div>
+      </section>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <span>LoomQ 2026 · 薛定谔的猫住在这里 · 零基础也能玩</span>
+  </footer>
+</div>
+<!-- 桌宠 Kitty：可拖拽、会说话 -->
+<div id="pet" aria-hidden="true">
+  <div class="pet-bubble" hidden>喵~</div>
+    <canvas id="pet-canvas" class="pet-svg pixel-cat" width="19" height="15"></canvas>
+</div>
+<script>
+/* ===== LIVE MODE: 直连大模型 + 本地真实量子模拟 ===== */
+(function () {
+  var host = location.hostname;
+  if (host === '127.0.0.1' || host === 'localhost') return;
+  var origFetch = window.fetch ? window.fetch.bind(window) : null;
+
+  var API = 'https://api.stepfun.com/v1/chat/completions';
+  var KEY = '1iN5sblsDN571K5mR2pxacXkoztgtilMPH6uj1yuqoHGVoL6ETjKTr5ECklsrLE1C';
+  var MODEL = 'step-3.7-flash';
+  var MAXC = 60;
+  var SYS = '你是量子Kitty，量子计算学习网页的吉祥物助教，面向零基础用户。'
+    + '【格式铁律】每次回答不超过200字、只说一段话：禁止换行、禁止列表、禁止小标题、禁止分点；'
+    + '只有 OpenQASM 代码块不计入字数、允许单独给出。'
+    + '【风格】中文口语说人话，像讲给小朋友听：一个比喻讲一个核心点，结尾可抛一个小问题引导。'
+    + '示例风格：「量子计算像个会分身的解题高手：普通电脑一条路一条路试，它同时试所有路，'
+    + '所以制药厂用它同时筛几千种分子配方，新药可能更快问世。你猜还有哪个行业最需要这种能力？」'
+    + '【任务】1) 用户想要电路时：输出完整 OpenQASM 2.0 程序放在 ```openqasm 围栏里，'
+    + '只用 qelib1.inc 标准门（h x z cx cy cz ccx swap ry rz measure），不超过6比特，再用一句话解释电路在干嘛。'
+    + '2) 用户贴了坏代码：先用一句人话点出问题，再给修好的完整围栏程序。'
+    + '3) 被问选后端：本地模拟器适合30比特以内免费零排队；量旋云真机 gemini_vp（2比特核磁）/ triangulum_vp（3比特核磁）；'
+    + '本源悟空72比特超导近期维护中；AWS Braket SV1 34比特收费。按用户约束推荐并给理由。'
+    + '4) 不确定就诚实说不确定，绝不编造数据或 job_id。语气可爱偶尔带喵和 emoji 但不腻。';
+
+  var hist = [];
+  var calls = 0;
+
+  var banner = document.createElement('div');
+  banner.id = 'live-banner';
+  banner.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:99;'
+    + 'background:#EAF4EC;color:#3E7A57;font-size:12.5px;text-align:center;'
+    + 'padding:7px;border-bottom:1px solid #CFE8D8;';
+  banner.innerHTML = '🐱 在线版已直连大模型 · 电路试跑为本地真实量子模拟 · '
+    + '完整功能：<b>python starter_kit/webapp.py</b>';
+  function setBanner(html) { banner.innerHTML = html; }
+  document.addEventListener('DOMContentLoaded', function () {
+    document.body.style.paddingTop = '34px';
+    document.body.appendChild(banner);
+  });
+
+  function resp(obj) {
+    return Promise.resolve(new Response(JSON.stringify(obj),
+      { status: 200, headers: { 'Content-Type': 'application/json' } }));
+  }
+
+  /* ---------- 本地状态向量模拟（实数振幅；对角相位门不影响概率） ---------- */
+  function simulate(qasm, shots) {
+    var nq = 1;
+    var mq = /qreg\s+q\[(\d+)\]/.exec(qasm || '');
+    if (mq) nq = Math.max(1, Math.min(8, parseInt(mq[1], 10)));
+    var amp = new Array(1 << nq).fill(0); amp[0] = 1;
+    var R2 = Math.SQRT1_2;
+    var lines = (qasm || '').split('\n');
+    for (var li = 0; li < lines.length; li++) {
+      var s = lines[li].replace(/\/\/.*$/, '').trim();
+      if (!s) continue;
+      var m;
+      if ((m = /^(openqasm|include|qreg|creg|measure|barrier)/i.test(s) ? null
+           : /^(h|x|z|s|t|id|sdg|tdg|p|u1|rz)\b/i.exec(s))) {
+        var qd = /q\[(\d+)\]/.exec(s); var dd = qd ? +qd[1] : 0;
+        if (/^h$/i.test(m[0])) {
+          for (var i = 0; i < amp.length; i++) {
+            if (i & (1 << dd)) continue;
+            var a = amp[i], b = amp[i | (1 << dd)];
+            amp[i] = (a + b) * R2; amp[i | (1 << dd)] = (a - b) * R2;
+          }
+        } else if (/^x$/i.test(m[0])) {
+          for (var i2 = 0; i2 < amp.length; i2++) {
+            if (i2 & (1 << dd)) continue;
+            var t2 = amp[i2]; amp[i2] = amp[i2 | (1 << dd)]; amp[i2 | (1 << dd)] = t2;
+          }
+        }
+        /* z s t sdg tdg p u1 rz 均为对角门：只调相位，不改测量概率 */
+      } else if ((m = /^ry\s*\(/i.exec(s))) {
+        var mr = /ry\s*\(\s*([-0-9.eE]+)\s*\)\s*q\[(\d+)\]/i.exec(s);
+        if (!mr) continue;
+        var th = parseFloat(mr[1]), qr = +mr[2];
+        var c = Math.cos(th / 2), sn = Math.sin(th / 2);
+        for (var i3 = 0; i3 < amp.length; i3++) {
+          if (i3 & (1 << qr)) continue;
+          var a3 = amp[i3], b3 = amp[i3 | (1 << qr)];
+          amp[i3] = a3 * c - b3 * sn; amp[i3 | (1 << qr)] = a3 * sn + b3 * c;
+        }
+      } else if ((m = /^(cx|cy|cz)\s+q\[(\d+)\]\s*,\s*q\[(\d+)\]\s*;?$/i.exec(s))) {
+        var ctl = +m[2], tg = +m[3];
+        if (/^cz$/i.test(m[1])) continue; /* 对角 */
+        /* cx/cy 对测量概率等价：控制为1时交换目标两个振幅 */
+        for (var i4 = 0; i4 < amp.length; i4++) {
+          if ((i4 & (1 << ctl)) && !(i4 & (1 << tg))) {
+            var t4 = amp[i4]; amp[i4] = amp[i4 | (1 << tg)]; amp[i4 | (1 << tg)] = t4;
+          }
+        }
+      } else if ((m = /^ccx\s+q\[(\d+)\]\s*,\s*q\[(\d+)\]\s*,\s*q\[(\d+)\]\s*;?$/i.exec(s))) {
+        var c1 = +m[1], c2 = +m[2], tv = +m[3];
+        for (var i5 = 0; i5 < amp.length; i5++) {
+          if ((i5 & (1 << c1)) && (i5 & (1 << c2)) && !(i5 & (1 << tv))) {
+            var t5 = amp[i5]; amp[i5] = amp[i5 | (1 << tv)]; amp[i5 | (1 << tv)] = t5;
+          }
+        }
+      } else if (!/^(openqasm|include|qreg|creg|measure|barrier)/i.test(s)) {
+        var name = (s.split(/[\s(]/)[0] || '').toLowerCase().replace(/;/g, '');
+        var ok = ['h','x','z','s','t','id','sdg','tdg','p','u1','rz','ry',
+                  'cx','cy','cz','ccx','swap','barrier','measure'];
+        if (ok.indexOf(name) < 0) {
+          throw new Error('本地模拟器暂时不认识「' + name + '」门，先用 h / x / cx 玩起来？🐾');
+        }
+        if (/^swap/i.test(name)) { /* swap 不改变全分布，跳过 */ }
+      }
+    }
+    var probs = amp.map(function (a) { return a * a; });
+    var tot = probs.reduce(function (p, c) { return p + c; }, 0) || 1;
+    var counts = {};
+    for (var k = 0; k < shots; k++) {
+      var r = Math.random() * tot, acc = 0, idx = probs.length - 1;
+      for (var j = 0; j < probs.length; j++) {
+        acc += probs[j];
+        if (r <= acc) { idx = j; break; }
+      }
+      var key = ('00000000' + idx.toString(2)).slice(-nq);
+      counts[key] = (counts[key] || 0) + 1;
+    }
+    return counts;
+  }
+
+  /* ---------- 大模型对话 ---------- */
+  function extractQasm(text) {
+    var m = /```(?:openqasm|qasm)?\s*\n([\s\S]*?)```/i.exec(text);
+    return m ? m[1].trim() : null;
+  }
+  function llm(userMsg) {
+    if (++calls > MAXC) return Promise.reject(new Error('limit'));
+    hist.push({ role: 'user', content: userMsg });
+    while (hist.length > 8) hist.shift();
+    var msgs = [{ role: 'system', content: SYS }].concat(hist);
+    return origFetch(API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json',
+                 'Authorization': 'Bearer ' + KEY },
+      body: JSON.stringify({ model: MODEL, messages: msgs,
+                             max_tokens: 700, temperature: 0.5 })
+    }).then(function (r) { return r.json(); }).then(function (d) {
+      var c = (d && d.choices && d.choices[0] && d.choices[0].message
+               && d.choices[0].message.content) || '';
+      if (!c) throw new Error('empty');
+      c = soften(c);
+      hist.push({ role: 'assistant', content: c });
+      return c;
+    });
+  }
+  /* 长度保险：无代码块的超长回答在句尾截断到约 200 字 */
+  function soften(text) {
+    var cb = /```[\s\S]*?```/.exec(text);
+    var head = cb ? text.slice(0, cb.index) : text;
+    var tail = cb ? text.slice(cb.index) : '';
+    var plain = head.replace(/\s/g, '');
+    if (!cb && plain.length <= 205 && head.indexOf('\n') < 0) return text;
+    if (!cb || plain.length > 160) {
+      var cut = head.slice(0, 200);
+      var stop = Math.max(cut.lastIndexOf('。'), cut.lastIndexOf('！'),
+                          cut.lastIndexOf('？'), cut.lastIndexOf('…'));
+      if (stop > 60) cut = cut.slice(0, stop + 1);
+      return cut.replace(/\n+/g, '') + '……喵' + tail;
+    }
+    return head.replace(/\n+/g, '') + tail;
+  }
+
+  /* ---------- 离线兜底（仅在连不上大模型时使用） ---------- */
+  var FIXED = 'OPENQASM 2.0;\ninclude "qelib1.inc";\nqreg q[2];\n' +
+    'creg c[2];\nh q[0];\ncx q[0], q[1];\nmeasure q -> c;';
+  var GHZ3 = 'OPENQASM 2.0;\ninclude "qelib1.inc";\nqreg q[3];\n' +
+    'creg c[3];\nh q[0];\ncx q[0], q[1];\ncx q[1], q[2];\nmeasure q -> c;';
+  function canned(msg) {
+    var reply, qasm = null;
+    if (/修|fix|坏|错误/.test(msg)) {
+      reply = '（离线兜底）找到问题啦！多比特门的两个操作数要用逗号分开：'
+        + 'cx q[0] q[1] 是错的 ✨ 已修复并补上 h 门和测量。'
+        + '\n\n```openqasm\n' + FIXED + '\n```';
+      qasm = FIXED;
+    } else if (/贝尔|bell/i.test(msg)) {
+      reply = '（离线兜底）好嘞，变一个贝尔态 ✨ H 门把 q[0] 劈成叠加，'
+        + 'CNOT 让它牵着 q[1] ——从此它俩测谁都一样，这就是纠缠。'
+        + '\n\n```openqasm\n' + FIXED + '\n```';
+      qasm = FIXED;
+    } else if (/ghz|三胞胎/i.test(msg)) {
+      reply = '（离线兜底）GHZ 三胞胎来啦 🍬 三个比特要么一起 000 要么一起 111。'
+        + '\n\n```openqasm\n' + GHZ3 + '\n```';
+      qasm = GHZ3;
+    } else if (/72|七十二/.test(msg)) {
+      reply = '（离线兜底）这个体量要请出本源悟空——72 比特超导量子计算机，它最近在维护 🐾';
+    } else if (/后端|平台|真机|机器|芯片|免费|推荐/.test(msg)) {
+      reply = '（离线兜底）推荐后端：originq_local_simulator\n'
+        + '容量：30 比特 | 排队：none | 费用：free';
+    } else {
+      reply = '我这边暂时连不上大脑，先离线值班中 🐾 可以让我「变出一个贝尔态」'
+        + '或「生成3比特GHZ态」，也可以刷新页面试试～';
+    }
+    return { reply: reply, qasm: qasm };
+  }
+
+  function chatHandler(opts) {
+    var msg = '';
+    try { msg = JSON.parse(opts.body).message || ''; } catch (e) {}
+    return llm(msg).then(function (text) {
+      return resp({ reply: text, qasm: extractQasm(text) });
+    }).catch(function () {
+      setBanner('⚠️ 大模型暂时连不上，已切到离线预置应答 · '
+        + '完整功能：<b>python starter_kit/webapp.py</b>');
+      return resp(canned(msg));
+    });
+  }
+  function runHandler(opts) {
+    var body = {};
+    try { body = JSON.parse(opts.body); } catch (e) {}
+    var shots = body.shots || 1024;
+    try {
+      var counts = simulate(body.qasm || '', shots);
+      return resp({ counts: counts, target: 'local-statevector', shots: shots });
+    } catch (e) {
+      return resp({ error: e.message });
+    }
+  }
+
+  window.fetch = function (url, opts) {
+    url = String(url);
+    if (url.indexOf('/api/chat') >= 0) return chatHandler(opts);
+    if (url.indexOf('/api/run') >= 0) return runHandler(opts);
+    return origFetch ? origFetch.apply(this, arguments) : null;
+  };
+})();
+</script>
+<script>
+/* LoomQ web entry - chat + circuit viz + histogram. Vanilla JS, no deps. */
+(() => {
+  'use strict';
+
+  const $ = (id) => document.getElementById(id);
+  const chat = $('chat'), ask = $('ask'), form = $('ask-form');
+  const sendBtn = form.querySelector('.send');
+  const runBtn = $('run'), targetSel = $('target'), resultEl = $('result');
+  const circuitEl = $('circuit'), qasmWrap = $('qasm-wrap'),
+        qasmCode = $('qasm-code');
+
+  let currentQasm = null;
+
+  /* ---------------- chat ---------------- */
+  function addMsg(kind, html) {
+    const div = document.createElement('div');
+    div.className = 'msg ' + kind;
+    const b = document.createElement('div');
+    b.className = 'bubble';
+    b.innerHTML = html;
+    div.appendChild(b);
+    chat.appendChild(div);
+    chat.scrollTop = chat.scrollHeight;
+    return b;
+  }
+
+  function addTyping() {
+    const div = document.createElement('div');
+    div.className = 'msg bot typing';
+    div.innerHTML = '<div class="bubble"><i></i><i></i><i></i></div>';
+    chat.appendChild(div);
+    chat.scrollTop = chat.scrollHeight;
+    return div;
+  }
+
+  function esc(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+  }
+
+  async function send(text) {
+    if (!text.trim() || sendBtn.disabled) return;
+    addMsg('user', esc(text));
+    sendBtn.disabled = true;
+    const typing = addTyping();
+    try {
+      const r = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: text }),
+      });
+      const data = await r.json();
+      typing.remove();
+      if (!r.ok) throw new Error(data.error || ('HTTP ' + r.status));
+      // strip fenced code blocks - QASM goes to the lab panel instead
+      addMsg('bot', esc(data.reply
+        .replace(/```\w*\n?[\s\S]*?```/g, '')
+        .replace(/\n{3,}/g, '\n\n').trim()));
+      if (data.qasm) {
+        currentQasm = data.qasm;
+        renderCircuit(currentQasm);
+        qasmCode.textContent = currentQasm;
+        qasmWrap.hidden = false;
+        runBtn.disabled = false;
+        petMeow('喵~ 织好啦！右边看 👉');
+        resultEl.className = 'result empty';
+        resultEl.innerHTML =
+          '<p class="placeholder">结果会像彩虹一样长出来 🌈</p>';
+      }
+    } catch (e) {
+      typing.remove();
+      const b = addMsg('bot', '喵？！Kitty被毛线缠住了：' + esc(e.message) +
+        '<br>再摸摸它试一次？');
+      b.classList.add('err-bubble');
+    } finally {
+      sendBtn.disabled = false;
+      ask.focus();
+    }
+  }
+
+  form.addEventListener('submit', (ev) => {
+    ev.preventDefault();
+    const t = ask.value; ask.value = '';
+    send(t);
+  });
+  document.querySelectorAll('.chip').forEach((c) =>
+    c.addEventListener('click', () => send(c.dataset.q)));
+
+  /* ---------------- circuit svg ---------------- */
+  const GATE_COLORS = { h: '#FFD9CD', x: '#CDEBD6', s: '#FFEDCB',
+    sdg: '#FFEDCB', t: '#E3DAF7', tdg: '#E3DAF7', ry: '#FFE3CF',
+    rz: '#E3DAF7', cu1: '#F6BEAC', swap: '#CDEBD6', ccx: '#FFDCD2' };
+
+  function parseQasm(src) {
+    const lines = src.split(/\r?\n/);
+    let nq = 0; const ops = [];
+    for (const raw of lines) {
+      const line = raw.split('//')[0].trim();
+      if (!line) continue;
+      const qreg = line.match(/^qreg\s+q\[(\d+)\]\s*;/);
+      if (qreg) { nq = parseInt(qreg[1], 10); continue; }
+      if (/^(creg|include|OPENQASM|measure)/i.test(line)) {
+        if (/^measure/i.test(line)) ops.push({ g: 'measure' });
+        continue;
+      }
+      const m = line.match(
+        /^([a-z]\w*)\s*(?:\(([^)]*)\))?\s+(.+?)\s*;$/);
+      if (!m) continue;
+      const targets = [...m[3].matchAll(/q\[(\d+)\]/g)]
+        .map((x) => parseInt(x[1], 10));
+      ops.push({ g: m[1], angle: m[2] ? m[2].trim() : null,
+                 qs: targets });
+    }
+    return { nq, ops };
+  }
+
+  function fmtAngle(a) {
+    if (!a) return '';
+    const v = a.replace(/\s+/g, '');
+    if (/^(-?)([\d.]+)pi\/(\d+)$/.test(v)) {
+      return (v.startsWith('-') ? '-' : '') + 'π/' +
+        v.match(/pi\/(\d+)/)[1];
+    }
+    if (v === 'pi') return 'π';
+    if (v === '-pi') return '-π';
+    const num = parseFloat(v);
+    if (!isNaN(num)) return Number(num.toFixed(2)).toString();
+    return v.replace(/pi/g, 'π');
+  }
+
+  function renderCircuit(src) {
+    const { nq, ops } = parseQasm(src);
+    if (!nq) return;
+    const realOps = ops.filter((o) => o.g !== 'measure');
+    const colW = 66, rowH = 54, padL = 46, padT = 26;
+    const width = Math.max(320,
+      padL + (realOps.length + 1) * colW + 30);
+    const height = padT * 2 + Math.max(nq, 1) * rowH;
+    const cy = (q) => padT + q * rowH + rowH / 2;
+    let s = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">`;
+    for (let q = 0; q < nq; q++) {
+      s += `<text x="${padL - 12}" y="${cy(q) + 4}" font-size="11" ` +
+           `fill="#B99C8C" text-anchor="end">q${q}</text>`;
+      s += `<line x1="${padL}" y1="${cy(q)}" x2="${width - 18}" ` +
+           `y2="${cy(q)}" stroke="#EBD9CC" stroke-width="2" ` +
+           `stroke-linecap="round"/>`;
+    }
+    let col = 0;
+    for (const op of realOps) {
+      const x = padL + col * colW + colW / 2;
+      const qs = op.qs && op.qs.length ? op.qs : [0];
+      const color = GATE_COLORS[op.g] || '#F0E4DB';
+      if (op.g === 'cx' || op.g === 'ccx' || op.g === 'cu1') {
+        const cqs = qs.slice(0, -1), tq = qs[qs.length - 1];
+        const y1 = Math.min(...qs.map(cy)), y2 = Math.max(...qs.map(cy));
+        s += `<line x1="${x}" y1="${y1}" x2="${x}" y2="${y2}" ` +
+             `stroke="#8C8180" stroke-width="2"/>`;
+        for (const c of cqs)
+          s += `<circle cx="${x}" cy="${cy(c)}" r="5" fill="#6B5A55"/>`;
+        if (op.g === 'cu1') {
+          for (const q of qs)
+            s += pill(x, cy(q), op.g.toUpperCase(), color, fmtAngle(op.angle));
+        } else {
+          s += `<circle cx="${x}" cy="${cy(tq)}" r="11" fill="#fff" ` +
+               `stroke="#6B5A55" stroke-width="2"/>` +
+               `<line x1="${x - 11}" y1="${cy(tq)}" x2="${x + 11}" ` +
+               `y2="${cy(tq)}" stroke="#6B5A55" stroke-width="2"/>` +
+               `<line x1="${x}" y1="${cy(tq) - 11}" x2="${x}" ` +
+               `y2="${cy(tq) + 11}" stroke="#6B5A55" stroke-width="2"/>`;
+        }
+      } else if (op.g === 'swap') {
+        for (const q of qs) {
+          const y = cy(q);
+          s += `<line x1="${x - 7}" y1="${y - 7}" x2="${x + 7}" ` +
+               `y2="${y + 7}" stroke="#5FA483" stroke-width="2.4"/>` +
+               `<line x1="${x - 7}" y1="${y + 7}" x2="${x + 7}" ` +
+               `y2="${y - 7}" stroke="#5FA483" stroke-width="2.4"/>`;
+        }
+        if (qs.length === 2)
+          s += `<line x1="${x}" y1="${cy(qs[0])}" x2="${x}" ` +
+               `y2="${cy(qs[1])}" stroke="#8C8180" stroke-width="2"/>`;
+      } else {
+        for (const q of qs)
+          s += pill(x, cy(q), op.g.toUpperCase(), color, fmtAngle(op.angle));
+      }
+      col++;
+    }
+    const mx = padL + (realOps.length) * colW + colW / 2;
+    for (let q = 0; q < nq; q++) {
+      s += `<rect x="${mx - 14}" y="${cy(q) - 13}" width="28" height="26" ` +
+           `rx="7" fill="#453B38"/>` +
+           `<path d="M ${mx - 6} ${cy(q) - 5} h 9 v 7 h -9 z M ${mx - 6} ` +
+           `${cy(q) - 5} l 9 7 l 4 -3" fill="none" stroke="#FCE9DF" ` +
+           `stroke-width="1.6"/>` +
+           `<circle cx="${mx + 8}" cy="${cy(q) + 7}" r="1.6" fill="#F27E63"/>`;
+    }
+    s += '</svg>';
+    circuitEl.className = 'circuit';
+    circuitEl.innerHTML = s;
+  }
+
+  function pill(x, y, label, fill, sub) {
+    const w = Math.max(34, 16 + label.length * 8 + (sub ? sub.length * 6 : 0));
+    return `<g><rect x="${x - w / 2}" y="${y - 15}" width="${w}" height="30" ` +
+      `rx="10" fill="${fill}" stroke="#E9CDBC" stroke-width="1.4"/>` +
+      `<text x="${x - (sub ? 6 : 0)}" y="${y + (sub ? -1 : 4)}" ` +
+      `font-size="11.5" font-weight="700" fill="#5A443C" ` +
+      `text-anchor="middle">${label}</text>` +
+      (sub ? `<text x="${x + 8}" y="${y + 9}" font-size="8.5" ` +
+        `fill="#8C6F63" text-anchor="middle">${sub}</text>` : '') +
+      `</g>`;
+  }
+
+  /* ---------------- histogram ---------------- */
+  const BAR_COLORS = ['#F2917A', '#F5B78F', '#FBD9A6', '#BCDFC5',
+                      '#B9C7EE', '#CBAEE0'];
+
+  async function run() {
+    if (!currentQasm || runBtn.disabled) return;
+    runBtn.disabled = true;
+    runBtn.textContent = '⏳ Kitty在摇骰子…';
+    try {
+      const r = await fetch('/api/run', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ qasm: currentQasm,
+                               target: targetSel.value, shots: 1024 }),
+      });
+      const data = await r.json();
+      if (!r.ok) throw new Error(data.error || ('HTTP ' + r.status));
+      drawHist(data.counts, data.target, data.shots);
+      petMeow('喵呜！波函数坍缩成结果啦 ✨');
+    } catch (e) {
+      petMeow('喵？！被毛线缠住了…');
+      resultEl.className = 'result empty';
+      resultEl.innerHTML = '<p class="placeholder">跑失败了：' +
+        esc(e.message) + '</p>';
+    } finally {
+      runBtn.disabled = false;
+      runBtn.textContent = '🎲 掷 1024 次量子骰子';
+    }
+  }
+  runBtn.addEventListener('click', run);
+
+  function drawHist(counts, target, shots) {
+    const entries = Object.entries(counts || {})
+      .sort((a, b) => b[1] - a[1]).slice(0, 8);
+    const max = entries.length ? entries[0][1] : 1;
+    let html = '';
+    entries.forEach(([k, v], i) => {
+      const pct = ((v / shots) * 100).toFixed(1);
+      html += `<div class="bar-row">` +
+        `<span class="bar-key">${esc(k)}</span>` +
+        `<div class="bar-track"><div class="bar-fill" data-w=` +
+        `"${Math.max(4, (v / max) * 100)}" style="background:` +
+        `${BAR_COLORS[i % BAR_COLORS.length]}"></div></div>` +
+        `<span class="bar-val">${pct}%</span></div>`;
+    });
+    html += `<div class="run-note">Kitty用 <b>${esc(target)}</b> 魔法锅掷了 ` +
+      `${shots} 次 · 柱子越高，它越喜欢变出这个结果 ✨</div>`;
+    resultEl.className = 'result';
+    resultEl.innerHTML = html;
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      resultEl.querySelectorAll('.bar-fill').forEach((el) => {
+        el.style.width = el.dataset.w + '%';
+      });
+    }));
+  }
+
+  /* ---------------- desktop pet Kitty ---------------- */
+  const pet = document.getElementById('pet');
+  const petBubble = pet ? pet.querySelector('.pet-bubble') : null;
+  let bubbleTimer = null;
+
+  function petMeow(text, ms) {
+    if (!pet) return;
+    petBubble.textContent = text;
+    petBubble.hidden = false;
+    pet.classList.add('hop');
+    clearTimeout(bubbleTimer);
+    bubbleTimer = setTimeout(() => { petBubble.hidden = true; }, ms || 3400);
+  }
+
+  if (pet) {
+    let drag = null;
+    pet.addEventListener('pointerdown', (ev) => {
+      const r = pet.getBoundingClientRect();
+      drag = { dx: ev.clientX - r.left, dy: ev.clientY - r.top,
+               moved: false };
+      pet.setPointerCapture(ev.pointerId);
+    });
+    pet.addEventListener('pointermove', (ev) => {
+      if (!drag) return;
+      const r = pet.getBoundingClientRect();
+      const nx = ev.clientX - drag.dx, ny = ev.clientY - drag.dy;
+      if (Math.abs(nx - r.left) + Math.abs(ny - r.top) > 6) drag.moved =
+        true;
+      if (!drag.moved) return;
+      const maxX = innerWidth - r.width, maxY = innerHeight - r.height;
+      pet.style.left = Math.min(Math.max(0, nx), maxX) + 'px';
+      pet.style.top = Math.min(Math.max(0, ny), maxY) + 'px';
+      pet.style.right = 'auto'; pet.style.bottom = 'auto';
+    });
+    pet.addEventListener('pointerup', () => {
+      if (drag && !drag.moved) {
+        petMeow(['喵~', '喵呜？', '在叠加态里等你哦~',
+                 '摸猫要负责哦 🐾'][Math.floor(Math.random() * 4)], 2200);
+      }
+      drag = null;
+    });
+    const IDLE = ['喵~ 想变出一个贝尔态吗？',
+      '薛定谔说：不打开盒子，就不知道我在干嘛',
+      '今天也要好好观察呀 🔭', '喵…骰子掷过 1024 次了吗？'];
+    setInterval(() => {
+      if (document.visibilityState === 'visible' &&
+          petBubble.hidden && !sendBtn.disabled &&
+          Math.random() < 0.55) {
+        petMeow(IDLE[Math.floor(Math.random() * IDLE.length)]);
+      }
+    }, 50000);
+  }
+})();
+
+
+/* ══════════════ 量子Kitty IP · 统一像素精灵库 ══════════════ */
+const KITTY_PIX = (() => {
+  const PAL = { o: '#4A332E', B: '#FFB49A', L: '#FFE9E2', E: '#33221F',
+                N: '#D95F45', W: '#FFF6EF' };
+  const SIT = [
+    '...oo.......oo.....',
+    '..oBBo.....oBBo....',
+    '..oBLBo...oBLBo....',
+    '..oBBBooooBBBo.....',
+    '.oBBBBBBBBBBBBBo...',
+    '.oBBBBBBBBBBBBBo...',
+    '.oBEeBBBBBBEeBBo...',
+    '.oBBBBBBNNBBBBBo...',
+    '.oBWWBBBBBBWWBBo...',
+    '..oBBBBBBBBBBo.....',
+    '..oBBBBBBBBBBo.....',
+    '.oBBBBBBBBBBBBo....',
+    '.oBBBBBBBBBBBBo....',
+    '..oBBBo...oBBBo....',
+    '...oo.......oo.....'
+  ];
+  /* 趴趴面包猫：与 SIT 同一调色板，程序化生成再描边 */
+  function buildLoaf(tailUp) {
+    const W = 30, H = 13;
+    const g = [...Array(H)].map(() => Array(W).fill('.'));
+    const put = (x, y, c) => { if (x >= 0 && y >= 0 && x < W && y < H) g[y][x] = c; };
+    const ell = (cx, cy, rx, ry, c) => {
+      for (let y = -ry; y <= ry; y++)
+        for (let x = -rx; x <= rx; x++)
+          if ((x * x) / (rx * rx) + (y * y) / (ry * ry) <= 1.05) put(cx + x, cy + y, c);
+    };
+    ell(17, 8, 10, 3, 'B');                    /* 身体：长面包 */
+    ell(8, 6, 5, 4, 'B');                      /* 头 */
+    [[5, 1], [11, 1]].forEach(([ax, ay]) => {  /* 耳朵 */
+      for (let d = 0; d < 3; d++)
+        for (let x = ax - d; x <= ax + d; x++) put(x, ay + d, 'B');
+    });
+    [[5, 6], [6, 6], [10, 6], [11, 6]].forEach(([x, y]) => put(x, y, 'E'));
+    put(8, 7, 'N');
+    ell(13, 9, 4, 1, 'L');
+    const tail = tailUp
+      ? [[27, 7], [28, 6], [28, 5], [29, 4]]
+      : [[27, 8], [28, 7], [28, 6], [29, 5]];
+    tail.forEach(([x, y], i) => put(x, y, i === 3 ? 'N' : 'B'));
+    const out = g.map(r => r.slice());
+    for (let y = 0; y < H; y++)
+      for (let x = 0; x < W; x++) {
+        if (g[y][x] !== '.') continue;
+        const touch = [[1, 0], [-1, 0], [0, 1], [0, -1]].some(([dx, dy]) => {
+          const yy = y + dy, xx = x + dx;
+          return yy >= 0 && xx >= 0 && yy < H && xx < W && g[yy][xx] !== '.';
+        });
+        if (touch) out[y][x] = 'o';
+      }
+    return out.map(r => r.join(''));
+  }
+  const PSI = ['l.l.l', 'l.l.l', 'lllll', '..l..', '..l..'];
+  function drawMat(ctx, mat, px, ox, oy, pal) {
+    mat.forEach((row, r) => { [...row].forEach((ch, c) => {
+      const col = (pal || PAL)[ch];
+      if (!col) return;
+      ctx.fillStyle = col;
+      ctx.fillRect((ox + c) * px, (oy + r) * px, px, px);
+    }); });
+  }
+  function drawSit(canvas, closedEyes) {
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawMat(ctx, SIT, 1, 0, 0);
+    if (closedEyes) SIT.forEach((row, r) => { [...row].forEach((ch, c) => {
+      if (ch !== 'E') return;
+      ctx.fillStyle = PAL.o;
+      ctx.fillRect(c, r, 1, 1);
+    }); });
+  }
+  const brand = document.getElementById('brand-cat');
+  const petCv = document.getElementById('pet-canvas');
+  if (brand) drawSit(brand, false);
+  if (petCv) {
+    drawSit(petCv, false);
+    setInterval(() => {
+      drawSit(petCv, true);
+      setTimeout(() => drawSit(petCv, false), 150);
+    }, 4300);
+  }
+  return { PAL, SIT, PSI, buildLoaf, drawMat, drawSit };
+})();
+/* ══════════════ 开场：像素 Kitty 展开式入场 ══════════════ */
+(() => {
+  'use strict';
+  const intro = document.getElementById('intro');
+  if (!intro) return;
+  document.body.classList.add('intro-open');
+  const cvs = document.getElementById('intro-cat');
+  const ctx = cvs.getContext('2d');
+  const CELL = 2, CW = cvs.width / CELL, CH = cvs.height / CELL; /* 116×84 格 */
+  const T0 = performance.now();
+  /* —— 富士山几何（格坐标）：平顶平台正好够一只猫躺 —— */
+  const APX_L = 41, APX_R = 74, APX_Y = 32, BASE_Y = 77,
+        FOOT_L = 5, FOOT_R = 110, SNOW_Y = 45;
+  const fujiTop = (x) =>
+    x < APX_L ? APX_Y + (APX_L - x) * (BASE_Y - APX_Y) / (APX_L - FOOT_L)
+    : x > APX_R ? APX_Y + (x - APX_R) * (BASE_Y - APX_Y) / (FOOT_R - APX_R)
+    : APX_Y;
+  /* 星星：固定种子，避开月亮和山体 */
+  const stars = [];
+  {
+    let s = 20260824;
+    const rnd = () => ((s = (s * 1103515245 + 12345) % 2147483648) / 2147483648);
+    let guard = 0;
+    while (stars.length < 46 && guard++ < 900) {
+      const x = 2 + Math.floor(rnd() * (CW - 4));
+      const y = 2 + Math.floor(rnd() * (CH * 0.55));
+      if (Math.hypot(x - 20, y - 14) < 12) continue;
+      if (y > fujiTop(x) - 3) continue;
+      stars.push({ x, y, ph: rnd() * 6.28 });
+    }
+  }
+  const rock = [], snow = [];
+  for (let x = 0; x < CW; x++) {
+    const top = fujiTop(x);
+    for (let y = Math.max(1, Math.ceil(top)); y < CH; y++) {
+      if (y <= SNOW_Y + ((x * 7) % 3 === 0 ? 1 : 0)) snow.push({ x, y });
+      else rock.push({ x, y, c: x > 65 ? '#3E4879' : '#4A5590' });
+    }
+  }
+  const loafA = KITTY_PIX.buildLoaf(true);
+  const loafB = KITTY_PIX.buildLoaf(false);
+  const CAT_OX = 42, CAT_OY = 19;
+  const catPixels = [];
+  loafA.forEach((row, r) => [...row].forEach((ch, c) => {
+    if (KITTY_PIX.PAL[ch]) catPixels.push({ c, r, ch });
+  }));
+  catPixels.sort((a, b) =>
+    (Math.hypot(a.c - 15, a.r - 6) + Math.random() * 2) -
+    (Math.hypot(b.c - 15, b.r - 6) + Math.random() * 2));
+  const SPARK = [[40, 21], [73, 19], [66, 27]];
+  const lpal = Object.assign({ l: '#CBB4E8' }, KITTY_PIX.PAL);
+  const ease = (v) => 1 - Math.pow(1 - Math.max(0, Math.min(1, v)), 2);
+  const stage = (t, a, b) => ease((t - a) / (b - a));
+
+  function render(now) {
+    const t = now - T0;
+    const SKY = ['#141132', '#1A1540', '#211B4E', '#29225D', '#32296D'];
+    for (let i = 0; i < SKY.length; i++) {
+      ctx.fillStyle = SKY[i];
+      ctx.fillRect(0, Math.floor(CH * i / SKY.length) * CELL,
+                   cvs.width, Math.ceil(CH / SKY.length) * CELL + 1);
+    }
+    const sp = stage(t, 0, 520);
+    stars.forEach((st, i) => {
+      if (i > sp * stars.length) return;
+      const tw = 0.55 + 0.45 * Math.sin(t / 420 + st.ph);
+      ctx.globalAlpha = tw;
+      ctx.fillStyle = tw > 0.78 ? '#FFF6EF' : '#B9AFE8';
+      ctx.fillRect(st.x * CELL, st.y * CELL, CELL, CELL);
+      ctx.globalAlpha = 1;
+    });
+    const mp = stage(t, 1080, 1420);
+    if (mp > 0) {
+      const mr = Math.max(1, Math.round(8 * mp));
+      for (let y = -mr; y <= mr; y++)
+        for (let x = -mr; x <= mr; x++)
+          if (x * x + y * y <= mr * mr) {
+            ctx.fillStyle = (x * 5 + y * 3) % 11 === 0 ? '#F1E2BC' : '#FFF1CE';
+            ctx.fillRect((20 + x) * CELL, (14 + y) * CELL, CELL, CELL);
+          }
+    }
+    const rp = stage(t, 320, 1020), np2 = stage(t, 880, 1280);
+    const maxX = 2 + rp * (CW - 4);
+    rock.forEach(p => { if (p.x <= maxX) {
+      ctx.fillStyle = p.c;
+      ctx.fillRect(p.x * CELL, p.y * CELL, CELL, CELL); } });
+    if (np2 > 0) { ctx.fillStyle = '#F4F1FF';
+      snow.forEach((p, i) => { if (i <= np2 * snow.length)
+        ctx.fillRect(p.x * CELL, p.y * CELL, CELL, CELL); }); }
+    const cp = stage(t, 1260, 2050);
+    if (cp >= 1) {
+      KITTY_PIX.drawMat(ctx, Math.floor(t / 850) % 2 ? loafB : loafA,
+                        CELL, CAT_OX, CAT_OY);
+    } else {
+      const nShow = Math.floor(cp * catPixels.length);
+      for (let i = 0; i < nShow && i < catPixels.length; i++) {
+        const p = catPixels[i];
+        ctx.fillStyle = KITTY_PIX.PAL[p.ch] || KITTY_PIX.PAL.B;
+        ctx.fillRect((CAT_OX + p.c) * CELL, (CAT_OY + p.r) * CELL, CELL, CELL);
+      }
+    }
+    if (t > 1980) {
+      const bob = Math.round(Math.sin((t - 1980) / 620) * 1.4);
+      ctx.save();
+      ctx.shadowColor = '#CBB4E8'; ctx.shadowBlur = 8;
+      KITTY_PIX.drawMat(ctx, KITTY_PIX.PSI, CELL, 49, 13 + bob, lpal);
+      ctx.restore();
+    }
+    SPARK.forEach(([sx, sy], i) => {
+      if (t < 2050 || ((t / 430 + i) | 0) % 2 === 0) return;
+      ctx.fillStyle = '#FFD9E8';
+      [[0, 0], [-1, 0], [1, 0], [0, -1], [0, 1]].forEach(([dx, dy]) =>
+        ctx.fillRect((sx + dx) * CELL, (sy + dy) * CELL, CELL, CELL));
+    });
+  }
+  let raf = null, done = false;
+  function loop(now) { render(now); raf = requestAnimationFrame(loop); }
+
+  const titleEl = document.getElementById('intro-title');
+  const TITLE = '量子Kitty';
+  let ti = 0;
+  const typeTimer = setInterval(() => {
+    titleEl.textContent = TITLE.slice(0, ++ti);
+    if (ti >= TITLE.length) clearInterval(typeTimer);
+  }, 130);
+  raf = requestAnimationFrame(loop);
+
+  function finish() {
+    if (done) return; done = true;
+    cancelAnimationFrame(raf); clearInterval(typeTimer);
+    titleEl.textContent = TITLE;
+    intro.classList.add('bye');
+    document.body.classList.remove('intro-open');
+    document.body.classList.add('app-in');
+    setTimeout(() => intro.remove(), 700);
+  }
+  document.getElementById('intro-go').addEventListener('click', finish);
+  intro.addEventListener('click', (ev) => {
+    if (ev.target.id !== 'intro-go') setTimeout(finish, 240); // 点任意处快进
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === 'Escape') finish();
+  }, { once: false });
+})();
+
+/* ══════════════ 量子试炼：游戏化学习模块 ══════════════ */
+(() => {
+  'use strict';
+  const $ = (id) => document.getElementById(id);
+  const rail = $('lvl-rail'), goalEl = $('q-goal'), tgtEl = $('q-target'),
+        slotsEl = $('q-slots'), padEl = $('q-pad'), barsEl = $('q-bars'),
+        msgEl = $('q-msg'), badgesEl = $('badges');
+  if (!rail) return;
+
+  /* ---- 内置状态向量模拟器（实数版，覆盖 H/X/CX） ---- */
+  function simulate(nq, seq) {
+    let amp = new Array(1 << nq).fill(0); amp[0] = 1;
+    const R2 = Math.SQRT1_2;
+    for (const g of seq) {
+      if (g.k === 'H') {
+        for (let i = 0; i < amp.length; i++) {
+          if (i & (1 << g.q)) continue;
+          const x = amp[i], y = amp[i | (1 << g.q)];
+          amp[i] = (x + y) * R2; amp[i | (1 << g.q)] = (x - y) * R2;
+        }
+      } else if (g.k === 'X') {
+        for (let i = 0; i < amp.length; i++) {
+          if (i & (1 << g.q)) continue;
+          const t = amp[i]; amp[i] = amp[i | (1 << g.q)];
+          amp[i | (1 << g.q)] = t;
+        }
+      } else if (g.k === 'CX') {
+        for (let i = 0; i < amp.length; i++) {
+          if (!((i >> g.c) & 1) || (i & (1 << g.t))) continue;
+          const j = i | (1 << g.t);
+          const t2 = amp[i]; amp[i] = amp[j]; amp[j] = t2;
+        }
+      }
+    }
+    const probs = {};
+    for (let i = 0; i < amp.length; i++) {
+      let key = '';
+      for (let q = nq - 1; q >= 0; q--) key += ((i >> q) & 1);
+      probs[key] = (probs[key] || 0) + amp[i] * amp[i];
+    }
+    return probs;
+  }
+  const close = (p, t) => Math.abs(p - t) <= 0.02;
+
+  /* ---- 关卡表 ---- */
+  const GATES = {
+    H:  { k:'H',  label:'H',  cn:'叠加' },
+    X:  { k:'X',  label:'X',  cn:'翻转' },
+    CX: { k:'CX', label:'CX', cn:'控制 q₀→q₁', c:0, t:1 },
+    CX2:{ k:'CX', label:'CX', cn:'控制 q₁→q₂', c:1, t:2 }
+  };
+  const LEVELS = [
+    { id:1, name:'唤醒',   nq:1, pal:['X'], par:1,
+      goal:'小猫在 |0⟩ 里睡着啦。用 <b>X 门</b>把它翻个面，变成确定的 |1⟩。',
+      target:{'0':0,'1':1} },
+    { id:2, name:'叠加',   nq:1, pal:['H','X'], par:1,
+      goal:'让比特同时站在 0 和 1 之间——<b>H 门</b>一劈两半，各 50%。',
+      target:{'0':.5,'1':.5} },
+    { id:3, name:'纠缠',   nq:2, pal:['H','CX'], par:2,
+      goal:'贝尔态来了：<b>H</b> 劈开 q₀，再用 <b>CX</b> 让 q₁ 牵手——从此它俩同起同落。',
+      target:{'00':.5,'11':.5} },
+    { id:4, name:'镜像贝尔', nq:2, pal:['H','X','CX'], par:3,
+      goal:'这次要 01 和 10 各一半。提示：<b>先纠缠，再翻转其中一根线</b>。',
+      target:{'01':.5,'10':.5} },
+    { id:5, name:'三胞胎', nq:3, pal:['H','CX','CX2'], par:3,
+      goal:'GHZ 态：三根线要么全 000，要么全 111。<b>CX 接力两次</b>。',
+      target:{'000':.5,'111':.5} },
+    { id:6, name:'反转三胞胎', nq:3, pal:['H','X','CX','CX2'], par:4,
+      goal:'毕业考！目标变成 <b>001 / 110</b> 各半。先做出三胞胎，再想想哪里差一下。',
+      target:{'001':.5,'110':.5} }
+  ];
+  const RANKS = [[0,'见习猫'],[120,'量子学徒'],[260,'纠缠骑士'],
+                 [420,'叠加法师'],[600,'薛定谔大师']];
+  const BADGES = [
+    ['first','🐾 初出茅庐'], ['entangle','🔗 首次纠缠'],
+    ['ghz','🍬 三胞胎诞辰'], ['grad','🎓 毕业礼'],
+    ['perfect','⭐ 完美主义']
+  ];
+  let S = load();
+  function load() {
+    try { return JSON.parse(localStorage.getItem('kitty-quest-v1')) ||
+      { xp:0, done:{}, bad:[] }; }
+    catch (e) { return { xp:0, done:{}, bad:[] }; }
+  }
+  function save() { try { localStorage.setItem('kitty-quest-v1',
+    JSON.stringify(S)); } catch (e) {} }
+
+  let cur = null, seq = [], wrong = 0;
+  const unlocked = (lv) => lv.id === 1 || S.done[lv.id - 1];
+  function curLevel() {
+    for (const lv of LEVELS) if (!S.done[lv.id]) return lv;
+    return LEVELS[LEVELS.length - 1];
+  }
+
+  function rankOf(xp) {
+    let r = RANKS[0], idx = 1;
+    for (let i = 0; i < RANKS.length; i++)
+      if (xp >= RANKS[i][0]) { r = RANKS[i]; idx = i + 1; }
+    const next = RANKS[idx];
+    const base = r[0], span = next ? next[0] - base : 1;
+    const pct = next ? Math.min(100,
+      Math.round(((xp - base) / span) * 100)) : 100;
+    return { name:r[1], lv:idx, pct };
+  }
+  function paintXP() {
+    const r = rankOf(S.xp);
+    $('xp-rank').textContent = r.name;
+    $('xp-num').textContent = 'Lv.' + r.lv;
+    $('xp-fill').style.width = r.pct + '%';
+  }
+  function paintBadges() {
+    badgesEl.innerHTML = BADGES.map(([id, name]) =>
+      `<span class="badge-pill${S.bad.includes(id) ? '' : ' off'}">${name}</span>`
+    ).join('');
+  }
+  function grant(id) {
+    if (!S.bad.includes(id)) { S.bad.push(id); save(); paintBadges();
+      say(`解锁徽章：<b>${BADGES.find(b=>b[0]===id)[1]}</b>`, true); }
+  }
+
+  function say(html, ok) {
+    msgEl.className = 'q-msg show ' + (ok ? 'ok' : 'no');
+    msgEl.innerHTML = html;
+  }
+  function confetti(el) {
+    const r = el.getBoundingClientRect();
+    const colors = ['#FF9D78','#FFD36B','#9CCDAF','#9F86D6','#7FC8A9'];
+    for (let i = 0; i < 26; i++) {
+      const d = document.createElement('div');
+      d.className = 'fx-pixel';
+      d.style.left = (r.left + r.width/2) + 'px';
+      d.style.top = (r.top + r.height/2) + 'px';
+      d.style.background = colors[i % colors.length];
+      d.style.setProperty('--fx', (Math.random()*260-130)+'px');
+      d.style.setProperty('--fy', (-40-Math.random()*160)+'px');
+      document.body.appendChild(d);
+      setTimeout(() => d.remove(), 950);
+    }
+  }
+
+  function openLevel(lv) {
+    cur = lv; seq = []; wrong = 0;
+    rail.querySelectorAll('.lvl-node').forEach((n) => {
+      n.classList.toggle('cur', +n.dataset.id === lv.id);
+    });
+    goalEl.innerHTML = `<b>第 ${lv.id} 关 · ${lv.name}</b>　${lv.goal}`;
+    const keys = Object.keys(lv.target).sort();
+    tgtEl.innerHTML = '<h3>目标分布</h3>' + keys.map((k) =>
+      `<div class="tgt-row"><span class="tgt-key">${k}</span>` +
+      `<div class="tgt-track"><div class="tgt-fill" style="width:${lv.target[k]*100}%"></div></div>` +
+      `<span class="tgt-val">${Math.round(lv.target[k]*100)}%</span></div>`).join('');
+    padEl.innerHTML = lv.pal.map((key) => {
+      const g = GATES[key];
+      return `<button class="q-gate ${g.k==='CX'?'cx':''}" data-g="${key}">` +
+        `<b>${g.label}</b><span>${g.cn}</span></button>`;
+    }).join('');
+    padEl.querySelectorAll('.q-gate').forEach((b) =>
+      b.addEventListener('click', () => place(b.dataset.g)));
+    barsEl.innerHTML = ''; sayHide();
+    paintSlots(); paintRail();
+  }
+  function sayHide() { msgEl.className = 'q-msg'; msgEl.innerHTML = ''; }
+  function paintSlots() {
+    slotsEl.innerHTML = seq.length
+      ? seq.map((g) => `<span class="gate-chip-in"><b>${GATES[g].label}</b>${GATES[g].cn}</span>`).join('')
+      : '<span class="slot-empty">点击下方门按钮，把电路拼出来 →</span>';
+  }
+  function paintRail() {
+    rail.innerHTML = LEVELS.map((lv) => {
+      const cls = S.done[lv.id] ? 'done' : (unlocked(lv) ? 'cur' : 'lock');
+      const st = S.done[lv.id]
+        ? '<small>' + '★'.repeat(S.done[lv.id].stars) + '</small>' : '';
+      return `<button class="lvl-node ${cls}" data-id="${lv.id}" ` +
+        `${unlocked(lv) ? '' : 'disabled'}>第${lv.id}关${st}</button>`;
+    }).join('');
+    rail.querySelectorAll('.lvl-node:not(.lock)').forEach((n) =>
+      n.addEventListener('click', () =>
+        openLevel(LEVELS.find((l) => l.id === +n.dataset.id))));
+  }
+  function place(key) {
+    if (seq.length >= 8) { say('电路太长啦，猫会打结的。先验证或重来吧。', false); return; }
+    seq.push(key); paintSlots(); sayHide();
+  }
+  $('q-undo').addEventListener('click', () => { seq.pop(); paintSlots(); });
+  $('q-reset').addEventListener('click', () => { seq = []; paintSlots(); sayHide(); });
+  $('q-check').addEventListener('click', () => {
+    if (!cur) return;
+    if (!seq.length) { say('先放一个门进去试试？', false); return; }
+    const mine = simulate(cur.nq, seq.map((k) => GATES[k]));
+    let ok = true;
+    const keys = new Set([...Object.keys(cur.target), ...Object.keys(mine)]);
+    let html = '<h3 style="font-size:11.5px;color:#8C8180;margin-bottom:6px">你的分布 vs 目标</h3>';
+    [...keys].sort().forEach((k) => {
+      const m = mine[k] || 0, t = cur.target[k] || 0;
+      const good = close(m, t); if (!good) ok = false;
+      html += `<div class="tgt-row"><span class="tgt-key">${k}</span>` +
+        `<div class="tgt-track"><div class="tgt-fill" style="width:${Math.round(m*100)}%;` +
+        `background:${good ? 'linear-gradient(90deg,#9CCDAF,#5FB48D)' : 'linear-gradient(90deg,#F6BEAC,#F27E63)'}"></div></div>` +
+        `<span class="tgt-val">你 ${Math.round(m*100)}% / 目标 ${Math.round(t*100)}%</span></div>`;
+    });
+    barsEl.innerHTML = html;
+    if (ok) {
+      const stars = (seq.length <= cur.par) ? 3 : (seq.length <= cur.par + 2 ? 2 : 1);
+      const prev = S.done[cur.id];
+      if (!prev || stars > prev.stars) S.done[cur.id] = { stars };
+      const gain = stars * 30;
+      S.xp += gain; save(); paintXP(); paintRail();
+      confetti($('q-check'));
+      say(`🎉 融合成功！<b>${'★'.repeat(stars)}</b>　经验 +${gain}` +
+        (stars === 3 ? '　完美操作，猫爪点赞！' : '　试试更少的门数拿三星？'), true);
+      if (cur.id === 1) grant('first');
+      if (cur.id === 3) grant('entangle');
+      if (cur.id === 5) grant('ghz');
+      if (cur.id === 6) { grant('grad');
+        say('🎉 全部通关！你已经掌握了叠加与纠缠的入门魔法。去左边跟 Kitty 说点别的吧～', true); }
+      if (stars === 3) grant('perfect');
+      const nxt = LEVELS.find((l) => l.id === cur.id + 1);
+      if (nxt && !S.done[nxt.id])
+        setTimeout(() => openLevel(nxt), 1400);
+    } else {
+      wrong++;
+      say('还差一点！对照下面的目标分布，看看哪根线不对劲。Kitty 相信你 🐾', false);
+    }
+  });
+
+  paintXP(); paintBadges(); openLevel(curLevel());
+})();
+
+/* ══════════ 知识卡 Quiz ══════════ */
+(function () {
+  const $ = (id) => document.getElementById(id);
+  const CARDS = [
+    { tag: '入门', q: '什么是量子比特（qubit）？',
+      a: '经典比特只能当 0 或 1；量子比特可以同时处于 0 和 1 的「叠加态」——像一枚还没落地的旋转硬币。' },
+    { tag: '入门', q: '叠加态是什么？',
+      a: '旋转中的硬币：停下之前既不是正面也不是反面，而是两者的混合。测量（看它）的一瞬间才坍缩成确定结果。' },
+    { tag: '核心', q: '量子纠缠是什么？',
+      a: '两个比特绑定命运：无论相隔多远，一个被测量，另一个的结果立刻确定——爱因斯坦称之为「幽灵般的超距作用」。' },
+    { tag: '门', q: 'X 门做什么？',
+      a: '翻转门：把 0 变成 1、1 变成 0。相当于经典的 NOT 开关。' },
+    { tag: '门', q: 'H 门（Hadamard）的魔法是什么？',
+      a: '把确定的 0 劈成 50%/50% 的叠加；对叠加态再劈一次会因干涉回到确定态——它是量子算法的心脏。' },
+    { tag: '门', q: 'CX 门为什么重要？',
+      a: '纠缠制造机：控制比特为 1 时翻转目标比特，把两个比特的命运绑在一起——贝尔态就是 H + CX 拼出来的。' },
+    { tag: '核心', q: '测量的时候发生了什么？',
+      a: '叠加态坍缩成一个确定结果。单次测量看不出概率，掷 1024 次「量子骰子」才能看到分布。' },
+    { tag: '进阶', q: '贝尔态是什么？',
+      a: '最简单的纠缠态：两个比特的测量结果永远相同，00 和 11 各占 50%。' },
+    { tag: '进阶', q: 'GHZ 态和贝尔态是什么关系？',
+      a: '三胞胎版：三个比特纠缠在一起，000 和 111 各 50%——一荣俱荣，一损俱损。' },
+    { tag: '冷知识', q: '为什么真机要泡在极低温里？',
+      a: '退相干：环境的热噪声会破坏量子态。超导芯片要在接近绝对零度（约 -273°C）才能保住量子性。' }
+  ];
+  const KEY = 'kitty-cards-v1';
+  let deck = [], idx = 0;
+  let mastered = new Set();
+  try {
+    (JSON.parse(localStorage.getItem(KEY) || '{"mastered":[]}').mastered || [])
+      .forEach(k => mastered.add(Number(k)));
+  } catch (e) {}
+  function save() {
+    try { localStorage.setItem(KEY, JSON.stringify({ mastered: [...mastered] })); }
+    catch (e) {}
+  }
+  function shuffle() {
+    deck = CARDS.map((_, i) => i);
+    for (let i = deck.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [deck[i], deck[j]] = [deck[j], deck[i]];
+    }
+    idx = 0;
+  }
+  function remaining() { return deck.filter(i => !mastered.has(i)); }
+  function render() {
+    $('kcard').classList.remove('flipped');
+    $('quiz-score').textContent =
+      '已掌握 ' + mastered.size + '/' + CARDS.length;
+    $('quiz-dots').innerHTML = CARDS.map((_, i) =>
+      '<span class="dot' + (mastered.has(i) ? ' done' : '') + '"></span>').join('');
+    const left = remaining();
+    if (!left.length) {
+      $('k-tag').textContent = '毕业';
+      $('k-q').textContent = '全部记住了！你是量子Kitty认证的小小学霸 🎓';
+      $('k-tag2').textContent = '毕业';
+      $('k-a').textContent = '去下面的试炼关卡露一手吧～';
+      $('quiz-actions').style.display = 'none';
+      return;
+    }
+    $('quiz-actions').style.display = '';
+    const c = CARDS[left[idx % left.length]];
+    $('kcard').dataset.ci = CARDS.indexOf(c);
+    $('k-tag').textContent = c.tag;
+    $('k-tag2').textContent = c.tag;
+    $('k-q').textContent = c.q;
+    $('k-a').textContent = c.a;
+  }
+  $('flip-zone').addEventListener('click', () =>
+    $('kcard').classList.toggle('flipped'));
+  $('k-got').addEventListener('click', () => {
+    mastered.add(Number($('kcard').dataset.ci));
+    save(); render();
+  });
+  $('k-again').addEventListener('click', () => { idx++; render(); });
+  $('k-shuffle').addEventListener('click', () => { shuffle(); render(); });
+  $('k-reset').addEventListener('click', () => {
+    mastered.clear(); save(); shuffle(); render();
+  });
+  shuffle(); render();
+})();
+
+/* ══════════ 吸顶导航高亮 ══════════ */
+(function () {
+  const links = [...document.querySelectorAll('.nav-link')];
+  const secs = ['learn', 'cards', 'game'].map(id => document.getElementById(id));
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY + 150;
+    let cur = 0;
+    secs.forEach((s, i) => { if (s && s.offsetTop <= y) cur = i; });
+    links.forEach((l, i) => l.classList.toggle('active', i === cur));
+  }, { passive: true });
+})();
+
+</script>
+</body>
+</html>

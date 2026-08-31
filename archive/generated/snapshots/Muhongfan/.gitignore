@@ -1,0 +1,13 @@
+.DS_Store
+.DStore
+**/ .DS_Store
+**/.DS_Store
+**/.DStore
+__pycache__/
+*.py[cod]
+.venv/
+.venv-clean-check/
+tools/
+ROADMAP.md
+spinq_private_key.pem
+.env

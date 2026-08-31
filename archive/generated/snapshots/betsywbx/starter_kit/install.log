@@ -1,0 +1,426 @@
+Using pip 26.2.1 from /Users/betsywang/Desktop/Projects/LoomQ-2026/.venv/lib/python3.10/site-packages/pip (python 3.10)
+Collecting git+https://github.com/OriginQ/QPanda-2.git#subdirectory=pyQPanda
+  Cloning https://github.com/OriginQ/QPanda-2.git to /private/var/folders/j8/6vgq8vsj22g640_l6fvgb02h0000gn/T/pip-req-build-4wh51cl5
+  Running command git version
+  git version 2.37.1 (Apple Git-137.1)
+  Running command git clone --filter=blob:none https://github.com/OriginQ/QPanda-2.git /private/var/folders/j8/6vgq8vsj22g640_l6fvgb02h0000gn/T/pip-req-build-4wh51cl5
+  Cloning into '/private/var/folders/j8/6vgq8vsj22g640_l6fvgb02h0000gn/T/pip-req-build-4wh51cl5'...
+  Updating files:   0% (2/1818)
+  Updating files:   1% (19/1818)
+  Updating files:   2% (37/1818)
+  Updating files:   3% (55/1818)
+  Updating files:   4% (73/1818)
+  Updating files:   5% (91/1818)
+  Updating files:   6% (110/1818)
+  Updating files:   7% (128/1818)
+  Updating files:   8% (146/1818)
+  Updating files:   9% (164/1818)
+  Updating files:  10% (182/1818)
+  Updating files:  11% (200/1818)
+  Updating files:  12% (219/1818)
+  Updating files:  13% (237/1818)
+  Updating files:  14% (255/1818)
+  Updating files:  15% (273/1818)
+  Updating files:  16% (291/1818)
+  Updating files:  17% (310/1818)
+  Updating files:  18% (328/1818)
+  Updating files:  19% (346/1818)
+  Updating files:  20% (364/1818)
+  Updating files:  21% (382/1818)
+  Updating files:  22% (400/1818)
+  Updating files:  23% (419/1818)
+  Updating files:  24% (437/1818)
+  Updating files:  25% (455/1818)
+  Updating files:  26% (473/1818)
+  Updating files:  27% (491/1818)
+  Updating files:  28% (510/1818)
+  Updating files:  29% (528/1818)
+  Updating files:  30% (546/1818)
+  Updating files:  31% (564/1818)
+  Updating files:  32% (582/1818)
+  Updating files:  33% (600/1818)
+  Updating files:  34% (619/1818)
+  Updating files:  35% (637/1818)
+  Updating files:  36% (655/1818)
+  Updating files:  37% (673/1818)
+  Updating files:  38% (691/1818)
+  Updating files:  39% (710/1818)
+  Updating files:  40% (728/1818)
+  Updating files:  41% (746/1818)
+  Updating files:  42% (764/1818)
+  Updating files:  43% (782/1818)
+  Updating files:  44% (800/1818)
+  Updating files:  45% (819/1818)
+  Updating files:  46% (837/1818)
+  Updating files:  47% (855/1818)
+  Updating files:  48% (873/1818)
+  Updating files:  49% (891/1818)
+  Updating files:  50% (909/1818)
+  Updating files:  51% (928/1818)
+  Updating files:  52% (946/1818)
+  Updating files:  53% (964/1818)
+  Updating files:  54% (982/1818)
+  Updating files:  55% (1000/1818)
+  Updating files:  56% (1019/1818)
+  Updating files:  57% (1037/1818)
+  Updating files:  58% (1055/1818)
+  Updating files:  59% (1073/1818)
+  Updating files:  60% (1091/1818)
+  Updating files:  61% (1109/1818)
+  Updating files:  62% (1128/1818)
+  Updating files:  63% (1146/1818)
+  Updating files:  64% (1164/1818)
+  Updating files:  65% (1182/1818)
+  Updating files:  66% (1200/1818)
+  Updating files:  67% (1219/1818)
+  Updating files:  68% (1237/1818)
+  Updating files:  69% (1255/1818)
+  Updating files:  70% (1273/1818)
+  Updating files:  71% (1291/1818)
+  Updating files:  72% (1309/1818)
+  Updating files:  73% (1328/1818)
+  Updating files:  74% (1346/1818)
+  Updating files:  75% (1364/1818)
+  Updating files:  76% (1382/1818)
+  Updating files:  77% (1400/1818)
+  Updating files:  78% (1419/1818)
+  Updating files:  79% (1437/1818)
+  Updating files:  80% (1455/1818)
+  Updating files:  81% (1473/1818)
+  Updating files:  82% (1491/1818)
+  Updating files:  83% (1509/1818)
+  Updating files:  84% (1528/1818)
+  Updating files:  85% (1546/1818)
+  Updating files:  86% (1564/1818)
+  Updating files:  87% (1582/1818)
+  Updating files:  88% (1600/1818)
+  Updating files:  89% (1619/1818)
+  Updating files:  90% (1637/1818)
+  Updating files:  91% (1655/1818)
+  Updating files:  92% (1673/1818)
+  Updating files:  93% (1691/1818)
+  Updating files:  94% (1709/1818)
+  Updating files:  95% (1728/1818)
+  Updating files:  96% (1746/1818)
+  Updating files:  97% (1764/1818)
+  Updating files:  98% (1782/1818)
+  Updating files:  99% (1800/1818)
+  Updating files: 100% (1818/1818)
+  Updating files: 100% (1818/1818), done.
+  Running command git rev-parse HEAD
+  c85615a702d6c6e6a2bb87839a298db2a5d64798
+  Resolved https://github.com/OriginQ/QPanda-2.git to commit c85615a702d6c6e6a2bb87839a298db2a5d64798
+  Running command git rev-parse HEAD
+  c85615a702d6c6e6a2bb87839a298db2a5d64798
+  Installing build dependencies: started
+  Running command installing build dependencies
+  Using pip 26.2.1 from /Users/betsywang/Desktop/Projects/LoomQ-2026/.venv/lib/python3.10/site-packages/pip (python 3.10)
+  Collecting setuptools>=40.8.0
+    Obtaining dependency information for setuptools>=40.8.0 from https://files.pythonhosted.org/packages/95/9c/c510029fc6ef33a6275cd2c5d3cecd6613dfd6aa401d57c54f1c18852ccf/setuptools-84.0.0-py3-none-any.whl.metadata
+    Using cached setuptools-84.0.0-py3-none-any.whl.metadata (6.6 kB)
+  Using cached setuptools-84.0.0-py3-none-any.whl (818 kB)
+  Installing collected packages: setuptools
+  ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+  torch 2.11.0 requires setuptools<82, but you have setuptools 84.0.0 which is incompatible.
+  Successfully installed setuptools-84.0.0
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Running command Getting requirements to build wheel
+  running egg_info
+  creating pyqpanda.egg-info
+  writing pyqpanda.egg-info/PKG-INFO
+  writing dependency_links to pyqpanda.egg-info/dependency_links.txt
+  writing requirements to pyqpanda.egg-info/requires.txt
+  writing top-level names to pyqpanda.egg-info/top_level.txt
+  writing manifest file 'pyqpanda.egg-info/SOURCES.txt'
+  reading manifest file 'pyqpanda.egg-info/SOURCES.txt'
+  adding license file 'LICENSE'
+  writing manifest file 'pyqpanda.egg-info/SOURCES.txt'
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Running command Preparing metadata (pyproject.toml)
+  running dist_info
+  creating /private/var/folders/j8/6vgq8vsj22g640_l6fvgb02h0000gn/T/pip-modern-metadata-w7675xt2/pyqpanda.egg-info
+  writing /private/var/folders/j8/6vgq8vsj22g640_l6fvgb02h0000gn/T/pip-modern-metadata-w7675xt2/pyqpanda.egg-info/PKG-INFO
+  writing dependency_links to /private/var/folders/j8/6vgq8vsj22g640_l6fvgb02h0000gn/T/pip-modern-metadata-w7675xt2/pyqpanda.egg-info/dependency_links.txt
+  writing requirements to /private/var/folders/j8/6vgq8vsj22g640_l6fvgb02h0000gn/T/pip-modern-metadata-w7675xt2/pyqpanda.egg-info/requires.txt
+  writing top-level names to /private/var/folders/j8/6vgq8vsj22g640_l6fvgb02h0000gn/T/pip-modern-metadata-w7675xt2/pyqpanda.egg-info/top_level.txt
+  writing manifest file '/private/var/folders/j8/6vgq8vsj22g640_l6fvgb02h0000gn/T/pip-modern-metadata-w7675xt2/pyqpanda.egg-info/SOURCES.txt'
+  reading manifest file '/private/var/folders/j8/6vgq8vsj22g640_l6fvgb02h0000gn/T/pip-modern-metadata-w7675xt2/pyqpanda.egg-info/SOURCES.txt'
+  adding license file 'LICENSE'
+  writing manifest file '/private/var/folders/j8/6vgq8vsj22g640_l6fvgb02h0000gn/T/pip-modern-metadata-w7675xt2/pyqpanda.egg-info/SOURCES.txt'
+  creating '/private/var/folders/j8/6vgq8vsj22g640_l6fvgb02h0000gn/T/pip-modern-metadata-w7675xt2/pyqpanda-3.8.4.dist-info'
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Requirement already satisfied: numpy>=1.17 in /Users/betsywang/Desktop/Projects/LoomQ-2026/.venv/lib/python3.10/site-packages (from pyqpanda==3.8.4) (1.26.4)
+Requirement already satisfied: matplotlib>=3.7 in /Users/betsywang/Desktop/Projects/LoomQ-2026/.venv/lib/python3.10/site-packages (from pyqpanda==3.8.4) (3.10.9)
+Requirement already satisfied: pydot in /Users/betsywang/Desktop/Projects/LoomQ-2026/.venv/lib/python3.10/site-packages (from pyqpanda==3.8.4) (4.0.1)
+Requirement already satisfied: scipy in /Users/betsywang/Desktop/Projects/LoomQ-2026/.venv/lib/python3.10/site-packages (from pyqpanda==3.8.4) (1.11.4)
+Requirement already satisfied: mypy<=0.971 in /Users/betsywang/Desktop/Projects/LoomQ-2026/.venv/lib/python3.10/site-packages (from pyqpanda==3.8.4) (0.971)
+Requirement already satisfied: requests in /Users/betsywang/Desktop/Projects/LoomQ-2026/.venv/lib/python3.10/site-packages (from pyqpanda==3.8.4) (2.34.2)
+Requirement already satisfied: snowland-smx in /Users/betsywang/Desktop/Projects/LoomQ-2026/.venv/lib/python3.10/site-packages (from pyqpanda==3.8.4) (1.0.0.post2)
+Requirement already satisfied: Cython in /Users/betsywang/Desktop/Projects/LoomQ-2026/.venv/lib/python3.10/site-packages (from pyqpanda==3.8.4) (3.2.9)
+Requirement already satisfied: gmssl in /Users/betsywang/Desktop/Projects/LoomQ-2026/.venv/lib/python3.10/site-packages (from pyqpanda==3.8.4) (3.2.2)
+Requirement already satisfied: networkx in /Users/betsywang/Desktop/Projects/LoomQ-2026/.venv/lib/python3.10/site-packages (from pyqpanda==3.8.4) (3.4.2)
+Requirement already satisfied: typing-extensions>=3.10 in /Users/betsywang/Desktop/Projects/LoomQ-2026/.venv/lib/python3.10/site-packages (from mypy<=0.971->pyqpanda==3.8.4) (4.16.0)
+Requirement already satisfied: mypy-extensions>=0.4.3 in /Users/betsywang/Desktop/Projects/LoomQ-2026/.venv/lib/python3.10/site-packages (from mypy<=0.971->pyqpanda==3.8.4) (1.1.0)
+Requirement already satisfied: tomli>=1.1.0 in /Users/betsywang/Desktop/Projects/LoomQ-2026/.venv/lib/python3.10/site-packages (from mypy<=0.971->pyqpanda==3.8.4) (2.4.1)
+Requirement already satisfied: contourpy>=1.0.1 in /Users/betsywang/Desktop/Projects/LoomQ-2026/.venv/lib/python3.10/site-packages (from matplotlib>=3.7->pyqpanda==3.8.4) (1.3.2)
+Requirement already satisfied: cycler>=0.10 in /Users/betsywang/Desktop/Projects/LoomQ-2026/.venv/lib/python3.10/site-packages (from matplotlib>=3.7->pyqpanda==3.8.4) (0.12.1)
+Requirement already satisfied: fonttools>=4.22.0 in /Users/betsywang/Desktop/Projects/LoomQ-2026/.venv/lib/python3.10/site-packages (from matplotlib>=3.7->pyqpanda==3.8.4) (4.63.0)
+Requirement already satisfied: kiwisolver>=1.3.1 in /Users/betsywang/Desktop/Projects/LoomQ-2026/.venv/lib/python3.10/site-packages (from matplotlib>=3.7->pyqpanda==3.8.4) (1.5.0)
+Requirement already satisfied: packaging>=20.0 in /Users/betsywang/Desktop/Projects/LoomQ-2026/.venv/lib/python3.10/site-packages (from matplotlib>=3.7->pyqpanda==3.8.4) (26.3)
+Requirement already satisfied: pillow>=8 in /Users/betsywang/Desktop/Projects/LoomQ-2026/.venv/lib/python3.10/site-packages (from matplotlib>=3.7->pyqpanda==3.8.4) (12.3.0)
+Requirement already satisfied: pyparsing>=3 in /Users/betsywang/Desktop/Projects/LoomQ-2026/.venv/lib/python3.10/site-packages (from matplotlib>=3.7->pyqpanda==3.8.4) (3.3.2)
+Requirement already satisfied: python-dateutil>=2.7 in /Users/betsywang/Desktop/Projects/LoomQ-2026/.venv/lib/python3.10/site-packages (from matplotlib>=3.7->pyqpanda==3.8.4) (2.9.0.post0)
+Requirement already satisfied: six>=1.5 in /Users/betsywang/Desktop/Projects/LoomQ-2026/.venv/lib/python3.10/site-packages (from python-dateutil>=2.7->matplotlib>=3.7->pyqpanda==3.8.4) (1.17.0)
+Requirement already satisfied: pycryptodomex in /Users/betsywang/Desktop/Projects/LoomQ-2026/.venv/lib/python3.10/site-packages (from gmssl->pyqpanda==3.8.4) (3.23.0)
+Requirement already satisfied: charset_normalizer<4,>=2 in /Users/betsywang/Desktop/Projects/LoomQ-2026/.venv/lib/python3.10/site-packages (from requests->pyqpanda==3.8.4) (3.5.1)
+Requirement already satisfied: idna<4,>=2.5 in /Users/betsywang/Desktop/Projects/LoomQ-2026/.venv/lib/python3.10/site-packages (from requests->pyqpanda==3.8.4) (3.18)
+Requirement already satisfied: urllib3<3,>=1.26 in /Users/betsywang/Desktop/Projects/LoomQ-2026/.venv/lib/python3.10/site-packages (from requests->pyqpanda==3.8.4) (2.7.0)
+Requirement already satisfied: certifi>=2023.5.7 in /Users/betsywang/Desktop/Projects/LoomQ-2026/.venv/lib/python3.10/site-packages (from requests->pyqpanda==3.8.4) (2026.7.22)
+Requirement already satisfied: cryptography in /Users/betsywang/Desktop/Projects/LoomQ-2026/.venv/lib/python3.10/site-packages (from snowland-smx->pyqpanda==3.8.4) (50.0.0)
+Requirement already satisfied: cffi>=2.0.0 in /Users/betsywang/Desktop/Projects/LoomQ-2026/.venv/lib/python3.10/site-packages (from cryptography->snowland-smx->pyqpanda==3.8.4) (2.1.1)
+Requirement already satisfied: pycparser in /Users/betsywang/Desktop/Projects/LoomQ-2026/.venv/lib/python3.10/site-packages (from cffi>=2.0.0->cryptography->snowland-smx->pyqpanda==3.8.4) (3.0)
+Building wheels for collected packages: pyqpanda
+  Building wheel for pyqpanda (pyproject.toml): started
+  Running command Building wheel for pyqpanda (pyproject.toml)
+  running bdist_wheel
+  running build
+  running build_py
+  creating build/lib
+  copying psi4_wrapper.py -> build/lib
+  creating build/lib/pyqpanda
+  copying pyqpanda/__init__.py -> build/lib/pyqpanda
+  copying pyqpanda/utils.py -> build/lib/pyqpanda
+  copying pyqpanda/optimizerTest.py -> build/lib/pyqpanda
+  creating build/lib/pyqpanda/Visualization
+  copying pyqpanda/Visualization/circuit_style.py -> build/lib/pyqpanda/Visualization
+  copying pyqpanda/Visualization/circuit_composer.py -> build/lib/pyqpanda/Visualization
+  copying pyqpanda/Visualization/bloch.py -> build/lib/pyqpanda/Visualization
+  copying pyqpanda/Visualization/pi_check.py -> build/lib/pyqpanda/Visualization
+  copying pyqpanda/Visualization/quantum_state_plot.py -> build/lib/pyqpanda/Visualization
+  copying pyqpanda/Visualization/__init__.py -> build/lib/pyqpanda/Visualization
+  copying pyqpanda/Visualization/bloch_plot.py -> build/lib/pyqpanda/Visualization
+  copying pyqpanda/Visualization/draw_probability_map.py -> build/lib/pyqpanda/Visualization
+  copying pyqpanda/Visualization/matplotlib_draw.py -> build/lib/pyqpanda/Visualization
+  copying pyqpanda/Visualization/parameterexpression.py -> build/lib/pyqpanda/Visualization
+  copying pyqpanda/Visualization/utils.py -> build/lib/pyqpanda/Visualization
+  copying pyqpanda/Visualization/exceptions.py -> build/lib/pyqpanda/Visualization
+  copying pyqpanda/Visualization/circuit_info.py -> build/lib/pyqpanda/Visualization
+  copying pyqpanda/Visualization/circuit_draw.py -> build/lib/pyqpanda/Visualization
+  creating build/lib/pyqpanda/OriginService
+  copying pyqpanda/OriginService/PilotOSMachine.py -> build/lib/pyqpanda/OriginService
+  copying pyqpanda/OriginService/QCloudPlot.py -> build/lib/pyqpanda/OriginService
+  copying pyqpanda/OriginService/__init__.py -> build/lib/pyqpanda/OriginService
+  copying pyqpanda/OriginService/QCloudMachine.py -> build/lib/pyqpanda/OriginService
+  creating build/lib/pyqpanda/Algorithm
+  copying pyqpanda/Algorithm/hamiltonian_simulation.py -> build/lib/pyqpanda/Algorithm
+  copying pyqpanda/Algorithm/__init__.py -> build/lib/pyqpanda/Algorithm
+  copying pyqpanda/Algorithm/fragments.py -> build/lib/pyqpanda/Algorithm
+  creating build/lib/pyqpanda/Hamiltonian
+  copying pyqpanda/Hamiltonian/__init__.py -> build/lib/pyqpanda/Hamiltonian
+  copying pyqpanda/Hamiltonian/chemistry_client.py -> build/lib/pyqpanda/Hamiltonian
+  creating build/lib/pyqpanda/TorchLayer
+  copying pyqpanda/TorchLayer/torchlayer.py -> build/lib/pyqpanda/TorchLayer
+  copying pyqpanda/TorchLayer/__init__.py -> build/lib/pyqpanda/TorchLayer
+  copying pyqpanda/TorchLayer/Torch_.py -> build/lib/pyqpanda/TorchLayer
+  copying pyqpanda/TorchLayer/cir_angle.py -> build/lib/pyqpanda/TorchLayer
+  copying pyqpanda/TorchLayer/basic_eng.py -> build/lib/pyqpanda/TorchLayer
+  creating build/lib/pyqpanda/Variational
+  copying pyqpanda/Variational/variational_qaoa_citcuit.py -> build/lib/pyqpanda/Variational
+  copying pyqpanda/Variational/__init__.py -> build/lib/pyqpanda/Variational
+  copying pyqpanda/Variational/VariationalCircuit.py -> build/lib/pyqpanda/Variational
+  creating build/lib/pyqpanda/Operator
+  copying pyqpanda/Operator/__init__.py -> build/lib/pyqpanda/Operator
+  creating build/lib/pyqpanda/Algorithm/demo
+  copying pyqpanda/Algorithm/demo/Deustch_Jozsa.py -> build/lib/pyqpanda/Algorithm/demo
+  copying pyqpanda/Algorithm/demo/__init__.py -> build/lib/pyqpanda/Algorithm/demo
+  copying pyqpanda/Algorithm/demo/Grover.py -> build/lib/pyqpanda/Algorithm/demo
+  creating build/lib/pyqpanda/Algorithm/QuantumGradient
+  copying pyqpanda/Algorithm/QuantumGradient/quantum_gradient.py -> build/lib/pyqpanda/Algorithm/QuantumGradient
+  copying pyqpanda/Algorithm/QuantumGradient/quantum_gradient_qaoa_test.py -> build/lib/pyqpanda/Algorithm/QuantumGradient
+  copying pyqpanda/Algorithm/QuantumGradient/__init__.py -> build/lib/pyqpanda/Algorithm/QuantumGradient
+  creating build/lib/pyqpanda/Algorithm/test
+  copying pyqpanda/Algorithm/test/test_utils.py -> build/lib/pyqpanda/Algorithm/test
+  copying pyqpanda/Algorithm/test/hamiltonian_simulation_test.py -> build/lib/pyqpanda/Algorithm/test
+  copying pyqpanda/Algorithm/test/test_script.py -> build/lib/pyqpanda/Algorithm/test
+  copying pyqpanda/Algorithm/test/quantum_gradient_qaoa_test.py -> build/lib/pyqpanda/Algorithm/test
+  copying pyqpanda/Algorithm/test/qaoa_test.py -> build/lib/pyqpanda/Algorithm/test
+  copying pyqpanda/Algorithm/test/__init__.py -> build/lib/pyqpanda/Algorithm/test
+  copying pyqpanda/Algorithm/test/qcl_test.py -> build/lib/pyqpanda/Algorithm/test
+  copying pyqpanda/Algorithm/test/vqe_test.py -> build/lib/pyqpanda/Algorithm/test
+  copying pyqpanda/Algorithm/test/qaoa_maxcut_test.py -> build/lib/pyqpanda/Algorithm/test
+  copying pyqpanda/Algorithm/test/state_preparation_test.py -> build/lib/pyqpanda/Algorithm/test
+  creating build/lib/pyqpanda/Algorithm/QuantumCircuitLearning
+  copying pyqpanda/Algorithm/QuantumCircuitLearning/quantum_circuit_learning.py -> build/lib/pyqpanda/Algorithm/QuantumCircuitLearning
+  copying pyqpanda/Algorithm/QuantumCircuitLearning/__init__.py -> build/lib/pyqpanda/Algorithm/QuantumCircuitLearning
+  creating build/lib/pyqpanda/Algorithm/VariationalQuantumEigensolver
+  copying pyqpanda/Algorithm/VariationalQuantumEigensolver/__init__.py -> build/lib/pyqpanda/Algorithm/VariationalQuantumEigensolver
+  copying pyqpanda/Algorithm/VariationalQuantumEigensolver/vqe.py -> build/lib/pyqpanda/Algorithm/VariationalQuantumEigensolver
+  creating build/lib/pyqpanda/Hamiltonian/test
+  copying pyqpanda/Hamiltonian/test/hamiltonian_test.py -> build/lib/pyqpanda/Hamiltonian/test
+  copying pyqpanda/Hamiltonian/test/__init__.py -> build/lib/pyqpanda/Hamiltonian/test
+  creating build/lib/pyqpanda/Hamiltonian/PauliOperator
+  copying pyqpanda/Hamiltonian/PauliOperator/__init__.py -> build/lib/pyqpanda/Hamiltonian/PauliOperator
+  running egg_info
+  writing pyqpanda.egg-info/PKG-INFO
+  writing dependency_links to pyqpanda.egg-info/dependency_links.txt
+  writing requirements to pyqpanda.egg-info/requires.txt
+  writing top-level names to pyqpanda.egg-info/top_level.txt
+  reading manifest file 'pyqpanda.egg-info/SOURCES.txt'
+  adding license file 'LICENSE'
+  writing manifest file 'pyqpanda.egg-info/SOURCES.txt'
+  installing to build/bdist.macosx-10.9-universal2/wheel
+  running install
+  running install_lib
+  creating build/bdist.macosx-10.9-universal2/wheel
+  copying build/lib/psi4_wrapper.py -> build/bdist.macosx-10.9-universal2/wheel/.
+  creating build/bdist.macosx-10.9-universal2/wheel/pyqpanda
+  creating build/bdist.macosx-10.9-universal2/wheel/pyqpanda/Visualization
+  copying build/lib/pyqpanda/Visualization/circuit_style.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/Visualization
+  copying build/lib/pyqpanda/Visualization/circuit_composer.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/Visualization
+  copying build/lib/pyqpanda/Visualization/bloch.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/Visualization
+  copying build/lib/pyqpanda/Visualization/pi_check.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/Visualization
+  copying build/lib/pyqpanda/Visualization/quantum_state_plot.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/Visualization
+  copying build/lib/pyqpanda/Visualization/__init__.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/Visualization
+  copying build/lib/pyqpanda/Visualization/bloch_plot.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/Visualization
+  copying build/lib/pyqpanda/Visualization/draw_probability_map.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/Visualization
+  copying build/lib/pyqpanda/Visualization/matplotlib_draw.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/Visualization
+  copying build/lib/pyqpanda/Visualization/parameterexpression.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/Visualization
+  copying build/lib/pyqpanda/Visualization/utils.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/Visualization
+  copying build/lib/pyqpanda/Visualization/exceptions.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/Visualization
+  copying build/lib/pyqpanda/Visualization/circuit_info.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/Visualization
+  copying build/lib/pyqpanda/Visualization/circuit_draw.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/Visualization
+  creating build/bdist.macosx-10.9-universal2/wheel/pyqpanda/OriginService
+  copying build/lib/pyqpanda/OriginService/PilotOSMachine.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/OriginService
+  copying build/lib/pyqpanda/OriginService/QCloudPlot.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/OriginService
+  copying build/lib/pyqpanda/OriginService/__init__.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/OriginService
+  copying build/lib/pyqpanda/OriginService/QCloudMachine.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/OriginService
+  copying build/lib/pyqpanda/__init__.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda
+  creating build/bdist.macosx-10.9-universal2/wheel/pyqpanda/Algorithm
+  creating build/bdist.macosx-10.9-universal2/wheel/pyqpanda/Algorithm/demo
+  copying build/lib/pyqpanda/Algorithm/demo/Deustch_Jozsa.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/Algorithm/demo
+  copying build/lib/pyqpanda/Algorithm/demo/__init__.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/Algorithm/demo
+  copying build/lib/pyqpanda/Algorithm/demo/Grover.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/Algorithm/demo
+  creating build/bdist.macosx-10.9-universal2/wheel/pyqpanda/Algorithm/QuantumGradient
+  copying build/lib/pyqpanda/Algorithm/QuantumGradient/quantum_gradient.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/Algorithm/QuantumGradient
+  copying build/lib/pyqpanda/Algorithm/QuantumGradient/quantum_gradient_qaoa_test.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/Algorithm/QuantumGradient
+  copying build/lib/pyqpanda/Algorithm/QuantumGradient/__init__.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/Algorithm/QuantumGradient
+  creating build/bdist.macosx-10.9-universal2/wheel/pyqpanda/Algorithm/test
+  copying build/lib/pyqpanda/Algorithm/test/test_utils.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/Algorithm/test
+  copying build/lib/pyqpanda/Algorithm/test/hamiltonian_simulation_test.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/Algorithm/test
+  copying build/lib/pyqpanda/Algorithm/test/test_script.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/Algorithm/test
+  copying build/lib/pyqpanda/Algorithm/test/quantum_gradient_qaoa_test.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/Algorithm/test
+  copying build/lib/pyqpanda/Algorithm/test/qaoa_test.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/Algorithm/test
+  copying build/lib/pyqpanda/Algorithm/test/__init__.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/Algorithm/test
+  copying build/lib/pyqpanda/Algorithm/test/qcl_test.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/Algorithm/test
+  copying build/lib/pyqpanda/Algorithm/test/vqe_test.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/Algorithm/test
+  copying build/lib/pyqpanda/Algorithm/test/qaoa_maxcut_test.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/Algorithm/test
+  copying build/lib/pyqpanda/Algorithm/test/state_preparation_test.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/Algorithm/test
+  copying build/lib/pyqpanda/Algorithm/hamiltonian_simulation.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/Algorithm
+  copying build/lib/pyqpanda/Algorithm/__init__.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/Algorithm
+  creating build/bdist.macosx-10.9-universal2/wheel/pyqpanda/Algorithm/QuantumCircuitLearning
+  copying build/lib/pyqpanda/Algorithm/QuantumCircuitLearning/quantum_circuit_learning.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/Algorithm/QuantumCircuitLearning
+  copying build/lib/pyqpanda/Algorithm/QuantumCircuitLearning/__init__.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/Algorithm/QuantumCircuitLearning
+  creating build/bdist.macosx-10.9-universal2/wheel/pyqpanda/Algorithm/VariationalQuantumEigensolver
+  copying build/lib/pyqpanda/Algorithm/VariationalQuantumEigensolver/__init__.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/Algorithm/VariationalQuantumEigensolver
+  copying build/lib/pyqpanda/Algorithm/VariationalQuantumEigensolver/vqe.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/Algorithm/VariationalQuantumEigensolver
+  copying build/lib/pyqpanda/Algorithm/fragments.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/Algorithm
+  copying build/lib/pyqpanda/utils.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda
+  copying build/lib/pyqpanda/optimizerTest.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda
+  creating build/bdist.macosx-10.9-universal2/wheel/pyqpanda/Hamiltonian
+  creating build/bdist.macosx-10.9-universal2/wheel/pyqpanda/Hamiltonian/test
+  copying build/lib/pyqpanda/Hamiltonian/test/hamiltonian_test.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/Hamiltonian/test
+  copying build/lib/pyqpanda/Hamiltonian/test/__init__.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/Hamiltonian/test
+  copying build/lib/pyqpanda/Hamiltonian/__init__.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/Hamiltonian
+  copying build/lib/pyqpanda/Hamiltonian/chemistry_client.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/Hamiltonian
+  creating build/bdist.macosx-10.9-universal2/wheel/pyqpanda/Hamiltonian/PauliOperator
+  copying build/lib/pyqpanda/Hamiltonian/PauliOperator/__init__.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/Hamiltonian/PauliOperator
+  creating build/bdist.macosx-10.9-universal2/wheel/pyqpanda/TorchLayer
+  copying build/lib/pyqpanda/TorchLayer/torchlayer.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/TorchLayer
+  copying build/lib/pyqpanda/TorchLayer/__init__.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/TorchLayer
+  copying build/lib/pyqpanda/TorchLayer/Torch_.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/TorchLayer
+  copying build/lib/pyqpanda/TorchLayer/cir_angle.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/TorchLayer
+  copying build/lib/pyqpanda/TorchLayer/basic_eng.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/TorchLayer
+  creating build/bdist.macosx-10.9-universal2/wheel/pyqpanda/Variational
+  copying build/lib/pyqpanda/Variational/variational_qaoa_citcuit.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/Variational
+  copying build/lib/pyqpanda/Variational/__init__.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/Variational
+  copying build/lib/pyqpanda/Variational/VariationalCircuit.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/Variational
+  creating build/bdist.macosx-10.9-universal2/wheel/pyqpanda/Operator
+  copying build/lib/pyqpanda/Operator/__init__.py -> build/bdist.macosx-10.9-universal2/wheel/./pyqpanda/Operator
+  running install_egg_info
+  Copying pyqpanda.egg-info to build/bdist.macosx-10.9-universal2/wheel/./pyqpanda-3.8.4-py3.10.egg-info
+  running install_scripts
+  creating build/bdist.macosx-10.9-universal2/wheel/pyqpanda-3.8.4.dist-info/WHEEL
+  creating '/private/var/folders/j8/6vgq8vsj22g640_l6fvgb02h0000gn/T/pip-ephem-wheel-cache-f42r6um2/wheels/a6/b5/83/de448a51aee82a38489cd164d235f7084e2e597bec66752f9a/tmpvqn_7te0/.tmp-4277m_2s/pyqpanda-3.8.4-py3-none-any.whl' and adding 'build/bdist.macosx-10.9-universal2/wheel' to it
+  adding 'psi4_wrapper.py'
+  adding 'pyqpanda/__init__.py'
+  adding 'pyqpanda/optimizerTest.py'
+  adding 'pyqpanda/utils.py'
+  adding 'pyqpanda/Algorithm/__init__.py'
+  adding 'pyqpanda/Algorithm/fragments.py'
+  adding 'pyqpanda/Algorithm/hamiltonian_simulation.py'
+  adding 'pyqpanda/Algorithm/QuantumCircuitLearning/__init__.py'
+  adding 'pyqpanda/Algorithm/QuantumCircuitLearning/quantum_circuit_learning.py'
+  adding 'pyqpanda/Algorithm/QuantumGradient/__init__.py'
+  adding 'pyqpanda/Algorithm/QuantumGradient/quantum_gradient.py'
+  adding 'pyqpanda/Algorithm/QuantumGradient/quantum_gradient_qaoa_test.py'
+  adding 'pyqpanda/Algorithm/VariationalQuantumEigensolver/__init__.py'
+  adding 'pyqpanda/Algorithm/VariationalQuantumEigensolver/vqe.py'
+  adding 'pyqpanda/Algorithm/demo/Deustch_Jozsa.py'
+  adding 'pyqpanda/Algorithm/demo/Grover.py'
+  adding 'pyqpanda/Algorithm/demo/__init__.py'
+  adding 'pyqpanda/Algorithm/test/__init__.py'
+  adding 'pyqpanda/Algorithm/test/hamiltonian_simulation_test.py'
+  adding 'pyqpanda/Algorithm/test/qaoa_maxcut_test.py'
+  adding 'pyqpanda/Algorithm/test/qaoa_test.py'
+  adding 'pyqpanda/Algorithm/test/qcl_test.py'
+  adding 'pyqpanda/Algorithm/test/quantum_gradient_qaoa_test.py'
+  adding 'pyqpanda/Algorithm/test/state_preparation_test.py'
+  adding 'pyqpanda/Algorithm/test/test_script.py'
+  adding 'pyqpanda/Algorithm/test/test_utils.py'
+  adding 'pyqpanda/Algorithm/test/vqe_test.py'
+  adding 'pyqpanda/Hamiltonian/__init__.py'
+  adding 'pyqpanda/Hamiltonian/chemistry_client.py'
+  adding 'pyqpanda/Hamiltonian/PauliOperator/__init__.py'
+  adding 'pyqpanda/Hamiltonian/test/__init__.py'
+  adding 'pyqpanda/Hamiltonian/test/hamiltonian_test.py'
+  adding 'pyqpanda/Operator/__init__.py'
+  adding 'pyqpanda/OriginService/PilotOSMachine.py'
+  adding 'pyqpanda/OriginService/QCloudMachine.py'
+  adding 'pyqpanda/OriginService/QCloudPlot.py'
+  adding 'pyqpanda/OriginService/__init__.py'
+  adding 'pyqpanda/TorchLayer/Torch_.py'
+  adding 'pyqpanda/TorchLayer/__init__.py'
+  adding 'pyqpanda/TorchLayer/basic_eng.py'
+  adding 'pyqpanda/TorchLayer/cir_angle.py'
+  adding 'pyqpanda/TorchLayer/torchlayer.py'
+  adding 'pyqpanda/Variational/VariationalCircuit.py'
+  adding 'pyqpanda/Variational/__init__.py'
+  adding 'pyqpanda/Variational/variational_qaoa_citcuit.py'
+  adding 'pyqpanda/Visualization/__init__.py'
+  adding 'pyqpanda/Visualization/bloch.py'
+  adding 'pyqpanda/Visualization/bloch_plot.py'
+  adding 'pyqpanda/Visualization/circuit_composer.py'
+  adding 'pyqpanda/Visualization/circuit_draw.py'
+  adding 'pyqpanda/Visualization/circuit_info.py'
+  adding 'pyqpanda/Visualization/circuit_style.py'
+  adding 'pyqpanda/Visualization/draw_probability_map.py'
+  adding 'pyqpanda/Visualization/exceptions.py'
+  adding 'pyqpanda/Visualization/matplotlib_draw.py'
+  adding 'pyqpanda/Visualization/parameterexpression.py'
+  adding 'pyqpanda/Visualization/pi_check.py'
+  adding 'pyqpanda/Visualization/quantum_state_plot.py'
+  adding 'pyqpanda/Visualization/utils.py'
+  adding 'pyqpanda-3.8.4.dist-info/licenses/LICENSE'
+  adding 'pyqpanda-3.8.4.dist-info/METADATA'
+  adding 'pyqpanda-3.8.4.dist-info/WHEEL'
+  adding 'pyqpanda-3.8.4.dist-info/top_level.txt'
+  adding 'pyqpanda-3.8.4.dist-info/RECORD'
+  removing build/bdist.macosx-10.9-universal2/wheel
+  Building wheel for pyqpanda (pyproject.toml): finished with status 'done'
+  Created wheel for pyqpanda: filename=pyqpanda-3.8.4-py3-none-any.whl size=136895 sha256=f4f02fa1a55a541cc9bf2799e672b9e69fb8c020b87de8d066248a7740544a35
+  Stored in directory: /private/var/folders/j8/6vgq8vsj22g640_l6fvgb02h0000gn/T/pip-ephem-wheel-cache-f42r6um2/wheels/a6/b5/83/de448a51aee82a38489cd164d235f7084e2e597bec66752f9a
+Successfully built pyqpanda
+Installing collected packages: pyqpanda
+Successfully installed pyqpanda-3.8.4

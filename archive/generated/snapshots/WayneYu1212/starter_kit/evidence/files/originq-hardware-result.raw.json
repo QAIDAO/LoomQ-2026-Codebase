@@ -1,0 +1,14 @@
+{
+  "provider": "Origin Quantum Cloud",
+  "job_id": "D0C7F490B43D9B04FDF19ABF3DB8B342",
+  "source_file": "evidence/files/originq-hardware-result.raw.csv",
+  "source_sha256": "934772c966c3e889d2615d6528ff9012e9e4dc31aa11d614be47510ed3263bb4",
+  "result_kind": "probabilities",
+  "probabilities": {
+    "00": 0.501,
+    "01": 0.012,
+    "10": 0.037,
+    "11": 0.45
+  },
+  "note": "Values are copied exactly from the user-exported provider CSV; no counts are present in the raw file."
+}

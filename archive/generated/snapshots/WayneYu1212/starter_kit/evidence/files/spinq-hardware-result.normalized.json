@@ -1,0 +1,21 @@
+{
+  "backend": "spinq_2_qubit_nmr_real_qpu",
+  "job_id": "G-260820-0008",
+  "shots": null,
+  "probabilities": {
+    "00": 0.42899157,
+    "01": 0.02230567,
+    "10": 0.04003949,
+    "11": 0.50866326
+  },
+  "bit_order": "provider_display_order",
+  "timestamp": "2026-08-20T19:15:15+08:00",
+  "meta": {
+    "provider": "spinq",
+    "device": "SpinQ Cloud 2-qubit NMR quantum computer",
+    "is_hardware": true,
+    "is_mock": false,
+    "source_result_kind": "ensemble_projection_probabilities",
+    "shots_note": "N/A: the provider task export exposes ensemble projection probabilities, not a discrete shot count"
+  }
+}

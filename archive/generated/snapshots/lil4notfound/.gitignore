@@ -1,0 +1,16 @@
+.DS_Store
+.DStore
+**/ .DS_Store
+**/.DS_Store
+**/.DStore
+__pycache__/
+*.py[cod]
+.venv/
+.env
+.env.*
+!.env.example
+*.log
+.coverage
+.pytest_cache/
+starter_kit/report.json
+starter_kit/.runtime/

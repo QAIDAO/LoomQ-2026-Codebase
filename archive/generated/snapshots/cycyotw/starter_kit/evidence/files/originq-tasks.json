@@ -1,0 +1,29 @@
+[
+  {
+    "name": "bell",
+    "task_id": "731D7567CEB49509DA142F74B40CE084",
+    "shots": 1000,
+    "backend_name": "WK_C180",
+    "qasm": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[2];\ncreg c[2];\nh q[0];\ncx q[0], q[1];\nmeasure q -> c;\n",
+    "originir": "QINIT 2\nCREG 2\nH q[0]\nCNOT q[0], q[1]\nMEASURE q[0], c[0]\nMEASURE q[1], c[1]\n",
+    "submitted_at": "2026-08-06T22:59:27+0800"
+  },
+  {
+    "name": "ghz3",
+    "task_id": "B7A65ED55321D0F043DB52F3D69D727E",
+    "shots": 4000,
+    "backend_name": "WK_C180",
+    "qasm": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[3];\ncreg c[3];\nh q[0];\ncx q[0],q[1];\ncx q[1],q[2];\nmeasure q -> c;\n",
+    "originir": "QINIT 3\nCREG 3\nH q[0]\nCNOT q[0], q[1]\nCNOT q[1], q[2]\nMEASURE q[0], c[0]\nMEASURE q[1], c[1]\nMEASURE q[2], c[2]\n",
+    "submitted_at": "2026-08-06T23:08:56+0800"
+  },
+  {
+    "name": "bitorder",
+    "task_id": "27AAC770A24287C75900621F818ABED7",
+    "shots": 4000,
+    "backend_name": "WK_C180",
+    "qasm": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[2];\ncreg c[2];\nx q[0];\nmeasure q[0] -> c[0];\nmeasure q[1] -> c[1];\n",
+    "originir": "QINIT 2\nCREG 2\nX q[0]\nMEASURE q[0], c[0]\nMEASURE q[1], c[1]\n",
+    "submitted_at": "2026-08-06T23:09:53+0800"
+  }
+]

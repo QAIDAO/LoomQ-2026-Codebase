@@ -1,0 +1,12 @@
+# Public evaluator baseline: no third-party dependencies.
+# Add project dependencies below and pin every version exactly, for example:
+amazon-braket-sdk==1.86.0
+amazon-braket-default-simulator==1.27.0
+qiskit==1.0.2
+spinqit==0.2.4
+antlr4-python3-runtime==4.9.2
+numpy==1.26.4
+scipy==1.11.4
+pyqpanda==3.8.4
+pyqpanda3==0.3.5
+flask==3.1.3

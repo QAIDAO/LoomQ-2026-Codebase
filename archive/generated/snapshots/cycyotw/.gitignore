@@ -1,0 +1,21 @@
+.DS_Store
+.DStore
+**/ .DS_Store
+**/.DS_Store
+**/.DStore
+__pycache__/
+*.py[cod]
+
+# 模型服务配置。loomq_cli.py 会自动读取这个文件，所以它必须永远进不了仓库——
+# 本仓库是公开的 fork，一旦提交等于把密钥发到全世界。
+.env
+.env.*
+!.env.example
+
+# loomq.sh 会在这里建虚拟环境（约 620 MB）。必须忽略，两个理由：
+# 提交归档上限是 100 MiB；而 prepare_submission.py 要求工作区干净，
+# 一个没被忽略的 .venv 会让预检直接判定为"有未提交改动"。
+.venv/
+.venv-hardware/
+.venv-spinq/
+venv/

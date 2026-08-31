@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LoomQ · 5 分钟，从零基础到真机第一个量子实验</title>
+<meta name="description" content="零量子背景也能在 5 分钟内理解叠加、干涉、纠缠，并在真实量子计算机上完成第一个实验。">
+<link rel="stylesheet" href="/app.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="brand">
+    <span class="brand-dot" aria-hidden="true"></span>
+    <span>LoomQ<br><small>量子接入平权计划</small></span>
+  </div>
+  <nav class="rail" id="rail" aria-label="课程进度"></nav>
+  <span class="rail-txt" id="rail-txt"></span>
+  <button class="icon-btn" id="btn-lab" title="自由实验室" aria-label="打开自由实验室">🧪</button>
+  <button class="icon-btn" id="btn-theme" title="切换深色/亮色" aria-label="切换深色或亮色主题">◐</button>
+</header>
+
+<main class="shell">
+  <!-- 引导课模式 -->
+  <div id="view-guide" class="split">
+    <section class="pane" aria-labelledby="guide-hd">
+      <div class="pane-hd">
+        <span class="brand-dot" style="width:16px;height:16px;border-radius:5px" aria-hidden="true"></span>
+        <h2 id="guide-hd">智能体引导</h2>
+      </div>
+      <div class="pane-bd">
+        <div id="chapter-tag"></div>
+        <h1 class="lesson-title" id="lesson-title"></h1>
+        <div id="chat" aria-live="polite"></div>
+        <div id="lesson-extra"></div>
+      </div>
+    </section>
+
+    <section class="pane sticky-pane" aria-labelledby="stage-hd">
+      <div class="pane-hd">
+        <h2 id="stage-hd">实验工作台</h2>
+        <span style="flex:1"></span>
+        <span id="stage-badge"></span>
+      </div>
+      <div class="pane-bd" id="stage"></div>
+    </section>
+  </div>
+
+  <!-- 自由实验室模式（结课后 / 顶栏可进） -->
+  <div id="view-lab" hidden>
+    <div class="lab-tabs" id="lab-tabs">
+      <button class="lab-tab on" data-t="run">▶ 跑电路</button>
+      <button class="lab-tab" data-t="gen">💬 说人话生成电路</button>
+      <button class="lab-tab" data-t="fix">🩹 修报错代码</button>
+      <button class="lab-tab" data-t="pick">🧭 帮我选平台</button>
+      <button class="lab-tab" data-t="cfg">⚙️ 配置</button>
+    </div>
+    <div class="split">
+      <section class="pane">
+        <div class="pane-hd"><h2 id="lab-hd">跑电路</h2></div>
+        <div class="pane-bd" id="lab-form"></div>
+      </section>
+      <section class="pane sticky-pane">
+        <div class="pane-hd"><h2>结果</h2><span style="flex:1"></span><span id="lab-badge"></span></div>
+        <div class="pane-bd" id="lab-out"></div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<div class="footbar">
+  <div class="footbar-in">
+    <button class="btn sec" id="btn-prev">← 上一步</button>
+    <span class="foot-hint" id="foot-hint"></span>
+    <button class="btn" id="btn-next">下一步 →</button>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="/app.js"></script>
+</body>
+</html>

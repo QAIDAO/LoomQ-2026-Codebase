@@ -1,0 +1,18 @@
+{
+  "duration": 48,
+  "assertions": [
+    {"kind":"appearsBy","selector":"#paths .detector","bySec":4},
+    {"kind":"before","a":"#path-a","b":"#paths .detector"},
+    {"kind":"appearsBy","selector":"#shots .bucket:first-child .ticket:first-child","bySec":12},
+    {"kind":"appearsBy","selector":"#bell .entangle","bySec":20},
+    {"kind":"appearsBy","selector":"#phase .merge","bySec":29},
+    {"kind":"appearsBy","selector":"#ghz .support-a","bySec":37},
+    {"kind":"appearsBy","selector":"#noise .jobs","bySec":46},
+    {"kind":"staysInFrame","selector":"#paths"},
+    {"kind":"staysInFrame","selector":"#shots"},
+    {"kind":"staysInFrame","selector":"#bell"},
+    {"kind":"staysInFrame","selector":"#phase"},
+    {"kind":"staysInFrame","selector":"#ghz"},
+    {"kind":"staysInFrame","selector":"#noise"}
+  ]
+}

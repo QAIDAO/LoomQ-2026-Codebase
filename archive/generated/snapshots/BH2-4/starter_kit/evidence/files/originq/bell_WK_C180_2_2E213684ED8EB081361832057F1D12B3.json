@@ -1,0 +1,23 @@
+{
+  "platform": "originq_cloud_qpu",
+  "backend": "WK_C180_2",
+  "job_id": "2E213684ED8EB081361832057F1D12B3",
+  "submitted_at_utc": "2026-08-15T15:23:14.509633+00:00",
+  "retrieved_at_utc": "2026-08-15T15:23:22.462544+00:00",
+  "shots": 1000,
+  "qasm_source": "starter_kit/circuits/bell.qasm",
+  "qasm_submitted": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[2];\ncreg c[2];\nh q[0];\ncx q[0], q[1];\nmeasure q[0] -> c[0];\nmeasure q[1] -> c[1];\n",
+  "counts": {
+    "00": 468,
+    "01": 7,
+    "10": 0,
+    "11": 525
+  },
+  "probabilities": {
+    "00": 0.4684147,
+    "01": 0.0068591,
+    "10": 2.4e-06,
+    "11": 0.5247236
+  },
+  "counts_note": "counts 由平台概率换算（若有）"
+}

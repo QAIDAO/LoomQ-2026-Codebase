@@ -1,0 +1,11 @@
+{
+  "platform": "OriginQ",
+  "backend": "originq_wukong",
+  "device": "origin_180",
+  "chip_id": 180,
+  "job_id": "FFA39889E42949045D8C2192EF616D50",
+  "shots": 1024,
+  "submitted_at": "2026-08-24T17:11:42.391820+00:00",
+  "qasm_path": "evidence/files/originq-bell.qasm",
+  "origin_ir_path": "evidence/files/originq-bell-originir.txt"
+}

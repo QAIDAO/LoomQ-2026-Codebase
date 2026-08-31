@@ -1,0 +1,18 @@
+.DS_Store
+.DStore
+**/ .DS_Store
+**/.DS_Store
+**/.DStore
+__pycache__/
+*.py[cod]
+*.env
+*.env.*
+*.pem
+*.key
+.aws/
+**/.aws/
+starter_kit/.hardware-private/
+# Legacy receipt locations retained to keep older local recovery state private.
+starter_kit/evidence/files/braket/*-prepared.json
+starter_kit/evidence/files/braket/*-submitted.json
+starter_kit/evidence/files/**/*-failed-*.json

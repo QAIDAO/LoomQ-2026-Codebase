@@ -1,0 +1,18 @@
+{
+  "backend": "originq_wukong_180_2_real_qpu",
+  "job_id": "B23E5B75D47D124A078F25B1C0083C2A",
+  "result_kind": "provider_probabilities",
+  "requested_shots": 1000,
+  "logical_qubits": 3,
+  "probabilities": {"000": 0.7027452, "001": 0.0000004, "010": 0.0001658, "011": 0.1872865, "100": 0.0012996, "101": 0.0000622, "110": 0.000328, "111": 0.108112},
+  "bit_order": "little",
+  "timestamp_status": "not exposed by the captured Runtime API response",
+  "meta": {
+    "provider": "originq",
+    "device": "Origin Wukong 180-2",
+    "is_hardware": true,
+    "is_mock": false,
+    "source_result_kind": "provider_probabilities",
+    "circuit_kind": "ghz3"
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "generated_by": "starter_kit/scripts/compute_hardware_statistics.py",
+  "method": {
+    "interval": "Wilson score interval, z=1.959963984540054 (95%)",
+    "formula": "center=(p+z^2/2n)/(1+z^2/n); half=z*sqrt(p(1-p)/n+z^2/4n^2)/(1+z^2/n)",
+    "scope": "sampling uncertainty only; does not model readout/depolarizing noise"
+  },
+  "jobs": [
+    {
+      "job_id": "D0C7F490B43D9B04FDF19ABF3DB8B342",
+      "device": "Origin Wukong 180-2 (legacy QCloud)",
+      "shots": 1000,
+      "circuit_kind": "bell",
+      "per_state": {
+        "00": {
+          "count": 501,
+          "p_hat": 0.501,
+          "wilson95": [
+            0.4701,
+            0.5319
+          ]
+        },
+        "01": {
+          "count": 12,
+          "p_hat": 0.012,
+          "wilson95": [
+            0.0069,
+            0.0209
+          ]
+        },
+        "10": {
+          "count": 37,
+          "p_hat": 0.037,
+          "wilson95": [
+            0.027,
+            0.0506
+          ]
+        },
+        "11": {
+          "count": 450,
+          "p_hat": 0.45,
+          "wilson95": [
+            0.4194,
+            0.481
+          ]
+        }
+      },
+      "target_support": {
+        "states": [
+          "00",
+          "11"
+        ],
+        "count": 951,
+        "p_hat": 0.951,
+        "wilson95": [
+          0.9358,
+          0.9627
+        ],
+        "note": "Wilson score 95% interval; separable/mixed baseline for Bell Z-basis target support is 0.5 only for a maximally-correlated classical mixture; the interval quantifies sampling uncertainty, not hardware noise."
+      }
+    },
+    {
+      "job_id": "2C68A9D3E2F6626B55EEC966DBC3CE2B",
+      "device": "Origin Wukong 180-2 (QPanda3 Runtime, WK_C180_2)",
+      "requested_shots": 1000,
+      "circuit_kind": "bell",
+      "source_result_kind": "provider_probabilities",
+      "probabilities": {
+        "00": 0.4578574,
+        "01": 0.0001633,
+        "10": 5.94e-05,
+        "11": 0.5419198
+      },
+      "statistical_inference": "not_computed",
+      "note": "Provider probability output is preserved as a point estimate. Raw shot counts were not exported, so Wilson intervals are not computed from rounded display counts."
+    },
+    {
+      "job_id": "B23E5B75D47D124A078F25B1C0083C2A",
+      "device": "Origin Wukong 180-2 (QPanda3 Runtime, WK_C180_2)",
+      "requested_shots": 1000,
+      "circuit_kind": "ghz3",
+      "source_result_kind": "provider_probabilities",
+      "probabilities": {
+        "000": 0.7027452,
+        "001": 4e-07,
+        "010": 0.0001658,
+        "011": 0.1872865,
+        "100": 0.0012996,
+        "101": 6.22e-05,
+        "110": 0.000328,
+        "111": 0.108112
+      },
+      "statistical_inference": "not_computed",
+      "note": "Provider probability output is preserved as a point estimate. Raw shot counts were not exported, so Wilson intervals are not computed from rounded display counts."
+    },
+    {
+      "job_id": "8575222FE2C04A065B38B9DEE5BA9AEE",
+      "device": "Origin Wukong 180-2 (QPanda3 Runtime, WK_C180_2)",
+      "requested_shots": 1000,
+      "circuit_kind": "multi",
+      "source_result_kind": "provider_probabilities",
+      "probabilities": {
+        "00": 0.2095924,
+        "01": 0.277605,
+        "10": 0.3016603,
+        "11": 0.2111422
+      },
+      "statistical_inference": "not_computed",
+      "note": "Provider probability output is preserved as a point estimate. Raw shot counts were not exported, so Wilson intervals are not computed from rounded display counts."
+    },
+    {
+      "job_id": "CA80432C12CFA2EBB33AC9A14C3AFF20",
+      "device": "Origin Wukong 180-2 (QPanda3 Runtime, WK_C180_2)",
+      "requested_shots": 1000,
+      "circuit_kind": "bell_xbasis",
+      "source_result_kind": "provider_probabilities",
+      "probabilities": {
+        "00": 0.5205638,
+        "01": 0.000221,
+        "10": 1e-07,
+        "11": 0.4792149
+      },
+      "statistical_inference": "not_computed",
+      "note": "Provider probability output is preserved as a point estimate. Raw shot counts were not exported, so Wilson intervals are not computed from rounded display counts."
+    },
+    {
+      "job_id": "5ABEAE903BE47DDEDCDEFABFBE162904",
+      "device": "Origin Wukong 180-2 (QPanda3 Runtime, WK_C180_2)",
+      "requested_shots": 1000,
+      "circuit_kind": "bell_ybasis",
+      "source_result_kind": "provider_probabilities",
+      "probabilities": {
+        "00": 0.0006148,
+        "01": 0.4752383,
+        "10": 0.524088,
+        "11": 5.88e-05
+      },
+      "statistical_inference": "not_computed",
+      "note": "Provider probability output is preserved as a point estimate. Raw shot counts were not exported, so Wilson intervals are not computed from rounded display counts."
+    }
+  ],
+  "spinq_note": {
+    "job_id": "G-260820-0008",
+    "note": "SpinQ NMR export provides ensemble projection probabilities without a discrete shot count; no binomial interval is computed (would require fabricating a shot count).",
+    "probabilities": {
+      "00": 0.42899157,
+      "01": 0.02230567,
+      "10": 0.04003949,
+      "11": 0.50866326
+    }
+  }
+}

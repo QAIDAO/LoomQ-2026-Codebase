@@ -1,0 +1,17 @@
+.git
+.gitignore
+.env
+.env.*
+.codex_reference
+*.pem
+*.key
+id_rsa*
+.venv
+venv
+__pycache__
+**/__pycache__
+*.py[cod]
+.pytest_cache
+.mypy_cache
+node_modules
+*.log

@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+
+[project]
+name = "loomq"
+version = "0.1.0"
+description = "Natural-language quantum and hybrid computing toolkit"
+requires-python = ">=3.9"
+
+
+[project.scripts]
+loomq = "loomq_cli:main"
+
+
+[tool.setuptools]
+py-modules = [
+    "loomq_cli",
+    "adapter",
+    "loomq_config",
+    "riscv_emulator",
+]
+
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = [
+    "l1*",
+    "l2*",
+    "l3*",
+    "hardware*",
+]

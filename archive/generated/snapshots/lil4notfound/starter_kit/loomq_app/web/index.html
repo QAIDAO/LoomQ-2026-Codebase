@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#f5f1e8">
+  <title>织络 · 把量子意图织成可运行的线路</title>
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+  <header class="masthead">
+    <a class="brand" href="/" aria-label="织络首页">
+      <span class="brand-loom" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+      <span><strong>织络</strong><small>量子计算通用中间层</small></span>
+    </a>
+    <div class="masthead-tools">
+      <div class="status"><i aria-hidden="true"></i><span>本地工作台</span></div>
+      <button id="clear-context" class="text-button compact" type="button" disabled>清空上下文</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="page-title">
+      <div class="hero-copy">
+        <p class="eyebrow">从一句话开始</p>
+        <h1 id="page-title">把一句想法，<br><em>织成</em>可以运行的量子任务</h1>
+        <p class="hero-intro">不需要先懂量子门，也不用先选择云平台。告诉织络你想得到什么；它会生成或修复线路、给出后端建议，并用本地理想模拟帮助你核验结果。</p>
+        <div class="flow-legend" aria-label="织络三步流程">
+          <span><i class="warp-dot"></i>意图是经线</span>
+          <span><i class="weft-dot"></i>建议是纬线</span>
+          <span><i class="pattern-dot"></i>本地验证成纹样</span>
+        </div>
+      </div>
+
+      <form id="chat-form" class="intent-card">
+        <div class="intent-heading">
+          <div>
+            <span>自动识别意图</span>
+            <label for="prompt">你想让量子计算做什么？</label>
+          </div>
+          <span id="detected-task" class="intent-badge" role="status">等待输入</span>
+        </div>
+
+        <div class="prompt-shell">
+          <textarea id="prompt" name="prompt" rows="6" maxlength="20000" placeholder="例如：生成一个 3 比特 GHZ 态，并测量所有比特" required></textarea>
+          <span class="prompt-tail" aria-hidden="true"></span>
+        </div>
+
+        <div class="composer-footer">
+          <div class="context-strip" aria-labelledby="context-title">
+            <span id="context-title">最近上下文</span>
+            <strong id="context-count">0 / 2 轮</strong>
+            <p id="context-summary">还没有历史。</p>
+          </div>
+          <div class="primary-actions">
+            <button id="submit-task" class="primary-button" type="submit">
+              <span>开始编织</span><i aria-hidden="true">穿梭</i>
+            </button>
+            <span class="shortcut">Ctrl / ⌘ + Enter</span>
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <section class="preset-section" aria-labelledby="preset-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">试一个例子</p>
+          <h2 id="preset-title">不知道从哪里开始？拿一个线团试试</h2>
+        </div>
+        <p>点击线团只会填入文字，你可以继续修改，确认后再开始编织。</p>
+      </div>
+
+      <div class="preset-grid">
+        <button id="use-example" class="yarn-preset yarn-indigo" type="button" data-example-index="0">
+          <img src="/assets/yarn-ball-indigo.png" alt="" width="384" height="384">
+          <span class="preset-copy">
+            <small>生成线路</small>
+            <strong>织一个 GHZ 态</strong>
+            <em>生成 3 比特 GHZ 态，并测量所有比特。</em>
+          </span>
+        </button>
+        <button class="yarn-preset yarn-green" type="button" data-example-index="1">
+          <img src="/assets/yarn-ball-green.png" alt="" width="384" height="384">
+          <span class="preset-copy">
+            <small>修复 QASM</small>
+            <strong>修好 Bell 线路</strong>
+            <em>粘贴一段报错的 Bell 态代码，请织络修好。</em>
+          </span>
+        </button>
+        <button class="yarn-preset yarn-violet" type="button" data-example-index="2">
+          <img src="/assets/yarn-ball-violet.png" alt="" width="384" height="384">
+          <span class="preset-copy">
+            <small>选择后端</small>
+            <strong>选择零排队平台</strong>
+            <em>15 比特、不想排队，应该选哪个平台？</em>
+          </span>
+        </button>
+      </div>
+    </section>
+
+    <div class="thread" aria-live="polite" aria-busy="false">
+      <section class="weaving-progress" aria-labelledby="progress-title">
+        <div class="section-heading progress-heading">
+          <div>
+            <p class="eyebrow">正在编织</p>
+            <h2 id="progress-title">正在理解并检查这次任务</h2>
+          </div>
+          <p>这里展示处理路径，不用虚假的百分比估算等待时间。</p>
+        </div>
+
+        <div class="weave-stages">
+          <article class="weave-stage" data-state="active">
+            <div class="stage-visual spin-visual" aria-hidden="true">
+              <i></i><i></i><i></i><b></b>
+            </div>
+            <div class="stage-copy">
+              <span>纺纱</span>
+              <h3>识别任务类型…</h3>
+              <p>判断你需要生成、修复、后端建议还是概念解释。</p>
+            </div>
+            <strong class="stage-state">处理中</strong>
+          </article>
+
+          <article class="weave-stage" data-state="active">
+            <div class="stage-visual warp-visual" aria-hidden="true">
+              <i></i><i></i><i></i><i></i><i></i><i></i><b></b>
+            </div>
+            <div class="stage-copy">
+              <span>穿经</span>
+              <h3>组织回答…</h3>
+              <p>生成或修复线路，或者按照约束筛选后端。</p>
+            </div>
+            <strong class="stage-state">处理中</strong>
+          </article>
+
+          <article class="weave-stage" data-state="active">
+            <div class="stage-visual shuttle-visual" aria-hidden="true">
+              <i></i><i></i><i></i><b></b>
+            </div>
+            <div class="stage-copy">
+              <span>引纬</span>
+              <h3>本地核验中…</h3>
+              <p>答案包含线路时，解析 QASM 并进行理想态模拟。</p>
+            </div>
+            <strong class="stage-state">处理中</strong>
+          </article>
+        </div>
+      </section>
+
+      <section class="result-workspace" aria-labelledby="result-title">
+        <div class="section-heading result-heading">
+          <div>
+            <p class="eyebrow">编织结果</p>
+            <h2 id="result-title">从答案到可核验的纹样</h2>
+          </div>
+          <button id="copy-answer" class="text-button" type="button" disabled>复制回答</button>
+        </div>
+
+        <div class="result-grid">
+          <section class="answer-panel" aria-label="织络中文解读">
+            <div class="panel-kicker"><span>中文解读</span><i aria-hidden="true"></i></div>
+            <div id="answer" class="answer empty"></div>
+            <section id="diagnostics" class="diagnostics" aria-label="人工复核与自动检查" hidden></section>
+          </section>
+
+          <div id="visualization" class="visualization" aria-label="线路与结果可视化"></div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <span>织络 · Built by lil4notfound</span>
+  </footer>
+
+  <script type="module" src="/assets/app.js"></script>
+</body>
+</html>

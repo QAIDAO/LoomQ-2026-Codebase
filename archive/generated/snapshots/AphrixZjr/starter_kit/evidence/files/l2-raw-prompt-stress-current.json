@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "run_date_utc": "2026-08-11",
+  "source_snapshot": "60af4a954e0058331a41e085bf252f93c39c0eac",
+  "command": "python experiments/l2_raw_prompt_stress.py --concurrency 4",
+  "model": "deepseek-v4-flash",
+  "credential_policy": "API key and base URL were process-local and are not stored in this artifact.",
+  "passed_case_ids": [
+    "generate:ghz3-v1", "generate:ghz3-v2", "generate:ghz3-v3",
+    "generate:ghz4-v1", "generate:ghz4-v2", "generate:ghz4-v3",
+    "generate:ghz5-v1", "generate:ghz5-v2", "generate:ghz5-v3",
+    "generate:ghz6-v1", "generate:ghz6-v2", "generate:ghz6-v3",
+    "generate:ghz7-v1", "generate:ghz7-v2", "generate:ghz7-v3",
+    "generate:ghz8-v1", "generate:ghz8-v2", "generate:ghz8-v3",
+    "generate:bell-v1", "generate:bell-v2", "generate:bell-v3",
+    "generate:bell-v4", "generate:bell-v5", "generate:bell-v6",
+    "repair:ghz3-v1", "repair:ghz3-v2", "repair:ghz3-v3",
+    "repair:ghz4-v1", "repair:ghz4-v2", "repair:ghz4-v3",
+    "repair:ghz5-v1", "repair:ghz5-v2", "repair:ghz5-v3",
+    "repair:ghz6-v1", "repair:ghz6-v2", "repair:ghz6-v3",
+    "repair:ghz7-v1", "repair:ghz7-v2", "repair:ghz7-v3",
+    "repair:ghz8-v1", "repair:ghz8-v2", "repair:ghz8-v3",
+    "repair:bell-v1", "repair:bell-v2", "repair:bell-v3",
+    "repair:bell-v4", "repair:bell-v5", "repair:bell-v6",
+    "backend:local15", "backend:sim26", "backend:free30",
+    "backend:free25", "backend:cloud34", "backend:qpu35",
+    "backend:qpu70", "backend:qpu9", "backend:cloud31",
+    "backend:spinq-sim", "backend:qpu8", "backend:braket-nowait",
+    "backend:origin-noacct", "backend:braket-paid", "backend:noacct24",
+    "backend:noacct26", "backend:paid30", "backend:cloud30",
+    "backend:sim24-nowait", "backend:noaws25", "backend:qpu72",
+    "backend:spinq-qpu", "backend:qpu-hours", "backend:free25-nowait"
+  ],
+  "summary": {
+    "passed": 72,
+    "failed": 0,
+    "total": 72,
+    "categories": {
+      "generate": {"passed": 24, "total": 24},
+      "repair": {"passed": 24, "total": 24},
+      "backend": {"passed": 24, "total": 24}
+    },
+    "concurrency": 4,
+    "wall_seconds": 117.609,
+    "throughput_cases_per_second": 0.612,
+    "latency_seconds": {"median": 5.961, "p95": 6.859, "maximum": 11.640}
+  }
+}

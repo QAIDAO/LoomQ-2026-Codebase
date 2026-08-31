@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>QuantumHelper · 导入线路</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+.tabs{display:flex;gap:8px;margin-bottom:16px}.tab{min-height:40px;padding:0 14px;border:1px solid rgba(25,26,30,.08);border-radius:11px;background:#fff;color:var(--text-2);cursor:pointer;font-size:13px;font-weight:700}.tab.active{border-color:var(--primary-line);background:var(--primary-soft);color:var(--primary-deep)}
+textarea{width:100%;min-height:270px;resize:vertical;padding:18px;border:1px solid rgba(25,26,30,.10);border-radius:16px;background:#fff;font-family:"SFMono-Regular",Consolas,monospace;font-size:13px;line-height:1.65}
+.upload{display:none;min-height:270px;align-items:center;justify-content:center;flex-direction:column;gap:12px;border:1px dashed rgba(94,99,182,.30);border-radius:16px;background:rgba(94,99,182,.04)}.upload.show{display:flex}
+.actions{display:flex;justify-content:flex-end;gap:10px;margin-top:18px}
+@media(max-width:760px){.actions{flex-direction:column-reverse}.actions .btn{width:100%}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header class="topbar">
+  <a class="brand" href="index.html"><div class="logo"><span></span></div>QuantumHelper</a>
+  <div class="top-meta"><span>已有量子线路</span><span class="mode"><i class="mode-dot"></i>任务引导</span></div>
+</header><nav class="progress cols-5" aria-label="流程"><div class="progress-step active"><i>1</i>导入线路</div><div class="progress-step"><i>2</i>检查线路</div><div class="progress-step"><i>3</i>选择后端</div><div class="progress-step"><i>4</i>运行</div><div class="progress-step"><i>5</i>结果</div></nav>
+
+<section class="hero">
+  <div class="eyebrow">直接从线路开始</div>
+  <h1>已经有线路的话，<span class="hero-em">不用重新描述任务</span></h1>
+  <p class="hero-text">粘贴或上传 OpenQASM。QuantumHelper 会先检查语法和线路规模，再进入后端选择。</p>
+</section>
+<main><section class="layout"><article class="card main-card"><div class="section-head"><div class="kicker">导入线路</div><h2 class="section-title">把 OpenQASM 放进来</h2></div><div class="section-body"><div class="tabs"><button class="tab active" id="pasteTab">粘贴代码</button><button class="tab" id="uploadTab">上传文件</button></div><textarea id="qasm">OPENQASM 2.0;
+include "qelib1.inc";
+qreg q[2];
+creg c[2];
+h q[0];
+cx q[0],q[1];
+measure q -> c;</textarea><div class="upload" id="upload"><strong>选择 .qasm 或 .txt 文件</strong><input type="file" id="fileInput" accept=".qasm,.txt,text/plain"></div><div class="actions"><a class="btn secondary" href="index.html">返回首页</a><button class="btn primary" id="checkBtn">检查线路 →</button></div></div></article><aside class="card side-card"><div class="kicker">检查内容</div><h2 class="side-title">先确认线路能不能运行</h2><div class="summary-list"><div class="summary-item"><span class="summary-name">格式</span><span class="summary-value" id="fmt">OpenQASM 2</span></div><div class="summary-item"><span class="summary-name">量子比特</span><span class="summary-value" id="qb">2</span></div><div class="summary-item"><span class="summary-name">测量</span><span class="summary-value" id="ms">已包含</span></div></div></aside></section></main></div>
+<script>
+function refresh(){const t=qasm.value,m=t.match(/qubit\[(\d+)\]/i)||t.match(/qreg\s+\w+\[(\d+)\]/i);qb.textContent=m?m[1]:'?';ms.textContent=/measure/i.test(t)?'已包含':'未发现';fmt.textContent=/OPENQASM\s+2/i.test(t)?'OpenQASM 2':'不支持的格式'}
+qasm.oninput=refresh;refresh();
+pasteTab.onclick=()=>{pasteTab.classList.add('active');uploadTab.classList.remove('active');qasm.style.display='block';upload.classList.remove('show')};
+uploadTab.onclick=()=>{uploadTab.classList.add('active');pasteTab.classList.remove('active');qasm.style.display='none';upload.classList.add('show')};
+fileInput.onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{qasm.value=r.result;refresh()};r.readAsText(f)};
+checkBtn.onclick=()=>{localStorage.setItem('qh_qasm',qasm.value);location.href='circuit-check.html'};
+</script></body>
+</html>

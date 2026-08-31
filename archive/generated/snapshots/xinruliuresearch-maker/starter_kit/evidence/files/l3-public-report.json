@@ -1,0 +1,18 @@
+{
+  "contract_version": "1.0",
+  "suite": "public",
+  "generated_at": "2026-08-21T00:33:13.990614+00:00",
+  "summary": {
+    "passed": 1,
+    "failed": 0,
+    "total": 1
+  },
+  "cases": [
+    {
+      "case_id": "l3:public-branch",
+      "status": "PASS",
+      "reason": "public branch semantics passed"
+    }
+  ],
+  "notice": "Public self-check only; this report is not an official score."
+}

@@ -1,0 +1,33 @@
+{
+  "platform": "originq",
+  "experiment": "bell",
+  "experiment_label": "贝尔态（两比特纠缠），不是 Deutsch 电路",
+  "backend": "本源悟空 180",
+  "job_id": "3C524A614AEFAA3130F2F3C139E9C8D8",
+  "status": "计算成功",
+  "created_at": "2026-08-14 14:51:57.173 +08:00",
+  "ended_at": "2026-08-14 14:52:03.874 +08:00",
+  "chip_runtime_seconds": 0.359,
+  "task_duration_seconds": 0.659,
+  "shots": 1000,
+  "logical_qubits": 4,
+  "mapping": true,
+  "physical_qubits": ["q[157]", "q[166]"],
+  "originir_logical": "H q[0]\nCNOT q[0],q[1]\nMEASURE q[0],c[0]\nMEASURE q[1],c[1]\n",
+  "originir_mapped": "RPHI q[157],(1.57079633,4.71238898)\nRPHI q[166],(1.57079633,4.71238898)\nBARRIER q[157],q[166]\nCZ q[157],q[166]\nBARRIER q[157],q[166]\nRPHI q[166],(1.57079633,0.48161940)\nBARRIER q[157],q[166]\nMEASURE q[166],c[1]\nMEASURE q[157],c[0]\n",
+  "probabilities": {
+    "00": 0.494,
+    "01": 0.028,
+    "10": 0.023,
+    "11": 0.455
+  },
+  "counts": {
+    "00": 494,
+    "01": 28,
+    "10": 23,
+    "11": 455
+  },
+  "official_csv": "starter_kit/evidence/files/originq-probability.csv",
+  "task_url": "https://console.originqc.com.cn/zh/jobs/3C524A614AEFAA3130F2F3C139E9C8D8",
+  "source": "OriginQ console export 3C524A614AEFAA3130F2F3C139E9C8D8_probability.csv; no API tokens"
+}

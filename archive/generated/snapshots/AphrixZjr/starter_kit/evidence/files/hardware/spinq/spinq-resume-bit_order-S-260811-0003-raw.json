@@ -1,0 +1,76 @@
+{
+  "schema_version": "loomq-spinq-hardware-v1",
+  "sdk_api": "spinqit-0.2.4",
+  "backend": "spinq-cloud-hardware",
+  "device_code": "triangulum_vp",
+  "job_id": "S-260811-0003",
+  "shots": 100,
+  "counts": {
+    "000": 0,
+    "110": 0,
+    "101": 0,
+    "010": 1,
+    "001": 0,
+    "111": 0,
+    "011": 99,
+    "100": 0
+  },
+  "counts_normalization": "probabilities-largest-remainder",
+  "bit_order": "little",
+  "recovered_existing_job": true,
+  "recovered_at": "2026-08-11T06:43:56.343331+00:00",
+  "qasm_sha256": "cb3b1bf9b858c4d854ede87cae9dae5c0c4a2cfa5cd583926ae88dae92a3c5ce",
+  "poll_count": 1,
+  "raw_result": {
+    "task_code": "S-260811-0003",
+    "counts": {
+      "000": 0,
+      "011": 0,
+      "110": 0,
+      "001": 0,
+      "100": 0,
+      "111": 0,
+      "101": 99,
+      "010": 0
+    },
+    "probabilities": {
+      "000": 0.0017049,
+      "011": 0.0032692,
+      "110": 0.00313563,
+      "001": 0.00382409,
+      "100": 0.00014706,
+      "111": 0.00099356,
+      "101": 0.98562674,
+      "010": 0.00129881
+    },
+    "shots": 100
+  },
+  "mode": "resume",
+  "circuit": "bit_order",
+  "local_preflight": {
+    "backend": "spinq-basic-simulator",
+    "counts": {
+      "011": 100
+    },
+    "expected_dominant_states": [
+      "011"
+    ],
+    "observed_dominant_states": [
+      "011"
+    ],
+    "dominant_states_match": true,
+    "expected_state_mass": 1.0,
+    "expected_state_threshold": 0.5,
+    "hardware_validation_passed": true
+  },
+  "expected_dominant_states": [
+    "011"
+  ],
+  "observed_dominant_states": [
+    "011"
+  ],
+  "dominant_states_match": true,
+  "expected_state_mass": 0.99,
+  "expected_state_threshold": 0.5,
+  "hardware_validation_passed": true
+}

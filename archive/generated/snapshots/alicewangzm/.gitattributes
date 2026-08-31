@@ -1,0 +1,11 @@
+# Normalize line endings. This repo is built and evaluated in a Linux
+# container, so store (and check out) text files with LF regardless of the
+# developer's OS or personal git config. This also silences the
+# "LF will be replaced by CRLF" warnings on Windows.
+* text=auto eol=lf
+
+# Keep truly binary assets untouched (no line-ending conversion).
+*.png binary
+*.jpg binary
+*.pdf binary
+*.docx binary

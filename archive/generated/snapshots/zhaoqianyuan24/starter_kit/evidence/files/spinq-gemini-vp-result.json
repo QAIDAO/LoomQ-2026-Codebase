@@ -1,0 +1,17 @@
+{
+  "status": 200,
+  "msg": "",
+  "simulation": {
+    "realMatrix": null,
+    "imagMatrix": null,
+    "module": null
+  },
+  "run": {
+    "realMatrix": null,
+    "imagMatrix": null,
+    "module": {
+      "0": 0.0,
+      "1": 1.0
+    }
+  }
+}

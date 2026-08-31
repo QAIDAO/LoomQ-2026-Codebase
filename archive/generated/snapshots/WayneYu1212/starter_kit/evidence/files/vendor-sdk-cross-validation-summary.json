@@ -1,0 +1,734 @@
+{
+  "seed": 1000,
+  "circuits": 40,
+  "targets": [
+    "spinq",
+    "originq",
+    "braket"
+  ],
+  "total": 120,
+  "passed": 120,
+  "failed": 0,
+  "rows": [
+    {
+      "circuit": "ghz5",
+      "target": "spinq",
+      "fidelity": 1.0,
+      "pass": true
+    },
+    {
+      "circuit": "ghz5",
+      "target": "originq",
+      "fidelity": 0.9965472787190051,
+      "pass": true
+    },
+    {
+      "circuit": "ghz5",
+      "target": "braket",
+      "fidelity": 0.9993094656224064,
+      "pass": true
+    },
+    {
+      "circuit": "qft",
+      "target": "spinq",
+      "fidelity": 1.0,
+      "pass": true
+    },
+    {
+      "circuit": "qft",
+      "target": "originq",
+      "fidelity": 0.9676400466302804,
+      "pass": true
+    },
+    {
+      "circuit": "qft",
+      "target": "braket",
+      "fidelity": 0.9708470996751719,
+      "pass": true
+    },
+    {
+      "circuit": "grover",
+      "target": "spinq",
+      "fidelity": 1.0,
+      "pass": true
+    },
+    {
+      "circuit": "grover",
+      "target": "originq",
+      "fidelity": 0.9816287307021208,
+      "pass": true
+    },
+    {
+      "circuit": "grover",
+      "target": "braket",
+      "fidelity": 0.9870092127788335,
+      "pass": true
+    },
+    {
+      "circuit": "random-0",
+      "target": "spinq",
+      "fidelity": 0.9990973489308725,
+      "pass": true
+    },
+    {
+      "circuit": "random-0",
+      "target": "originq",
+      "fidelity": 0.9763476328261521,
+      "pass": true
+    },
+    {
+      "circuit": "random-0",
+      "target": "braket",
+      "fidelity": 0.9660069258751613,
+      "pass": true
+    },
+    {
+      "circuit": "random-1",
+      "target": "spinq",
+      "fidelity": 0.9995294645254456,
+      "pass": true
+    },
+    {
+      "circuit": "random-1",
+      "target": "originq",
+      "fidelity": 0.9799800354243149,
+      "pass": true
+    },
+    {
+      "circuit": "random-1",
+      "target": "braket",
+      "fidelity": 0.9827994382156355,
+      "pass": true
+    },
+    {
+      "circuit": "random-2",
+      "target": "spinq",
+      "fidelity": 0.9993302247881252,
+      "pass": true
+    },
+    {
+      "circuit": "random-2",
+      "target": "originq",
+      "fidelity": 0.9864056536800871,
+      "pass": true
+    },
+    {
+      "circuit": "random-2",
+      "target": "braket",
+      "fidelity": 0.9915027921776163,
+      "pass": true
+    },
+    {
+      "circuit": "random-3",
+      "target": "spinq",
+      "fidelity": 1.0,
+      "pass": true
+    },
+    {
+      "circuit": "random-3",
+      "target": "originq",
+      "fidelity": 0.9875063885589289,
+      "pass": true
+    },
+    {
+      "circuit": "random-3",
+      "target": "braket",
+      "fidelity": 0.9911551623055157,
+      "pass": true
+    },
+    {
+      "circuit": "random-4",
+      "target": "spinq",
+      "fidelity": 0.9978105337159833,
+      "pass": true
+    },
+    {
+      "circuit": "random-4",
+      "target": "originq",
+      "fidelity": 0.9751064677951409,
+      "pass": true
+    },
+    {
+      "circuit": "random-4",
+      "target": "braket",
+      "fidelity": 0.9709799849482306,
+      "pass": true
+    },
+    {
+      "circuit": "random-5",
+      "target": "spinq",
+      "fidelity": 0.9995294645254456,
+      "pass": true
+    },
+    {
+      "circuit": "random-5",
+      "target": "originq",
+      "fidelity": 0.9827582886582837,
+      "pass": true
+    },
+    {
+      "circuit": "random-5",
+      "target": "braket",
+      "fidelity": 0.9899339730671428,
+      "pass": true
+    },
+    {
+      "circuit": "random-6",
+      "target": "spinq",
+      "fidelity": 0.9999999999999999,
+      "pass": true
+    },
+    {
+      "circuit": "random-6",
+      "target": "originq",
+      "fidelity": 0.9948208215986639,
+      "pass": true
+    },
+    {
+      "circuit": "random-6",
+      "target": "braket",
+      "fidelity": 0.9882588994378539,
+      "pass": true
+    },
+    {
+      "circuit": "random-7",
+      "target": "spinq",
+      "fidelity": 0.9999506065251627,
+      "pass": true
+    },
+    {
+      "circuit": "random-7",
+      "target": "originq",
+      "fidelity": 0.9857406995601586,
+      "pass": true
+    },
+    {
+      "circuit": "random-7",
+      "target": "braket",
+      "fidelity": 0.9965630543981302,
+      "pass": true
+    },
+    {
+      "circuit": "random-8",
+      "target": "spinq",
+      "fidelity": 0.9999999999999999,
+      "pass": true
+    },
+    {
+      "circuit": "random-8",
+      "target": "originq",
+      "fidelity": 0.987815651886055,
+      "pass": true
+    },
+    {
+      "circuit": "random-8",
+      "target": "braket",
+      "fidelity": 0.9796250824583962,
+      "pass": true
+    },
+    {
+      "circuit": "random-9",
+      "target": "spinq",
+      "fidelity": 0.9987210583472651,
+      "pass": true
+    },
+    {
+      "circuit": "random-9",
+      "target": "originq",
+      "fidelity": 0.9706592498497837,
+      "pass": true
+    },
+    {
+      "circuit": "random-9",
+      "target": "braket",
+      "fidelity": 0.9798690014067463,
+      "pass": true
+    },
+    {
+      "circuit": "random-10",
+      "target": "spinq",
+      "fidelity": 0.9995294645254456,
+      "pass": true
+    },
+    {
+      "circuit": "random-10",
+      "target": "originq",
+      "fidelity": 0.9881961819182212,
+      "pass": true
+    },
+    {
+      "circuit": "random-10",
+      "target": "braket",
+      "fidelity": 0.9897734628305457,
+      "pass": true
+    },
+    {
+      "circuit": "random-11",
+      "target": "spinq",
+      "fidelity": 0.9864611375762501,
+      "pass": true
+    },
+    {
+      "circuit": "random-11",
+      "target": "originq",
+      "fidelity": 0.9756063498859198,
+      "pass": true
+    },
+    {
+      "circuit": "random-11",
+      "target": "braket",
+      "fidelity": 0.9752722720930744,
+      "pass": true
+    },
+    {
+      "circuit": "random-12",
+      "target": "spinq",
+      "fidelity": 0.9989434178174555,
+      "pass": true
+    },
+    {
+      "circuit": "random-12",
+      "target": "originq",
+      "fidelity": 0.9806126144844627,
+      "pass": true
+    },
+    {
+      "circuit": "random-12",
+      "target": "braket",
+      "fidelity": 0.9784393832573884,
+      "pass": true
+    },
+    {
+      "circuit": "random-13",
+      "target": "spinq",
+      "fidelity": 0.9999999999999999,
+      "pass": true
+    },
+    {
+      "circuit": "random-13",
+      "target": "originq",
+      "fidelity": 0.9854949721076034,
+      "pass": true
+    },
+    {
+      "circuit": "random-13",
+      "target": "braket",
+      "fidelity": 0.9858405052522203,
+      "pass": true
+    },
+    {
+      "circuit": "random-14",
+      "target": "spinq",
+      "fidelity": 0.9993302247881253,
+      "pass": true
+    },
+    {
+      "circuit": "random-14",
+      "target": "originq",
+      "fidelity": 0.9657415396518821,
+      "pass": true
+    },
+    {
+      "circuit": "random-14",
+      "target": "braket",
+      "fidelity": 0.9904761025889195,
+      "pass": true
+    },
+    {
+      "circuit": "random-15",
+      "target": "spinq",
+      "fidelity": 0.9983221457528048,
+      "pass": true
+    },
+    {
+      "circuit": "random-15",
+      "target": "originq",
+      "fidelity": 0.9778137126890294,
+      "pass": true
+    },
+    {
+      "circuit": "random-15",
+      "target": "braket",
+      "fidelity": 0.9848317295415495,
+      "pass": true
+    },
+    {
+      "circuit": "random-16",
+      "target": "spinq",
+      "fidelity": 0.9995294645254456,
+      "pass": true
+    },
+    {
+      "circuit": "random-16",
+      "target": "originq",
+      "fidelity": 0.9896849149725534,
+      "pass": true
+    },
+    {
+      "circuit": "random-16",
+      "target": "braket",
+      "fidelity": 0.9798429971369256,
+      "pass": true
+    },
+    {
+      "circuit": "random-17",
+      "target": "spinq",
+      "fidelity": 0.9990955442081262,
+      "pass": true
+    },
+    {
+      "circuit": "random-17",
+      "target": "originq",
+      "fidelity": 0.977331551939733,
+      "pass": true
+    },
+    {
+      "circuit": "random-17",
+      "target": "braket",
+      "fidelity": 0.9819243238756793,
+      "pass": true
+    },
+    {
+      "circuit": "random-18",
+      "target": "spinq",
+      "fidelity": 1.0,
+      "pass": true
+    },
+    {
+      "circuit": "random-18",
+      "target": "originq",
+      "fidelity": 0.99056836976567,
+      "pass": true
+    },
+    {
+      "circuit": "random-18",
+      "target": "braket",
+      "fidelity": 0.9934643032317372,
+      "pass": true
+    },
+    {
+      "circuit": "random-19",
+      "target": "spinq",
+      "fidelity": 0.9999506065251625,
+      "pass": true
+    },
+    {
+      "circuit": "random-19",
+      "target": "originq",
+      "fidelity": 0.9720585672681384,
+      "pass": true
+    },
+    {
+      "circuit": "random-19",
+      "target": "braket",
+      "fidelity": 0.9812150690925219,
+      "pass": true
+    },
+    {
+      "circuit": "random-20",
+      "target": "spinq",
+      "fidelity": 0.9993635568679459,
+      "pass": true
+    },
+    {
+      "circuit": "random-20",
+      "target": "originq",
+      "fidelity": 0.9832307457154477,
+      "pass": true
+    },
+    {
+      "circuit": "random-20",
+      "target": "braket",
+      "fidelity": 0.9849994274531564,
+      "pass": true
+    },
+    {
+      "circuit": "random-21",
+      "target": "spinq",
+      "fidelity": 0.9930871681667846,
+      "pass": true
+    },
+    {
+      "circuit": "random-21",
+      "target": "originq",
+      "fidelity": 0.9732766789074583,
+      "pass": true
+    },
+    {
+      "circuit": "random-21",
+      "target": "braket",
+      "fidelity": 0.9687381743869579,
+      "pass": true
+    },
+    {
+      "circuit": "random-22",
+      "target": "spinq",
+      "fidelity": 0.9900331196017841,
+      "pass": true
+    },
+    {
+      "circuit": "random-22",
+      "target": "originq",
+      "fidelity": 0.9768311185970325,
+      "pass": true
+    },
+    {
+      "circuit": "random-22",
+      "target": "braket",
+      "fidelity": 0.984203452896189,
+      "pass": true
+    },
+    {
+      "circuit": "random-23",
+      "target": "spinq",
+      "fidelity": 0.9997720588688035,
+      "pass": true
+    },
+    {
+      "circuit": "random-23",
+      "target": "originq",
+      "fidelity": 0.9929518850442507,
+      "pass": true
+    },
+    {
+      "circuit": "random-23",
+      "target": "braket",
+      "fidelity": 0.9738310753880123,
+      "pass": true
+    },
+    {
+      "circuit": "random-24",
+      "target": "spinq",
+      "fidelity": 0.982150634528324,
+      "pass": true
+    },
+    {
+      "circuit": "random-24",
+      "target": "originq",
+      "fidelity": 0.9686690740503608,
+      "pass": true
+    },
+    {
+      "circuit": "random-24",
+      "target": "braket",
+      "fidelity": 0.9657871559704988,
+      "pass": true
+    },
+    {
+      "circuit": "random-25",
+      "target": "spinq",
+      "fidelity": 0.9998752786771312,
+      "pass": true
+    },
+    {
+      "circuit": "random-25",
+      "target": "originq",
+      "fidelity": 0.9963219743088573,
+      "pass": true
+    },
+    {
+      "circuit": "random-25",
+      "target": "braket",
+      "fidelity": 0.990913159649562,
+      "pass": true
+    },
+    {
+      "circuit": "random-26",
+      "target": "spinq",
+      "fidelity": 0.9998687656625451,
+      "pass": true
+    },
+    {
+      "circuit": "random-26",
+      "target": "originq",
+      "fidelity": 0.9949730119822005,
+      "pass": true
+    },
+    {
+      "circuit": "random-26",
+      "target": "braket",
+      "fidelity": 0.9973857741407021,
+      "pass": true
+    },
+    {
+      "circuit": "random-27",
+      "target": "spinq",
+      "fidelity": 0.9999506065251624,
+      "pass": true
+    },
+    {
+      "circuit": "random-27",
+      "target": "originq",
+      "fidelity": 0.9969554284895964,
+      "pass": true
+    },
+    {
+      "circuit": "random-27",
+      "target": "braket",
+      "fidelity": 0.9996757393060081,
+      "pass": true
+    },
+    {
+      "circuit": "random-28",
+      "target": "spinq",
+      "fidelity": 0.9960704520089441,
+      "pass": true
+    },
+    {
+      "circuit": "random-28",
+      "target": "originq",
+      "fidelity": 0.9504311527521654,
+      "pass": true
+    },
+    {
+      "circuit": "random-28",
+      "target": "braket",
+      "fidelity": 0.9602482346132264,
+      "pass": true
+    },
+    {
+      "circuit": "random-29",
+      "target": "spinq",
+      "fidelity": 0.9987561861947318,
+      "pass": true
+    },
+    {
+      "circuit": "random-29",
+      "target": "originq",
+      "fidelity": 0.9700562021218869,
+      "pass": true
+    },
+    {
+      "circuit": "random-29",
+      "target": "braket",
+      "fidelity": 0.97979347283864,
+      "pass": true
+    },
+    {
+      "circuit": "random-30",
+      "target": "spinq",
+      "fidelity": 0.9967103449600148,
+      "pass": true
+    },
+    {
+      "circuit": "random-30",
+      "target": "originq",
+      "fidelity": 0.9679763241239122,
+      "pass": true
+    },
+    {
+      "circuit": "random-30",
+      "target": "braket",
+      "fidelity": 0.9683502067772596,
+      "pass": true
+    },
+    {
+      "circuit": "random-31",
+      "target": "spinq",
+      "fidelity": 0.9856630424592141,
+      "pass": true
+    },
+    {
+      "circuit": "random-31",
+      "target": "originq",
+      "fidelity": 0.9652892145294371,
+      "pass": true
+    },
+    {
+      "circuit": "random-31",
+      "target": "braket",
+      "fidelity": 0.9672875501326852,
+      "pass": true
+    },
+    {
+      "circuit": "random-32",
+      "target": "spinq",
+      "fidelity": 0.9995298495332621,
+      "pass": true
+    },
+    {
+      "circuit": "random-32",
+      "target": "originq",
+      "fidelity": 0.9744257479543832,
+      "pass": true
+    },
+    {
+      "circuit": "random-32",
+      "target": "braket",
+      "fidelity": 0.9861777326746874,
+      "pass": true
+    },
+    {
+      "circuit": "random-33",
+      "target": "spinq",
+      "fidelity": 0.9989866233380853,
+      "pass": true
+    },
+    {
+      "circuit": "random-33",
+      "target": "originq",
+      "fidelity": 0.9806198913500278,
+      "pass": true
+    },
+    {
+      "circuit": "random-33",
+      "target": "braket",
+      "fidelity": 0.9771564551898181,
+      "pass": true
+    },
+    {
+      "circuit": "random-34",
+      "target": "spinq",
+      "fidelity": 0.9972497009783866,
+      "pass": true
+    },
+    {
+      "circuit": "random-34",
+      "target": "originq",
+      "fidelity": 0.9643303159278716,
+      "pass": true
+    },
+    {
+      "circuit": "random-34",
+      "target": "braket",
+      "fidelity": 0.9708990746416333,
+      "pass": true
+    },
+    {
+      "circuit": "random-35",
+      "target": "spinq",
+      "fidelity": 0.9973113139050942,
+      "pass": true
+    },
+    {
+      "circuit": "random-35",
+      "target": "originq",
+      "fidelity": 0.9611382583691949,
+      "pass": true
+    },
+    {
+      "circuit": "random-35",
+      "target": "braket",
+      "fidelity": 0.9666647661871576,
+      "pass": true
+    },
+    {
+      "circuit": "random-36",
+      "target": "spinq",
+      "fidelity": 0.9999999999999999,
+      "pass": true
+    },
+    {
+      "circuit": "random-36",
+      "target": "originq",
+      "fidelity": 0.9870237046835176,
+      "pass": true
+    },
+    {
+      "circuit": "random-36",
+      "target": "braket",
+      "fidelity": 0.97910365974712,
+      "pass": true
+    }
+  ]
+}

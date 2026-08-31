@@ -1,0 +1,8 @@
+FROM loomq-originq-evidence
+
+RUN apt-get update -o Acquire::Retries=5 \
+    && apt-get install -y --no-install-recommends libgomp1 \
+    && rm -rf /var/lib/apt/lists/*
+COPY requirements-originq-cloud.txt /tmp/requirements-originq-cloud.txt
+RUN /opt/originq-venv/bin/pip install --no-cache-dir -r /tmp/requirements-originq-cloud.txt
+COPY scripts/submit_originq_cloud_v3.py scripts/submit_originq_cloud_v3.py

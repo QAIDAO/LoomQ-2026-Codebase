@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "source_snapshot": "60af4a954e0058331a41e085bf252f93c39c0eac",
+  "provider": "SpinQ Cloud",
+  "platform": "triangulum_vp",
+  "analysis_method": {
+    "metric": "sum of normalized counts on the circuit's ideal Z-basis support",
+    "confidence_interval": "two-sided Wilson score interval",
+    "confidence_level": 0.95,
+    "z": 1.96,
+    "comparison_baseline": "uniform distribution over all measured bit strings",
+    "post_selection": false,
+    "readout_mitigation": false,
+    "rerun_or_result_selection": false
+  },
+  "jobs": [
+    {
+      "job_id": "S-260811-0002",
+      "circuit": "smoke_bell",
+      "shots": 100,
+      "ideal_support": ["00", "11"],
+      "support_count": 94,
+      "support_rate": 0.94,
+      "wilson_95": [0.875230, 0.972214],
+      "uniform_baseline": 0.5,
+      "margin_over_uniform": 0.44,
+      "conditional_ideal_distribution": {"00": 0.563830, "11": 0.436170}
+    },
+    {
+      "job_id": "S-260811-0003",
+      "circuit": "bit_order",
+      "shots": 100,
+      "ideal_support": ["011"],
+      "support_count": 99,
+      "support_rate": 0.99,
+      "wilson_95": [0.945512, 0.998233],
+      "uniform_baseline": 0.125,
+      "margin_over_uniform": 0.865
+    },
+    {
+      "job_id": "S-260811-0004",
+      "circuit": "formal_bell",
+      "shots": 8192,
+      "ideal_support": ["00", "11"],
+      "support_count": 6626,
+      "support_rate": 0.808837890625,
+      "wilson_95": [0.800179, 0.817208],
+      "uniform_baseline": 0.5,
+      "margin_over_uniform": 0.308837890625,
+      "conditional_ideal_distribution": {"00": 0.559765, "11": 0.440235}
+    },
+    {
+      "job_id": "S-260811-0005",
+      "circuit": "formal_ghz3",
+      "shots": 8192,
+      "ideal_support": ["000", "111"],
+      "support_count": 7004,
+      "support_rate": 0.85498046875,
+      "wilson_95": [0.847189, 0.862439],
+      "uniform_baseline": 0.25,
+      "margin_over_uniform": 0.60498046875,
+      "conditional_ideal_distribution": {"000": 0.502570, "111": 0.497430}
+    }
+  ],
+  "interpretation": [
+    "The deterministic mapping probe reaches 99/100 and is consistent with the archived q-to-c permutation. Because its prepared qubit state is the palindrome 101, this job alone cannot distinguish the two opposite overall provider-key directions.",
+    "The formal Bell and GHZ-3 results remain well above their uniform-support baselines, and their ideal states are the dominant observed peaks, but leakage is material and is reported without mitigation.",
+    "The installed SpinQ SDK states that triangulum_vp does not support a customized physical layout, so pair remapping was not available as a documented optimization for these jobs.",
+    "No job was rerun or selected to improve the reported support rate. S-260811-0003 was recovered by a read-only query after local normalization failed.",
+    "A Z-basis distribution alone does not certify entanglement or coherence; these measurements are hardware-execution evidence and consistency checks only."
+  ]
+}

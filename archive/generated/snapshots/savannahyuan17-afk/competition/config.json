@@ -1,0 +1,18 @@
+{
+  "upstream": "QAIDAO/LoomQ-2026",
+  "deadline_display": "2026-08-25 12:00 UTC+8",
+  "required_files": [
+    "starter_kit/submission.yaml",
+    "starter_kit/adapter.py",
+    "starter_kit/__init__.py",
+    "starter_kit/transpiler.py",
+    "starter_kit/simulator.py",
+    "starter_kit/engine.py",
+    "starter_kit/agent.py",
+    "starter_kit/compiler.py",
+    "starter_kit/llm_client.py",
+    "starter_kit/evaluator.py",
+    "starter_kit/requirements.txt",
+    "starter_kit/VERSION"
+  ]
+}

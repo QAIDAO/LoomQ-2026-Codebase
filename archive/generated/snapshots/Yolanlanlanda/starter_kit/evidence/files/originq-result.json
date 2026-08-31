@@ -1,0 +1,27 @@
+{
+  "backend": "originq_wukong",
+  "job_id": "E782EA6B30439B7EE5199CC750DD0382",
+  "shots": 1000,
+  "bit_order": "little",
+  "timestamp": "2026-08-20T17:47:34.735+08:00",
+  "probabilities": {
+    "00": 0.49,
+    "01": 0.034,
+    "10": 0.036,
+    "11": 0.44
+  },
+  "counts": {
+    "00": 490,
+    "01": 34,
+    "10": 36,
+    "11": 440
+  },
+  "meta": {
+    "source": "originq_wukong superconducting hardware (悟空), console-exported probability distribution",
+    "chip_runtime_s": 0.319,
+    "mapped_physical_qubits": [19, 29],
+    "line_optimization": true,
+    "mapping": true,
+    "note": "counts are derived from the console-exported probabilities x shots (rounded); the platform's native export is a probability distribution. Bell-state |00>+|11>: dominant peaks 00 and 11, noise on 01/10."
+  }
+}

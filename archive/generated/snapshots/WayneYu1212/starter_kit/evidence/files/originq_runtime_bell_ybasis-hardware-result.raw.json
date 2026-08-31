@@ -1,0 +1,21 @@
+{
+  "provider": "Origin Quantum Cloud (QPanda3 Runtime)",
+  "job_id": "5ABEAE903BE47DDEDCDEFABFBE162904",
+  "api_path": "qpanda3_runtime.RuntimeService.query_task",
+  "source_result_kind": "probabilities",
+  "raw_sdk_response": {
+    "errCode": 0,
+    "taskResult": [
+      "{\"value\":[0.0006148,0.4752383,0.524088,0.0000588],\"key\":[\"0x0\",\"0x1\",\"0x2\",\"0x3\"]}"
+    ],
+    "taskType": "sample",
+    "task_status": "finished"
+  },
+  "probabilities": {
+    "00": 0.0006148,
+    "01": 0.4752383,
+    "10": 0.524088,
+    "11": 5.88e-05
+  },
+  "note": "Raw JSON returned by qpanda3_runtime.RuntimeService.query_task on 2026-08-22 for the Bell Y-basis experiment (Sdg,Sdg then H,H before measurement; Sdg decomposed as S^3 for the SDK, functionally identical). No provider CSV is exported by this API path."
+}

@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0",
+  "protocol": "openai_chat_completions",
+  "formal_model": "deepseek-v4-flash",
+  "thinking": {
+    "type": "disabled"
+  },
+  "temperature": 0,
+  "stream": false,
+  "per_case": {
+    "timeout_seconds": 120
+  },
+  "formal_case_count": 12,
+  "organizer_api_available_before_scoring": false
+}

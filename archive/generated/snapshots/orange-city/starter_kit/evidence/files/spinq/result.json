@@ -1,0 +1,26 @@
+{
+  "backend": "spinq_cloud_qpu",
+  "platform": "triangulum_vp",
+  "job_id": "S-260824-0006",
+  "shots": 8192,
+  "counts": {
+    "00": 4052,
+    "11": 2755,
+    "01": 578,
+    "10": 806
+  },
+  "probabilities": {
+    "00": 0.49466329,
+    "11": 0.33633732,
+    "01": 0.07058837,
+    "10": 0.09841101
+  },
+  "bit_order": "little",
+  "timestamp": "2026-08-24T10:44:59Z",
+  "qasm": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[2];\ncreg c[2];\nh q[0];\ncx q[0],q[1];\nmeasure q -> c;\n",
+  "meta": {
+    "task": "loomq-bell",
+    "username": "czrczrczr",
+    "is_mock": false
+  }
+}

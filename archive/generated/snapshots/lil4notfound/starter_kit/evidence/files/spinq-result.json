@@ -1,0 +1,30 @@
+{
+  "backend": "spinq_cloud_qpu",
+  "job_id": "G-260825-0009",
+  "shots": 16384,
+  "counts": {
+    "00": 7169,
+    "01": 559,
+    "10": 1439,
+    "11": 7217
+  },
+  "bit_order": "little",
+  "timestamp": "2026-08-24T22:17:37.866Z",
+  "meta": {
+    "is_mock": false,
+    "platform": "SpinQ Cloud",
+    "platform_code": "gemini_vp",
+    "platform_name": "2Qubit核磁量子计算机",
+    "machine_code": "Gemini-pro-1",
+    "simulator": false,
+    "source_result": "spinq-result.raw.msgpack",
+    "source_format": "MessagePack probability map",
+    "raw_probabilities": {
+      "00": 0.43753909,
+      "01": 0.03413434,
+      "10": 0.08784618,
+      "11": 0.44048039
+    },
+    "counts_normalization": "largest-remainder allocation of probability * shots"
+  }
+}

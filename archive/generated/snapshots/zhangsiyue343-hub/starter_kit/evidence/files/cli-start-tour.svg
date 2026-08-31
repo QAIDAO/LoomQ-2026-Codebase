@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="653" viewBox="0 0 640 653">
+<rect width="100%" height="100%" rx="10" fill="#141821"/>
+<rect x="12" y="12" width="616" height="30" rx="6" fill="#232a36"/>
+<circle cx="32" cy="27" r="5.5" fill="#ff5f57"/>
+<circle cx="50" cy="27" r="5.5" fill="#febc2e"/>
+<circle cx="68" cy="27" r="5.5" fill="#28c840"/>
+<text x="86" y="31.5" font-family="Consolas,monospace" font-size="13" fill="#8b98ab">cli-start-tour.py</text>
+<g font-family="Consolas,'Courier New',monospace" font-size="13.5" fill="#d8dee9" xml:space="preserve">
+<text x="24" y="66" fill="#d8dee9"></text>
+<text x="24" y="83" fill="#ffd166">—— 第 1 步 · 30 秒概念 ——</text>
+<text x="24" y="100" fill="#d8dee9">  量子比特可以叠加（同时“部分 0 部分 1”），纠缠让多个比特联动，</text>
+<text x="24" y="117" fill="#d8dee9">  测量把它们坍缩成经典比特串。下面我们亲手走一遍这条链路。</text>
+<text x="24" y="134" fill="#ffd166">—— 第 2 步 · 用一句中文生成电路 ——</text>
+<text x="24" y="151" fill="#d8dee9">…</text>
+<text x="24" y="168" fill="#a5d6ff">已生成 3 比特 电路（来源：template，自验：distribution matches ideal (ghz)）</text>
+<text x="24" y="185" fill="#d8dee9"></text>
+<text x="24" y="202" fill="#d8dee9">```qasm</text>
+<text x="24" y="219" fill="#d8dee9">OPENQASM 2.0;</text>
+<text x="24" y="236" fill="#d8dee9">include &quot;qelib1.inc&quot;;</text>
+<text x="24" y="253" fill="#d8dee9">qreg q[3];</text>
+<text x="24" y="270" fill="#d8dee9">creg c[3];</text>
+<text x="24" y="287" fill="#d8dee9">h q[0];</text>
+<text x="24" y="304" fill="#d8dee9">cx q[0], q[1];</text>
+<text x="24" y="321" fill="#d8dee9">cx q[1], q[2];</text>
+<text x="24" y="338" fill="#d8dee9">measure q -&gt; c;</text>
+<text x="24" y="355" fill="#d8dee9">```</text>
+<text x="24" y="372" fill="#d8dee9"></text>
+<text x="24" y="389" fill="#d8dee9">  测量结果分布（2048 shots）：</text>
+<text x="24" y="406" fill="#79c0ff">  111      50.2%  ████████████</text>
+<text x="24" y="423" fill="#79c0ff">  000      49.8%  ████████████</text>
+<text x="24" y="440" fill="#d8dee9"></text>
+<text x="24" y="457" fill="#d8dee9"></text>
+<text x="24" y="474" fill="#ffd166">—— 第 3 步 · 本地运行并读结果 ——</text>
+<text x="24" y="491" fill="#d8dee9">  把上面的 QASM 存成文件后可用 :run ghz.qasm 执行；</text>
+<text x="24" y="508" fill="#d8dee9">  这里直接替你跑一次：</text>
+<text x="24" y="525" fill="#d8dee9">  贝尔态只会出现 00 和 11，各约 50%%：这就是纠缠的直接证据。</text>
+<text x="24" y="542" fill="#79c0ff">  00        51.66 % █████████████████</text>
+<text x="24" y="559" fill="#79c0ff">  11        48.34 % ███████████████</text>
+<text x="24" y="576" fill="#d8dee9"></text>
+<text x="24" y="593" fill="#ffd166">—— 第 4 步 · 接下来你可以 ——</text>
+<text x="24" y="610" fill="#d8dee9">  输入任意中文需求（如“生成 5 比特均匀叠加态并测量”）；</text>
+<text x="24" y="627" fill="#d8dee9">  :demo 看三个完整案例；:explain 查概念；:backend 选平台。</text>
+<text x="24" y="644" fill="#d8dee9">  遇到报错？把报错代码直接贴进来，我会修好并解释。</text>
+</g></svg>

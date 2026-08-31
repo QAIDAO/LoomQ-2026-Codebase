@@ -1,0 +1,17 @@
+.DS_Store
+.DStore
+**/ .DS_Store
+**/.DS_Store
+**/.DStore
+__pycache__/
+*.py[cod]
+
+starter_kit/.venv/
+
+starter_kit/.env.l2.local
+
+.venv-spinq/
+.venv/
+
+# 真实硬件体验与 L2 失败诊断均是本地运行产物，不进入比赛提交。
+starter_kit/runtime/

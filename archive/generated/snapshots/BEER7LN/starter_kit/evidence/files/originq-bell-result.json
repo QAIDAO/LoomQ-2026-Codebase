@@ -1,0 +1,45 @@
+{
+  "platform": "Origin Quantum Cloud",
+  "backend": "WK_C180_2",
+  "device": "Wukong 180 superconducting real QPU",
+  "website": "https://console.originqc.com.cn/zh/jobs/E03FE919C438D14649B3C227CB6979D8",
+  "job_id": "E03FE919C438D14649B3C227CB6979D8",
+  "timestamp": "2026-08-07T12:13:30.819000Z",
+  "task_status": 3,
+  "task_status_name": "FINISHED",
+  "shots": 1024,
+  "counts": {
+    "00": 509,
+    "01": 87,
+    "10": 43,
+    "11": 385
+  },
+  "counts_source": "platform_raw_counts",
+  "bit_order": "little",
+  "selected_physical_qubits": [
+    38,
+    47
+  ],
+  "timing_info": {
+    "aioTimeStamp": "9:1786104837703;8:1786104817601;7:1786104810874;2:1786104836121;",
+    "cirExecuteTime": "null",
+    "pulseTime": "null",
+    "qpuRunTime": "378",
+    "startTime": "1786104810819",
+    "totalTime": "26985"
+  },
+  "circuit": "starter_kit/evidence/files/originq-bell-executed.originir",
+  "raw_result": "starter_kit/evidence/files/originq-bell-raw-result.json",
+  "top_k_states": [
+    "00",
+    "11"
+  ],
+  "expected_top_k_states": [
+    "00",
+    "11"
+  ],
+  "top_k_match": true,
+  "source": "adapter.transpile(qasm, 'originq') -> OriginIR -> pyqpanda3 QProg -> QCloudService",
+  "executed_originir_sha256": "ed374f48b97fb94fb947211d37c6ab9e67728cd3ee9cf1e1337aa3d5c4ac41b8",
+  "raw_result_sha256": "0b4263a335085abc3609bd48322c3d5e7df3f58fd63f6dfbabf0f38a065ba30d"
+}

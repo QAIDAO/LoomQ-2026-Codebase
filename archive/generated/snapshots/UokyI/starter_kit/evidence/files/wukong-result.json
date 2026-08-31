@@ -1,0 +1,22 @@
+{
+  "backend": "originq_wukong",
+  "job_id": "A7C58462C717A6873FF1AEF6B8728213",
+  "shots": 8192,
+  "counts": {
+    "00": 4346,
+    "01": 0,
+    "10": 1,
+    "11": 3845
+  },
+  "bit_order": "little",
+  "timestamp": "2026-08-24T08:46:04Z",
+  "meta": {
+    "chip": "origin_180",
+    "raw_probabilities": {
+      "00": 0.5304425,
+      "01": 1e-06,
+      "10": 0.000174,
+      "11": 0.4693825
+    }
+  }
+}

@@ -1,0 +1,36 @@
+# 科学声明边界审计
+
+本文件约束评委材料、Web 与 README 中实验结论的措辞。原则是：代码验证证明软件语义；真机数据只支持它实际测量的物理量。
+
+| 对象 | 已有证据 | 允许结论 | 不作出的结论 |
+|---|---|---|---|
+| 本地 Bell 模拟 | 精确状态向量与 `00/11` counts | 程序在无噪声模型中产生目标分布 | 量子优势、真机保真度 |
+| P1 本地断言 | `evaluate_assertions()` 对本地精确分布执行 `support/parity/uniformity` | 断言在本地无噪声参考下通过或失败；证据模式明确标为 `exact-local` | 真机可达到同样结果，或断言失败的物理原因 |
+| P1 有限 shots 诊断 | `diagnose_observed_execution()` 与 Wilson / 总变差区间 | 观测数据与本地参考“相容 / 偏离 / 不确定”；区间只在提供 shots 时出现 | 将偏差归因到某种具体噪声机制、门保真度或硬件失效模式 |
+| Provider 概率诊断 | 平台直接返回的概率分布，无 shots | 如实报告为 `provider-probabilities`，不伪造置信区间 | 把 provider 概率冒充 shots、p-value 或统计显著性 |
+| 逐门状态故事 | 同一本地状态向量在每个门后的振幅、概率和相位；最多 8 比特 | 解释模拟器中的路径与相位干涉，支持手算和 CLI 复核 | 真机内部状态、实验层析结果或测量之外的直接观测 |
+| ProofTrace 局部重写 | 命名的相邻恒等式规则、source lineage 与重写记录 | 列出的局部 rewrite 在对应操作数上保持符号语义 | 任意规模的全局等价定理、真机保真度 |
+| ProofTrace whole-circuit validation | `compare_circuit_semantics()` 对 `<=8` qubit 线路重算全部计算基列，要求同一个全局相位、相同终端测量映射、`tol=1e-12` | 在声明边界内给出 bounded 数值 supporting evidence，可发现结构回读无法排除的相对相位错误 | 无界形式化证明、30 qubit 线路结论、真实硬件等价性 |
+| 反事实首门分歧实验 | Web `/api/compare` 复用 `diagnose_mutation()` 的精确态比较，最多 8 比特；寄存器或测量映射不同则报告结构不可比 | 给出 zero-input、global-phase 归一后的 first divergent gate、门对照、最大振幅差与最终分布 TV 距离 | 把时间上的首个模拟分歧冒充普遍因果推断；对 8 比特以上电路或真实硬件噪声作同样定位 |
+| 算法画廊 | 无噪声精确模拟：Deutsch–Jozsa `11=1`；两轮 Grover `P(111)=0.9453125`；QFT-4 测量均匀且振幅相位非平凡 | 这些归档电路在声明的理想模型和位序下具有对应分布/相位 | 量子加速、真实硬件优势，或任意 oracle/输入的普遍性能 |
+| Native IR 回读 | 三套独立语法 parser 重建与源完全相同的 `Circuit` | emitter 输出在所支持规范子集中没有丢门、换门、参数或测量映射；这是 mandatory structural round-trip | 厂商云服务当前在线或接受所有扩展语法 |
+| P2 Hybrid 回放 | `trace_hybrid()` 返回 `branch_path`、`machine_jump_taken`、`source_condition_true`、measurement provenance、寄存器增量和机器字 | 源码条件真假、机器跳转真假、bit 顺序 `c[0], c[1], …` 和寄存器变化可复核；Web 只是展示这些确定性证据 | 量子硬件噪声导致某条经典分支被选中，或未编码到 replay 输入的测量位在机器寄存器中被真实执行 |
+| P2 Hybrid 路径证书 | `certify_hybrid_paths()` 在记录的 `max_outcomes` 上限内穷举全部 `2**num_clbits` outcome，重放源码分支并列出路径总概率、不可达 outcome、死路径与终态寄存器差异；概率计算在 20 qubit 内使用稠密精确态、21–30 qubit 使用最多 1,000,000 个已占基态的稀疏精确态；`verify_hybrid_path_certificate()` 必须从源码本地重算 | 上述资源边界内的软件路径概率、不可达 outcome、死路径与终态寄存器差异可复核；这是本地证书，不是真机物理证据 | 把该证书外推为硬件路径选择机制、噪声来源或真机分支证明，或声称覆盖 30 qubit 以上及超过稀疏状态上限的线路 |
+| OriginQ Bell 真机 | job `9D182FA1EF76FF3807697CDF69DE7483`，Z 基 958/1000 位于 `00/11`，Wilson 95% 区间 `[0.9437,0.9688]` | 强 Z 基相关，与目标 Bell 电路的计算基支持集一致 | 单靠 Z 基数据证明纠缠、Bell 不等式或设备无关认证 |
+| SpinQ Bell 真机 | job `G-260824-0001`，provider MessagePack 投影概率，理想支持集概率 `0.66866048` | 全局主峰 `00` 是理想支持态；如实报告噪声和偏差 | 把投影概率伪造成 shots、置信区间或高保真双峰 |
+| L1 target 输出 | 同一 IR 的三种 emitter、公开 evaluator、PyQuafu 状态向量交叉验证 | 软件语义、位序和目标文本满足公开契约 | 对三家云端实时可用性或排队时间作保证 |
+| L2 本地协议 fixture | Web → OpenAI-compatible HTTP → `agent_chat` → 确定性验证 | 网络、路由、重试和验证链路可执行 | 真实 DeepSeek 成绩或正式私有 case 得分 |
+| L2 多轮 fixture | 严格交替且有长度上限的历史到达本地协议服务 | 多轮消息编排、边界拒绝和清空会话可执行 | 真实模型跨轮准确率或长期记忆能力 |
+| L2 500 例语料 | 固定种子、唯一 prompt、断点续跑和摘要校验 | 真实服务可复现执行的压力测试协议 | 未运行真实模型时声称 500 例通过 |
+| Prompt Contract | 从原 prompt 重建任务类型、目标态、后端约束和三个 SHA-256 摘要 | 这些字段在固定解析规则下可复核；内容变化会导致相应摘要变化 | 自然语言只有一种正确解释、推荐后端实时可用，或 SHA-256 摘要证明作者身份 |
+| Witness Chain | 同一源电路的稳定 `gN/mN` ID、规范 JSON SHA-256 与全量重算 | 四类本地软件证据共享同一源操作坐标；内容被修改时验证失败 | 作者身份签名、真机内部因果链、物理噪声来源或超出各子报告原有范围的结论 |
+| 量子 RISC-V | `custom-0` 机器字在扩展模拟器解码执行 | 自定义 ISA 编码与模拟器闭环 | 已在物理 RISC-V/量子控制硬件部署 |
+
+## 全局约束
+
+1. 模拟器结果不计入真机平台数量。
+2. 只有带 provider job ID、赛程时间、原始结果和实际电路的记录申报真机。
+3. “验证”必须说明验证对象：QASM 语义、目标分布、证据完整性或协议链路，不能含混地替代物理证明。
+4. 后端推荐只依据赛事固定能力表，不代表平台当前排队、价格或在线状态。
+5. PyQuafu 是独立开发 oracle，不是本赛题三个 target 的真机替代品。
+6. P1/P2 Web 面板复用本地确定性工具链；它们是公开可审的工程证据，不是对私有 12 例 DeepSeek 评测或未公开参赛材料的替代。

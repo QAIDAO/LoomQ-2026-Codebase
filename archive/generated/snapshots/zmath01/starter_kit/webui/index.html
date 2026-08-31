@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LoomQ - 量子接入平台</title>
+<style>
+  /* Material blue-white-black theme */
+  :root{
+    --bg:#F5F7FA; --card:#FFFFFF; --ink:#0B1220; --sub:#5C6B7A; --line:#E3E8F0;
+    --acc:#1565C0; --acc-soft:#E3F2FD; --ok:#0D47A1; --ok-soft:#E8F0FE;
+    --warn:#0D47A1; --warn-soft:#EEF3FB; --chip:#F1F4F9; --black:#0B1220;
+    --shadow:0 1px 2px rgba(11,18,32,.06),0 4px 12px rgba(11,18,32,.05);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);
+    font-family:"PingFang SC","Microsoft YaHei","Noto Sans CJK SC",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    font-size:15px;line-height:1.55}
+  a{color:var(--acc)}
+  button{font-family:inherit;cursor:pointer}
+
+  /* ---------- layout ---------- */
+  .app{display:flex;min-height:100vh}
+  nav{width:216px;background:#fff;border-right:1px solid var(--line);padding:18px 12px;position:sticky;top:0;height:100vh;overflow:auto}
+  .brand{display:flex;align-items:center;gap:10px;padding:6px 8px 14px;border-bottom:1px solid var(--line);margin-bottom:12px}
+  .brand .logo{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#1565C0,#0D47A1);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:16px}
+  .brand b{font-size:16px;display:block;line-height:1.2}
+  .brand small{color:var(--sub);font-size:11px}
+  nav .item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;color:var(--sub);text-decoration:none;margin-bottom:4px;font-weight:500;transition:.15s}
+  nav .item:hover{background:var(--chip);color:var(--ink)}
+  nav .item.on{background:var(--acc-soft);color:var(--acc);font-weight:700}
+  nav .item .ic{width:20px;text-align:center}
+  nav .hint{margin:18px 6px 6px;font-size:11px;color:var(--sub)}
+  .status-card{background:var(--chip);border-radius:10px;padding:10px 12px;font-size:12px;color:var(--sub);margin-top:10px}
+  .status-card b{color:var(--ink)}
+  main{flex:1;padding:26px 34px 80px;min-width:0}
+  body{overflow-x:hidden}
+
+  /* ---------- common ---------- */
+  h1{font-size:23px;margin:0 0 4px}
+  .subtitle{color:var(--sub);margin:0 0 20px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin-bottom:16px;box-shadow:var(--shadow)}
+  .card h2{margin:0 0 10px;font-size:16px}
+  .row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .btn{background:var(--acc);color:#fff;border:none;border-radius:8px;padding:8px 15px;font-size:14px;font-weight:600;transition:.15s}
+  .btn:hover{filter:brightness(1.08)}
+  .btn:disabled{background:#C3CFE0;cursor:not-allowed}
+  .btn.ghost{background:#fff;color:var(--acc);border:1px solid var(--acc)}
+  .btn.ghost:hover{background:var(--acc-soft)}
+  .btn.small{padding:5px 10px;font-size:13px}
+  .chip{display:inline-block;background:var(--chip);border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:12px;color:var(--sub);cursor:pointer;transition:.15s}
+  .chip:hover{border-color:var(--acc);color:var(--acc)}
+  .chip.sel{background:var(--acc-soft);border-color:var(--acc);color:var(--acc);font-weight:600}
+  textarea{width:100%;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:13px;border:1px solid var(--line);border-radius:10px;padding:12px;resize:vertical;min-height:150px;background:#FAFBFF;color:var(--ink)}
+  textarea:focus{outline:2px solid var(--acc-soft);border-color:var(--acc)}
+  .muted{color:var(--sub);font-size:13px}
+  .tag{display:inline-block;font-size:11px;border-radius:6px;padding:2px 8px;font-weight:600}
+  .tag.ok{background:var(--ok-soft);color:var(--ok)}
+  .tag.warn{background:var(--warn-soft);color:var(--warn)}
+  .tag.acc{background:var(--acc-soft);color:var(--acc)}
+
+  /* ---------- hero ---------- */
+  .hero{background:linear-gradient(135deg,#1565C0,#0D47A1);color:#fff;border-radius:14px;padding:24px 28px;margin-bottom:16px}
+  .hero h1{margin:0 0 6px;font-size:24px}
+  .hero p{margin:0;opacity:.92;max-width:720px}
+  .hero .steps{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
+  .hero .step{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);border-radius:8px;padding:6px 12px;font-size:13px;font-weight:600}
+
+  /* ---------- tour (removed) ---------- */
+  .concept{display:flex;gap:12px;align-items:flex-start;background:var(--chip);border-radius:10px;padding:10px 12px;margin-top:8px}
+  .concept b{display:block;margin-bottom:2px}
+  .concept p{margin:0;font-size:13px;color:var(--sub)}
+
+  /* ---------- chat ---------- */
+  .chatbox{display:flex;flex-direction:column;gap:10px;max-height:420px;overflow:auto;padding:4px 2px}
+  .msg{max-width:82%;padding:10px 14px;border-radius:12px;font-size:14px;white-space:pre-wrap;word-break:break-word}
+  .msg.user{align-self:flex-end;background:var(--acc);color:#fff;border-bottom-right-radius:4px}
+  .msg.bot{align-self:flex-start;background:var(--chip);border-bottom-left-radius:4px}
+  .msg.sys{align-self:center;background:var(--warn-soft);color:var(--warn);font-size:13px;max-width:92%}
+  .quick{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+  .chatinput{display:flex;gap:10px;margin-top:12px}
+  .chatinput input,.chatinput textarea{flex:1;border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:14px;font-family:inherit}
+  .chatinput textarea{min-height:46px;max-height:180px;resize:vertical}
+  .chatinput input:focus,.chatinput textarea:focus{outline:2px solid var(--acc-soft);border-color:var(--acc)}
+  details.agentcfg{background:var(--chip);border-radius:10px;padding:8px 12px;margin-bottom:10px;font-size:13px}
+  details.agentcfg summary{cursor:pointer;font-weight:500}
+  details.agentcfg input{border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-size:13px;background:#fff}
+  pre.qasm{background:#0B1220;color:#DCE7FF;border-radius:10px;padding:12px;font-size:12px;overflow:auto;white-space:pre-wrap}
+  pre.ir{background:#FAFBFF;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:12px;overflow:auto;white-space:pre-wrap}
+  pre.circuit-pre{background:#FAFBFF;border:1px solid var(--line);border-radius:10px;padding:10px 12px;
+    white-space:pre;overflow-x:auto;overflow-y:hidden;
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"DejaVu Sans Mono","Liberation Mono",monospace;
+    font-size:13px;line-height:1.3;color:#0B1220}
+
+  /* ---------- graphical circuit editor (3-column lab) ---------- */
+  .lab3{display:grid;grid-template-columns:172px minmax(0,1fr) 300px;gap:14px;align-items:start}
+  .lab3 .card{margin-bottom:0}
+  .lab-right{position:sticky;top:14px}
+  .gates{display:flex;flex-direction:column;gap:6px}
+  .gatebtn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:7px 8px;font-size:13px;
+    font-family:ui-monospace,SFMono-Regular,Consolas,monospace;cursor:grab;text-align:center;
+    transition:.15s;color:var(--ink)}
+  .gatebtn:hover{border-color:var(--acc);background:var(--acc-soft);color:var(--acc)}
+  .gatebtn:active{cursor:grabbing}
+  .gatebtn.cfg{border-style:dashed}
+  .circ-grid{display:grid;gap:2px;min-width:max-content}
+  .qwire{display:flex;align-items:center;font-family:ui-monospace,monospace;font-size:12px;color:var(--sub);padding-left:2px}
+  .cell{height:44px;border:1px dashed transparent;border-radius:6px;display:flex;align-items:center;
+    justify-content:center;position:relative}
+  .cell::before{content:"";position:absolute;left:0;right:0;top:50%;height:2px;background:var(--line);z-index:0}
+  .cell.drag-over{border-color:var(--acc);background:var(--acc-soft)}
+  .gchip{background:var(--acc-soft);border:1px solid var(--acc);border-radius:6px;padding:2px 7px;
+    font-family:ui-monospace,monospace;font-size:12px;color:var(--acc);cursor:pointer;user-select:none;z-index:1;white-space:nowrap}
+  .gchip:hover{background:#fff;box-shadow:0 0 0 2px var(--acc-soft)}
+  .gctl{width:12px;height:12px;border-radius:50%;background:#0B1220;z-index:1}
+  .gtgt{width:18px;height:18px;border:2px solid var(--acc);border-radius:50%;z-index:1;
+    display:flex;align-items:center;justify-content:center;color:var(--acc);font-size:14px;font-weight:700;line-height:1}
+  .gtgt.dim{opacity:.35}
+  .gcap{position:absolute;top:1px;right:2px;font-family:ui-monospace,monospace;font-size:9px;color:var(--acc);
+    z-index:1;background:#fff;padding:0 2px;border-radius:3px;border:1px solid var(--line)}
+  .vlink{position:absolute;left:calc(50% - 1px);width:2px;background:var(--acc);z-index:1}
+  .pick-hint{margin-bottom:8px;font-size:13px;background:var(--acc-soft);border:1px solid var(--acc);
+    border-radius:8px;padding:8px 12px;color:var(--acc)}
+  .pick-ctl{width:16px;height:16px;border-radius:50%;background:#fff;border:2px solid var(--acc);color:var(--acc);
+    font-weight:700;z-index:1;display:flex;align-items:center;justify-content:center;font-size:11px;cursor:pointer}
+  .pick-ctl.sel{background:var(--acc);color:#fff}
+  .cell.pick-t{background:var(--acc-soft)}
+  .rh-item{border:1px solid var(--line);border-radius:8px;padding:5px 9px;background:#fff;cursor:pointer;font-size:12px;transition:.12s}
+  .rh-item:hover{border-color:var(--acc);box-shadow:var(--shadow)}
+
+  /* ---------- circuit library knowledge ---------- */
+  .bloch-wrap{display:flex;gap:20px;flex-wrap:wrap;align-items:center}
+  .bloch-wrap canvas{background:#fff;border:1px solid var(--line);border-radius:12px}
+  .bloch-side{flex:1;min-width:240px;display:flex;flex-direction:column;gap:10px}
+  .bloch-formula{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:16px;background:var(--acc-soft);border-radius:8px;padding:10px 12px;color:var(--acc)}
+  .bloch-label{font-size:13px;color:var(--sub);display:flex;flex-direction:column;gap:4px}
+  .bloch-label input{width:100%;accent-color:var(--acc)}
+  .bloch-readout{font-family:ui-monospace,monospace;font-size:15px;font-weight:600;color:var(--ink)}
+  .gk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-top:10px}
+  .gk-card{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff}
+  .gk-card .gk-name{font-family:ui-monospace,monospace;font-size:14px;font-weight:700;color:var(--acc);margin-bottom:4px}
+  .gk-card .gk-desc{font-size:13px;color:var(--ink);line-height:1.55}
+  .hist{display:flex;align-items:flex-end;gap:6px;height:160px;padding:10px 4px 0;border-bottom:1px solid var(--line);overflow-x:auto}
+  .bar{flex:1 1 0;min-width:26px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;position:relative}
+  .bar .rect{width:70%;max-width:42px;background:linear-gradient(180deg,#1976D2,#1565C0);border-radius:4px 4px 0 0;transition:height .5s ease}
+  .bar.best .rect{background:linear-gradient(180deg,#0B1220,#1A2A4A)}
+  .bar.rest .rect{background:#C3CFE0}
+  .bar .lbl{font-size:11px;margin-top:4px;font-family:ui-monospace,Consolas,monospace;white-space:nowrap;color:var(--sub)}
+  .bar.best .lbl{font-weight:800;color:var(--ink)}
+  .hist-readout{min-height:22px;font-family:ui-monospace,monospace;font-size:12px;color:var(--acc);margin-bottom:4px;
+    background:var(--acc-soft);border-radius:6px;padding:3px 8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .legend{margin-top:8px;font-size:12px;color:var(--sub)}
+  .legend .dot{display:inline-block;width:10px;height:10px;border-radius:3px;margin:0 6px 0 12px;vertical-align:-1px}
+
+  /* ---------- tabs ---------- */
+  .tabs{display:flex;gap:6px;border-bottom:1px solid var(--line);margin-bottom:12px}
+  .tabs button{background:none;border:none;border-bottom:3px solid transparent;padding:8px 14px;font-size:14px;color:var(--sub);font-weight:600}
+  .tabs button.on{color:var(--acc);border-bottom-color:var(--acc)}
+  .panel{display:none}
+  .panel.on{display:block}
+
+  /* ---------- flow diagram ---------- */
+  .flow{display:flex;align-items:stretch;gap:6px;flex-wrap:wrap;margin:14px 0 4px}
+  .node{flex:1;min-width:140px;background:var(--acc-soft);border:1px solid var(--acc);border-radius:10px;padding:9px 10px;text-align:center;font-size:13px;font-weight:600;color:var(--acc)}
+  .node.alt{background:var(--chip);border-color:var(--sub);color:var(--sub)}
+  .flow .arrow{align-self:center;color:var(--sub);font-weight:800;font-size:17px}
+  @media(max-width:760px){ .app{flex-direction:column} nav{width:100%;height:auto;position:static;display:flex;overflow-x:auto} nav .brand{display:none} main{padding:18px} }
+
+  /* ---------- algorithm cards ---------- */
+  .algogrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+  .algocard{border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:#fff;transition:.15s}
+  .algocard:hover{border-color:var(--acc);box-shadow:var(--shadow)}
+  .algocard h3{margin:0 0 4px;font-size:15px}
+  .algocard .desc{font-size:12px;color:var(--sub);min-height:34px;margin:0 0 10px}
+  .algocard .badges{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+
+  /* ---------- circuit diagram ---------- */
+  .circuit-wrap{overflow-x:auto;background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 8px}
+  .circuit-wrap svg{display:block}
+
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
+  th{color:var(--sub);font-weight:600;background:var(--chip)}
+  code{background:var(--chip);padding:1px 6px;border-radius:5px;font-family:ui-monospace,Consolas,monospace;font-size:12px}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ================= NAV ================= -->
+  <nav>
+    <div class="brand">
+      <div class="logo">LQ</div>
+      <div><b>LoomQ</b><small>量子接入平台</small></div>
+    </div>
+    <a class="item on" data-tab="start" href="#start"><span class="ic">🚀</span> 开始</a>
+    <a class="item" data-tab="chat" href="#chat"><span class="ic">💬</span> 对话</a>
+    <a class="item" data-tab="lab" href="#lab"><span class="ic">🧪</span> 实验台</a>
+    <a class="item" data-tab="algos" href="#algos"><span class="ic">📚</span> 电路库</a>
+    <a class="item" data-tab="backends" href="#backends"><span class="ic">🖥️</span> 后端</a>
+    <div class="hint">状态</div>
+    <div class="status-card">
+      <div id="st-llm">智能体：检测中…</div>
+      <div id="st-server" style="margin-top:6px">服务器：连接中…</div>
+    </div>
+  </nav>
+
+  <!-- ================= MAIN ================= -->
+  <main>
+
+    <!-- ======== TAB: START ======== -->
+    <section id="tab-start" class="panel on">
+      <div class="hero">
+        <h1>让不懂"黑话"的人，也能指挥最前沿的量子算力</h1>
+
+        <div style="margin-top:14px">
+          <!-- tour button removed: content duplicated the '量子计算入门' card below -->
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>工作流程</h2>
+        <div class="flow">
+          <div class="node">想法<br><span class="muted">自然语言 or QASM</span></div>
+          <div class="arrow">→</div>
+          <div class="node">智能体<br><span class="muted">生成 · 纠错 · 自检</span></div>
+          <div class="arrow">→</div>
+          <div class="node">统一中间层<br><span class="muted">一份 IR 三家翻译</span></div>
+          <div class="arrow">→</div>
+          <div class="node alt">结果<br><span class="muted">直方图 · 解释</span></div>
+        </div>
+        <p class="muted">同一中间层转译为：量旋 <code>OpenQASM 2.0</code>、本源 <code>OriginIR</code>、Braket <code>OpenQASM 3</code>。<code>run()</code> 执行转译产物本身，转译与执行无法互相掩盖错误。</p>
+      </div>
+
+      <div class="card">
+        <h2>量子计算入门</h2>
+        <div class="concept"><div>🎲</div><div><b>量子比特</b><p>经典比特非 0 即 1，量子比特可处于 0 与 1 的线性叠加态。</p></div></div>
+        <div class="concept"><div>🌀</div><div><b>叠加</b><p>H 门使比特进入 0 和 1 的概率幅组合，测量前状态未定。</p></div></div>
+        <div class="concept"><div>🤝</div><div><b>纠缠</b><p>多比特形成不可分割的整体状态；测其一，其余瞬间关联确定。</p></div></div>
+        <div class="concept"><div>📏</div><div><b>测量</b><p>测量导致叠加态随机坍缩为 0 或 1；需多次采样以统计概率分布。</p></div></div>
+      </div>
+    </section>
+
+    <!-- ======== TAB: CHAT ======== -->
+    <section id="tab-chat" class="panel">
+      <div class="card">
+        <h2>💬 说人话 · 量子助手</h2>
+        <details class="agentcfg" id="agentcfg">
+          <summary>⚙ 智能体 API Key（环境变量已配置时显示 ✅）</summary>
+          <div class="row" style="margin-top:8px">
+            <input id="llm-base" placeholder="Base URL（默认 OpenAI 兼容）" style="flex:1">
+            <input id="llm-model" placeholder="Model（如 deepseek-v4-flash）" style="flex:1">
+            <input id="llm-key" type="password" placeholder="API Key（留空表示不修改）" style="flex:2">
+            <button class="btn" onclick="saveAgentKey()">保存</button>
+          </div>
+          <div id="llm-status" class="muted" style="margin-top:6px;font-size:12px"></div>
+        </details>
+        <div class="quick">
+          <button class="chip" onclick="quickAsk('帮我生成一个 3 比特的最大纠缠态（GHZ 态），并进行全测量')">🌀 GHZ 态</button>
+          <button class="chip" onclick="quickAsk('我想制备一个贝尔态，但这段代码报错了，帮我修好：H q[0]; CX q[0] q[1]')">🔧 修代码</button>
+          <button class="chip" onclick="quickAsk('我需要运行一个 15 比特电路，且零排队等待、不想花钱，选哪个平台？')">🖥️ 选后端</button>
+        </div>
+        <div class="chatbox" id="chatbox"></div>
+        <div class="chatinput">
+          <textarea id="chatinput" rows="2" placeholder="例如：两个比特永远同面的硬币&#10;Enter 发送 · Shift+Enter 换行（可粘贴多行电路代码）" onkeydown="chatKey(event)"></textarea>
+          <button class="btn" onclick="sendChat()">发送</button>
+        </div>
+        <div id="chat-run" style="display:none;margin-top:12px">
+          <div class="row" style="justify-content:space-between">
+            <span class="muted">智能体生成的电路：</span>
+            <button class="btn ghost small" onclick="runChatQasm()">▶ 验证</button>
+          </div>
+          <pre class="qasm" id="chat-qasm" style="margin:8px 0 0"></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======== TAB: LAB ======== -->
+    <section id="tab-lab" class="panel">
+      <div class="lab3">
+        <!-- LEFT: gate palette -->
+        <div class="card" style="padding:14px">
+          <b style="font-size:14px">门板 · 白名单 12 门</b>
+          <div class="muted" style="margin:4px 0 8px;font-size:12px">拖到线上 · 或点击门再点线</div>
+          <div class="gates" id="gate-palette"></div>
+          <div class="muted" style="margin:10px 0 6px">示例电路：</div>
+          <div class="row" style="gap:6px">
+            <button class="btn ghost small" onclick="loadExample('bell')">Bell</button>
+            <button class="btn ghost small" onclick="loadExample('ghz3')">GHZ-3</button>
+          </div>
+          <div class="row" style="gap:6px;margin-top:8px">
+            <span class="muted">预设：</span>
+            <select id="preset" style="border:1px solid var(--line);border-radius:8px;padding:5px 6px;font-size:12px;background:#fff">
+              <option value="bell">Bell</option>
+              <option value="ghz3">GHZ-3</option>
+              <option value="qft4">QFT-4</option>
+              <option value="grover3">Grover-3</option>
+            </select>
+          </div>
+          <div class="row" style="gap:6px;margin-top:8px">
+            <span class="muted">电路线：</span>
+            <button class="btn ghost small" onclick="addWire()" title="增加一根电路线">+ 加线</button>
+            <button class="btn ghost small" onclick="removeWire()" title="减少一根电路线（需该线无门）">− 减线</button>
+          </div>
+          <button class="btn ghost small" style="margin-top:10px;width:100%" onclick="clearGrid()">🗑 清空电路</button>
+          <div class="muted" style="margin-top:8px;font-size:11px">点击已放置的门可删除</div>
+        </div>
+
+        <!-- MIDDLE: circuit canvas + QASM -->
+        <div>
+          <div class="card">
+            <div class="row" style="margin-bottom:8px">
+              <b style="font-size:14px">电路编辑</b>
+              <button class="btn ghost small" id="btn-grid" onclick="circView('grid')">图形编辑</button>
+              <button class="btn ghost small" id="btn-qiskit" onclick="circView('qiskit')">Qiskit 标准图</button>
+              <span class="muted" style="margin-left:auto;font-size:11px">位串右侧为 c[0]（小端）</span>
+            </div>
+            <div class="circuit-wrap" id="circuit-svg" style="overflow-x:auto"><span class="muted">（加载电路后显示）</span></div>
+            <textarea id="qasm-editor" spellcheck="false" style="margin-top:10px"></textarea>
+            <div class="muted" style="margin-top:6px;font-size:11px">可直接编辑下方 OPENQASM 2.0，电路图同步对照</div>
+          </div>
+        </div>
+
+        <!-- RIGHT: run + histogram (always visible) -->
+        <div class="card lab-right" style="padding:14px">
+          <div class="row" style="margin-bottom:8px">
+            <span class="muted">后端</span>
+            <button class="chip sel" id="tg-spinq" onclick="pickTarget('spinq')">量旋</button>
+            <button class="chip" id="tg-originq" onclick="pickTarget('originq')">本源</button>
+            <button class="chip" id="tg-braket" onclick="pickTarget('braket')">Braket</button>
+            <button class="chip" id="tg-all" onclick="pickTarget('all')">全部</button>
+          </div>
+          <div class="row" style="margin-bottom:10px">
+            <span class="muted">采样</span>
+            <input id="shots" type="number" value="8192" min="16" max="100000" step="16" style="width:90px;border:1px solid var(--line);border-radius:8px;padding:7px 8px">
+            <button class="btn" id="run-btn" onclick="runLab()">▶ 运行</button>
+          </div>
+          <div class="muted" style="margin-bottom:4px">📊 直方图（悬停柱子看概率）：</div>
+          <div class="hist-readout" id="hist-readout">（悬停柱子查看概率）</div>
+          <div id="hist-area"><span class="muted">（运行后显示）</span></div>
+          <div id="lab-result" style="display:none">
+            <div class="legend" style="margin-top:8px"><span class="dot" style="background:#1976D2"></span>结果
+              <span class="dot" style="background:#0B1220"></span>主导态
+              <span class="muted">· 位串右侧为 c[0]（小端）</span></div>
+            <div class="row" style="margin-top:12px;gap:10px">
+              <div><span class="tag acc">后端</span> <code id="res-backend"></code></div>
+              <div><span class="tag acc">采样</span> <code id="res-shots"></code></div>
+              <div><span class="tag acc">作业</span> <code id="res-job"></code></div>
+            </div>
+            <div class="card" style="background:var(--ok-soft);border-color:var(--ok);margin-top:10px;padding:10px 12px">
+              <b style="color:var(--ok)">🧠 结论</b>
+              <p id="res-expl" style="margin:6px 0 0;font-size:13px;color:#0D47A1"></p>
+            </div>
+          </div>
+          <div class="muted" style="margin-top:14px;margin-bottom:4px">📋 运行记录（点击恢复查看，最多 20 条）：</div>
+          <div id="run-history" style="display:flex;flex-direction:column;gap:4px;max-height:220px;overflow:auto"></div>
+        </div>
+      </div>
+
+      <!-- IR comparison: full width below -->
+      <div class="card" id="lab-ir" style="display:none">
+        <h2>🔄 三家后端原生 IR</h2>
+        <div class="tabs">
+          <button class="on" data-ir="spinq" onclick="showIR('spinq',this)">量旋 (QASM 2.0)</button>
+          <button data-ir="originq" onclick="showIR('originq',this)">本源 (OriginIR)</button>
+          <button data-ir="braket" onclick="showIR('braket',this)">Braket (QASM 3)</button>
+        </div>
+        <pre class="ir" id="ir-spinq"></pre>
+        <pre class="ir" id="ir-originq" style="display:none"></pre>
+        <pre class="ir" id="ir-braket" style="display:none"></pre>
+        <div class="row" style="margin-top:10px">
+          <span class="muted">重跑：</span>
+          <button class="btn ghost small" onclick="rerunOn('spinq')">量旋</button>
+          <button class="btn ghost small" onclick="rerunOn('originq')">本源</button>
+          <button class="btn ghost small" onclick="rerunOn('braket')">Braket</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======== TAB: ALGORITHMS ======== -->
+    <section id="tab-algos" class="panel">
+      <div class="card">
+        <h2>📚 电路库 · 知识</h2>
+        <p class="muted" style="margin-top:-6px">核心概念可视化 + 12 门白名单知识 + 示例电路说明。点击示例加载进实验台。</p>
+
+        <div class="card" style="margin-top:14px">
+          <h2>⚛ 核心概念可视化 · 单比特叠加</h2>
+          <div class="bloch-wrap">
+            <canvas id="bloch-canvas" width="300" height="300" style="max-width:100%"></canvas>
+            <div class="bloch-side">
+              <div class="bloch-formula">|ψ⟩ = cos(θ/2)·|0⟩ + e<sup>iφ</sup>·sin(θ/2)·|1⟩</div>
+              <label class="bloch-label">θ 天顶角（0=纯 |0⟩，180=纯 |1⟩）
+                <input type="range" id="bloch-theta" min="0" max="180" value="90"></label>
+              <label class="bloch-label">φ 方位角（相对相位）
+                <input type="range" id="bloch-phi" min="0" max="360" value="45"></label>
+              <div id="bloch-readout" class="bloch-readout"></div>
+              <div class="muted" style="font-size:12px;line-height:1.6">
+                蓝色箭头 = 量子态在布洛赫球上的位置。测量即沿 Z 轴"抛硬币"：落在上极点的概率
+                P(0)=cos²(θ/2)，下极点 P(1)=sin²(θ/2)。拖滑杆看叠加如何变成确定态。
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:14px">
+          <h2>🔬 门板 · 12 个白名单门</h2>
+          <p class="muted" style="margin-top:-6px">全部评测电路只会使用这些门（赛题白名单）。鼠标悬停门板也有简版提示。</p>
+          <div class="gk-grid" id="gate-knowledge"></div>
+        </div>
+
+        <div class="card" style="margin-top:14px">
+          <h2>🧩 示例电路</h2>
+          <div class="algogrid" id="algo-grid"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======== TAB: BACKENDS ======== -->
+    <section id="tab-backends" class="panel">
+      <div class="card">
+        <h2>🖥️ 后端能力表</h2>
+        <div style="overflow:auto"><table id="backend-table"></table></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- tour modal removed -->
+
+<script>
+/* ================= state ================= */
+const PRESETS = {
+  bell:    {file:'bell.qasm',    desc:'两比特纠缠：00/11 各半', tag:'纠缠'},
+  ghz3:   {file:'ghz3.qasm',   desc:'三比特纠缠：000/111', tag:'纠缠'},
+  qft4:   {file:'qft4.qasm',   desc:'傅里叶变换：4 比特均匀分布', tag:'变换'},
+  grover3: {file:'grover3.qasm', desc:'搜索：1 次迭代命中 |11⟩', tag:'搜索'},
+};
+let target='spinq', lastResult=null, lastChatQasm=null, curPreset='bell';
+const $=id=>document.getElementById(id);
+
+
+/* ================= nav ================= */
+document.querySelectorAll('nav .item').forEach(a=>a.addEventListener('click',e=>{
+  e.preventDefault();
+  document.querySelectorAll('nav .item').forEach(x=>x.classList.remove('on'));
+  a.classList.add('on');
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  $('tab-'+a.dataset.tab).classList.add('on');
+}));
+function showTab(name){
+  document.querySelectorAll('nav .item').forEach(x=>x.classList.toggle('on',x.dataset.tab===name));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('on',p.id==='tab-'+name));
+}
+
+/* ================= api ================= */
+async function api(path,opts){
+  const res=await fetch(path,opts);
+  const data=await res.json().catch(()=>({ok:false,error:'无法解析响应'}));
+  if(!data.ok) throw new Error(data.error||('HTTP '+res.status));
+  return data;
+}
+async function init(){
+  try{
+    const h=await api('/api/health');
+    $('st-llm').innerHTML='智能体：'+(h.llm_configured?'<b style="color:var(--ok)">已就绪</b>':'<b style="color:var(--warn)">未配置</b>（对话不可用）');
+    $('st-server').innerHTML='服务器：<b style="color:var(--ok)">已连接</b>';
+    $('llm-status').textContent=h.llm_configured?'✅ 已配置（LOOMQ_LLM_*） — 直接在下面发问即可。':'⚠ 未配置 — 在上面填入 Base URL、Model、API Key 并点保存（只存于服务端内存，重启需重新输入）。';
+    loadPreset('bell');
+    loadBackends(); renderAlgos(); renderGateKnowledge(); initPalette(); initBloch();
+    renderRunHistory();
+    const params=new URLSearchParams(location.search);
+    const autoRun=params.has('run');
+    if(autoRun){showTab('lab');const rk=params.get('run');if(PRESETS[rk])loadPreset(rk);else loadPreset('bell');if(!params.has('diag')&&!window.__LOOMQ_DIAG)setTimeout(runLab,400);}else if(location.hash&&['start','chat','lab','algos','backends'].includes(location.hash.slice(1))){
+      showTab(location.hash.slice(1));
+    }
+  }catch(err){
+    $('st-server').innerHTML='服务器：<b style="color:var(--warn)">连接失败</b> — 先运行 <code>python3 loomq_web.py</code>';
+  }
+}
+async function loadBackends(){
+  try{
+    const d=await api('/api/backends');
+    $('backend-table').innerHTML='<thead><tr><th>后端</th><th>平台</th><th>名称</th><th>类型</th><th>比特</th><th>排队</th><th>费用</th><th>需账号</th></tr></thead><tbody>'+
+      d.backends.backends.map(b=>`<tr><td><code>${b.id}</code></td><td>${b.platform}</td><td>${b.name}</td><td><span class="tag ${b.kind==='qpu'?'warn':'ok'}">${b.kind}</span></td><td>${b.max_qubits}</td><td>${b.queue}</td><td>${b.cost}</td><td>${b.requires_account?'是':'否'}</td></tr>`).join('')+'</tbody>';
+  }catch(err){$('backend-table').innerHTML=`<tr><td>加载失败：${err.message}</td></tr>`;}
+}
+function renderAlgos(){
+  $('algo-grid').innerHTML=Object.entries(PRESETS).map(([k,v])=>{
+    const tip=escapeHtml(circuitTip(k).replace(/\n/g, '&#10;'));
+    const more=(CIRCUIT_INFO[k]&&CIRCUIT_INFO[k].more)?'<p class="gk-desc" style="margin:6px 0 10px">'+escapeHtml(CIRCUIT_INFO[k].more)+'</p>':'';
+    return `
+    <div class="algocard" data-algo="${k}" title="${tip}">
+      <h3>${k==='bell'?'Bell':k==='ghz3'?'GHZ-3':k==='qft4'?'QFT-4':'Grover-3'}</h3>
+      <div class="badges"><span class="tag acc">${v.tag}</span><span class="tag warn">${v.file}</span></div>
+      <p class="desc">${v.desc}</p>
+      ${more}
+      <button class="btn small" onclick="loadAlgo('${k}')">加载 + 运行</button>
+    </div>`;}).join('');
+}
+function loadAlgo(k){showTab('lab');$('preset').value=k;loadPreset(k);setTimeout(runLab,300);}
+
+/* ================= presets / circuit diagram ================= */
+async function loadPreset(k){
+  curPreset=k; $('preset').value=k;
+  // If the server inlined the QASM (via ?run=<preset>), use it synchronously
+  // to avoid a race in headless screenshots.
+  if(window.__LOOMQ_PRESET&&window.__LOOMQ_PRESET.key===k){
+    $('qasm-editor').value=window.__LOOMQ_PRESET.qasm;
+    $('lab-result').style.display='none';$('lab-ir').style.display='none';
+    circView('grid');
+    return;
+  }
+  try{
+    const res=await fetch('/circuits/'+PRESETS[k].file);
+    $('qasm-editor').value=await res.text();
+    $('lab-result').style.display='none';$('lab-ir').style.display='none';
+    circView('grid');
+  }catch(err){$('qasm-editor').value='// 加载失败: '+err.message;}
+}
+$('preset').addEventListener('change',()=>loadPreset($('preset').value));
+let _qasmTimer=null;
+$('qasm-editor').addEventListener('input',()=>{curPreset=null;clearTimeout(_qasmTimer);_qasmTimer=setTimeout(syncFromQasm,300);});
+async function drawCircuitFromEditor(){
+  const qasm=$('qasm-editor').value.trim();
+  if(!qasm){$('circuit-svg').innerHTML='<span class="muted">（空）</span>';return;}
+  try{
+    const d=await api('/api/circuit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({qasm})});
+    if(d.standard_text){
+      // Standard Qiskit text circuit diagram, rendered exactly like a
+      // markdown code block: monospace, no wrapping, horizontal scroll, and
+      // font auto-scaled so wide diagrams stay aligned and on-screen.
+      const lines=d.standard_text.split('\n');
+      const maxLen=Math.max(...lines.map(l=>l.length),0);
+      // char width ~0.6em in a monospace font; target ~700px container
+      const fit=Math.max(7,Math.min(13,Math.floor(660/maxLen)));
+      $('circuit-svg').innerHTML='<pre class="circuit-pre" style="font-size:'+fit+'px">'+escapeHtml(d.standard_text)+'</pre>'+
+        '<div class="muted" style="margin-top:6px;font-size:11px">电路图由 Qiskit <code>QuantumCircuit.draw("text")</code> 渲染（开源标准）</div>';
+    }else{
+      // qiskit not installed on the server: show the source instead of a
+      // hand-rolled diagram (keeps the drawing honest).
+      $('circuit-svg').innerHTML='<pre class="ir" style="margin:0">'+escapeHtml(qasm)+'</pre>'+
+        '<div class="muted" style="margin-top:6px;font-size:11px">服务器未安装 qiskit，暂以 QASM 源码展示；'+
+        '安装后自动渲染标准电路图（<code>uv pip install --python .venv310 qiskit</code>）</div>';
+    }
+  }catch(err){$('circuit-svg').innerHTML=`<span class="muted">解析失败：${err.message}</span>`;}
+}
+
+/* ================= knowledge tooltips ================= */
+// Short hover explanations (shown via the native title attribute) for the
+// 12 whitelist gates (used in the palette and the all-12 self-test) and the
+// four preset circuits in the library card.
+const GATE_INFO={
+  h:   'Hadamard 门：|0⟩→(|0⟩+|1⟩)/√2，|1⟩→(|0⟩-|1⟩)/√2，制造叠加。',
+  x:   'X 门（NOT）：翻转量子态，|0⟩↔|1⟩。',
+  s:   'S 门（相位门 √Z）：给 |1⟩ 加 i 相位。',
+  sdg: 'S†（S 门的逆）：抵消 S 留下的相位。',
+  t:   'T 门（π/8 门）：给 |1⟩ 加 e^(iπ/4) 相位。',
+  tdg: 'T†（T 门的逆）：抵消 T 留下的相位。',
+  rz:  'RZ(θ)：绕 Z 轴旋转 θ 弧度（保持 |0⟩，|1⟩→e^(iθ)|1⟩）。',
+  ry:  'RY(θ)：绕 Y 轴旋转 θ 弧度。',
+  cx:  'CNOT 门：控制=1 时翻转目标（双比特纠缠的基本积木）。',
+  cu1: '受控相位门 Cu1(θ)：两个比特都=1 时给 |11⟩ 加 e^(iθ) 相位。',
+  swap:'SWAP 门：交换两个比特的状态。',
+  ccx: 'Toffoli 门：两个控制比特都=1 时翻转目标（通用 3 比特经典门）。',
+};
+const CIRCUIT_INFO={
+  bell:    {one:'两比特纠缠（最大纠缠态）',more:'H 门让 q0 进入叠加，CNOT 让 q0 控制 q1 翻转，产生 |00⟩+|11⟩ 纠缠对。'},
+  ghz3:   {one:'三比特纠缠（最大纠缠态）',more:'H + CNOT 链把 3 个比特纠缠到 |000⟩+|111⟩ 上，3 体 GHZ。'},
+  qft4:   {one:'4 比特量子傅里叶变换（末位无 swap）',more:'把基态 |0000⟩ 变成 |0000⟩+|0001⟩+...+|1111⟩ 均匀叠加（+受控相位）。'},
+  grover3: {one:'3 比特 Grover 搜索（1 次迭代）',more:'均匀叠加 → oracle（CCX）标记 |111⟩ → 扩散算子放大振幅 ≈ 击中 |111⟩。'},
+};
+function gateTip(n,p){ return (GATE_INFO[n]||n) + (p?`\n拖放时输入角度（如 pi/2、0.7；留空默认 π/4）。`:''); }
+function circuitTip(k){ const c=CIRCUIT_INFO[k]; return c?(c.one+(c.more?'\n\n'+c.more:'')):''; }
+function renderGateKnowledge(){
+  $('gate-knowledge').innerHTML=GATES12.map(g=>{
+    const q=g.q||1;
+    return '<div class="gk-card"><div class="gk-name">'+escapeHtml(g.label)+(q>1?' · '+q+' 比特':'')+'</div>'+
+      '<div class="gk-desc">'+escapeHtml(GATE_INFO[g.n]||g.n)+'</div></div>';
+  }).join('');
+}
+function initBloch(){
+  const cv=$('bloch-canvas'); if(!cv) return;
+  const ctx=cv.getContext('2d');
+  const cx=150, cy=150, R=120;
+  function draw(){
+    const th=parseInt($('bloch-theta').value,10)*Math.PI/180;
+    const ph=parseInt($('bloch-phi').value,10)*Math.PI/180;
+    ctx.clearRect(0,0,300,300);
+    ctx.strokeStyle='#C9D4E5'; ctx.lineWidth=1;
+    ctx.beginPath(); ctx.arc(cx,cy,R,0,2*Math.PI); ctx.stroke();
+    ctx.beginPath(); ctx.ellipse(cx,cy,R,R*0.42,0,0,2*Math.PI); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(cx,cy-R); ctx.lineTo(cx,cy+R); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(cx-R,cy); ctx.lineTo(cx+R,cy); ctx.stroke();
+    ctx.fillStyle='#5C6B7A'; ctx.font='13px sans-serif'; ctx.textAlign='center';
+    ctx.fillText('|0⟩',cx,cy-R+16);
+    ctx.fillText('|1⟩',cx,cy+R-6);
+    ctx.fillText('−',cx+R-8,cy+4); ctx.fillText('+',cx-R+10,cy+4);
+    // ellipse-flattened projection of the Bloch point
+    const xf=cx+R*Math.sin(th)*Math.cos(ph);
+    const yf=cy-R*Math.cos(th)*0.42;
+    ctx.strokeStyle='#1565C0'; ctx.lineWidth=2.5;
+    ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(xf,yf); ctx.stroke();
+    ctx.fillStyle='#1565C0';
+    ctx.beginPath(); ctx.arc(xf,yf,5,0,2*Math.PI); ctx.fill();
+    const p0=Math.cos(th/2)**2, p1=Math.sin(th/2)**2;
+    $('bloch-readout').textContent='P(0) = '+Math.round(p0*100)+'%   ·   P(1) = '+Math.round(p1*100)+'%';
+  }
+  $('bloch-theta').addEventListener('input',draw);
+  $('bloch-phi').addEventListener('input',draw);
+  draw();
+}
+const GATES12=[
+  {n:'h',label:'H'},{n:'x',label:'X'},{n:'s',label:'S'},{n:'sdg',label:'S†'},
+  {n:'t',label:'T'},{n:'tdg',label:'T†'},{n:'rz',label:'Rz(θ)',p:1},{n:'ry',label:'Ry(θ)',p:1},
+  {n:'cx',label:'CX',q:2},{n:'cu1',label:'Cu1(θ)',q:2,p:1},
+  {n:'swap',label:'SWAP',q:2},{n:'ccx',label:'CCX',q:3},
+];
+let circMode='grid', pendingGate=null, pendingMulti=null, circ={qubits:2,cols:1,grid:[[],[]]};
+
+function parseParam(s){
+  const t=(s||'').trim().replace(/\s+/g,'');
+  if(!t) return null;
+  const m=t.match(/^pi(?:\/(\d+))?$/);
+  if(m) return m[1]?Math.PI/parseInt(m[1],10):Math.PI;
+  const v=parseFloat(t);
+  return isNaN(v)?null:v;
+}
+function fmtParam(p){
+  if(p==null) return '';
+  const k=p/Math.PI;
+  // Compact pi-fraction form: (k*pi/n), tried for n in 1,2,3,4,6,8,12.
+  for(const n of [1,2,3,4,6,8,12]){
+    const r=k*n;
+    if(Math.abs(r-Math.round(r))<1e-9&&Math.abs(r)>1e-9){
+      const m=Math.round(r);
+      return (Math.abs(m)===1?'':m+'*')+'pi'+(n>1?'/'+n:'');
+    }
+  }
+  return String(Math.round(p*1e6)/1e6);
+}
+function placeGate(name,qubits,col,param){
+  // QASM order: controls first, target last (cx c,t). The target is always
+  // the wire the user dropped on; controls are user-picked wires.
+  const target=qubits[qubits.length-1];
+  for(const q of qubits){
+    while(circ.grid[q].length<=col) circ.grid[q].push(null);
+    circ.grid[q][col]=q===qubits[0]?{name,qubits,param,target}:{link:true,to:qubits[0],name,target,qubits};
+  }
+  circ.cols=Math.max(circ.cols,col+1);
+}
+function colBlocked(c){
+  // Wires a multi-qubit gate in column c passes THROUGH as an intermediate
+  // wire; another gate must never sit on those cells or the vertical
+  // connector would overlap it (the QFT h-vs-cu1 collision).
+  const blocked=new Set();
+  for(let w=0;w<circ.qubits;w++){
+    const g=circ.grid[w]&&circ.grid[w][c];
+    if(g&&g.name&&g.qubits&&g.qubits.length>1){
+      const lo=Math.min(...g.qubits), hi=Math.max(...g.qubits);
+      for(let x=lo;x<=hi;x++) if(!g.qubits.includes(x)) blocked.add(x);
+    }
+  }
+  return blocked;
+}
+function colSuitable(qs,c){
+  for(const w of qs){ if(circ.grid[w]&&circ.grid[w][c]) return false; }
+  const b=colBlocked(c);
+  for(const w of qs) if(b.has(w)) return false;
+  return true;
+}
+function parseQasmToGrid(){
+  const qm=$('qasm-editor').value.match(/qreg\s*q\[\s*(\d+)\s*\]/);
+  const n=Math.max(2,qm?parseInt(qm[1],10):2);
+  circ={qubits:n,cols:1,grid:Array.from({length:n},()=>[])};
+  const last=new Array(n).fill(-1);
+  const re=/^\s*(h|x|s|sdg|t|tdg|rz|ry|cx|cu1|swap|ccx)\s*(?:\(\s*([^)]*)\s*\))?\s*q\[\s*(\d+)\s*\]\s*(?:,\s*q\[\s*(\d+)\s*\])?\s*(?:,\s*q\[\s*(\d+)\s*\])?\s*;?\s*$/;
+  for(const line of $('qasm-editor').value.split('\n')){
+    const m=line.match(re); if(!m) continue;
+    const qs=[parseInt(m[3],10)]; if(m[4]!==undefined) qs.push(parseInt(m[4],10)); if(m[5]!==undefined) qs.push(parseInt(m[5],10));
+    if(Math.max(...qs)>=n) continue;
+    let col=Math.max(...qs.map(q=>last[q]))+1;
+    while(!colSuitable(qs,col)) col++;
+    placeGate(m[1],qs,col,parseParam(m[2]));
+    for(const q of qs) last[q]=col;
+  }
+  circ.cols=Math.max(1,...circ.grid.map(r=>r.length));
+}
+function gridToQasm(){
+  const n=circ.qubits, lines=['OPENQASM 2.0;','include "qelib1.inc";','qreg q['+n+'];','creg c['+n+'];'];
+  for(let c=0;c<circ.cols;c++) for(let w=0;w<n;w++){
+    const g=circ.grid[w]&&circ.grid[w][c];
+    if(g&&g.name&&!g.link) lines.push(g.name+(g.param!=null?'('+fmtParam(g.param)+')':'')+' '+g.qubits.map(q=>'q['+q+']').join(', ')+';');
+  }
+  lines.push('measure q -> c;');
+  return lines.join('\n')+'\n';
+}
+function renderGrid(){
+  const n=circ.qubits, cols=Math.max(circ.cols,1), out=[];
+  const pm=pendingMulti;
+  let hint='';
+  if(pm){
+    hint='<div class="pick-hint">目标固定在 q['+pm.tw+']（'+pm.name.toUpperCase()+'）· 请点击任意线上的 <b>●</b> 选择控制线（'+
+      (pm.q-1)+' 根，上下均可）· <b onclick="cancelPick()">取消</b></div>';
+  }
+  for(let w=0;w<n;w++){
+    out.push('<div class="qwire">q['+w+']</div>');
+    for(let c=0;c<cols;c++){
+      const g=circ.grid[w]&&circ.grid[w][c];
+      let inner='';
+      if(pm&&w!==pm.tw&&c===pm.c&&!g){
+        inner='<div class="pick-ctl'+(pm.sel.includes(w)?' sel':'')+'" data-pick="'+w+'">+</div>';
+      }else if(pm&&w===pm.tw&&c===pm.c){
+        inner='<div class="gtgt dim">⊕</div>';
+      }else if(g&&g.name){
+        if(g.qubits.length===1){
+          inner='<div class="gchip" data-w="'+w+'" data-c="'+c+'" title="点击删除">'+escapeHtml(g.name.toUpperCase()+(g.param!=null?'('+fmtParam(g.param)+')':''))+'</div>';
+        }else{
+          const isTarget=w===g.target;
+          inner=(isTarget?'<div class="gtgt">'+(g.name==='swap'?'×':'⊕')+'</div><div class="gcap">'+escapeHtml(g.name.toUpperCase())+'</div>':'<div class="gctl">+</div>');
+          if(isTarget) inner+=vlink(g);
+        }
+      }else if(g&&g.link){
+        inner=(w===g.target?'<div class="gtgt">'+(g.name==='swap'?'×':'⊕')+'</div>':'<div class="gctl">+</div>');
+        if(w===g.target) inner+=vlink(g);
+      }
+      out.push('<div class="cell'+(pm&&w===pm.tw&&c===pm.c?' pick-t':'')+'" data-w="'+w+'" data-c="'+c+'">'+inner+'</div>');
+    }
+  }
+  $('circuit-svg').innerHTML=hint+'<div class="circ-grid" style="grid-template-columns:48px repeat('+cols+',60px)">'+out.join('')+'</div>';
+  document.querySelectorAll('#circuit-svg .cell').forEach(cell=>{
+    cell.addEventListener('dragover',e=>{e.preventDefault();cell.classList.add('drag-over');});
+    cell.addEventListener('dragleave',()=>cell.classList.remove('drag-over'));
+    cell.addEventListener('drop',e=>{e.preventDefault();cell.classList.remove('drag-over');
+      const gn=e.dataTransfer.getData('text/plain')||(pendingGate?pendingGate.n:'');
+      const gq=parseInt(e.dataTransfer.getData('text/q')||(pendingGate?pendingGate.q:1)||1,10);
+      const gp=(e.dataTransfer.getData('text/p')||(pendingGate?pendingGate.p:0))==='1';
+      pendingGate=null;
+      if(gn) placeFromPalette(gn,gq,gp,parseInt(cell.dataset.w,10),parseInt(cell.dataset.c,10));
+    });
+    cell.addEventListener('click',()=>{
+      const w=parseInt(cell.dataset.w,10),c=parseInt(cell.dataset.c,10);
+      if(pendingGate){ placeFromPalette(pendingGate.n,pendingGate.q,pendingGate.p,w,c); pendingGate=null; return; }
+      if(pendingMulti){
+        const pick=cell.querySelector('.pick-ctl');
+        if(pick) pickControl(parseInt(pick.dataset.pick,10)); else cancelPick();
+        return;
+      }
+      const g=circ.grid[w]&&circ.grid[w][c];
+      if(g&&(g.name||g.link)){
+        const gate=g.link?circ.grid[g.to]&&circ.grid[g.to][c]:g;
+        if(gate&&gate.name){ for(const q of gate.qubits) circ.grid[q][c]=null; syncToQasm(); }
+      }
+    });
+  });
+}
+function vlink(g){
+  const lo=Math.min(...g.qubits), hi=Math.max(...g.qubits), t=g.target;
+  const up=(t-lo)*46, down=(hi-t)*46;
+  // The target may sit in the MIDDLE of the span (e.g. ccx q[0],q[2],q[1]);
+  // draw the connector as two segments (up + down) so it never overshoots.
+  let html='';
+  if(up>0) html+='<div class="vlink" style="height:'+up+'px;bottom:24px"></div>';
+  if(down>0) html+='<div class="vlink" style="height:'+down+'px;top:24px"></div>';
+  return html;
+}
+function pickControl(w){
+  const pm=pendingMulti; if(!pm) return;
+  if(pm.sel.includes(w)){ pm.sel=pm.sel.filter(x=>x!==w); renderGrid(); return; }
+  pm.sel.push(w);
+  if(pm.sel.length>=pm.q-1){
+    const qs=[...pm.sel,pm.tw];
+    while(!colSuitable(qs,pm.c)) pm.c++; // keep the connector from crossing other gates
+    placeGate(pm.name,qs,pm.c,pm.param);
+    pendingMulti=null;
+    syncToQasm();
+  }else renderGrid();
+}
+function cancelPick(){ pendingMulti=null; renderGrid(); }
+function syncFromQasm(){ parseQasmToGrid(); if(circMode==='grid') renderGrid(); }
+function syncToQasm(){ $('qasm-editor').value=gridToQasm(); renderGrid(); }
+function placeFromPalette(n,q,p,w,c){
+  if(q>1){
+    if(circ.qubits<q){ alert('至少需要 '+q+' 根线才能放 '+n.toUpperCase()+'（先用 + 加线，最多 12 根）'); return; }
+    while(!colSuitable([w],c)) c++; // drop cell must not be crossed by an existing gate
+    const param=p?(prompt('请输入角度（如 pi/2、0.7；留空默认 π/4）')||''):null;
+    const angle=parseParam(param);
+    // Control-picker: target stays on the dropped wire; the user picks the
+    // control wire(s) from any free wire above/below (max 12 wires).
+    pendingMulti={name:n,q,p,param:(angle==null&&p?Math.PI/4:angle),tw:w,c,sel:[]};
+    renderGrid();
+    return;
+  }
+  if(w>=circ.qubits) return;
+  while((circ.grid[w]&&circ.grid[w][c])||!colSuitable([w],c)) c++;
+  const param=p?(prompt('请输入角度（如 pi/2、0.7；留空默认 π/4）')||''):null;
+  const angle=parseParam(param);
+  placeGate(n,[w],c,angle==null&&p?Math.PI/4:angle);
+  syncToQasm();
+}
+function clearGrid(){ circ={qubits:2,cols:1,grid:[[],[]]}; syncToQasm(); }
+function addWire(){ if(circ.qubits>=12){alert('最多 12 比特');return;} circ.qubits++; circ.grid.push(new Array(circ.cols).fill(null)); syncToQasm(); }
+function removeWire(){ if(circ.qubits<=2){alert('至少 2 比特');return;} const last=circ.qubits-1; if(circ.grid[last]&&circ.grid[last].some(g=>g&&g.name)){alert('最后一根线上还有门，请先删除后再减线');return;} circ.qubits--; circ.grid.pop(); syncToQasm(); }
+function loadExample(k){ $('preset').value=k; loadPreset(k); }
+function circView(m){
+  circMode=m;
+  $('btn-grid').classList.toggle('on',m==='grid');
+  $('btn-qiskit').classList.toggle('on',m==='qiskit');
+  // Re-parse the editor into the grid model so a programmatically loaded
+  // preset (which does not fire the input event) shows immediately.
+  if(m==='grid') syncFromQasm(); else drawCircuitFromEditor();
+}
+function initPalette(){
+  $('gate-palette').innerHTML=GATES12.map(g=>{
+    const q=g.q||1;
+    return '<button class="gatebtn'+(g.p?' cfg':'')+'" draggable="true" data-g="'+g.n+'" data-q="'+q+'" data-p="'+(g.p?1:0)+'"'+
+      ' title="'+escapeHtml(gateTip(g.n,!!g.p))+'"'+
+      ' ondragstart="dragStart(event)" onclick="pendingPick(\''+g.n+'\','+q+','+(g.p?1:0)+')">'+g.label+'</button>';
+  }).join('');
+}
+function dragStart(e){ const t=e.target; e.dataTransfer.setData('text/plain',t.dataset.g); e.dataTransfer.setData('text/q',t.dataset.q||'1'); e.dataTransfer.setData('text/p',t.dataset.p||'0'); }
+function pendingPick(n,q,p){ pendingGate={n,q,p}; }
+
+/* ================= lab ================= */
+function pickTarget(t){target=t;['spinq','originq','braket','all'].forEach(x=>$('tg-'+x).classList.toggle('sel',x===t));if(lastResult&&t!=='all')showIR(t,document.querySelector(`[data-ir="${t}"]`));}
+let runHistory=[], runId=0;
+function pushHistory(d){
+  const r=d.result, top=Object.entries(r.counts).sort((a,b)=>b[1]-a[1]).slice(0,3)
+    .map(([k,v])=>'|'+k+'⟩:'+v).join(' ');
+  runHistory.unshift({id:++runId,t:new Date().toLocaleTimeString('zh-CN',{hour12:false}),target:r.backend,
+    shots:r.shots,counts:r.counts,explanation:d.explanation,transpilations:d.transpilations,top});
+  if(runHistory.length>20) runHistory.pop();
+  renderRunHistory();
+}
+function renderRunHistory(){
+  $('run-history').innerHTML=runHistory.map(h=>
+    '<div class="rh-item" onclick="restoreRun('+h.id+')" title="点击恢复查看">'+
+    '<code>'+escapeHtml(h.target)+'</code> <span class="muted">'+h.t+' · '+h.shots+' shots</span>'+
+    '<div class="muted" style="font-size:11px">'+escapeHtml(h.top)+'</div></div>').join('')||
+    '<span class="muted" style="font-size:12px">（暂无记录）</span>';
+}
+function restoreRun(id){
+  const h=runHistory.find(x=>x.id===id); if(!h) return;
+  const d={result:{counts:h.counts,backend:h.target,shots:h.shots,job_id:'history'},explanation:h.explanation,transpilations:h.transpilations};
+  lastResult=d;
+  renderHistogram(d);
+  $('res-backend').textContent=h.target;$('res-shots').textContent=h.shots;$('res-job').textContent='history';
+  $('res-expl').textContent=h.explanation;
+  $('ir-spinq').textContent=h.transpilations.spinq;$('ir-originq').textContent=h.transpilations.originq;$('ir-braket').textContent=h.transpilations.braket;
+  $('lab-result').style.display='block';$('lab-ir').style.display='block';
+  showIR('spinq',document.querySelector('[data-ir="spinq"]'));
+}
+async function runLab(){
+  const qasm=$('qasm-editor').value.trim();
+  const shots=Math.max(16,Math.min(100000,parseInt($('shots').value)||8192));
+  if(!qasm){alert('请粘贴 QASM 或选择示例电路。');return;}
+  circView(circMode);
+  const btn=$('run-btn');btn.disabled=true;btn.textContent='运行中…';
+  const targets=target==='all'?['spinq','originq','braket']:[target];
+  try{
+    let last=null;
+    for(const t of targets){
+      const d=await api('/api/run',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({qasm,target:t,shots})});
+      last=d; pushHistory(d);
+    }
+    if(!last) return;
+    lastResult=last;
+    renderHistogram(last); circView(circMode);
+    $('res-backend').textContent=last.result.backend;$('res-shots').textContent=last.result.shots;$('res-job').textContent=last.result.job_id;
+    $('res-expl').textContent=last.explanation;
+    $('ir-spinq').textContent=last.transpilations.spinq;$('ir-originq').textContent=last.transpilations.originq;$('ir-braket').textContent=last.transpilations.braket;
+    $('lab-result').style.display='block';$('lab-ir').style.display='block';
+    const showT=target==='all'?'spinq':target;
+    showIR(showT,document.querySelector(`[data-ir="${showT}"]`));
+  }catch(err){
+    alert('运行失败：'+err.message+'\n\n常见原因：门不在白名单 / 寄存器未声明或越界 / 语法错误');
+  }finally{btn.disabled=false;btn.textContent='▶ 运行';}
+}
+function rerunOn(t){pickTarget(t);runLab();}
+function showIR(t,btn){
+  document.querySelectorAll('[data-ir]').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  ['spinq','originq','braket'].forEach(x=>$('ir-'+x).style.display=x===t?'block':'none');
+}
+function renderHistogram(d){
+  const counts=d.result.counts,total=Object.values(counts).reduce((a,b)=>a+b,0);
+  let entries=Object.entries(counts).sort((a,b)=>b[1]-a[1]);
+  const allCount=entries.length;
+  const maxKeys=8; // Qiskit number_to_keep standard: keep top-8, merge the rest
+  let rest=null;
+  if(allCount>maxKeys){
+    rest=entries.slice(maxKeys).reduce((s,[,v])=>s+v,0);
+    entries=entries.slice(0,maxKeys);
+  }
+  const max=entries.length?entries[0][1]:1;
+  const best=entries[0]&&entries[0][1]/total>0.25?entries[0][0]:null;
+  const pct=v=>(100*v/total).toFixed(1);
+  const bar=(k,v,cls='')=>`<div class="bar ${best&&k===best?'best':''}${cls}" data-tip="|${k}⟩ · ${pct(v)}% · ${v} 次">`+
+    `<div class="rect" style="height:${Math.max(2,Math.round(140*v/max))}px"></div><div class="lbl">|${k}⟩</div></div>`;
+  let html='<div class="hist">'+entries.map(([k,v])=>bar(k,v)).join('');
+  if(rest!==null){
+    html+='<div class="bar rest" data-tip="其余 '+(allCount-maxKeys)+' 个位串合计 · '+pct(rest)+'% · '+rest+' 次">'+
+      '<div class="rect" style="height:'+Math.max(2,Math.round(140*rest/max))+'px"></div><div class="lbl">其余</div></div>';
+  }
+  html+='</div>';
+  html+='<div class="muted" style="margin-top:6px">共 '+total+' 次采样 · 悬停柱子看概率 · 前 '+Math.min(maxKeys,allCount)+(rest!==null?' + 其余':'')+'（Qiskit number_to_keep）</div>';
+  $('hist-area').innerHTML=html;
+  // Probability readout in a fixed slot ABOVE the chart (no layout movement).
+  const ro=$('hist-readout');
+  document.querySelectorAll('#hist-area .bar').forEach(b=>{
+    b.addEventListener('mouseenter',()=>{ro.textContent=b.dataset.tip;});
+    b.addEventListener('mouseleave',()=>{ro.textContent='（悬停柱子查看概率）';});
+  });
+}
+
+/* ================= chat ================= */
+function pushMsg(role,html){const box=$('chatbox'),d=document.createElement('div');d.className='msg '+role;d.innerHTML=html;box.appendChild(d);box.scrollTop=box.scrollHeight;}
+async function sendChat(text){
+  const prompt=(text||'').trim()||$('chatinput').value.trim();
+  if(!prompt)return;
+  $('chatinput').value='';
+  pushMsg('user',escapeHtml(prompt));pushMsg('bot','（思考中…）');
+  try{
+    const d=await api('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt})});
+    const msgs=document.querySelectorAll('#chatbox .msg.bot');
+    msgs[msgs.length-1].textContent=d.reply;
+    if(d.qasm){$('chat-qasm').textContent=d.qasm;$('chat-run').style.display='block';lastChatQasm=d.qasm;}
+    else $('chat-run').style.display='none';
+  }catch(err){
+    const msgs=document.querySelectorAll('#chatbox .msg.bot');
+    msgs[msgs.length-1].textContent='⚠️ '+err.message;
+  }
+}
+function quickAsk(q){sendChat(q);}
+function chatKey(e){
+  // Enter sends; Shift+Enter inserts a newline; never send mid-IME-composition.
+  if(e.key==='Enter'&&!e.shiftKey&&!e.isComposing){
+    e.preventDefault();
+    sendChat();
+  }
+}
+async function saveAgentKey(){
+  const base_url=$('llm-base').value.trim();
+  const api_key=$('llm-key').value.trim();
+  const model=$('llm-model').value.trim();
+  if(!base_url&&!api_key&&!model){$('llm-status').textContent='ℹ 没填任何字段，未修改。';return;}
+  try{
+    const d=await api('/api/agent-key',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({base_url,api_key,model})});
+    $('st-llm').innerHTML=d.configured?'智能体：<b style="color:var(--ok)">已就绪</b>':'智能体：<b style="color:var(--warn)">未配置</b>';
+    $('llm-status').textContent=d.configured?'✅ 已保存到服务端进程内存（重启失效）。':'⚠ 已部分保存，但仍有字段未配置。';
+    $('llm-key').value='';  // never echo back
+  }catch(err){$('llm-status').textContent='❌ 保存失败：'+err.message;}
+}
+async function runChatQasm(){
+  if(!lastChatQasm)return;
+  pushMsg('sys','正在把电路载入实验台并运行…');
+  // Load the LLM-generated circuit into the lab editor, switch to the lab
+  // tab, then run it with the currently selected backend/shot count.
+  $('qasm-editor').value=lastChatQasm; curPreset=null;
+  circView(circMode);
+  showTab('lab');
+  setTimeout(runLab,250);
+}
+function escapeHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function firstExperiment(){showTab('lab');$('preset').value='bell';loadPreset('bell');setTimeout(runLab,300);}
+window.addEventListener('hashchange',()=>{const t=location.hash.replace('#','');if(['start','chat','lab','algos','backends'].includes(t))showTab(t);});
+
+init();
+</script>
+</body>
+</html>

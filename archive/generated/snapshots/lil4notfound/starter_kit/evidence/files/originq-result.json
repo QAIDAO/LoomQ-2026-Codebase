@@ -1,0 +1,33 @@
+{
+  "backend": "originq_wukong_180",
+  "job_id": "F60B83B83F602BC514C2E3323FEBB38C",
+  "shots": 1000,
+  "counts": {
+    "00": 499,
+    "01": 22,
+    "10": 19,
+    "11": 460
+  },
+  "bit_order": "little",
+  "timestamp": "2026-08-24T23:35:40.918Z",
+  "meta": {
+    "is_mock": false,
+    "platform": "Origin Quantum Cloud",
+    "platform_name": "本源悟空 180",
+    "status": "Completed",
+    "physical_qubits": [157, 166],
+    "optimization": true,
+    "mapping": true,
+    "source_result": "originq-result.raw.json",
+    "source_format": "platform-exported JSON probability map",
+    "source_created_time": "2026-08-25 07:35:40.918",
+    "source_end_time": "2026-08-25 07:36:52.148",
+    "raw_probabilities": {
+      "00": 0.499,
+      "01": 0.022,
+      "10": 0.019,
+      "11": 0.46
+    },
+    "counts_normalization": "exact probability * shots conversion; all products are integral"
+  }
+}

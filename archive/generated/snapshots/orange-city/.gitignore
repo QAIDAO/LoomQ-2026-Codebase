@@ -1,0 +1,9 @@
+.DS_Store
+.DStore
+**/ .DS_Store
+**/.DS_Store
+**/.DStore
+__pycache__/
+*.py[cod]
+# Local SpinQit source checkout (use pip wheel instead)
+SpinQit/

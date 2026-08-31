@@ -1,0 +1,18 @@
+FROM python:3.10.21-slim-bookworm
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
+
+# pyqpanda 依赖 libcurl.so.4
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libcurl4 \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /workspace/submission
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY . .
+
+# This image's no-credential default is an L1 isolation smoke test. Formal L2
+# execution requires organizer-injected LOOMQ_LLM_* configuration.
+CMD ["python", "evaluator.py", "--level", "l1", "--target", "spinq,originq,braket", "--json-out", "/tmp/loomq-public-report.json"]

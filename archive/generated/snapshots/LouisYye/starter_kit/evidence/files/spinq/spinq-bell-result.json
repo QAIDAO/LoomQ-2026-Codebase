@@ -1,0 +1,27 @@
+{
+  "platform": "SpinQ Cloud",
+  "backend": "spinq_cloud_2_qubits_nmr",
+  "device": "2 Qubits NMR",
+  "job_id": "G-260821-0001",
+  "status": "Success",
+  "source_type": "SpinQ Cloud",
+  "created_at": "2026-08-21T15:02:41+08:00",
+  "started_at": "2026-08-21T15:02:41+08:00",
+  "completed_at": "2026-08-21T15:04:14+08:00",
+  "measurement_type": "projection_probability",
+  "shots": null,
+  "shots_note": "SpinQ Cloud did not expose shots for this NMR projection-probability task.",
+  "probabilities": {
+    "00": 0.44239204,
+    "01": 0.06120968,
+    "10": 0.03296570,
+    "11": 0.46343258
+  },
+  "dominant_states": [
+    "11",
+    "00"
+  ],
+  "qasm_path": "evidence/files/spinq-bell.qasm",
+  "raw_result_path": "evidence/files/spinq-bell-raw.msgpack",
+  "is_mock": false
+}

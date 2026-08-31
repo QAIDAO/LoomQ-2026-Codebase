@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>QuantumHelper · 描述任务</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+textarea{width:100%;min-height:220px;resize:vertical;padding:20px;border:1px solid rgba(25,26,30,.10);border-radius:18px;background:#fff;font-size:16px;line-height:1.72}
+textarea:focus{border-color:rgba(94,99,182,.34);box-shadow:0 0 0 4px rgba(94,99,182,.07);outline:none}
+.examples{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}.example{min-height:92px;padding:14px;border:1px solid rgba(25,26,30,.07);border-radius:14px;background:rgba(255,255,255,.62);cursor:pointer;text-align:left;color:var(--text);font-size:13px;line-height:1.58}.example:hover{border-color:var(--primary-line);background:var(--primary-soft)}.example strong{display:block;margin-bottom:5px;color:var(--ink)}
+.analysis{display:none;margin-top:18px;padding:20px;border:1px solid var(--primary-line);border-radius:17px;background:linear-gradient(180deg,rgba(94,99,182,.07),rgba(255,255,255,.82))}.analysis.show{display:block}.analysis-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.analysis-item{padding:14px;border:1px solid rgba(25,26,30,.07);border-radius:13px;background:rgba(255,255,255,.68)}.analysis-item span{display:block;color:var(--text-2);font-size:11px}.analysis-item strong{display:block;margin-top:6px;font-size:14px;line-height:1.55}
+.input-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:18px}
+@media(max-width:760px){.examples,.analysis-grid{grid-template-columns:1fr}.input-actions{flex-direction:column-reverse}.input-actions .btn{width:100%}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header class="topbar">
+  <a class="brand" href="index.html"><div class="logo"><span></span></div>QuantumHelper</a>
+  <div class="top-meta"><span>自己的任务</span><span class="mode"><i class="mode-dot"></i>任务引导</span></div>
+</header><nav class="progress cols-6" aria-label="流程"><div class="progress-step active"><i>1</i>描述任务</div><div class="progress-step"><i>2</i>生成方案</div><div class="progress-step"><i>3</i>确认线路</div><div class="progress-step"><i>4</i>选择后端</div><div class="progress-step"><i>5</i>运行</div><div class="progress-step"><i>6</i>结果</div></nav>
+
+<section class="hero">
+  <div class="eyebrow">从你的问题开始</div>
+  <h1>用平常说话的方式，<span class="hero-em">描述你想解决的任务</span></h1>
+  <p class="hero-text">先说目标、候选和限制条件就够了。QuantumHelper 会先整理问题，再判断怎样继续。</p>
+</section>
+<main><section class="layout"><article class="card main-card"><div class="section-head"><div class="kicker">任务描述</div><h2 class="section-title">你现在想解决什么问题？</h2></div><div class="section-body"><textarea id="taskInput" placeholder="例如：我有 8 个候选编号，其中只有一个满足条件，希望找到它。"></textarea><div class="examples"><button class="example" data-text="我有 8 个候选编号，其中只有一个满足条件，希望找到它。"><strong>查找一个目标</strong>我有若干候选，其中只有一个满足条件……</button><button class="example" data-text="我有几项任务需要安排顺序，希望尽量减少时间冲突。"><strong>选择更合适的方案</strong>我有几种安排，希望让冲突尽量少……</button><button class="example" data-text="我已经有一个量子线路，希望重复运行并比较各个测量结果出现的频率。"><strong>观察结果分布</strong>我想重复运行同一个线路并比较结果……</button></div><div class="input-actions"><a class="btn secondary" href="index.html">返回首页</a><button class="btn primary" id="analyzeBtn">整理这个任务 →</button></div><div class="analysis" id="analysis"><div class="kicker">QuantumHelper 的理解</div><div class="analysis-grid"><div class="analysis-item"><span>目标</span><strong id="goal"></strong></div><div class="analysis-item"><span>问题类型</span><strong id="type"></strong></div><div class="analysis-item"><span>已知条件</span><strong id="cond"></strong></div><div class="analysis-item"><span>期望输出</span><strong id="out"></strong></div></div><div class="action-block"><a class="btn primary" href="custom-plan.html">确认，生成方案 →</a><a class="btn secondary" href="task-adjust.html">这个任务还说不清楚</a></div></div></div></article><aside class="card side-card"><div class="kicker">描述时优先写这些</div><h2 class="side-title">不用先翻译成量子术语</h2><div class="summary-list"><div class="summary-item"><span class="summary-name">你想得到什么</span><span class="summary-value">目标</span></div><div class="summary-item"><span class="summary-name">有哪些候选</span><span class="summary-value">范围</span></div><div class="summary-item"><span class="summary-name">有什么限制</span><span class="summary-value">条件</span></div></div></aside></section></main></div>
+<script>
+document.querySelectorAll('.example').forEach(b=>b.onclick=()=>taskInput.value=b.dataset.text);
+function parse(t){
+ if(/冲突|顺序|安排|路线|方案/.test(t))return{type:'优化',goal:'找到更合适的候选方案',cond:'存在多个方案，需要比较冲突或成本',out:'较优方案'};
+ if(/测量|线路|频率|分布/.test(t))return{type:'测量',goal:'运行线路并观察测量结果',cond:'已有线路，需要重复运行并统计',out:'测量结果分布'};
+ if(/关联|相关|两个量子比特/.test(t))return{type:'关联',goal:'观察量子比特之间的结果关系',cond:'关注多个量子比特是否共同变化',out:'关联后的测量结果'};
+ return{type:'查找',goal:'找到满足条件的目标候选',cond:'存在一组候选，并给出了判断目标的条件',out:'满足条件的目标'};
+}
+analyzeBtn.onclick=()=>{const t=taskInput.value.trim();if(t.length<4){location.href='task-adjust.html';return}const r=parse(t);goal.textContent=r.goal;type.textContent=r.type;cond.textContent=r.cond;out.textContent=r.out;localStorage.setItem('qh_task',t);localStorage.setItem('qh_type',r.type);localStorage.setItem('qh_goal',r.goal);localStorage.setItem('qh_condition',r.cond);localStorage.setItem('qh_output',r.out);analysis.classList.add('show');analysis.scrollIntoView({behavior:'smooth',block:'nearest'})};
+</script></body>
+</html>

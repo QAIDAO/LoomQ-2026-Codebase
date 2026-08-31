@@ -1,0 +1,16 @@
+{
+  "backend": "originq_cloud_full_amplitude",
+  "job_id": "6A81E0139F939EE6CC36C5FA529D5A65",
+  "shots": 8192,
+  "counts": {
+    "00": 0.4877929,
+    "11": 0.512207
+  },
+  "bit_order": "big",
+  "timestamp": "2026-08-25T04:44:29.193091",
+  "meta": {
+    "transpiled_gates": 2,
+    "depth": 2,
+    "qubits_count": 2
+  }
+}

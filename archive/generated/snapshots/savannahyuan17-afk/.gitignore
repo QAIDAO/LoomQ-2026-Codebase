@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+*.egg
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# WorkBuddy internal
+.codebuddy/
+.workbuddy/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temp / cache files in root (4-byte random names from tools)
+/_[a-z0-9_]*
+/[a-z0-9][a-z0-9_][a-z0-9_][a-z0-9_][a-z0-9_][a-z0-9_][a-z0-9_]*
+
+# Docker
+*.tar
+
+# Evidence attachments (keep README)
+starter_kit/evidence/files/*
+!starter_kit/evidence/files/.gitkeep

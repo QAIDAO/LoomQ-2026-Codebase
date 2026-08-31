@@ -1,0 +1,29 @@
+{
+  "provider": "originq",
+  "backend": "WK_C180",
+  "chip_id": "WK_C180",
+  "job_id": "8FEAB29CDEF92F47DD115E023FAF329B",
+  "timestamp": "2026-08-24T03:04:30.888041Z",
+  "submitted_at": "2026-08-24T03:03:18.765401Z",
+  "shots": 8192,
+  "counts": {
+    "0x0": 3969,
+    "0x1": 164,
+    "0x2": 160,
+    "0x3": 3899
+  },
+  "selected_physical_qubits": [
+    157,
+    166
+  ],
+  "job_status": "JobStatus.FINISHED",
+  "timing": {
+    "aioTimeStamp": "9:1787540667957;8:1787540599923;7:1787540599654;2:1787540664248;",
+    "cirExecuteTime": "null",
+    "pulseTime": "null",
+    "qpuRunTime": "2477",
+    "startTime": "1787540599590",
+    "totalTime": "68470"
+  },
+  "provider_raw_path": "starter_kit/evidence/incoming/originq-8FEAB29CDEF92F47DD115E023FAF329B-provider-raw.json"
+}

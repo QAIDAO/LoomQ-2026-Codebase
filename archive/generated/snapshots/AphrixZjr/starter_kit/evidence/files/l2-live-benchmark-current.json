@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "run_date_utc": "2026-08-11",
+  "source_snapshot": "60af4a954e0058331a41e085bf252f93c39c0eac",
+  "command": "python experiments/l2_live_benchmark.py",
+  "model": "deepseek-v4-flash",
+  "credential_policy": "API key and base URL were process-local and are not stored in this artifact.",
+  "results": [
+    {"case": "generate:ghz3-zh", "passed": true, "latency_seconds": 6.547},
+    {"case": "generate:bell-en", "passed": true, "latency_seconds": 5.968},
+    {"case": "generate:ghz4-en", "passed": true, "latency_seconds": 6.125},
+    {"case": "generate:ghz5-zh", "passed": true, "latency_seconds": 6.297},
+    {"case": "repair:bell-syntax", "passed": true, "latency_seconds": 5.594},
+    {"case": "repair:ghz3-gate", "passed": true, "latency_seconds": 6.016},
+    {"case": "repair:ghz4-measure", "passed": true, "latency_seconds": 6.187},
+    {"case": "repair:bell-operand", "passed": true, "latency_seconds": 6.094},
+    {"case": "backend:local15", "passed": true, "latency_seconds": 6.906},
+    {"case": "backend:local30", "passed": true, "latency_seconds": 5.641},
+    {"case": "backend:qpu70", "passed": true, "latency_seconds": 6.750},
+    {"case": "backend:braket-paid", "passed": true, "latency_seconds": 5.828}
+  ],
+  "summary": {
+    "passed": 12,
+    "failed": 0,
+    "total": 12,
+    "latency_seconds": {"median": 6.110, "maximum": 6.906}
+  }
+}

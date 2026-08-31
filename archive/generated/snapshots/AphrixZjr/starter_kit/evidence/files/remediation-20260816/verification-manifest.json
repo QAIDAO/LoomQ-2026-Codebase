@@ -1,0 +1,251 @@
+{
+  "artifacts": [
+    {
+      "bytes": 270364,
+      "path": "starter_kit/evidence/files/l2-raw-prompt-stress-remediation-20260815.json",
+      "sha256": "898f7aaeb3597f528bc52c71794247ea9753275a04e6a7d0f40a653814d8e5de",
+      "status": "ok"
+    },
+    {
+      "bytes": 34979,
+      "path": "starter_kit/evidence/files/l2-raw-prompt-stress-remediation-20260815.stdout.txt",
+      "sha256": "86425ed86c0b290d2ab0eaf639430e89a842746c1e14294012f3f698d69fe494",
+      "status": "ok"
+    },
+    {
+      "bytes": 410,
+      "path": "starter_kit/evidence/files/evaluator-l2-remediation-20260815.json",
+      "sha256": "2319e0de465ea473b9127626d98f12772546564c078fdaeacc32dd56071a3b37",
+      "status": "ok"
+    },
+    {
+      "bytes": 1397,
+      "path": "starter_kit/evidence/files/hardware/spinq/spinq-smoke-bell-S-260811-0002-summary.json",
+      "sha256": "8c2b866b9b2d3ca8264d15cd5c6864ab134cf61400f258ddf09f889989592104",
+      "status": "ok"
+    },
+    {
+      "bytes": 1525,
+      "path": "starter_kit/evidence/files/hardware/spinq/spinq-resume-bit_order-S-260811-0003-summary.json",
+      "sha256": "e280bbd4e777b1b69907e60007f294b9d53aade093a220b240929ba740971402",
+      "status": "ok"
+    },
+    {
+      "bytes": 1413,
+      "path": "starter_kit/evidence/files/hardware/spinq/spinq-formal-bell-S-260811-0004-summary.json",
+      "sha256": "ef4d1b1afb5a1be3d93c526592cd84f8cc64926dab60ff1eeb39a4735256c0a4",
+      "status": "ok"
+    },
+    {
+      "bytes": 1517,
+      "path": "starter_kit/evidence/files/hardware/spinq/spinq-formal-ghz3-S-260811-0005-summary.json",
+      "sha256": "93d1da220eb11fe80216986e8fa2d8a9ae6edd2e4fac5b6d5cd35ea3f49b37f2",
+      "status": "ok"
+    },
+    {
+      "bytes": 3001,
+      "path": "starter_kit/evidence/files/hardware/spinq/spinq-hardware-analysis.json",
+      "sha256": "b7b481a8a39570dc64306935b46f9236c1c397ef29954bd8a4f3fb5600cd4fe9",
+      "status": "ok"
+    }
+  ],
+  "commands": [
+    {
+      "argv": [
+        "python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "starter_kit/tests",
+        "-v"
+      ],
+      "duration_seconds": 19.380516,
+      "name": "starter-unittest",
+      "output_bytes": 30607,
+      "output_file": "starter-unittest-current.txt",
+      "output_sha256": "840ce72d4ffddf20986a72c9e0f1dbd50498897f175febb2d80dddbbb89ee2d3",
+      "return_code": 0,
+      "started_at_utc": "2026-08-15T17:08:37.573125Z",
+      "timed_out": false
+    },
+    {
+      "argv": [
+        "python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "duration_seconds": 19.781589,
+      "name": "repository-unittest",
+      "output_bytes": 34870,
+      "output_file": "repository-unittest-current.txt",
+      "output_sha256": "8491c2f2035d64d29fcad8bc72d4f2ad03f06dfbed5e0b1bb9f2ffc371e29d16",
+      "return_code": 0,
+      "started_at_utc": "2026-08-15T17:08:56.947258Z",
+      "timed_out": false
+    },
+    {
+      "argv": [
+        "python",
+        "-B",
+        "-m",
+        "compileall",
+        "-q",
+        "competition",
+        "starter_kit"
+      ],
+      "duration_seconds": 0.133794,
+      "name": "python-compile",
+      "output_bytes": 0,
+      "output_file": "python-compile-current.txt",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "return_code": 0,
+      "started_at_utc": "2026-08-15T17:09:16.735460Z",
+      "timed_out": false
+    },
+    {
+      "argv": [
+        "python",
+        "-B",
+        "starter_kit/evaluator.py",
+        "--level",
+        "l3"
+      ],
+      "duration_seconds": 0.175985,
+      "name": "evaluator-l3",
+      "output_bytes": 97,
+      "output_file": "evaluator-l3-current.txt",
+      "output_sha256": "3af900efe7f8f3d06fd52bb312caf1ab1156e02c1f8f3e9317b150743ef1d6d4",
+      "return_code": 0,
+      "started_at_utc": "2026-08-15T17:09:16.869752Z",
+      "timed_out": false
+    },
+    {
+      "argv": [
+        "node",
+        "--check",
+        "starter_kit/web/static/app.js"
+      ],
+      "duration_seconds": 0.052018,
+      "name": "node-app-check",
+      "output_bytes": 0,
+      "output_file": "node-app-check-current.txt",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "return_code": 0,
+      "started_at_utc": "2026-08-15T17:09:17.045869Z",
+      "timed_out": false
+    },
+    {
+      "argv": [
+        "node",
+        "--check",
+        "starter_kit/browser_responsive_check.mjs"
+      ],
+      "duration_seconds": 0.047272,
+      "name": "browser-responsive-node-check",
+      "output_bytes": 0,
+      "output_file": "browser-responsive-node-check-current.txt",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "return_code": 0,
+      "started_at_utc": "2026-08-15T17:09:17.097650Z",
+      "timed_out": false
+    },
+    {
+      "argv": [
+        "node",
+        "--check",
+        "starter_kit/browser_agent_flow_check.mjs"
+      ],
+      "duration_seconds": 0.045949,
+      "name": "browser-agent-node-check",
+      "output_bytes": 0,
+      "output_file": "browser-agent-node-check-current.txt",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "return_code": 0,
+      "started_at_utc": "2026-08-15T17:09:17.143458Z",
+      "timed_out": false
+    },
+    {
+      "argv": [
+        "C:/Progra~1/Docker/Docker/resources/bin/docker-compose.exe",
+        "-f",
+        "starter_kit/compose.yaml",
+        "config",
+        "--quiet"
+      ],
+      "duration_seconds": 0.071509,
+      "name": "compose-config",
+      "output_bytes": 0,
+      "output_file": "compose-config-current.txt",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "return_code": 0,
+      "started_at_utc": "2026-08-15T17:09:17.190646Z",
+      "timed_out": false
+    },
+    {
+      "argv": [
+        "git",
+        "-c",
+        "safe.directory=D:/LoomQ-2026",
+        "diff",
+        "--check"
+      ],
+      "duration_seconds": 0.045337,
+      "name": "git-diff-check",
+      "output_bytes": 0,
+      "output_file": "git-diff-check-current.txt",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "return_code": 0,
+      "started_at_utc": "2026-08-15T17:09:17.261450Z",
+      "timed_out": false
+    }
+  ],
+  "environment": {
+    "architecture": {
+      "machine": "AMD64",
+      "pointer_bits": 64
+    },
+    "docker": {
+      "available": true,
+      "version": "Docker version 29.6.2, build dfc4efb"
+    },
+    "node": {
+      "available": true,
+      "version": "v22.14.0"
+    },
+    "os": {
+      "release": "10",
+      "system": "Windows",
+      "version": "10.0.26200"
+    },
+    "python": {
+      "implementation": "CPython",
+      "version": "3.10.11"
+    }
+  },
+  "execution_policy": {
+    "automatic_commit": false,
+    "child_environment": "sanitized_allowlist_values_not_recorded",
+    "default_l2_live": false,
+    "default_network_access": false,
+    "evidence_outputs_mutate_worktree": true,
+    "tracked_evidence_finalization": "two_phase_evidence_only_commit"
+  },
+  "generated_at_utc": "2026-08-15T17:08:37.572125Z",
+  "repository": {
+    "available": true,
+    "captured_before_commands": true,
+    "captured_before_evidence_write": true,
+    "dirty": false,
+    "head": "ebf24a7c2961a3f1d4cfe320f6f9c758337cdf82",
+    "head_role": "source_snapshot"
+  },
+  "schema_version": 1,
+  "success": true
+}
