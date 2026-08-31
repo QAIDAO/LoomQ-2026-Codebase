@@ -1,0 +1,26 @@
+contract_version: "1.0"
+starter_kit_version: "1.1.0"
+entrypoint: "adapter.py"
+levels:
+  l1: true
+  l2: true
+  l3: true
+runtime:
+  language: "python"
+  version: "3.10"
+network:
+  # L1 全部跑在本地模拟器上，不需要网络。
+  required_for_l1: false
+  # ★ 必须是 true。starter_kit/README.md：「若参加 L2，请把 submission.yaml 中的
+  #   levels.l2 与 network.required_for_l2 同时改为 true」。
+  #   L2 要连组委会注入的模型服务；声明成 false 而评测器据此断网，
+  #   12 个 case 会全部失败。这一条是提交前逐项复查时抓到的。
+  required_for_l2: true
+  allowed_hosts: []
+l2_runtime:
+  protocol: "openai_chat_completions"
+  configuration_source: "environment"
+  required_environment:
+    - "LOOMQ_LLM_BASE_URL"
+    - "LOOMQ_LLM_API_KEY"
+    - "LOOMQ_LLM_MODEL"

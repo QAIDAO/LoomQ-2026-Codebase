@@ -1,0 +1,29 @@
+{
+  "counts": null,
+  "density_matrix": null,
+  "fields": {
+    "QProg": null,
+    "completedAt": null,
+    "createdAt": null,
+    "endTime": null,
+    "mappingQubit": null,
+    "measureQubits": null,
+    "probCount": null,
+    "srcQubits": null,
+    "startTime": null,
+    "submitTime": null,
+    "taskResult": null
+  },
+  "job_id": "EE7D22A38D5A9F246A2031BC7A31C3AD",
+  "job_status": "JobStatus.FAILED",
+  "origin_data": "{\"success\":false,\"code\":10001,\"message\":\"failed\",\"obj\":{\"taskId\":\"EE7D22A38D5A9F246A2031BC7A31C3AD\",\"chipId\":\"WK_C180_2\",\"taskCalMethod\":\"1\",\"taskFrom\":\"4\",\"errCode\":41,\"errInfo\":\"Error: measured qubit is zero!\",\"taskState\":\"4\",\"totalTime\":null,\"qpuRunTime\":null,\"pulseTime\":null,\"cirExecuteTime\":null,\"measureQubits\":null,\"QMachineType\":null}}",
+  "probabilities": null,
+  "result_availability": "unavailable: provider task did not finish",
+  "state_fidelity": null,
+  "timing_info": {
+    "cirExecuteTime": "null",
+    "pulseTime": "null",
+    "qpuRunTime": "null",
+    "totalTime": "null"
+  }
+}

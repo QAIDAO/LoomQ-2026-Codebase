@@ -1,0 +1,14 @@
+# LoomQ submission dependencies (pinned exactly).
+# Local python must be 3.10: spinqit only ships cp310 wheels; official
+# evaluator uses python:3.10-slim per submission.yaml and the Dockerfile.
+#
+# Resolution notes (verified on 2026-08-17):
+# - spinqit==0.2.4 pins antlr4-python3-runtime==4.9.2, so any antlr-4.13.x
+#   dependency (newer amazon-braket-default-simulator) breaks resolution.
+# - amazon-braket-sdk>=1.111.0 requires Python>=3.11 -> stay on 1.90.2.
+# - amazon-braket-default-simulator==1.27.0 is pinned explicitly so the
+#   resolver does NOT upgrade to a version pinning antlr 4.13.2.
+spinqit==0.2.4
+pyqpanda==3.8.5
+amazon-braket-sdk==1.90.2
+amazon-braket-default-simulator==1.27.0

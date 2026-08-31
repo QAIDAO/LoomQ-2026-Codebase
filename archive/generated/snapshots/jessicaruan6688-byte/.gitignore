@@ -1,0 +1,15 @@
+.DS_Store
+.DStore
+**/ .DS_Store
+**/.DS_Store
+**/.DStore
+__pycache__/
+*.py[cod]
+
+.docker-verify-insurance/
+.env
+**/.env
+*.pem
+
+
+.docker-verify-full/

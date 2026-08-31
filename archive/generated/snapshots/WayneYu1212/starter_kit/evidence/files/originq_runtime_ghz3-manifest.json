@@ -1,0 +1,37 @@
+{
+  "package": "originq_runtime_ghz3",
+  "job_id": "B23E5B75D47D124A078F25B1C0083C2A",
+  "device_id": "WK_C180_2",
+  "device": "Origin Wukong 180-2",
+  "physical_qubits": [
+    49,
+    58,
+    67
+  ],
+  "shots": 1000,
+  "circuit": "GHZ-3: H(0), CX(0,1), CX(0,2), measure",
+  "data_source": "qpanda_runtime.RuntimeService (2026-08-21)",
+  "missing_provider_exports": "provider CSV: N/A; task screenshot: N/A",
+  "files": [
+    {
+      "name": "originq_runtime_ghz3-hardware-bell.qasm",
+      "sha256": "371c1f7eacd207bcd7a0780112a982bcf7df1e5f601139ce7bc17808827b926f",
+      "size_bytes": 118
+    },
+    {
+      "name": "originq_runtime_ghz3-hardware-metadata.json",
+      "sha256": "16e3bf01f763ebd572f551a315c1c4f2801fbe0f67c32ed0d783b6b84dfa2634",
+      "size_bytes": 1345
+    },
+    {
+      "name": "originq_runtime_ghz3-hardware-result.normalized.json",
+      "sha256": "bc76b2121fcfbc928c97295b6512063c52c6642678330f853a46a1975820a975",
+      "size_bytes": 677
+    },
+    {
+      "name": "originq_runtime_ghz3-hardware-result.raw.json",
+      "sha256": "7b2c1a33a03ce80c6f380223ba29f459b3ce834eb045033fb20c4f69b7887f99",
+      "size_bytes": 363
+    }
+  ]
+}

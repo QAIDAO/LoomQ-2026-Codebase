@@ -1,0 +1,39 @@
+{
+  "schema_version": "loomq-spinq-hardware-summary-v1",
+  "backend": "spinq-cloud-hardware",
+  "job_id": "S-260811-0002",
+  "shots": 100,
+  "counts": {
+    "00": 53,
+    "11": 41,
+    "01": 3,
+    "10": 3
+  },
+  "bit_order": "little",
+  "timestamp": "2026-08-11T06:36:03.268Z",
+  "circuit": "bell",
+  "mode": "smoke",
+  "counts_normalization": "probabilities-largest-remainder",
+  "meta": {
+    "provider": "SpinQ Cloud",
+    "device_code": "triangulum_vp",
+    "sdk_api": "spinqit-0.2.4",
+    "result_kind": "probabilities",
+    "counts_normalization": "probabilities-largest-remainder",
+    "provider_shots": 100,
+    "provider_shots_verified": true,
+    "measured_qubits": [0, 1],
+    "measurement_map": [
+      {"qubit": 0, "classical": 0},
+      {"qubit": 1, "classical": 1}
+    ],
+    "source_qasm_sha256": "26594a7df50cc16b354391a5cdac02f56725bc1b0688c7f4c47ebce3b34e2773",
+    "submitted_qasm_sha256": "6648fba6510dca0e4a025b7e69f2ca50d4c7aec70c27f1f7659d201b0a515068",
+    "raw_evidence_file": "spinq-smoke-bell-S-260811-0002-raw.json",
+    "timestamp_source": "spinq-task-metadata.json created_at (provider createdTime)"
+  },
+  "source_qasm_file": "spinq-smoke-bell-S-260811-0002-source.qasm",
+  "submitted_qasm_file": "spinq-smoke-bell-S-260811-0002-submitted.qasm",
+  "request_file": "spinq-smoke-bell-S-260811-0002-request.json",
+  "task_metadata_file": "spinq-task-metadata.json"
+}

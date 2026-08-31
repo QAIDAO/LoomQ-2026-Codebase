@@ -1,0 +1,10 @@
+{
+  "platform": "Origin Quantum Cloud",
+  "backend": "WK_C180",
+  "job_id": "C631C56659A127243AFDB9D2B1086683",
+  "submitted_at": "2026-08-21T13:52:28.326096Z",
+  "shots": 1000,
+  "input_file": "starter_kit/evidence/files/l1-real-hardware/originq/C631C56659A127243AFDB9D2B1086683-input.qasm",
+  "originir_file": "starter_kit/evidence/files/l1-real-hardware/originq/C631C56659A127243AFDB9D2B1086683-submitted.originir",
+  "raw_result_file": "starter_kit/evidence/files/l1-real-hardware/originq/C631C56659A127243AFDB9D2B1086683-raw-result.json"
+}

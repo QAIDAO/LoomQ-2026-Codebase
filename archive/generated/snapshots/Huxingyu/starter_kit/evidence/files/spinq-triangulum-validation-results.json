@@ -1,0 +1,94 @@
+{
+  "generated_at": "2026-08-22T06:10:00+00:00",
+  "platform": "SpinQ Cloud",
+  "machine": "Triangulum NMR 3Q",
+  "note": "云平台结果 bit order 为 q0q1...；原始概率含真机噪声。",
+  "tasks": [
+    {
+      "name": "tri-ghz3",
+      "job_id": "S-260822-0002",
+      "task_id": 61421,
+      "platform_code": "triangulum_vp",
+      "platform_name": "3Qubit核磁量子计算机",
+      "machine_code": "Triangulum-pro-1",
+      "machine_id": 8,
+      "simulator": false,
+      "shots": 1024,
+      "source_code": "OPENQASM 2.0;\nqreg q[3];\ncreg c[3];\nh q[0];\ncx q[0],q[1];\ncx q[1],q[2];",
+      "created_time": "2026-08-21T22:15:29.008+00:00",
+      "start_time": "2026-08-21T22:15:29.033+00:00",
+      "end_time": "2026-08-21T22:17:58.216+00:00",
+      "raw_result": {
+        "000": 0.37320491,
+        "011": 0.02987532,
+        "110": 0.03687888,
+        "001": 0.03047942,
+        "100": 0.02601419,
+        "111": 0.37285412,
+        "101": 0.06332782,
+        "010": 0.06736533
+      },
+      "expected_probability": {
+        "000": 0.50012,
+        "111": 0.49988
+      }
+    },
+    {
+      "name": "tri-x-cx-111",
+      "job_id": "S-260822-0003",
+      "task_id": 61422,
+      "platform_code": "triangulum_vp",
+      "platform_name": "3Qubit核磁量子计算机",
+      "machine_code": "Triangulum-pro-1",
+      "machine_id": 8,
+      "simulator": false,
+      "shots": 1024,
+      "source_code": "OPENQASM 2.0;\nqreg q[3];\ncreg c[3];\nx q[0];\ncx q[0],q[1];\ncx q[1],q[2];",
+      "created_time": "2026-08-21T22:15:29.303+00:00",
+      "start_time": "2026-08-21T22:17:58.880+00:00",
+      "end_time": "2026-08-21T22:20:46.281+00:00",
+      "raw_result": {
+        "000": 0.0413562,
+        "011": 0.01156577,
+        "110": 0.04905098,
+        "001": 0.01685721,
+        "100": 0.01771341,
+        "111": 0.8174051,
+        "101": 0.03726023,
+        "010": 0.00879109
+      },
+      "expected_probability": {
+        "111": 1.0
+      }
+    },
+    {
+      "name": "tri-h-q0",
+      "job_id": "S-260822-0004",
+      "task_id": 61423,
+      "platform_code": "triangulum_vp",
+      "platform_name": "3Qubit核磁量子计算机",
+      "machine_code": "Triangulum-pro-1",
+      "machine_id": 8,
+      "simulator": false,
+      "shots": 1024,
+      "source_code": "OPENQASM 2.0;\nqreg q[3];\ncreg c[3];\nh q[0];",
+      "created_time": "2026-08-21T22:15:29.596+00:00",
+      "start_time": "2026-08-21T22:20:51.869+00:00",
+      "end_time": "2026-08-21T22:23:34.168+00:00",
+      "raw_result": {
+        "000": 0.50095674,
+        "011": 0.02353123,
+        "110": 0.00855199,
+        "001": 0.01589214,
+        "100": 0.42501197,
+        "111": 0.0054614,
+        "101": 0.00611508,
+        "010": 0.01447943
+      },
+      "expected_probability": {
+        "000": 0.500915,
+        "001": 0.499085
+      }
+    }
+  ]
+}

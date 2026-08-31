@@ -1,0 +1,13 @@
+.DS_Store
+.DStore
+**/ .DS_Store
+**/.DS_Store
+**/.DStore
+__pycache__/
+*.py[cod]
+.env
+**/.env
+!.env.example
+!**/.env.example
+*:Zone.Identifier
+**/*:Zone.Identifier

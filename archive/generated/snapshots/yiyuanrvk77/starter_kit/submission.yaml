@@ -1,0 +1,17 @@
+# LoomQ 提交清单
+# 说明：levels 按你实际实现的层次勾选；l2=true 时 network.required_for_l2 必须也为 true。
+contract_version: "1.0"
+
+levels:
+  l1: true
+  l2: true
+  l3: true
+
+runtime:
+  language: python
+  version: "3.10"
+
+network:
+  required_for_l2: true
+  allowed_hosts: []
+

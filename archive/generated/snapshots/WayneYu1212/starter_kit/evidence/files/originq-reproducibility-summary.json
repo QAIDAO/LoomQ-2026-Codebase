@@ -1,0 +1,59 @@
+{
+  "provider": "originq",
+  "device": "Origin Wukong 180-2",
+  "circuit_kind": "bell",
+  "circuit_sha256": "b83288d04f54fad40c776df9eb949e5cbf660b0dd67dd9eddbc301b0e19d8432",
+  "circuit_source": "evidence/files/originq-hardware-bell.qasm",
+  "status": "CANONICAL_ACCEPTED_PLUS_RUNTIME_REPRODUCTION",
+  "status_reason": "This summary records the single canonical real hardware job (D0C7F4...) accepted in issue #55 via the legacy QCloud API. The legacy API path later returned 'Quantum computer under maintenance' (2026-08-21). To continue hardware evidence, the Origin Wukong 180-2 path was migrated to the official QPanda3 Runtime API (RuntimeService / WK_C180_2), which successfully ran three new jobs: Bell (2C68A9D3...), GHZ-3 (B23E5B75...), and Multi (8575222F...). Those new jobs are stored as fully separate evidence packages (originq_runtime_*). This summary does NOT claim additional runs beyond the canonical job; it records the canonical job and points to the separate runtime packages.",
+  "runs": [
+    {
+      "job_id": "D0C7F490B43D9B04FDF19ABF3DB8B342",
+      "shots": 1000,
+      "physical_qubits": [49, 58],
+      "probabilities": {
+        "00": 0.501,
+        "01": 0.012,
+        "10": 0.037,
+        "11": 0.45
+      },
+      "target_mass": 0.951,
+      "non_target_mass": 0.049,
+      "chip_execution_time_s": 0.313,
+      "raw_sha256": "934772c966c3e889d2615d6528ff9012e9e4dc31aa11d614be47510ed3263bb4",
+      "raw_path": "evidence/files/originq-hardware-result.raw.csv",
+      "submitted_at": "2026-08-20T20:29:51.026+08:00",
+      "completed_at": "2026-08-20T21:16:43.073+08:00"
+    }
+  ],
+  "runtime_reproduction_jobs": [
+    {
+      "job_id": "2C68A9D3E2F6626B55EEC966DBC3CE2B",
+      "circuit": "bell",
+      "package": "originq_runtime_bell",
+      "manifest": "evidence/files/originq_runtime_bell-manifest.json"
+    },
+    {
+      "job_id": "B23E5B75D47D124A078F25B1C0083C2A",
+      "circuit": "ghz3",
+      "package": "originq_runtime_ghz3",
+      "manifest": "evidence/files/originq_runtime_ghz3-manifest.json"
+    },
+    {
+      "job_id": "8575222FE2C04A065B38B9DEE5BA9AEE",
+      "circuit": "multi",
+      "package": "originq_runtime_multi",
+      "manifest": "evidence/files/originq_runtime_multi-manifest.json"
+    }
+  ],
+  "summary": {
+    "canonical_runs_completed": 1,
+    "canonical_successful_runs": 1,
+    "canonical_failed_runs": 0,
+    "runtime_reproduction_jobs": 3,
+    "mean_execution_time_s": 0.313,
+    "stability_metric": null,
+    "stability_note": "stability_metric is null because n=1 for the canonical job: a single run cannot produce a meaningful std/min/max. The three runtime reproduction jobs are stored separately and are not averaged into this canonical metric."
+  },
+  "traceability_boundary": "This is participant-side reproducibility evidence. It does not replace organizer hardware verification. Organizers may log into Origin Quantum Cloud and verify the canonical job D0C7F490B43D9B04FDF19ABF3DB8B342 and the three runtime jobs listed above."
+}

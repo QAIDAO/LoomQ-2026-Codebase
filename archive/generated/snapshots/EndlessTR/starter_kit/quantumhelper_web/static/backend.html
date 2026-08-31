@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>QuantumHelper · 选择后端</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+.pref{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}.chip{min-height:40px;padding:0 13px;border:1px solid rgba(25,26,30,.08);border-radius:11px;background:#fff;color:var(--text-2);cursor:pointer;font-size:13px;font-weight:700}.chip.active{border-color:var(--primary-line);background:var(--primary-soft);color:var(--primary-deep)}
+.backends{display:grid;gap:12px}.backend{padding:20px;border:1px solid rgba(25,26,30,.08);border-radius:16px;background:rgba(255,255,255,.68);cursor:pointer}.backend:hover{border-color:var(--primary-line)}.backend.selected{border-color:var(--primary);background:linear-gradient(180deg,rgba(94,99,182,.08),rgba(255,255,255,.86))}
+.backend-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}.backend-name{font-size:18px;font-weight:760}.tag{padding:7px 9px;border-radius:9px;background:var(--green-soft);color:var(--green);font-size:11px;font-weight:760}.backend-desc{margin:7px 0 0;color:var(--text);font-size:13px;line-height:1.6}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:15px}.metric{padding:10px;border:1px solid rgba(25,26,30,.06);border-radius:11px;background:rgba(255,255,255,.66)}.metric span{display:block;color:var(--text-2);font-size:10px}.metric strong{display:block;margin-top:4px;font-size:12px}
+@media(max-width:760px){.metrics{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header class="topbar">
+  <a class="brand" href="index.html"><div class="logo"><span></span></div>QuantumHelper</a>
+  <div class="top-meta"><span>选择运行后端</span><span class="mode"><i class="mode-dot"></i>任务引导</span></div>
+</header>
+<div id="prog"></div>
+
+<section class="hero">
+  <div class="eyebrow">选择后端</div>
+  <h1>先按你在意的条件选，<span class="hero-em">不用记平台名字</span></h1>
+  <p class="hero-text">本地 / 云端、排队、费用、账号先说清楚，再给推荐。平台名放在第二层。</p>
+</section>
+<main><section class="layout"><article class="card main-card"><div class="section-head"><div class="kicker">你更在意什么</div><h2 class="section-title">选择一两个条件，推荐会自动调整</h2></div><div class="section-body"><div class="pref"><button class="chip active" data-pref="queue">不想排队</button><button class="chip active" data-pref="free">希望免费</button><button class="chip active" data-pref="account">不想登录账号</button><button class="chip" data-pref="cloud">想尝试云端</button></div><div class="backends"><div class="backend selected" data-id="local"><div class="backend-top"><div><div class="backend-name">本地模拟器</div><p class="backend-desc">直接在本机运行，适合第一次测试、小线路和快速验证。</p></div><span class="tag">当前推荐</span></div><div class="metrics"><div class="metric"><span>位置</span><strong>本地</strong></div><div class="metric"><span>排队</span><strong>无</strong></div><div class="metric"><span>费用</span><strong>免费</strong></div><div class="metric"><span>账号</span><strong>不需要</strong></div></div></div><div class="backend" data-id="cloud"><div class="backend-top"><div><div class="backend-name">云端模拟器</div><p class="backend-desc">适合希望体验云端工作流时使用。</p></div></div><div class="metrics"><div class="metric"><span>位置</span><strong>云端</strong></div><div class="metric"><span>排队</span><strong>可能</strong></div><div class="metric"><span>费用</span><strong>依平台</strong></div><div class="metric"><span>账号</span><strong>通常需要</strong></div></div></div><div class="backend" data-id="qpu"><div class="backend-top"><div><div class="backend-name">真实量子设备</div><p class="backend-desc">用于真机实验，会额外受到排队、账号、配额和噪声影响。</p></div></div><div class="metrics"><div class="metric"><span>位置</span><strong>云端</strong></div><div class="metric"><span>排队</span><strong>常见</strong></div><div class="metric"><span>费用</span><strong>依平台</strong></div><div class="metric"><span>账号</span><strong>需要</strong></div></div></div></div></div></article><aside class="card side-card"><div class="kicker">这些词是什么意思</div><h2 class="side-title">只看会影响你选择的参数</h2><div class="summary-list"><div class="summary-item"><span class="summary-name">本地 / 云端</span><span class="summary-value">运行位置</span></div><div class="summary-item"><span class="summary-name">排队</span><span class="summary-value">等待资源</span></div><div class="summary-item"><span class="summary-name">费用</span><span class="summary-value">运行成本</span></div><div class="summary-item"><span class="summary-name">账号</span><span class="summary-value">登录要求</span></div></div><div class="action-block"><button class="btn primary" id="continueBtn">使用推荐后端 →</button></div></aside></section></main></div>
+<script>
+const source=new URLSearchParams(location.search).get('source')||'custom';
+prog.innerHTML=source==='import'
+?`<nav class="progress cols-5"><div class="progress-step done"><i>✓</i>导入线路</div><div class="progress-step done"><i>✓</i>检查线路</div><div class="progress-step active"><i>3</i>选择后端</div><div class="progress-step"><i>4</i>运行</div><div class="progress-step"><i>5</i>结果</div></nav>`
+:`<nav class="progress cols-6"><div class="progress-step done"><i>✓</i>描述任务</div><div class="progress-step done"><i>✓</i>生成方案</div><div class="progress-step done"><i>✓</i>确认线路</div><div class="progress-step active"><i>4</i>选择后端</div><div class="progress-step"><i>5</i>运行</div><div class="progress-step"><i>6</i>结果</div></nav>`;
+let selected='local';const cards=[...document.querySelectorAll('.backend')];
+cards.forEach(c=>c.onclick=()=>{cards.forEach(x=>x.classList.remove('selected'));c.classList.add('selected');selected=c.dataset.id});
+document.querySelectorAll('.chip').forEach(c=>c.onclick=()=>c.classList.toggle('active'));
+continueBtn.onclick=()=>{const n={local:'本地模拟器',cloud:'云端模拟器',qpu:'真实量子设备'};localStorage.setItem('qh_backend',n[selected]);location.href=source==='import'?'circuit-run.html':'custom-run.html'};
+</script></body>
+</html>

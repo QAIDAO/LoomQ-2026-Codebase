@@ -1,0 +1,6 @@
+# Public evaluator baseline + pinned L1 simulator SDKs.
+# Versions chosen to avoid antlr4 conflicts (see upstream LoomQ issue #1).
+amazon-braket-sdk==1.50.0
+spinqit==0.2.4
+setuptools==69.5.1
+pyqpanda==3.8.5

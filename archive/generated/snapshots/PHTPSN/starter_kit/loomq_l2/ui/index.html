@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="LoomQ is a bilingual guide and local workspace for learning, translating, simulating, compiling, and verifying quantum programs.">
+    <title>LoomQ — Learn, simulate, compile, and verify</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <div class="workspace">
+      <aside class="side-rail" id="side-rail" data-i18n-aria="aria.workspace">
+        <div class="rail-head">
+          <a class="brand" href="#" aria-label="LoomQ home">
+            <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span><strong>LoomQ</strong><small data-i18n="brand.tagline">Quantum guide</small></span>
+          </a>
+          <button class="rail-toggle" id="rail-toggle" type="button" aria-controls="side-rail" aria-expanded="true" aria-label="Collapse sidebar" title="Collapse sidebar"><span aria-hidden="true">‹</span></button>
+        </div>
+        <div class="language-switch" role="group" data-i18n-aria="aria.language">
+          <button class="active" type="button" data-language="en">EN</button><button type="button" data-language="zh">中文</button>
+        </div>
+        <nav class="view-nav" data-i18n-aria="aria.tools">
+          <button class="active" type="button" data-view="overview" aria-current="page"><span>01</span><i aria-hidden="true">◎</i><strong data-i18n="nav.overview">Tool overview</strong></button>
+          <button type="button" data-view="guide"><span>02</span><i aria-hidden="true">↗</i><strong data-i18n="nav.guide">Beginner guide</strong></button>
+          <button type="button" data-view="learn"><span>03</span><i aria-hidden="true">◇</i><strong data-i18n="nav.learn">Quantum basics</strong></button>
+          <button type="button" data-view="gates"><span>04</span><i aria-hidden="true">⊕</i><strong data-i18n="nav.gates">12 supported gates</strong></button>
+          <button type="button" data-view="simulator"><span>05</span><i aria-hidden="true">▶</i><strong data-i18n="nav.simulator">Vendor simulators</strong></button>
+          <button type="button" data-view="hybrid"><span>06</span><i aria-hidden="true">⌁</i><strong data-i18n="nav.hybrid">Hybrid compiler</strong></button>
+          <button type="button" data-view="evidence"><span>07</span><i aria-hidden="true">✓</i><strong data-i18n="nav.evidence">Execution evidence</strong></button>
+          <button type="button" data-view="history"><span>08</span><i aria-hidden="true">≡</i><strong data-i18n="nav.history">Conversation history</strong></button>
+        </nav>
+        <div class="rail-footer">
+          <div class="agent-health">
+            <span class="status" id="service-status" role="status"><span class="status-dot"></span><span id="service-status-text">Checking local agent</span></span>
+          </div>
+          <div class="backend-health" data-i18n-aria="aria.backends">
+            <strong data-i18n="rail.backends">Local backends</strong>
+            <ul>
+              <li class="checking" data-backend-status="spinq" title="SpinQit · checking"><span class="backend-dot" aria-hidden="true"></span><span>SpinQit</span><small data-backend-state>Checking</small></li>
+              <li class="checking" data-backend-status="originq" title="Origin Quantum · checking"><span class="backend-dot" aria-hidden="true"></span><span data-i18n="sim.vendor.origin">Origin Quantum</span><small data-backend-state>Checking</small></li>
+              <li class="checking" data-backend-status="braket" title="Amazon Braket · checking"><span class="backend-dot" aria-hidden="true"></span><span>Braket</span><small data-backend-state>Checking</small></li>
+            </ul>
+          </div>
+        </div>
+      </aside>
+
+      <main class="content-stage" id="content-stage">
+        <section class="content-view active" id="view-overview" data-view-panel="overview" aria-labelledby="overview-title">
+          <header class="view-heading">
+            <p class="eyebrow" data-i18n="overview.eyebrow">01 · Tool overview</p>
+            <h1 id="overview-title"><span data-i18n="overview.title1">From a plain-language idea</span><br><em data-i18n="overview.title2">to a circuit you can run.</em></h1>
+            <p class="view-lede" data-i18n="overview.lede">LoomQ helps a beginner understand the task, write or repair OpenQASM, verify the circuit locally, and compare three vendor simulators.</p>
+          </header>
+          <div class="capability-grid">
+            <article><span>01</span><h2 data-i18n="overview.askTitle">Ask naturally</h2><p data-i18n="overview.askBody">Describe the outcome. You do not need to know gate syntax or backend names.</p></article>
+            <article><span>02</span><h2 data-i18n="overview.verifyTitle">Verify before use</h2><p data-i18n="overview.verifyBody">Generated QASM is parsed and simulated locally before LoomQ presents it as valid.</p></article>
+            <article><span>03</span><h2 data-i18n="overview.runTitle">Run without cloud cost</h2><p data-i18n="overview.runBody">Test counts through SpinQit, Origin Quantum, and Amazon Braket local SDKs.</p></article>
+          </div>
+          <div class="workflow-card">
+            <div><span data-i18n="overview.intentLabel">YOUR INTENT</span><strong data-i18n="overview.intentValue">“Make a Bell pair”</strong></div><i>→</i>
+            <div><span>LOOMQ</span><strong data-i18n="overview.loomqValue">Build + verify</strong></div><i>→</i>
+            <div><span data-i18n="overview.resultLabel">RESULT</span><strong data-i18n="overview.resultValue">QASM + counts</strong></div>
+          </div>
+          <div class="boundary-note"><span aria-hidden="true">!</span><div><strong data-i18n="overview.boundaryTitle">Simulation is not real hardware.</strong><p data-i18n="overview.boundaryBody">The simulator view uses vendor SDKs on this computer. It never submits a paid quantum-machine job.</p></div></div>
+        </section>
+
+        <section class="content-view" id="view-guide" data-view-panel="guide" aria-labelledby="guide-title">
+          <header class="view-heading compact guide-heading">
+            <p class="eyebrow" data-i18n="guide.eyebrow">02 · Beginner guide</p>
+            <h2 id="guide-title"><span data-i18n="guide.title1">Three moves take you</span><br><em data-i18n="guide.title2">from zero to entanglement.</em></h2>
+            <p class="view-lede" data-i18n="guide.lede">Follow one state as H creates two possible paths, CX links two qubits, and measurement turns the final Bell state into ordinary bits.</p>
+            <ol class="guide-route" aria-label="Lesson route" data-i18n-aria="guide.routeAria">
+              <li><span>01</span><strong>H</strong><small data-i18n="guide.routeH">Superposition</small></li>
+              <li><span>02</span><strong>CX</strong><small data-i18n="guide.routeCx">Conditional flip</small></li>
+              <li><span>03</span><strong>H + CX</strong><small data-i18n="guide.routeBell">Bell state</small></li>
+            </ol>
+          </header>
+
+          <section class="guide-module" aria-labelledby="guide-h-title">
+            <header><span>01</span><h3 id="guide-h-title" data-i18n="guide.h.title">Start with the H gate</h3><small>1 QUBIT</small></header>
+            <div class="guide-frames guide-frames-four">
+              <article class="guide-frame">
+                <span class="guide-frame-number">01 · BASIS</span>
+                <h4 data-i18n="guide.h.basisTitle">Two basis states</h4>
+                <div class="guide-visual guide-energy" aria-hidden="true"><div><span data-latex="\lvert 1\rangle">|1⟩</span></div><div><i></i><span data-latex="\lvert 0\rangle">|0⟩</span></div></div>
+                <p data-i18n="guide.h.basisBody">Treat a qubit as a two-level system. These two labels are the outcomes a measurement can report.</p>
+              </article>
+              <article class="guide-frame">
+                <span class="guide-frame-number">02 · INITIALIZE</span>
+                <h4 data-i18n="guide.h.initialTitle">Begin at zero</h4>
+                <div class="guide-visual"><div class="guide-state"><span data-latex="\lvert\psi\rangle=\lvert 0\rangle">|ψ⟩ = |0⟩</span><small data-latex="\begin{bmatrix}1\\0\end{bmatrix}">[1, 0]ᵀ</small></div></div>
+                <p data-i18n="guide.h.initialBody">Before any gate is applied, measuring this state returns 0 with certainty.</p>
+              </article>
+              <article class="guide-frame">
+                <span class="guide-frame-number">03 · APPLY H</span>
+                <h4 data-i18n="guide.h.applyTitle">Create two paths</h4>
+                <div class="guide-visual"><div class="guide-wave-pair"><div><b data-latex="\lvert 0\rangle/\sqrt{2}">|0⟩ / √2</b><svg viewBox="0 0 140 30" role="img" aria-label="First equal amplitude"><path d="M0 15 C14 2 28 2 42 15 S70 28 84 15 S112 2 126 15 S140 28 140 15"/></svg></div><div><b data-latex="\lvert 1\rangle/\sqrt{2}">|1⟩ / √2</b><svg viewBox="0 0 140 30" role="img" aria-label="Second equal amplitude"><path d="M0 15 C14 2 28 2 42 15 S70 28 84 15 S112 2 126 15 S140 28 140 15"/></svg></div></div></div>
+                <p><span data-i18n="guide.h.applyBody">H gives the two basis states equal amplitudes:</span> <span class="guide-inline-math" data-latex="H\lvert0\rangle=\frac{\lvert0\rangle+\lvert1\rangle}{\sqrt2}">H|0⟩ = (|0⟩ + |1⟩)/√2</span></p>
+              </article>
+              <article class="guide-frame">
+                <span class="guide-frame-number">04 · MEASURE</span>
+                <h4 data-i18n="guide.h.measureTitle">Read one bit</h4>
+                <div class="guide-visual"><div class="guide-probabilities"><div><code>0</code><i><b></b></i><span>50%</span></div><div><code>1</code><i><b></b></i><span>50%</span></div></div></div>
+                <p data-i18n="guide.h.measureBody">Each run returns either 0 or 1. Repeating the circuit reveals the fifty-fifty distribution.</p>
+              </article>
+            </div>
+            <p class="guide-note"><span aria-hidden="true">i</span><span data-i18n="guide.h.note">The two-level picture is intuition. In the circuit model, |0⟩ and |1⟩ are first of all two fixed basis vectors.</span></p>
+          </section>
+
+          <section class="guide-module" aria-labelledby="guide-cx-title">
+            <header><span>02</span><h3 id="guide-cx-title" data-i18n="guide.cx.title">Add a second qubit and meet CX</h3><small>2 QUBITS</small></header>
+            <div class="guide-frames guide-frames-three">
+              <article class="guide-frame">
+                <span class="guide-frame-number">01 · REGISTER</span>
+                <h4 data-i18n="guide.cx.registerTitle">Describe both together</h4>
+                <div class="guide-visual"><div class="guide-state"><span data-latex="\lvert q_1q_0\rangle=\lvert00\rangle">|q₁q₀⟩ = |00⟩</span><small data-latex="\{\lvert00\rangle,\lvert01\rangle,\lvert10\rangle,\lvert11\rangle\}">{|00⟩, |01⟩, |10⟩, |11⟩}</small></div></div>
+                <p data-i18n="guide.cx.registerBody">Two qubits have four computational-basis states. LoomQ writes labels in |q₁q₀⟩ order.</p>
+              </article>
+              <article class="guide-frame">
+                <span class="guide-frame-number">02 · CONTROL</span>
+                <h4 data-i18n="guide.cx.gateTitle">Read the CX symbol</h4>
+                <div class="guide-visual"><div class="guide-cx-diagram" role="img" data-i18n-aria="guide.cx.diagramAria" aria-label="CX gate with q zero as control and q one as target"><div><code>q₀</code><i><b></b><em></em></i><span data-i18n="guide.cx.control">control</span></div><div><code>q₁</code><i><b></b></i><span data-i18n="guide.cx.target">target</span></div></div></div>
+                <p data-i18n="guide.cx.gateBody">The filled dot is the control. If it is 1, the circled plus flips the target qubit.</p>
+              </article>
+              <article class="guide-frame">
+                <span class="guide-frame-number">03 · RULE</span>
+                <h4 data-i18n="guide.cx.ruleTitle">A conditional flip</h4>
+                <div class="guide-visual"><div class="guide-state guide-state-stack"><span data-latex="\operatorname{CX}\lvert00\rangle=\lvert00\rangle">CX|00⟩ = |00⟩</span><span data-latex="\operatorname{CX}\lvert01\rangle=\lvert11\rangle">CX|01⟩ = |11⟩</span></div></div>
+                <p data-i18n="guide.cx.ruleBody">With q₀ as control, the target q₁ changes only on the branch where q₀ equals 1.</p>
+              </article>
+            </div>
+          </section>
+
+          <section class="guide-module" aria-labelledby="guide-bell-title">
+            <header><span>03</span><h3 id="guide-bell-title" data-i18n="guide.bell.title">Connect H and CX to make a Bell state</h3><small>ENTANGLEMENT</small></header>
+            <div class="guide-frames guide-frames-three">
+              <article class="guide-frame">
+                <span class="guide-frame-number">01 · START</span>
+                <h4 data-i18n="guide.bell.startTitle">Initialize</h4>
+                <div class="guide-visual"><div class="guide-state"><span data-latex="\lvert00\rangle">|00⟩</span><small data-i18n="guide.bell.startLabel">one known joint state</small></div></div>
+                <p data-i18n="guide.bell.startBody">Both qubits begin at zero, so there is initially only one nonzero path.</p>
+              </article>
+              <article class="guide-frame">
+                <span class="guide-frame-number">02 · H ON q₀</span>
+                <h4 data-i18n="guide.bell.splitTitle">Split the path</h4>
+                <div class="guide-visual"><div class="guide-transform"><span data-latex="\lvert00\rangle">|00⟩</span><i>→</i><span data-latex="\frac{\lvert00\rangle+\lvert01\rangle}{\sqrt2}">(|00⟩ + |01⟩)/√2</span></div></div>
+                <p data-i18n="guide.bell.splitBody">H acts on q₀, creating two equal-amplitude branches while q₁ remains zero.</p>
+              </article>
+              <article class="guide-frame guide-frame-accent">
+                <span class="guide-frame-number">03 · CX</span>
+                <h4 data-i18n="guide.bell.finishTitle">Link the outcomes</h4>
+                <div class="guide-visual"><div class="guide-state guide-bell-state"><span data-latex="\lvert\Phi^+\rangle=\frac{\lvert00\rangle+\lvert11\rangle}{\sqrt2}">|Φ⁺⟩ = (|00⟩ + |11⟩)/√2</span><small data-latex="P(00)=P(11)=\frac12">P(00) = P(11) = 1/2</small></div></div>
+                <p data-i18n="guide.bell.finishBody">CX turns the second branch into |11⟩. The joint state cannot be split into two independent qubit states: it is entangled.</p>
+              </article>
+            </div>
+          </section>
+
+          <nav class="guide-next" aria-labelledby="guide-next-title">
+            <header><p class="eyebrow" data-i18n="guide.nextEyebrow">Continue exploring</p><h3 id="guide-next-title" data-i18n="guide.nextTitle">Choose your next step.</h3></header>
+            <div>
+              <button type="button" data-guide-destination="learn"><span>01</span><strong data-i18n="guide.nextLearnTitle">More in Quantum basics</strong><small data-i18n="guide.nextLearnBody">Understand amplitudes, phase, measurement, shots, and entanglement in more depth.</small><i>↗</i></button>
+              <button type="button" data-guide-destination="gates"><span>02</span><strong data-i18n="guide.nextGatesTitle">Explore the twelve supported gates</strong><small data-i18n="guide.nextGatesBody">See every gate’s meaning, matrix, syntax, and runnable example.</small><i>↗</i></button>
+              <button type="button" data-guide-destination="simulator"><span>03</span><strong data-i18n="guide.nextHardwareTitle">Open real-hardware demos</strong><small data-i18n="guide.nextHardwareBody">Follow the verified SpinQ, Origin Quantum, and Amazon Braket hardware walkthroughs.</small><i>↗</i></button>
+            </div>
+          </nav>
+        </section>
+
+        <section class="content-view" id="view-learn" data-view-panel="learn" aria-labelledby="learn-title">
+          <header class="view-heading compact">
+            <p class="eyebrow" data-i18n="learn.eyebrow">03 · Quantum basics</p>
+            <h2 id="learn-title"><span data-i18n="learn.title1">Eight ideas take you</span><br><em data-i18n="learn.title2">from vectors to circuits.</em></h2>
+            <p class="view-lede" data-i18n="learn.lede">Start with linear algebra: a quantum circuit multiplies a complex vector by matrices. Measurement then returns a bit string at random, using the squared magnitudes of the vector coordinates as probabilities.</p>
+          </header>
+          <div class="concept-grid">
+            <article><span>01 / VECTOR</span><h3 data-i18n="learn.vectorTitle">A qubit is a vector</h3><p data-i18n="learn.vectorBody">One qubit is represented by a length-2 complex vector called its state. |ψ⟩ is simply a name for that vector. The fixed vectors |0⟩=[1,0]ᵀ and |1⟩=[0,1]ᵀ form the computational basis: the two results a measurement can report.</p><code class="concept-formula">|ψ⟩ = α|0⟩ + β|1⟩ = [α, β]ᵀ</code></article>
+            <article><span>02 / NUMBER</span><h3 data-i18n="learn.amplitudeTitle">Amplitudes become probabilities</h3><p data-i18n="learn.amplitudeBody">The complex numbers α and β are called amplitudes. They are not probabilities. Measuring 0 has probability |α|²; measuring 1 has probability |β|². A valid state has total probability one. A state with multiple nonzero amplitudes is called a superposition of those basis vectors.</p><code class="concept-formula">|α|² + |β|² = 1</code></article>
+            <article><span>03 / MEMORY</span><h3 data-i18n="learn.registerTitle">More qubits mean more coordinates</h3><p data-i18n="learn.registerBody">Two qubits use a length-4 vector whose coordinates are named |00⟩, |01⟩, |10⟩, and |11⟩. Combining independent qubits uses the Kronecker product, written ⊗: multiply every coordinate of the first vector by every coordinate of the second. Each added qubit doubles the vector length.</p><code class="concept-formula">[a,b]ᵀ ⊗ [c,d]ᵀ = [ac,ad,bc,bd]ᵀ</code></article>
+            <article><span>04 / PROGRAM</span><h3 data-i18n="learn.gateTitle">A gate is a matrix</h3><p data-i18n="learn.gateBody">A gate updates the state by matrix multiplication. Its matrix is unitary: U†U=I, where U† is the conjugate transpose. This preserves vector length, and applying U† undoes U. A circuit is the ordered program of these matrix operations.</p><code class="concept-formula">|ψ′⟩ = U|ψ⟩</code></article>
+            <article><span>05 / COMBINE</span><h3 data-i18n="learn.phaseTitle">Phase controls interference</h3><p data-i18n="learn.phaseBody">A complex amplitude has a magnitude and an angle; the angle is its phase. Phase does not change that coordinate's probability by itself. Later gates can add coordinates: aligned amplitudes reinforce, while opposite amplitudes cancel. This is interference.</p><code class="concept-formula">1/√2 + (−1/√2) = 0</code></article>
+            <article><span>06 / READ</span><h3 data-i18n="learn.measureTitle">Measurement chooses one result</h3><p data-i18n="learn.measureBody">Measurement randomly selects one computational-basis label, such as 00 or 11. The probability is the squared magnitude of that label's coordinate. It returns the selected label as an ordinary bit string; after that read, the state equals the selected basis vector.</p><code class="concept-formula">coordinate a₁₁ → P(11) = |a₁₁|²</code></article>
+            <article><span>07 / REPEAT</span><h3 data-i18n="learn.shotsTitle">One shot is one complete run</h3><p data-i18n="learn.shotsBody">For one shot, the program creates fresh qubits in |0…0⟩, applies every gate in order, and measures once. N shots restart this whole process N times. “Counts” is the map from each returned bit string to how often it appeared.</p><code class="concept-formula">counts = { "00": 503, "11": 521 }</code></article>
+            <article><span>08 / JOINT</span><h3 data-i18n="learn.entangleTitle">Entanglement is non-factorability</h3><p data-i18n="learn.entangleBody">A multi-qubit state is entangled when it cannot be written as a Kronecker product of separate single-qubit states. In the Bell state below, neither qubit has its own independent vector, so measuring one bit constrains the other.</p><code class="concept-formula">|Φ⁺⟩ = (|00⟩ + |11⟩)/√2</code></article>
+          </div>
+          <div class="circuit-story">
+            <div><p class="eyebrow" data-i18n="learn.storyEyebrow">The definitions in action</p><h3 data-i18n="learn.storyTitle">Calculate a Bell pair</h3><p data-i18n="learn.storyBody">A Bell pair is an entangled two-qubit state whose measured bits are perfectly correlated: this example returns only 00 or 11, each with probability 1/2. To calculate it, write labels in |q₁q₀⟩ order. H gives q₀ two amplitudes of 1/√2, and CX flips q₁ only in the coordinate where q₀=1.</p></div>
+            <ol class="state-flow">
+              <li><span data-i18n="learn.start">INITIALIZE</span><code>|q₁q₀⟩ = |00⟩</code><small data-i18n="learn.known">Both qubits start at 0</small></li>
+              <li><span data-i18n="learn.gate">APPLY H TO q₀</span><code>(|00⟩+|01⟩)/√2</code><small data-i18n="learn.paths">Two nonzero coordinates</small></li>
+              <li><span data-i18n="learn.link">APPLY CX</span><code>(|00⟩+|11⟩)/√2</code><small data-i18n="learn.entangle">Cannot factor into two vectors</small></li>
+              <li><span data-i18n="learn.measure">MEASURE</span><code>P(00)=P(11)=1/2</code><small data-i18n="learn.correlated">Only matching bits appear</small></li>
+            </ol>
+          </div>
+          <div class="bit-order-note"><strong data-i18n="learn.bitOrderTitle">One important convention</strong><p data-i18n="learn.bitOrderBody">In result key “10”, the rightmost character is c[0]. LoomQ normalizes every backend to this little-endian convention.</p></div>
+        </section>
+
+        <section class="content-view" id="view-gates" data-view-panel="gates" aria-labelledby="gates-title">
+          <header class="view-heading compact">
+            <p class="eyebrow" data-i18n="gates.eyebrow">04 · Official gate set</p>
+            <h2 id="gates-title"><span data-i18n="gates.title1">Twelve gates.</span><br><em data-i18n="gates.title2">The complete vocabulary.</em></h2>
+            <p class="view-lede" data-i18n="gates.lede">θ is a rotation angle measured in radians; “dg” means the inverse gate.</p>
+          </header>
+          <div class="gate-legend"><span><i class="single-dot"></i><b data-i18n="gates.single">Single-qubit</b></span><span><i class="phase-dot"></i><b data-i18n="gates.phase">Phase and rotation</b></span><span><i class="multi-dot"></i><b data-i18n="gates.multi">Controlled and multi-qubit</b></span></div>
+          <div class="gate-grid">
+            <article class="gate-card single"><div class="gate-top"><span>01</span><code>h</code><small data-i18n="gates.oneQubit">1 qubit</small></div><h3 data-i18n="gate.h.title">Hadamard</h3><p data-i18n="gate.h.body">Creates or recombines equal quantum paths—the usual doorway into superposition.</p><div class="gate-matrix"><span data-i18n="gates.matrix">Matrix</span><math aria-label="one over square root of two times the matrix one one, one negative one"><mfrac><mn>1</mn><msqrt><mn>2</mn></msqrt></mfrac><mo>⁢</mo><mfenced><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>1</mn></mtd></mtr><mtr><mtd><mn>1</mn></mtd><mtd><mo>−</mo><mn>1</mn></mtd></mtr></mtable></mfenced></math></div><code class="gate-syntax">h q[0];</code><button type="button" data-gate-example="h"><span data-i18n="gates.try">Try this gate</span><i>↗</i></button></article>
+            <article class="gate-card single"><div class="gate-top"><span>02</span><code>x</code><small data-i18n="gates.oneQubit">1 qubit</small></div><h3 data-i18n="gate.x.title">Bit flip</h3><p data-i18n="gate.x.body">Swaps |0⟩ and |1⟩. It is the quantum counterpart of classical NOT.</p><div class="gate-matrix"><span data-i18n="gates.matrix">Matrix</span><math aria-label="matrix zero one, one zero"><mfenced><mtable><mtr><mtd><mn>0</mn></mtd><mtd><mn>1</mn></mtd></mtr><mtr><mtd><mn>1</mn></mtd><mtd><mn>0</mn></mtd></mtr></mtable></mfenced></math></div><code class="gate-syntax">x q[0];</code><button type="button" data-gate-example="x"><span data-i18n="gates.try">Try this gate</span><i>↗</i></button></article>
+            <article class="gate-card phase"><div class="gate-top"><span>03</span><code>s</code><small data-i18n="gates.oneQubit">1 qubit</small></div><h3 data-i18n="gate.s.title">Quarter phase</h3><p data-i18n="gate.s.body">Adds a 90° phase to |1⟩. Interference makes that hidden phase observable.</p><div class="gate-matrix"><span data-i18n="gates.matrix">Matrix</span><math aria-label="diagonal matrix one i"><mfenced><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>0</mn></mtd></mtr><mtr><mtd><mn>0</mn></mtd><mtd><mi>i</mi></mtd></mtr></mtable></mfenced></math></div><code class="gate-syntax">s q[0];</code><button type="button" data-gate-example="s"><span data-i18n="gates.try">Try this gate</span><i>↗</i></button></article>
+            <article class="gate-card phase"><div class="gate-top"><span>04</span><code>sdg</code><small data-i18n="gates.oneQubit">1 qubit</small></div><h3 data-i18n="gate.sdg.title">Inverse S</h3><p data-i18n="gate.sdg.body">Applies the opposite −90° phase. “Dagger” means inverse.</p><div class="gate-matrix"><span data-i18n="gates.matrix">Matrix</span><math aria-label="diagonal matrix one negative i"><mfenced><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>0</mn></mtd></mtr><mtr><mtd><mn>0</mn></mtd><mtd><mo>−</mo><mi>i</mi></mtd></mtr></mtable></mfenced></math></div><code class="gate-syntax">sdg q[0];</code><button type="button" data-gate-example="sdg"><span data-i18n="gates.try">Try this gate</span><i>↗</i></button></article>
+            <article class="gate-card phase"><div class="gate-top"><span>05</span><code>t</code><small data-i18n="gates.oneQubit">1 qubit</small></div><h3 data-i18n="gate.t.title">Eighth phase</h3><p data-i18n="gate.t.body">Adds a finer 45° phase, an important building block for general algorithms.</p><div class="gate-matrix"><span data-i18n="gates.matrix">Matrix</span><math aria-label="diagonal matrix one, e to the i pi over four"><mfenced><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>0</mn></mtd></mtr><mtr><mtd><mn>0</mn></mtd><mtd><msup><mi>e</mi><mrow><mi>i</mi><mi>π</mi><mo>/</mo><mn>4</mn></mrow></msup></mtd></mtr></mtable></mfenced></math></div><code class="gate-syntax">t q[0];</code><button type="button" data-gate-example="t"><span data-i18n="gates.try">Try this gate</span><i>↗</i></button></article>
+            <article class="gate-card phase"><div class="gate-top"><span>06</span><code>tdg</code><small data-i18n="gates.oneQubit">1 qubit</small></div><h3 data-i18n="gate.tdg.title">Inverse T</h3><p data-i18n="gate.tdg.body">Applies −45°, undoing a T gate when placed directly after it.</p><div class="gate-matrix"><span data-i18n="gates.matrix">Matrix</span><math aria-label="diagonal matrix one, e to the negative i pi over four"><mfenced><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>0</mn></mtd></mtr><mtr><mtd><mn>0</mn></mtd><mtd><msup><mi>e</mi><mrow><mo>−</mo><mi>i</mi><mi>π</mi><mo>/</mo><mn>4</mn></mrow></msup></mtd></mtr></mtable></mfenced></math></div><code class="gate-syntax">tdg q[0];</code><button type="button" data-gate-example="tdg"><span data-i18n="gates.try">Try this gate</span><i>↗</i></button></article>
+            <article class="gate-card phase"><div class="gate-top"><span>07</span><code>rz(θ)</code><small data-i18n="gates.oneQubit">1 qubit</small></div><h3 data-i18n="gate.rz.title">Z rotation</h3><p data-i18n="gate.rz.body">Rotates phase by angle θ. It changes interference even when direct probabilities stay unchanged.</p><div class="gate-matrix"><span data-i18n="gates.matrix">Matrix</span><math aria-label="diagonal matrix e to the negative i theta over two, e to the i theta over two"><mfenced><mtable><mtr><mtd><msup><mi>e</mi><mrow><mo>−</mo><mi>i</mi><mi>θ</mi><mo>/</mo><mn>2</mn></mrow></msup></mtd><mtd><mn>0</mn></mtd></mtr><mtr><mtd><mn>0</mn></mtd><mtd><msup><mi>e</mi><mrow><mi>i</mi><mi>θ</mi><mo>/</mo><mn>2</mn></mrow></msup></mtd></mtr></mtable></mfenced></math></div><code class="gate-syntax">rz(pi/2) q[0];</code><button type="button" data-gate-example="rz"><span data-i18n="gates.try">Try this gate</span><i>↗</i></button></article>
+            <article class="gate-card phase"><div class="gate-top"><span>08</span><code>ry(θ)</code><small data-i18n="gates.oneQubit">1 qubit</small></div><h3 data-i18n="gate.ry.title">Y rotation</h3><p data-i18n="gate.ry.body">Rotates amplitudes by θ, directly changing the chance of measuring zero or one.</p><div class="gate-matrix"><span data-i18n="gates.matrix">Matrix</span><math aria-label="Y rotation matrix"><mfenced><mtable><mtr><mtd><mi>cos</mi><mo>(</mo><mi>θ</mi><mo>/</mo><mn>2</mn><mo>)</mo></mtd><mtd><mo>−</mo><mi>sin</mi><mo>(</mo><mi>θ</mi><mo>/</mo><mn>2</mn><mo>)</mo></mtd></mtr><mtr><mtd><mi>sin</mi><mo>(</mo><mi>θ</mi><mo>/</mo><mn>2</mn><mo>)</mo></mtd><mtd><mi>cos</mi><mo>(</mo><mi>θ</mi><mo>/</mo><mn>2</mn><mo>)</mo></mtd></mtr></mtable></mfenced></math></div><code class="gate-syntax">ry(pi/2) q[0];</code><button type="button" data-gate-example="ry"><span data-i18n="gates.try">Try this gate</span><i>↗</i></button></article>
+            <article class="gate-card multi"><div class="gate-top"><span>09</span><code>cx</code><small data-i18n="gates.twoQubits">2 qubits</small></div><h3 data-i18n="gate.cx.title">Controlled X</h3><p data-i18n="gate.cx.body">Flips the target only when the control is one. With H, it creates entanglement.</p><div class="gate-matrix"><span data-i18n="gates.matrix">Matrix</span><math aria-label="controlled X four by four matrix"><mfenced><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>0</mn></mtd><mtd><mn>0</mn></mtd><mtd><mn>0</mn></mtd></mtr><mtr><mtd><mn>0</mn></mtd><mtd><mn>1</mn></mtd><mtd><mn>0</mn></mtd><mtd><mn>0</mn></mtd></mtr><mtr><mtd><mn>0</mn></mtd><mtd><mn>0</mn></mtd><mtd><mn>0</mn></mtd><mtd><mn>1</mn></mtd></mtr><mtr><mtd><mn>0</mn></mtd><mtd><mn>0</mn></mtd><mtd><mn>1</mn></mtd><mtd><mn>0</mn></mtd></mtr></mtable></mfenced></math></div><code class="gate-syntax">cx q[0],q[1];</code><button type="button" data-gate-example="cx"><span data-i18n="gates.try">Try this gate</span><i>↗</i></button></article>
+            <article class="gate-card multi"><div class="gate-top"><span>10</span><code>cu1(θ)</code><small data-i18n="gates.twoQubits">2 qubits</small></div><h3 data-i18n="gate.cu1.title">Controlled phase</h3><p data-i18n="gate.cu1.body">Adds phase θ only when both qubits are one. Common in Fourier-style circuits.</p><div class="gate-matrix"><span data-i18n="gates.matrix">Matrix</span><math aria-label="controlled phase diagonal matrix"><mfenced><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>0</mn></mtd><mtd><mn>0</mn></mtd><mtd><mn>0</mn></mtd></mtr><mtr><mtd><mn>0</mn></mtd><mtd><mn>1</mn></mtd><mtd><mn>0</mn></mtd><mtd><mn>0</mn></mtd></mtr><mtr><mtd><mn>0</mn></mtd><mtd><mn>0</mn></mtd><mtd><mn>1</mn></mtd><mtd><mn>0</mn></mtd></mtr><mtr><mtd><mn>0</mn></mtd><mtd><mn>0</mn></mtd><mtd><mn>0</mn></mtd><mtd><msup><mi>e</mi><mrow><mi>i</mi><mi>θ</mi></mrow></msup></mtd></mtr></mtable></mfenced></math></div><code class="gate-syntax">cu1(pi/2) q[0],q[1];</code><button type="button" data-gate-example="cu1"><span data-i18n="gates.try">Try this gate</span><i>↗</i></button></article>
+            <article class="gate-card multi"><div class="gate-top"><span>11</span><code>swap</code><small data-i18n="gates.twoQubits">2 qubits</small></div><h3 data-i18n="gate.swap.title">Exchange</h3><p data-i18n="gate.swap.body">Trades the complete states of two qubits without measuring either one.</p><div class="gate-matrix"><span data-i18n="gates.matrix">Matrix</span><math aria-label="swap four by four matrix"><mfenced><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>0</mn></mtd><mtd><mn>0</mn></mtd><mtd><mn>0</mn></mtd></mtr><mtr><mtd><mn>0</mn></mtd><mtd><mn>0</mn></mtd><mtd><mn>1</mn></mtd><mtd><mn>0</mn></mtd></mtr><mtr><mtd><mn>0</mn></mtd><mtd><mn>1</mn></mtd><mtd><mn>0</mn></mtd><mtd><mn>0</mn></mtd></mtr><mtr><mtd><mn>0</mn></mtd><mtd><mn>0</mn></mtd><mtd><mn>0</mn></mtd><mtd><mn>1</mn></mtd></mtr></mtable></mfenced></math></div><code class="gate-syntax">swap q[0],q[1];</code><button type="button" data-gate-example="swap"><span data-i18n="gates.try">Try this gate</span><i>↗</i></button></article>
+            <article class="gate-card multi"><div class="gate-top"><span>12</span><code>ccx</code><small data-i18n="gates.threeQubits">3 qubits</small></div><h3 data-i18n="gate.ccx.title">Toffoli</h3><p data-i18n="gate.ccx.body">Flips the target only when both controls are one, enabling reversible classical logic.</p><div class="gate-matrix"><span data-i18n="gates.matrix">Matrix</span><math aria-label="identity six direct sum Pauli X"><msub><mi>I</mi><mn>6</mn></msub><mo>⊕</mo><mi>X</mi></math></div><code class="gate-syntax">ccx q[0],q[1],q[2];</code><button type="button" data-gate-example="ccx"><span data-i18n="gates.try">Try this gate</span><i>↗</i></button></article>
+          </div>
+        </section>
+
+        <section class="content-view" id="view-simulator" data-view-panel="simulator" aria-labelledby="simulator-title">
+          <header class="view-heading compact">
+            <p class="eyebrow" data-i18n="sim.eyebrow">05 · Vendor simulators</p><h2 id="simulator-title" data-i18n="sim.title">Run OpenQASM locally.</h2>
+            <p class="view-lede" data-i18n="sim.lede">Choose one SDK or compare all three. For each shot, LoomQ creates fresh qubits at |0…0⟩, runs every gate once, and records one measured bit string.</p>
+          </header>
+          <div class="simulator-facts">
+            <article class="vendor-card spinq"><span class="vendor-mark"><img src="/assets/spinq-logo.png" alt="" width="257" height="89"></span><span><strong data-i18n="sim.vendor.spinq">SpinQ</strong><small>SpinQit SDK</small></span></article>
+            <article class="vendor-card origin"><span class="vendor-mark"><img src="/assets/origin-quantum-logo.svg" alt="" width="140" height="42"></span><span><strong data-i18n="sim.vendor.origin">Origin Quantum</strong><small>pyQPanda SDK</small></span></article>
+            <article class="vendor-card aws"><span class="vendor-mark"><img src="/assets/aws-logo.svg" alt="" width="189" height="126"></span><span><strong>Amazon Web Services</strong><small>Amazon Braket SDK</small></span></article>
+          </div>
+          <section class="runner-lab" id="runner-lab" aria-labelledby="runner-lab-title">
+            <header class="lab-heading"><h3 id="runner-lab-title" data-i18n="sim.lab">Local simulator lab</h3></header>
+            <form class="runner-form" id="runner-form">
+              <label for="qasm-input" data-i18n="sim.program">OpenQASM 2.0 program</label>
+              <textarea id="qasm-input" name="qasm" rows="10" maxlength="24000" spellcheck="false">OPENQASM 2.0;
+include "qelib1.inc";
+qreg q[2];
+creg c[2];
+h q[0];
+cx q[0],q[1];
+measure q -&gt; c;</textarea>
+              <div class="runner-controls">
+                <label><span data-i18n="sim.simulator">Simulator</span><select id="simulator-target" name="target"><option value="all" data-i18n="sim.all">Compare all three</option><option value="spinq">SpinQit Basic</option><option value="originq">Origin Quantum CPU</option><option value="braket">Amazon Braket Local</option></select></label>
+                <label><span data-i18n="sim.shots">Shots</span><input id="simulator-shots" name="shots" type="number" min="1" max="8192" step="1" value="512"></label>
+                <button class="run-button" id="run-button" type="submit"><span data-i18n="sim.run">Run locally</span><span aria-hidden="true">▶</span></button>
+              </div>
+              <p class="runner-privacy" data-i18n="sim.privacy">No account, payment, queue, or real-hardware submission is used.</p>
+              <div class="simulation-results" id="simulation-results" aria-live="polite"></div>
+            </form>
+          </section>
+          <section class="translation-disclosure" aria-labelledby="translation-block-title">
+            <header class="lab-heading"><h3 id="translation-block-title" data-i18n="l1.optional">Inspect IR and SDK translation</h3></header>
+            <div class="translation-tool" aria-labelledby="translation-tool-title">
+              <div class="translation-controls">
+                <label><span data-i18n="l1.target">Translation target</span><select id="translation-target"><option value="spinq">SpinQ · OpenQASM 2.0</option><option value="originq">Origin Quantum · QRunes</option><option value="braket">Amazon Braket · OpenQASM 3.0</option></select></label>
+                <button class="compile-button" id="translation-button" type="button"><span data-i18n="l1.translate">Show IR + SDK translation</span><span aria-hidden="true">→</span></button>
+              </div>
+              <p class="runner-privacy" data-i18n="l1.note">The IR removes source register names while preserving qubit indices, classical-bit destinations, parameters, and instruction order.</p>
+              <div class="compiler-results" id="l1-results" aria-live="polite">
+                <article class="circuit-preview"><header><span>01</span><strong data-i18n="l1.circuit">Circuit diagram</strong><small data-i18n="l1.circuitHint">gates flow from left to right</small></header><div class="circuit-diagram" id="l1-circuit-diagram"><p data-i18n="l1.awaitingCircuit">Choose this option to draw the circuit.</p></div></article>
+                <article class="compiler-output"><header><span>02</span><strong id="translation-tool-title" data-i18n="l1.ir">Canonical IR</strong></header><pre id="l1-ir-output"><code data-i18n="l1.awaiting">Choose this option to inspect the circuit IR.</code></pre></article>
+                <article class="compiler-output"><header><span>03</span><strong id="l1-output-title" data-i18n="l1.output">SDK translation</strong></header><pre id="l1-translation-output"><code data-i18n="l1.awaitingOutput">Choose a target to see its exact syntax.</code></pre></article>
+              </div>
+            </div>
+          </section>
+        </section>
+
+        <section class="content-view" id="view-hybrid" data-view-panel="hybrid" aria-labelledby="hybrid-title">
+          <header class="view-heading compact">
+            <p class="eyebrow" data-i18n="hybrid.eyebrow">06 · Hybrid compiler</p>
+            <h2 id="hybrid-title"><span data-i18n="hybrid.title1">Quantum operations in order.</span><br><em data-i18n="hybrid.title2">Classical decisions in RISC-V.</em></h2>
+            <p class="view-lede" data-i18n="hybrid.lede">Hybrid-QASM adds one classical { … } block to an OpenQASM 2.0 circuit. LoomQ separates the two responsibilities: quantum gates and measurements remain an ordered operation stream, while integer assignments and if/else decisions become deterministic RISC-V instructions.</p>
+          </header>
+          <div class="hybrid-explainer">
+            <article><span>01</span><strong data-i18n="hybrid.step1Title">Read Hybrid-QASM</strong><p data-i18n="hybrid.step1Body">Ordinary quantum instructions surround one classical block. Measurement expressions use c[n]; writable integer values use r1, r2, and so on.</p></article>
+            <article><span>02</span><strong data-i18n="hybrid.step2Title">Preserve quantum order</strong><p data-i18n="hybrid.step2Body">Gates and measurements are normalized into the same canonical instruction order used by the circuit translator.</p></article>
+            <article><span>03</span><strong data-i18n="hybrid.step3Title">Lower classical logic</strong><p data-i18n="hybrid.step3Body">Measured bits enter RISC-V registers x10, x11, and onward. Assignments and branches compile into a small, executable assembly program.</p></article>
+          </div>
+          <form class="hybrid-lab" id="hybrid-form">
+            <label for="hybrid-input" data-i18n="hybrid.program">Hybrid-QASM program</label>
+            <textarea id="hybrid-input" rows="17" maxlength="24000" spellcheck="false">OPENQASM 2.0;
+include "qelib1.inc";
+qreg q[2];
+creg c[2];
+h q[0];
+measure q[0] -&gt; c[0];
+classical {
+  if (c[0] == 1) {
+    r1 = 7;
+  } else {
+    r1 = 3;
+  }
+}
+cx q[0], q[1];</textarea>
+            <div class="hybrid-actions"><p data-i18n="hybrid.note">Compilation is deterministic and local: it does not call the AI model or a cloud service.</p><button class="compile-button" id="hybrid-button" type="submit"><span data-i18n="hybrid.compile">Compile Hybrid-QASM</span><span aria-hidden="true">→</span></button></div>
+            <div class="compiler-results" id="hybrid-results" aria-live="polite">
+              <article class="compiler-output"><header><span>01</span><strong data-i18n="hybrid.quantumOutput">Quantum operation stream</strong></header><pre id="hybrid-quantum-output"><code data-i18n="hybrid.awaitingQuantum">Compile the example to list its quantum operations.</code></pre></article>
+              <article class="compiler-output"><header><span>02</span><strong data-i18n="hybrid.classicalOutput">Tiny RISC-V assembly</strong></header><pre id="hybrid-assembly-output"><code data-i18n="hybrid.awaitingAssembly">Compiled classical instructions will appear here.</code></pre></article>
+            </div>
+            <section class="binary-extension" aria-labelledby="binary-extension-title">
+              <header><div><span class="binary-badge">BONUS · LQ-Q32</span><h3 id="binary-extension-title" data-i18n="hybrid.binaryTitle">Quantum operations become real 32-bit instruction words.</h3></div><p data-i18n="hybrid.binaryBody">The custom-0 opcode 0x0B enters a minimum executable loop: encode, decode, then recover the operation semantics used by the emulator.</p></header>
+              <div class="compiler-results binary-results">
+                <article class="compiler-output"><header><span>03</span><strong data-i18n="hybrid.machineOutput">LQ-Q32 machine code</strong></header><pre id="hybrid-machine-output"><code data-i18n="hybrid.awaitingMachine">Encoded 32-bit words will appear here.</code></pre></article>
+                <article class="compiler-output"><header><span>04</span><strong data-i18n="hybrid.decodedOutput">Decoded execution trace</strong></header><pre id="hybrid-decoded-output"><code data-i18n="hybrid.awaitingDecoded">Decoded operations will appear here.</code></pre></article>
+              </div>
+            </section>
+          </form>
+        </section>
+
+        <section class="content-view" id="view-evidence" data-view-panel="evidence" aria-labelledby="evidence-title">
+          <header class="view-heading compact">
+            <p class="eyebrow" data-i18n="evidence.eyebrow">07 · Execution evidence</p>
+            <h2 id="evidence-title"><span data-i18n="evidence.title1">Two execution paths.</span><br><em data-i18n="evidence.title2">One auditable record.</em></h2>
+            <p class="view-lede" data-i18n="evidence.lede">Switch between physical quantum-machine jobs and the custom quantum RISC-V path with its archived GPU validation. Every claim links to the artifact that supports it.</p>
+          </header>
+
+          <div class="evidence-mode-tabs" role="tablist" aria-label="Execution evidence path">
+            <button class="active" id="evidence-mode-hardware" type="button" role="tab" aria-selected="true" aria-controls="evidence-panel-hardware" tabindex="0" data-evidence-mode="hardware"><span>01</span><strong data-i18n="evidence.modeHardware">Quantum machines</strong><small data-i18n="evidence.modeHardwareMeta">Origin · SpinQ · AWS guide</small></button>
+            <button id="evidence-mode-riscv-gpu" type="button" role="tab" aria-selected="false" aria-controls="evidence-panel-riscv-gpu" tabindex="-1" data-evidence-mode="riscv-gpu"><span>02</span><strong data-i18n="evidence.modeRiscv">Quantum RISC-V + GPU</strong><small data-i18n="evidence.modeRiscvMeta">LQ-Q32 · CUDA evidence</small></button>
+          </div>
+
+          <div class="evidence-mode-panel" id="evidence-panel-hardware" role="tabpanel" aria-labelledby="evidence-mode-hardware" data-evidence-panel="hardware">
+
+          <div class="evidence-definition">
+            <span aria-hidden="true">✓</span>
+            <div><strong data-i18n="evidence.definitionTitle">What “real-hardware evidence” means here</strong><p data-i18n="evidence.definitionBody">The provider recorded a completed job on a named physical quantum machine. “Normalized” means LoomQ converted the provider’s result into one common counts format; the original response remains available beside it.</p></div>
+          </div>
+
+          <div class="evidence-grid">
+            <article class="evidence-card origin-evidence">
+              <header><div><span class="evidence-provider">ORIGIN QUANTUM · WK_C180</span><h3 data-i18n="evidence.originBell">Bell pair · Wukong 180</h3></div><span class="evidence-status verified" data-i18n="evidence.verified">Verified</span></header>
+              <a class="evidence-shot" href="/evidence/originq-bell-task.png" target="_blank" rel="noopener"><img src="/evidence/originq-bell-task.png" alt="Origin Quantum Bell task page showing the completed Wukong 180 hardware job" width="2048" height="1346"><span data-i18n="evidence.openScreenshot">Open task screenshot ↗</span></a>
+              <dl class="evidence-meta"><div><dt data-i18n="evidence.jobId">Job ID</dt><dd><code>FF2950…C14CA</code></dd></div><div><dt data-i18n="evidence.shots">Shots</dt><dd>512</dd></div><div><dt data-i18n="evidence.finished">Platform finish</dt><dd>2026-08-23 18:17 CST</dd></div></dl>
+              <div class="evidence-distribution" aria-label="Origin Quantum Bell result distribution"><div><code>00</code><meter min="0" max="1" value="0.4763031">47.63%</meter><span>47.63%</span></div><div><code>11</code><meter min="0" max="1" value="0.5230812">52.31%</meter><span>52.31%</span></div></div>
+              <p class="evidence-reading"><strong>99.94%</strong> <span data-i18n="evidence.originReading">of provider probability lies on the Bell pair’s expected results, 00 and 11.</span></p>
+              <nav class="artifact-links" aria-label="Origin Quantum Bell evidence files"><a href="/evidence/originq-bell-task.json" target="_blank" rel="noopener" data-i18n="evidence.taskRecord">Task record</a><a href="/evidence/originq-bell-program.originir" target="_blank" rel="noopener" data-i18n="evidence.executedProgram">Executed program</a><a href="/evidence/originq-bell-raw.json" target="_blank" rel="noopener" data-i18n="evidence.rawResult">Raw result</a><a href="/evidence/originq-bell-normalized.json" target="_blank" rel="noopener" data-i18n="evidence.normalizedResult">Normalized result</a></nav>
+            </article>
+
+            <article class="evidence-card spinq-evidence">
+              <header><div><span class="evidence-provider">SPINQ · GEMINI_VP</span><h3 data-i18n="evidence.spinqBell">Bell pair · Gemini NMR</h3></div><span class="evidence-status caution" data-i18n="evidence.noisy">Recorded · noisy</span></header>
+              <a class="evidence-shot" href="/evidence/spinq-bell-task.png" target="_blank" rel="noopener"><img src="/evidence/spinq-bell-task.png" alt="SpinQ Bell task page showing the completed Gemini hardware job" width="1874" height="978"><span data-i18n="evidence.openScreenshot">Open task screenshot ↗</span></a>
+              <dl class="evidence-meta"><div><dt data-i18n="evidence.jobId">Job ID</dt><dd><code>G-260823-0014</code></dd></div><div><dt data-i18n="evidence.shots">Shots</dt><dd>1,000</dd></div><div><dt data-i18n="evidence.finished">Platform finish</dt><dd>2026-08-23 22:35 CST</dd></div></dl>
+              <div class="evidence-distribution" aria-label="SpinQ Bell result distribution"><div><code>00</code><meter min="0" max="1" value="0.39588674">39.59%</meter><span>39.59%</span></div><div><code>01 + 10</code><meter class="unexpected" min="0" max="1" value="0.32784597">32.78%</meter><span>32.78%</span></div><div><code>11</code><meter min="0" max="1" value="0.27626729">27.63%</meter><span>27.63%</span></div></div>
+              <p class="evidence-reading caution-text"><strong>67.22%</strong> <span data-i18n="evidence.spinqReading">lies on 00 and 11. LoomQ preserves the unexpected 01 and 10 results instead of hiding them.</span></p>
+              <nav class="artifact-links" aria-label="SpinQ Bell evidence files"><a href="/evidence/spinq-bell-task.json" target="_blank" rel="noopener" data-i18n="evidence.taskRecord">Task record</a><a href="/evidence/spinq-bell-program.qasm" target="_blank" rel="noopener" data-i18n="evidence.executedProgram">Executed program</a><a href="/evidence/spinq-bell-raw.json" target="_blank" rel="noopener" data-i18n="evidence.rawResult">Raw result</a><a href="/evidence/spinq-bell-normalized.json" target="_blank" rel="noopener" data-i18n="evidence.normalizedResult">Normalized result</a></nav>
+            </article>
+          </div>
+
+          <div class="supplemental-evidence">
+            <article><span>GHZ-3 · ORIGIN QUANTUM</span><h3 data-i18n="evidence.ghzTitle">A second Wukong 180 run</h3><p data-i18n="evidence.ghzBody">Job 98E7…C497 used 512 shots. The expected 000 and 111 outcomes contain 99.85% of provider probability.</p><a href="/evidence/originq-ghz3-task.png" target="_blank" rel="noopener" data-i18n="evidence.viewGhz">View GHZ-3 task screenshot ↗</a></article>
+            <article><span>3 TESTS · SPINQ</span><h3 data-i18n="evidence.diagnosticTitle">The noisy result was investigated</h3><p data-i18n="evidence.diagnosticBody">Three follow-up jobs show that simply reversing the CNOT operands does not explain the Bell discrepancy. The available cloud interface cannot separate compilation, mapping, calibration, state preparation, and measurement effects.</p><a href="/evidence/spinq-diagnostics.json" target="_blank" rel="noopener" data-i18n="evidence.viewDiagnostics">Open diagnostic report ↗</a></article>
+            <article class="not-run"><span>GHZ-3 · SPINQ</span><h3 data-i18n="evidence.notRunTitle">Prepared, not submitted</h3><p data-i18n="evidence.notRunBody">At the recorded status check, the only online machine had two qubits. LoomQ did not present an offline three-qubit machine as a successful run.</p></article>
+          </div>
+
+          <section class="hardware-tutorial" aria-labelledby="hardware-tutorial-title">
+            <header><p class="eyebrow" data-i18n="evidence.tutorialEyebrow">Real-machine tutorial</p><h3 id="hardware-tutorial-title" data-i18n="evidence.tutorialTitle">Learn one safe workflow for each platform.</h3><p data-i18n="evidence.tutorialLede">The website never submits hardware. These lessons explain what each step means, which project resource helps, and exactly where a read-only action becomes a quota-consuming cloud submission.</p></header>
+
+            <div class="safety-strip"><strong data-i18n="evidence.safetyTitle">The rule shared by all three platforms</strong><p data-i18n="evidence.safetyBody">First run the circuit in a local simulator. Then refresh the real device’s current status, check its supported qubit count and gates, review price or quota, and obtain the account owner’s approval. Credentials belong only in ignored local configuration—not in this page, screenshots, evidence files, or Git.</p></div>
+
+            <div class="hardware-tabs" role="tablist" aria-label="Real-machine platform tutorials">
+              <button class="active" id="hardware-tab-origin" type="button" role="tab" aria-selected="true" aria-controls="hardware-panel-origin" tabindex="0" data-hardware-tab="origin"><span>01</span><strong data-i18n="evidence.tabOrigin">Origin Quantum</strong><small>pyqpanda3 · OriginIR</small></button>
+              <button id="hardware-tab-spinq" type="button" role="tab" aria-selected="false" aria-controls="hardware-panel-spinq" tabindex="-1" data-hardware-tab="spinq"><span>02</span><strong data-i18n="evidence.tabSpinq">SpinQ</strong><small>SpinQ Cloud · OpenQASM 2.0</small></button>
+              <button id="hardware-tab-aws" type="button" role="tab" aria-selected="false" aria-controls="hardware-panel-aws" tabindex="-1" data-hardware-tab="aws"><span>03</span><strong>Amazon Braket</strong><small>AWS · OpenQASM 3.0</small></button>
+            </div>
+
+            <section class="hardware-tab-panel active" id="hardware-panel-origin" role="tabpanel" aria-labelledby="hardware-tab-origin" data-hardware-panel="origin">
+              <header><span>ORIGIN QUANTUM</span><h4 data-i18n="evidence.originLessonTitle">From a locally checked circuit to one saved hardware job</h4><p data-i18n="evidence.originLessonLede">A backend is the named machine that receives your circuit. A preflight reads the available backend list before submission; it does not consume hardware quota.</p></header>
+              <ol class="tutorial-steps">
+                <li><div><strong data-i18n="evidence.originStep1">Validate the circuit locally</strong><p data-i18n="evidence.originStep1Body">Use the Vendor simulators page first. Then use its optional translation panel to inspect the Origin Quantum form before contacting the cloud.</p></div></li>
+                <li><div><strong data-i18n="evidence.originStep2">Configure account access</strong><p data-i18n="evidence.originStep2Body">Create a current API token in the Origin Quantum account center. A token is a secret used by software; it is different from your website password. Put it only in the ignored repository-root .env file.</p></div><pre><code>LOOMQ_ORIGINQ_API_TOKEN=&lt;your-current-api-token&gt;
+LOOMQ_ORIGINQ_BACKEND=&lt;an-online-backend-id&gt;</code></pre></li>
+                <li><div><strong data-i18n="evidence.originStep3">Build once, then run a read-only preflight</strong><p data-i18n="evidence.originStep3Body">The isolated image keeps the cloud SDK separate from the competition environment. Preflight confirms that the token works and shows the currently available machines.</p></div><pre><code>docker build -f starter_kit/hardware/Dockerfile.originq `
+  -t loomq-originq-hardware:0.4.0 .
+
+docker run --rm --env-file .env `
+  --mount type=bind,source=${PWD},target=/workspace/repo `
+  loomq-originq-hardware:0.4.0 preflight</code></pre></li>
+                <li class="quota-step"><div><strong data-i18n="evidence.originStep4">Approve, submit once, and keep the job ID</strong><p data-i18n="evidence.originStep4Body">Only submit after checking the selected machine and quota. The project’s helper requires an explicit confirmation flag, saves the returned job ID immediately, and refuses to overwrite an existing record.</p></div><pre><code>docker run --rm --env-file .env `
+  --mount type=bind,source=${PWD},target=/workspace/repo `
+  loomq-originq-hardware:0.4.0 submit --confirm-real-hardware
+
+docker run --rm --env-file .env `
+  --mount type=bind,source=${PWD},target=/workspace/repo `
+  loomq-originq-hardware:0.4.0 poll --wait</code></pre></li>
+              </ol>
+              <aside class="reproduction-note"><strong data-i18n="evidence.reproduceOriginTitle">Want to reproduce the archived evidence example?</strong><p data-i18n="evidence.reproduceOriginBody">Use starter_kit/circuits/bell.qasm, the default bell profile, backend WK_C180, and 512 shots. Run the prepare command before submission. For the three-qubit example, add --profile ghz3 to prepare, submit, and poll.</p></aside>
+            </section>
+
+            <section class="hardware-tab-panel" id="hardware-panel-spinq" role="tabpanel" aria-labelledby="hardware-tab-spinq" data-hardware-panel="spinq" hidden>
+              <header><span>SPINQ CLOUD</span><h4 data-i18n="evidence.spinqLessonTitle">Prepare a cloud-compatible circuit before choosing a machine</h4><p data-i18n="evidence.spinqLessonLede">SpinQ’s cloud hardware measures used qubits automatically, so its submitted artifact must omit explicit measure statements even though the local learning circuit contains them.</p></header>
+              <ol class="tutorial-steps">
+                <li><div><strong data-i18n="evidence.spinqStep1">Start with a locally verified OpenQASM circuit</strong><p data-i18n="evidence.spinqStep1Body">Run it through the SpinQit simulator on the Vendor simulators page. Simulation checks circuit meaning, but it does not prove that a real machine is currently online.</p></div></li>
+                <li><div><strong data-i18n="evidence.spinqStep2">Refresh machines and choose by capability</strong><p data-i18n="evidence.spinqStep2Body">Connect the authenticated SpinQ cloud tool, call get_platforms, and select an online machine with enough qubits and the required gates. Save that fresh response as your preflight JSON.</p></div></li>
+                <li><div><strong data-i18n="evidence.spinqStep3">Create the exact submission artifact</strong><p data-i18n="evidence.spinqStep3Body">The project helper checks the selected platform and removes cloud-incompatible measurement declarations. Inspect its output before sending it anywhere.</p></div><pre><code>python -m starter_kit.hardware.spinq_cloud `
+  --source starter_kit/circuits/bell.qasm `
+  --platforms-json &lt;fresh-preflight.json&gt; `
+  --platform &lt;online-platform-code&gt; `
+  --out &lt;prepared-cloud-circuit.qasm&gt;</code></pre></li>
+                <li class="quota-step"><div><strong data-i18n="evidence.spinqStep4">Approve one submission, then retrieve that same task</strong><p data-i18n="evidence.spinqStep4Body">Call qasm_submit with the selected platform code and the exact prepared QASM only after approval. Save the returned task ID, wait, and use get_task_result_by_id; never create a second task merely because the first is pending.</p></div></li>
+              </ol>
+            </section>
+
+            <section class="hardware-tab-panel" id="hardware-panel-aws" role="tabpanel" aria-labelledby="hardware-tab-aws" data-hardware-panel="aws" hidden>
+              <header><span>AMAZON BRAKET</span><h4 data-i18n="evidence.awsLessonTitle">Separate free local learning from an authorized AWS QPU task</h4><p data-i18n="evidence.awsLessonLede">A QPU is a physical quantum processing unit. Amazon Braket local simulation needs no AWS account, while a QPU task needs AWS access, a region, service configuration, storage, and explicit cost approval.</p></header>
+              <ol class="tutorial-steps">
+                <li><div><strong data-i18n="evidence.awsStep1">Translate and test locally without credentials</strong><p data-i18n="evidence.awsStep1Body">Use the Vendor simulators page for Amazon Braket, or run the repository example below. It teaches the OpenQASM 3.0 program shape and returns counts without contacting AWS.</p></div><pre><code>python starter_kit/examples/run_braket.py</code></pre></li>
+                <li><div><strong data-i18n="evidence.awsStep2">Create a named AWS profile with limited permissions</strong><p data-i18n="evidence.awsStep2Body">For learning and device discovery, begin with an identity that can only call SearchDevices and GetDevice. Those read-only permissions cannot create a quantum task.</p></div><pre><code>py -m pip install -r requirements/backend-observations.lock.txt
+$env:AWS_PROFILE = "loomq-readonly"
+py scripts/backend_observations.py --provider aws `
+  --output .cache/loomq/backend-observations.json</code></pre></li>
+                <li><div><strong data-i18n="evidence.awsStep3">Read the fresh report before choosing a QPU</strong><p data-i18n="evidence.awsStep3Body">Check the device ARN, region, ONLINE status, qubit count, capabilities, queue information, and current public pricing. An ARN is AWS’s unique identifier for a cloud resource.</p></div></li>
+                <li class="quota-step"><div><strong data-i18n="evidence.awsStep4">Stop at the project boundary before paid submission</strong><p data-i18n="evidence.awsStep4Body">This repository intentionally has no AWS QPU submission helper and no archived AWS hardware job. After the account owner approves service enablement, storage, region, device, and cost, follow the official Braket console or SDK task workflow. Do not treat read-only discovery credentials as submission permission.</p></div></li>
+              </ol>
+              <aside class="platform-limit"><strong data-i18n="evidence.awsLimitTitle">What the project provides</strong><p data-i18n="evidence.awsLimitBody">OpenQASM 3.0 translation, a credential-free local Braket example, and read-only live device discovery. It does not automate a chargeable AWS task.</p></aside>
+            </section>
+          </section>
+          </div>
+
+          <div class="evidence-mode-panel riscv-gpu-view" id="evidence-panel-riscv-gpu" role="tabpanel" aria-labelledby="evidence-mode-riscv-gpu" data-evidence-panel="riscv-gpu" hidden>
+            <div class="gpu-intro">
+              <div><span class="binary-badge">BONUS · CUSTOM-0 OPCODE 0x0B</span><h3 data-i18n="gpu.title">A 32-bit quantum instruction path that actually runs.</h3><p data-i18n="gpu.lede">LoomQ converts the L3 quantum stream into LQ-Q32 words, decodes those words, and executes the recovered semantics. A separate Kaggle run validates the decoded GHZ workload on an NVIDIA GPU.</p></div>
+              <div class="gpu-intro-mark" aria-hidden="true"><span>32</span><small>BIT</small></div>
+            </div>
+
+            <section class="bonus-requirements" aria-labelledby="bonus-requirements-title">
+              <header><p class="eyebrow" data-i18n="gpu.requirementsEyebrow">Minimum closed loop</p><h3 id="bonus-requirements-title" data-i18n="gpu.requirementsTitle">The Bonus requirements, connected end to end.</h3></header>
+              <div>
+                <article><span>01</span><strong data-i18n="gpu.req1Title">Encoding specification</strong><p data-i18n="gpu.req1Body">Two validated 32-bit formats use RISC-V custom-0 opcode 0x0B, with explicit qubit, gate, angle, and measurement fields.</p></article>
+                <article><span>02</span><strong data-i18n="gpu.req2Title">Machine-code decoder</strong><p data-i18n="gpu.req2Body">The emulator accepts hexadecimal instruction words, checks reserved fields, and reconstructs executable quantum operations.</p></article>
+                <article><span>03</span><strong data-i18n="gpu.req3Title">Full whitelist coverage</strong><p data-i18n="gpu.req3Body">All 12 allowed gates plus measurement pass encode/decode tests, including parameter quantization and invalid-word rejection.</p></article>
+                <article><span>04</span><strong data-i18n="gpu.req4Title">GPU validation</strong><p data-i18n="gpu.req4Body">A private Kaggle run used CuPy NVRTC kernels on a Tesla P100 to execute the decoded GHZ subset and compare it with CPU results.</p></article>
+              </div>
+            </section>
+
+            <section class="gpu-tutor" aria-labelledby="gpu-tutor-title">
+              <header><p class="eyebrow" data-i18n="gpu.tutorEyebrow">GPU Tutor</p><h3 id="gpu-tutor-title" data-i18n="gpu.tutorTitle">Follow one GHZ program through five transformations.</h3><p data-i18n="gpu.tutorLede">Select a step to see what changes, what stays invariant, and which artifact proves it.</p></header>
+              <div class="gpu-tutor-layout">
+                <div class="gpu-tutor-steps" role="tablist" aria-label="GPU Tutor steps">
+                  <button class="active" id="gpu-step-tab-1" type="button" role="tab" aria-selected="true" aria-controls="gpu-step-panel-1" tabindex="0" data-gpu-step="1"><span>01</span><strong data-i18n="gpu.step1">Hybrid-QASM</strong><small data-i18n="gpu.step1Meta">Source semantics</small></button>
+                  <button id="gpu-step-tab-2" type="button" role="tab" aria-selected="false" aria-controls="gpu-step-panel-2" tabindex="-1" data-gpu-step="2"><span>02</span><strong data-i18n="gpu.step2">LQ-Q32 words</strong><small data-i18n="gpu.step2Meta">Binary encoding</small></button>
+                  <button id="gpu-step-tab-3" type="button" role="tab" aria-selected="false" aria-controls="gpu-step-panel-3" tabindex="-1" data-gpu-step="3"><span>03</span><strong data-i18n="gpu.step3">Decode fields</strong><small data-i18n="gpu.step3Meta">Recover meaning</small></button>
+                  <button id="gpu-step-tab-4" type="button" role="tab" aria-selected="false" aria-controls="gpu-step-panel-4" tabindex="-1" data-gpu-step="4"><span>04</span><strong data-i18n="gpu.step4">CUDA / NVRTC</strong><small data-i18n="gpu.step4Meta">GPU execution</small></button>
+                  <button id="gpu-step-tab-5" type="button" role="tab" aria-selected="false" aria-controls="gpu-step-panel-5" tabindex="-1" data-gpu-step="5"><span>05</span><strong data-i18n="gpu.step5">CPU ↔ GPU</strong><small data-i18n="gpu.step5Meta">Verify parity</small></button>
+                </div>
+                <div class="gpu-tutor-stage">
+                  <article class="gpu-tutor-panel active" id="gpu-step-panel-1" role="tabpanel" aria-labelledby="gpu-step-tab-1" data-gpu-panel="1"><span class="stage-kicker" data-i18n="gpu.sourceKicker">Input</span><h4 data-i18n="gpu.sourceTitle">Start with operations, not hardware details.</h4><p data-i18n="gpu.sourceBody">The GHZ circuit creates a three-qubit superposition with H and two CX gates, then measures every qubit. L3 preserves these operations in order.</p><pre><code>h q[0];
+cx q[0], q[1];
+cx q[1], q[2];
+measure q[0] -&gt; c[0];
+measure q[1] -&gt; c[1];
+measure q[2] -&gt; c[2];</code></pre></article>
+                  <article class="gpu-tutor-panel" id="gpu-step-panel-2" role="tabpanel" aria-labelledby="gpu-step-tab-2" data-gpu-panel="2" hidden><span class="stage-kicker" data-i18n="gpu.wordsKicker">Encode</span><h4 data-i18n="gpu.wordsTitle">Each operation becomes one unsigned 32-bit word.</h4><p data-i18n="gpu.wordsBody">The low seven bits carry custom-0 opcode 0x0B. Base gates use funct7; operands use rd, rs1, and rs2.</p><pre><code>0x0200000b  h q[0]
+0x0e00800b  cx q[0], q[1]
+0x0e01008b  cx q[1], q[2]
+0x1400000b  measure q[0] -&gt; c[0]</code></pre></article>
+                  <article class="gpu-tutor-panel" id="gpu-step-panel-3" role="tabpanel" aria-labelledby="gpu-step-tab-3" data-gpu-panel="3" hidden><span class="stage-kicker" data-i18n="gpu.decodeKicker">Decode</span><h4 data-i18n="gpu.decodeTitle">Fields are validated before semantics are recovered.</h4><p data-i18n="gpu.decodeBody">Opcode selects the extension, funct3 selects the format, and funct7 or the immediate identifies the operation. Invalid opcodes, unknown functions, repeated qubits, and nonzero reserved fields are rejected.</p><div class="instruction-field-strip" aria-label="LQ-Q32 base instruction fields"><span class="field-funct7"><b>31…25</b>funct7</span><span class="field-rs2"><b>24…20</b>rs2</span><span class="field-rs1"><b>19…15</b>rs1</span><span class="field-funct3"><b>14…12</b>funct3</span><span class="field-rd"><b>11…7</b>rd</span><span class="field-opcode"><b>6…0</b>0x0B</span></div></article>
+                  <article class="gpu-tutor-panel" id="gpu-step-panel-4" role="tabpanel" aria-labelledby="gpu-step-tab-4" data-gpu-panel="4" hidden><span class="stage-kicker" data-i18n="gpu.cudaKicker">Execute</span><h4 data-i18n="gpu.cudaTitle">Decoded gates drive raw GPU kernels.</h4><p data-i18n="gpu.cudaBody">CuPy compiles CUDA C kernels at runtime through NVRTC. The archived run applies decoded H and CX operations to a complex state vector, then derives measurement probabilities on a Tesla P100.</p><div class="gpu-runtime-facts"><span><b>GPU</b>Tesla P100-PCIE-16GB</span><span><b>CUDA</b>Compute capability 6.0</span><span><b>Runtime</b>CuPy 14.0.1 · NVRTC</span></div></article>
+                  <article class="gpu-tutor-panel" id="gpu-step-panel-5" role="tabpanel" aria-labelledby="gpu-step-tab-5" data-gpu-panel="5" hidden><span class="stage-kicker" data-i18n="gpu.verifyKicker">Verify</span><h4 data-i18n="gpu.verifyTitle">Independent CPU and GPU paths agree.</h4><p data-i18n="gpu.verifyBody">Both paths return the ideal GHZ distribution at 4,096 shots. The maximum probability difference is near floating-point roundoff.</p><div class="cpu-gpu-compare"><div><strong>CPU</strong><code>{ "000": 2048, "111": 2048 }</code></div><div><strong>GPU</strong><code>{ "000": 2048, "111": 2048 }</code></div></div><p class="delta"><span>MAX |Δ|</span><code>2.220446049250313e-16</code></p></article>
+                </div>
+              </div>
+            </section>
+
+            <section class="gpu-proof-card" aria-labelledby="gpu-proof-title">
+              <header><div><span class="evidence-status verified" data-i18n="gpu.archived">Archived · passed</span><h3 id="gpu-proof-title" data-i18n="gpu.proofTitle">Private Kaggle GPU validation</h3></div><time datetime="2026-08-25">2026-08-25</time></header>
+              <dl class="gpu-facts"><div><dt data-i18n="gpu.device">Device</dt><dd>Tesla P100-PCIE-16GB</dd></div><div><dt data-i18n="gpu.memory">GPU memory</dt><dd>16 GB</dd></div><div><dt data-i18n="gpu.coverage">Encoding coverage</dt><dd data-i18n="gpu.coverageValue">12 gates + measurement</dd></div><div><dt data-i18n="gpu.executed">GPU-executed subset</dt><dd>H · CX · measure</dd></div></dl>
+              <nav class="artifact-links" aria-label="Quantum RISC-V GPU evidence files"><a href="/evidence/quantum-riscv-gpu-result.json" target="_blank" rel="noopener" data-i18n="gpu.resultJson">Evidence JSON</a><a href="/evidence/quantum-riscv-gpu.log" target="_blank" rel="noopener" data-i18n="gpu.runLog">Complete run log</a><a href="/evidence/quantum-riscv-gpu.py" target="_blank" rel="noopener" data-i18n="gpu.validationScript">Validation script</a></nav>
+            </section>
+
+            <aside class="claim-boundary"><strong data-i18n="gpu.boundaryTitle">What this result proves—and what it does not</strong><p data-i18n="gpu.boundaryBody">The full instruction set is encoded and decoded on CPU. The archived GPU run executes only the GHZ operations H, CX, and measurement; it does not claim that every gate has a dedicated CUDA kernel, and a GPU is not presented as quantum hardware.</p></aside>
+          </div>
+        </section>
+
+        <section class="content-view" id="view-history" data-view-panel="history" aria-labelledby="history-title">
+          <header class="view-heading compact">
+            <p class="eyebrow" data-i18n="history.eyebrow">08 · Conversation history</p>
+            <h2 id="history-title"><span data-i18n="history.title1">Every LoomQ exchange,</span><br><em data-i18n="history.title2">until this page is refreshed.</em></h2>
+            <p class="view-lede" data-i18n="history.lede">Messages from every conversation created during this page session appear here. Starting a new conversation does not erase them.</p>
+          </header>
+          <div class="history-empty" id="history-empty">
+            <span aria-hidden="true">◎</span>
+            <strong data-i18n="history.emptyTitle">No conversations yet</strong>
+            <p data-i18n="history.emptyBody">Ask LoomQ a question and the exchange will appear here.</p>
+          </div>
+          <div class="history-list" id="history-list" aria-live="polite"></div>
+        </section>
+      </main>
+
+      <aside class="assistant-dock" id="assistant-dock" aria-labelledby="assistant-title">
+        <header class="assistant-heading"><div><p class="eyebrow" data-i18n="assistant.eyebrow">AI circuit assistant</p><h2 id="assistant-title" data-i18n="assistant.title">Ask LoomQ</h2></div><div class="assistant-actions"><button class="clear-button" id="clear-button" type="button" data-i18n="assistant.new">New</button><button class="assistant-hide-button" id="assistant-hide-button" type="button" aria-controls="assistant-dock" aria-label="Hide LoomQ assistant" title="Hide LoomQ assistant"><span aria-hidden="true">×</span></button></div></header>
+        <div class="starter-prompts" id="starter-prompts">
+          <button type="button" data-prompt-en="Create a three-qubit GHZ state and measure every qubit." data-prompt-zh="创建一个三量子比特 GHZ 态并测量全部量子比特。"><span data-i18n="assistant.generate">Generate</span><b data-i18n="assistant.ghz">Create a GHZ circuit</b></button>
+          <button type="button" data-prompt-en="Repair this Bell-state fragment as complete OpenQASM 2.0: H q[0]; CX q[0] q[1]." data-prompt-zh="把这个 Bell 态片段修复为完整的 OpenQASM 2.0：H q[0]; CX q[0] q[1]."><span data-i18n="assistant.repair">Repair</span><b data-i18n="assistant.fix">Fix broken QASM</b></button>
+          <button type="button" data-prompt-en="I need a 26-qubit circuit with no queue and no account. Which backend should I use?" data-prompt-zh="我需要运行一个 26 量子比特线路，不能排队，也没有账号。应该使用哪个后端？"><span data-i18n="assistant.choose">Choose</span><b data-i18n="assistant.backend">Recommend a backend</b></button>
+        </div>
+        <div class="conversation" id="conversation" role="log" aria-live="polite" data-i18n-aria="aria.conversation" tabindex="0"></div>
+        <form class="composer" id="composer">
+          <div class="composer-resize-handle" id="composer-resize-handle" role="separator" aria-orientation="horizontal" aria-label="Resize prompt input" aria-valuemin="60" aria-valuemax="220" aria-valuenow="60" tabindex="0"><span aria-hidden="true"></span></div>
+          <label for="prompt-input" data-i18n="assistant.describe">Describe what you want</label>
+          <textarea id="prompt-input" name="prompt" rows="3" maxlength="24000" data-i18n-placeholder="assistant.placeholder" placeholder="Create a Bell state, measure both qubits, and explain the result." required></textarea>
+          <div class="composer-footer"><span><kbd>Ctrl</kbd> + <kbd>Enter</kbd></span><button class="send-button" id="send-button" type="submit" disabled><span data-i18n="assistant.ask">Ask LoomQ</span><span aria-hidden="true">↗</span></button></div>
+        </form>
+      </aside>
+      <button class="assistant-launcher" id="assistant-launcher" type="button" aria-controls="assistant-dock" aria-expanded="false" aria-label="Open LoomQ assistant" title="Open LoomQ assistant"><span aria-hidden="true">✦</span><strong data-dynamic-text="openAssistant">Ask LoomQ</strong></button>
+    </div>
+    <template id="message-template"><article class="message"><div class="message-meta"></div><div class="message-body"></div></article></template>
+    <script src="/vendor/katex.min.js" defer></script>
+    <script src="/app.js" defer></script>
+  </body>
+</html>

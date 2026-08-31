@@ -1,0 +1,23 @@
+__pycache__/
+*.py[cod]
+report.json
+vendor/
+.spinq_probe.py
+.env*
+*.env
+*.env.*
+*.pem
+*.key
+.aws/
+.hardware-private/
+
+# Generated verification outputs are force-added only in the evidence
+# finalization commit after a clean source snapshot has been verified.
+evidence/files/*-current.txt
+evidence/files/*-current.json
+evidence/files/verification-manifest.json
+
+# Hardware recovery and failure state can contain provider metadata.
+evidence/files/braket/*-prepared.json
+evidence/files/braket/*-submitted.json
+evidence/files/**/*-failed-*.json

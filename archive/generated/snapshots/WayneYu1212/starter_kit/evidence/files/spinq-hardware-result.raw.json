@@ -1,0 +1,15 @@
+{
+  "provider": "SpinQ Cloud",
+  "job_id": "G-260820-0008",
+  "platform_task_id": "61373",
+  "source_file": "evidence/files/spinq-hardware-result.raw.msgpack",
+  "source_sha256": "b7a66c66a5d69aaeda2857a8ba99d08f1f0a214671c02740be434ea3aa72d195",
+  "result_kind": "ensemble_projection_probabilities",
+  "probabilities": {
+    "00": 0.42899157,
+    "01": 0.02230567,
+    "10": 0.04003949,
+    "11": 0.50866326
+  },
+  "note": "Decoded without modification from the 49-byte provider-exported MessagePack."
+}

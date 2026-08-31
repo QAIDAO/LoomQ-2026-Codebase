@@ -1,0 +1,11 @@
+{
+  "backend": "WK_C180_2",
+  "job_id": "EE7D22A38D5A9F246A2031BC7A31C3AD",
+  "logical_preparation_sha256": "7d44e21c07f288034b521edb642e70a4664d05b87b182d9d3604593e45ceee0b",
+  "requested_physical_qubits": [
+    49,
+    58
+  ],
+  "shots": 1000,
+  "submission": "accepted_by_sdk"
+}

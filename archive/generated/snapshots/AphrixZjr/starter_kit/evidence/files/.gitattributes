@@ -1,0 +1,9 @@
+# Preserve machine-generated evidence bytes on every platform. Windows CRLF is
+# part of the captured output and must not be normalized after SHA-256 hashing.
+*-current.txt -text whitespace=-blank-at-eol,-blank-at-eof
+*-current.json -text whitespace=-blank-at-eol,-blank-at-eof
+verification-manifest.json -text whitespace=-blank-at-eol,-blank-at-eof
+*remediation-*.json -text whitespace=-blank-at-eol,-blank-at-eof
+*remediation-*.stdout.txt -text whitespace=-blank-at-eol,-blank-at-eof
+remediation-*/*.txt -text whitespace=-blank-at-eol,-blank-at-eof
+remediation-*/verification-manifest.json -text whitespace=-blank-at-eol,-blank-at-eof

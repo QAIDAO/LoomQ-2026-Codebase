@@ -1,0 +1,59 @@
+{
+  "backend": "originq-qcloud-WK_C180",
+  "bit_order": "little",
+  "circuit": "ghz3",
+  "counts": {
+    "000": 3928,
+    "001": 14,
+    "010": 0,
+    "011": 2,
+    "100": 2,
+    "101": 1,
+    "110": 2,
+    "111": 4243
+  },
+  "dominant_states_match": true,
+  "expected_support": [
+    "000",
+    "111"
+  ],
+  "expected_support_probability": 0.9974365234375,
+  "expected_support_threshold": 0.5,
+  "hardware_validation_passed": true,
+  "job_id": "5F5EB24ADDB266E77E8A52A478D8AAF2",
+  "local_preflight": {
+    "backend": "originq-pyqpanda3-cpuqvm",
+    "counts": {
+      "000": 4105,
+      "111": 4087
+    },
+    "dominant_states_match": true,
+    "expected_support": [
+      "000",
+      "111"
+    ],
+    "expected_support_probability": 1.0,
+    "expected_support_threshold": 0.5,
+    "hardware_validation_passed": true,
+    "observed_dominant_states": [
+      "000",
+      "111"
+    ]
+  },
+  "meta": {
+    "device_id": "WK_C180",
+    "engine": "pyqpanda3 0.4.0 QCloud",
+    "origin_ir_sha256": "fecf3e275d0beb09ae2d0942c5e2825f20ac345907460ec9bb1e1e44b1781c34",
+    "provider": "Origin Quantum",
+    "task_name": "LoomQ-L1-ghz3"
+  },
+  "observed_dominant_states": [
+    "111",
+    "000"
+  ],
+  "origin_ir_file": "originq-ghz3-5F5EB24ADDB266E77E8A52A478D8AAF2.originir",
+  "qasm_file": "originq-ghz3-5F5EB24ADDB266E77E8A52A478D8AAF2.qasm",
+  "raw_result_file": "originq-ghz3-5F5EB24ADDB266E77E8A52A478D8AAF2-raw.json",
+  "shots": 8192,
+  "timestamp": "2026-08-03T06:13:39.750829+00:00"
+}

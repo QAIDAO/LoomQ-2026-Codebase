@@ -1,0 +1,22 @@
+{
+  "provider": "SpinQ Cloud",
+  "backend": "gemini_vp",
+  "is_simulator": false,
+  "job_id": "G-260818-0010",
+  "shots": 1024,
+  "counts": {
+    "00": 442,
+    "11": 528,
+    "01": 29,
+    "10": 25
+  },
+  "probabilities": {
+    "00": 0.43195341,
+    "11": 0.51568218,
+    "01": 0.02786955,
+    "10": 0.02449486
+  },
+  "bit_order": "little",
+  "timestamp": "2026-08-18T12:05:53.678187Z",
+  "qasm_source": "D:\\20260803_310\\LoomQ-2026-main (1)\\LoomQ-2026-main\\starter_kit\\circuits\\bell.qasm"
+}

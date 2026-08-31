@@ -1,0 +1,36 @@
+{
+  "package": "originq_runtime_bell",
+  "job_id": "2C68A9D3E2F6626B55EEC966DBC3CE2B",
+  "device_id": "WK_C180_2",
+  "device": "Origin Wukong 180-2",
+  "physical_qubits": [
+    49,
+    58
+  ],
+  "shots": 1000,
+  "circuit": "Bell: H(q0), CX(q0,q1), measure",
+  "data_source": "qpanda3_runtime.RuntimeService (2026-08-22)",
+  "missing_provider_exports": "provider CSV: N/A; task screenshot: N/A; exact timestamp not captured (date-granularity)",
+  "files": [
+    {
+      "name": "originq_runtime_bell-hardware-bell.qasm",
+      "sha256": "7e8c1c09ba2d68afac59b1af854bffec6e92409ca02b83d71a029676a1ceff7f",
+      "size_bytes": 101
+    },
+    {
+      "name": "originq_runtime_bell-hardware-metadata.json",
+      "sha256": "493953a62b53ca2de54425ee1388dd5c7707b5a279d882f8646ecbb23b11473d",
+      "size_bytes": 1592
+    },
+    {
+      "name": "originq_runtime_bell-hardware-result.normalized.json",
+      "sha256": "4deaac52412333428e6bec97eac038d7b6333827406d9405006994dc50d6a8b5",
+      "size_bytes": 664
+    },
+    {
+      "name": "originq_runtime_bell-hardware-result.raw.json",
+      "sha256": "7cbef6e85a517a4df3b92368fdee3a80e3bdd85d7d60a72fa6a2d08c0249a1c7",
+      "size_bytes": 706
+    }
+  ]
+}

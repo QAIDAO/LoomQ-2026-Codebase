@@ -1,0 +1,9 @@
+# Public evaluator baseline: no third-party dependencies.
+# Add project dependencies below and pin every version exactly, for example:
+# amazon-braket-sdk==<tested-version>
+# spinqit==<tested-version>
+# pyqpanda==<tested-version>
+# Braket 默认模拟器未锁定这两个传递依赖；固定版本以复用 Python 3.10 的 wheel。
+llvmlite==0.45.1
+numba==0.62.1
+amazon-braket-sdk==1.108.0

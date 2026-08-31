@@ -1,0 +1,29 @@
+(base) jjh@DESKTOP-NI1VVHD:/mnt/d/WXL/loom2026zxy$ python -m starter_kit.chat "生成一个 3 比特 GHZ 态并进行全测量"
+下面是生成 3 比特 GHZ 态并做全测量的 OpenQASM 2.0 程序：
+
+```qasm
+OPENQASM 2.0;
+include "qelib1.inc";
+
+qreg q[3];
+creg c[3];
+
+// 制备 |000> -> |GHZ> = (|000> + |111>) / sqrt(2)
+h q[0];
+cx q[0], q[1];
+cx q[0], q[2];
+
+// 全测量
+measure q[0] -> c[0];
+measure q[1] -> c[1];
+measure q[2] -> c[2];
+```
+
+**说明**：  
+- 先对 q[0] 施加 Hadamard 门，使其处于叠加态；  
+- 再用两个 CNOT 门将纠缠扩展到 q[1] 和 q[2]，得到标准 GHZ 态；  
+- 最后对三个比特全部测量，结果只会是 `000` 或 `111`（各 50% 概率）。
+
+**推荐后端**：  
+- 若想快速本地验证，可用 `braket_local_simulator`（无需账号，随 SDK 本地运行）；  
+- 若想体验真机，可注册 SpinQ Cloud 使用 `spinq_cloud_qpu`（2–8 比特，免费配额）。

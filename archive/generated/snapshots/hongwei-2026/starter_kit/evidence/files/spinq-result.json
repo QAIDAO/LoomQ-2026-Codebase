@@ -1,0 +1,24 @@
+{
+  "backend": "spinq_cloud_qpu",
+  "job_id": "G-260820-0003",
+  "shots": 1024,
+  "counts": {
+    "00": 447,
+    "11": 520,
+    "01": 48,
+    "10": 9
+  },
+  "bit_order": "little",
+  "timestamp": "2026-08-20T03:35:32Z",
+  "meta": {
+    "platform": "gemini_vp",
+    "probabilities": {
+      "00": 0.4364376,
+      "11": 0.50741507,
+      "01": 0.04713561,
+      "10": 0.00901172
+    },
+    "raw_type": "SpinQCloudResult",
+    "task_id": "G-260820-0003"
+  }
+}

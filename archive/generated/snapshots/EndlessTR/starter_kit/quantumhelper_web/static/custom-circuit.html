@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>QuantumHelper · 确认线路</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+.circuit{padding:26px;border:1px solid var(--primary-line);border-radius:18px;background:radial-gradient(circle at top left,rgba(94,99,182,.08),transparent 34%),rgba(255,255,255,.72)}
+.wire-row{display:grid;grid-template-columns:56px 1fr;gap:18px;align-items:center;min-height:82px}.qname{font-size:13px;font-weight:760}.wire{position:relative;height:2px;background:rgba(39,41,109,.20)}
+.gate{position:absolute;top:50%;transform:translate(-50%,-50%);min-width:50px;height:50px;padding:0 12px;display:flex;align-items:center;justify-content:center;border:1px solid var(--primary-line);border-radius:13px;background:#fff;color:var(--primary-deep);font-size:13px;font-weight:800}.g1{left:20%}.g2{left:50%}.g3{left:80%}
+.legend{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}.legend>div{padding:14px;border:1px solid rgba(25,26,30,.07);border-radius:13px;background:rgba(255,255,255,.62)}.legend strong{display:block;margin-bottom:5px;font-size:14px}.legend span{color:var(--text-2);font-size:12px;line-height:1.55}
+@media(max-width:760px){.legend{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header class="topbar">
+  <a class="brand" href="index.html"><div class="logo"><span></span></div>QuantumHelper</a>
+  <div class="top-meta"><span>自己的任务</span><span class="mode"><i class="mode-dot"></i>任务引导</span></div>
+</header><nav class="progress cols-6" aria-label="流程"><div class="progress-step done"><i>✓</i>描述任务</div><div class="progress-step done"><i>✓</i>生成方案</div><div class="progress-step active"><i>3</i>确认线路</div><div class="progress-step"><i>4</i>选择后端</div><div class="progress-step"><i>5</i>运行</div><div class="progress-step"><i>6</i>结果</div></nav>
+
+<section class="hero">
+  <div class="eyebrow">线路 · 第 3 步</div>
+  <h1>方案已经变成线路，<span class="hero-em">先确认结构再运行</span></h1>
+  <p class="hero-text">这里看每一段线路承担什么作用，不要求先记住所有量子门名称。</p>
+</section>
+<main><section class="layout"><article class="card main-card"><div class="section-head"><div class="kicker">生成线路</div><h2 class="section-title" id="circuitTitle"></h2></div><div class="section-body"><div class="circuit"><div class="wire-row"><div class="qname">q₀</div><div class="wire"><div class="gate g1" id="a1"></div><div class="gate g2" id="a2"></div><div class="gate g3" id="a3"></div></div></div><div class="wire-row"><div class="qname">q₁</div><div class="wire"><div class="gate g1" id="b1"></div><div class="gate g2" id="b2"></div><div class="gate g3" id="b3"></div></div></div><div class="wire-row" id="third"><div class="qname">q₂</div><div class="wire"><div class="gate g1" id="c1"></div><div class="gate g2" id="c2"></div><div class="gate g3" id="c3"></div></div></div></div><div class="legend"><div><strong id="l1t"></strong><span id="l1d"></span></div><div><strong id="l2t"></strong><span id="l2d"></span></div><div><strong id="l3t"></strong><span id="l3d"></span></div></div></div></article><aside class="card side-card"><div class="kicker">线路摘要</div><h2 class="side-title" id="methodName"></h2><div class="summary-list"><div class="summary-item"><span class="summary-name">量子比特</span><span class="summary-value" id="qubits"></span></div><div class="summary-item"><span class="summary-name">阶段</span><span class="summary-value">3</span></div></div><div class="action-block"><a class="btn primary" href="backend.html?source=custom">确认线路，选择后端 →</a><a class="btn secondary" href="custom-plan.html">返回修改方案</a></div></aside></section></main></div>
+<script>
+const type=localStorage.getItem('qh_type')||'查找',methodNameEl=document.getElementById('methodName');methodNameEl.textContent=localStorage.getItem('qh_method')||'Grover-style Search';
+const c={
+'查找':{title:'搜索线路 · 3 个阶段',q:3,g1:'H',g2:'Oracle',g3:'M',l1:['准备候选','让候选状态进入可搜索的表示。'],l2:['标记并放大','突出满足条件的目标状态。'],l3:['读取结果','测量后得到最可能的目标编号。']},
+'优化':{title:'优化线路 · 3 个阶段',q:4,g1:'Init',g2:'Cost',g3:'M',l1:['编码方案','把候选方案放进参数化线路。'],l2:['比较代价','通过目标函数让不同方案产生差异。'],l3:['读取候选','测量并比较更优结果。']},
+'测量':{title:'已有线路 · 运行前确认',q:2,g1:'Input',g2:'Circuit',g3:'M',l1:['读取输入','保留已有线路结构。'],l2:['直接执行','不重新生成算法，只运行线路。'],l3:['统计结果','重复测量并形成分布。']},
+'关联':{title:'关联线路 · 3 个阶段',q:2,g1:'H',g2:'CX',g3:'M',l1:['准备状态','让第一个量子比特进入叠加状态。'],l2:['建立关联','使用两比特操作连接状态。'],l3:['读取结果','测量并验证关联模式。']}
+}[type];
+circuitTitle.textContent=c.title;qubits.textContent=c.q;third.style.display=c.q<=2?'none':'grid';
+[a1,b1,c1].forEach(x=>x.textContent=c.g1);[a2,b2,c2].forEach(x=>x.textContent=c.g2);[a3,b3,c3].forEach(x=>x.textContent=c.g3);
+l1t.textContent=c.l1[0];l1d.textContent=c.l1[1];l2t.textContent=c.l2[0];l2d.textContent=c.l2[1];l3t.textContent=c.l3[0];l3d.textContent=c.l3[1];
+</script></body>
+</html>

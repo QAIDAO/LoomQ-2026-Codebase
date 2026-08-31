@@ -1,0 +1,37 @@
+{
+  "package": "originq_runtime_bell_xbasis",
+  "job_id": "CA80432C12CFA2EBB33AC9A14C3AFF20",
+  "device_id": "WK_C180_2",
+  "device": "Origin Wukong 180-2",
+  "physical_qubits": [
+    49,
+    58
+  ],
+  "shots": 1000,
+  "circuit": "Bell X-basis: H(q0), CX(q0,q1), H(q0), H(q1), measure",
+  "data_source": "qpanda3_runtime.RuntimeService (2026-08-22)",
+  "missing_provider_exports": "provider CSV: N/A; task screenshot: N/A; exact timestamp: not captured",
+  "experiment_role": "X-basis leg of the two-setting entanglement witness",
+  "files": [
+    {
+      "name": "originq_runtime_bell_xbasis-hardware-bell.qasm",
+      "sha256": "18c416a3ec293cd44d81656bc88289048d67c7bf7dbfbedebb4411b35b38b8f4",
+      "size_bytes": 150
+    },
+    {
+      "name": "originq_runtime_bell_xbasis-hardware-metadata.json",
+      "sha256": "7d199287452face10e133e8c0a87b4fe3f5b9043507e193c5185715796209ba9",
+      "size_bytes": 1772
+    },
+    {
+      "name": "originq_runtime_bell_xbasis-hardware-result.normalized.json",
+      "sha256": "0d3f73e3d32d89628bdfa8a72d009a408c7d60d3682489ebb23ad5554716dc8c",
+      "size_bytes": 659
+    },
+    {
+      "name": "originq_runtime_bell_xbasis-hardware-result.raw.json",
+      "sha256": "b17b424e13a1b35bace2ef7743ab4cccc96f3d120fc6476091822cda27bc0cf1",
+      "size_bytes": 759
+    }
+  ]
+}

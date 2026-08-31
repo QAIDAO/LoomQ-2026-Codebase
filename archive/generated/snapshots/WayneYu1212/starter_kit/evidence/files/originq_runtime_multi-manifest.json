@@ -1,0 +1,41 @@
+{
+  "package": "originq_runtime_multi",
+  "job_id": "8575222FE2C04A065B38B9DEE5BA9AEE",
+  "device_id": "WK_C180_2",
+  "device": "Origin Wukong 180-2",
+  "physical_qubits": [
+    49,
+    58
+  ],
+  "shots": 1000,
+  "circuit": "Multi-gate: H, CX, H, CX (see qasm)",
+  "data_source": "qpanda_runtime.RuntimeService (2026-08-21)",
+  "missing_provider_exports": "provider CSV: N/A; task screenshot: N/A",
+  "files": [
+    {
+      "name": "originq_runtime_multi-hardware-bell.qasm",
+      "sha256": "a4e0a86d46d67e79b1fc7071b33193308a12c318c7334615517f4f648656d46f",
+      "size_bytes": 127
+    },
+    {
+      "name": "originq_runtime_multi-hardware-metadata.json",
+      "sha256": "025d235cc4f0db6d40de9d88e7f4acd4838eae7f7f26430367ea2787215012f0",
+      "size_bytes": 1340
+    },
+    {
+      "name": "originq_runtime_multi-hardware-result.normalized.json",
+      "sha256": "bfdc4e99be95d86b1dde6634c458e079805264f3d8e9a9487e5cc48cd72eb5c3",
+      "size_bytes": 603
+    },
+    {
+      "name": "originq_runtime_multi-hardware-result.raw.json",
+      "sha256": "268b315ac5501b3376f955e8990291f16d18a77a8e67de741b074be9f47746ca",
+      "size_bytes": 292
+    },
+    {
+      "name": "originq_runtime_multi-reference-comparison.json",
+      "sha256": "3d5b51b52f2049cff5aee829fa25b35d389d449df93658838dad4adec413a1d1",
+      "size_bytes": 902
+    }
+  ]
+}

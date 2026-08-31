@@ -1,0 +1,7 @@
+.DS_Store
+.DStore
+**/.DS_Store
+**/.DStore
+__pycache__/
+*.py[cod]
+.codex_reference/

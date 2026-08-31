@@ -1,0 +1,55 @@
+{
+  "platform": "spinq",
+  "circuit": "bell.qasm",
+  "source": "spinq_cloud_console",
+  "submitted_at_utc": "2026-08-23T02:02:05Z",
+  "raw_platform_response": {
+    "taskCode": "G-260823-0008",
+    "platformCode": "gemini",
+    "bitNum": 2,
+    "status": "S",
+    "startTime": "2026-08-23 10:00:32",
+    "endTime": "2026-08-23 10:02:05",
+    "result": {
+      "10": 0.08919871,
+      "11": 0.44087195,
+      "00": 0.42774914,
+      "01": 0.04218021
+    }
+  },
+  "normalized_result": {
+    "backend": "spinq_cloud_qpu",
+    "job_id": "G-260823-0008",
+    "shots": 4096,
+    "counts": {
+      "10": 365,
+      "11": 1806,
+      "00": 1752,
+      "01": 173
+    },
+    "bit_order": "little",
+    "timestamp": "2026-08-23T02:02:05Z",
+    "meta": {
+      "platform": "spinq",
+      "circuit": "bell.qasm",
+      "dominant_state_check": {
+        "expected_dominant_states": [
+          "00",
+          "11"
+        ],
+        "observed_top_states": [
+          "11",
+          "00",
+          "10",
+          "01"
+        ],
+        "top_k_hit": true,
+        "missing_from_top_k": []
+      },
+      "platform_code": "gemini",
+      "source": "spinq_cloud_console",
+      "executor": "real-machine",
+      "note": "counts derived from platform probabilities x 4096 shots; raw_platform_response is the console record verbatim"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+QINIT 3
+CREG 3
+X q[0]
+X q[2]
+MEASURE q[0], c[0]
+MEASURE q[1], c[2]
+MEASURE q[2], c[1]

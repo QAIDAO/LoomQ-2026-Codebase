@@ -1,0 +1,42 @@
+{
+  "PROGRAM_MEASUREMENT_GATE": "PASS",
+  "backend": "WK_C180_2",
+  "gate_counts": {
+    "CNOT": 1,
+    "H": 1
+  },
+  "measurement_count": 2,
+  "measurement_pairs": [
+    [
+      0,
+      0
+    ],
+    [
+      1,
+      1
+    ]
+  ],
+  "options": {
+    "mapping": true,
+    "prob_counts": false,
+    "specified_block": [
+      49,
+      58
+    ]
+  },
+  "originir": "QINIT 2\nCREG 2\nH q[0]\nCNOT q[0],q[1]\nMEASURE q[0],c[0]\nMEASURE q[1],c[1]\n",
+  "reference_simulator": {
+    "PASS": true,
+    "distribution": {
+      "00": 0.5,
+      "01": 0.0,
+      "10": 0.0,
+      "11": 0.5
+    }
+  },
+  "requested_physical_qubits": [
+    49,
+    58
+  ],
+  "shots": 1000
+}

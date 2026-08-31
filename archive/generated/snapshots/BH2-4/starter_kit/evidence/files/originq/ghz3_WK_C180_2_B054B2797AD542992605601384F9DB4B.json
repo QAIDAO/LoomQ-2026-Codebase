@@ -1,0 +1,31 @@
+{
+  "platform": "originq_cloud_qpu",
+  "backend": "WK_C180_2",
+  "job_id": "B054B2797AD542992605601384F9DB4B",
+  "submitted_at_utc": "2026-08-15T15:23:23.378214+00:00",
+  "retrieved_at_utc": "2026-08-15T15:23:54.582113+00:00",
+  "shots": 1000,
+  "qasm_source": "starter_kit/circuits/ghz3.qasm",
+  "qasm_submitted": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[3];\ncreg c[3];\nh q[0];\ncx q[0], q[1];\ncx q[1], q[2];\nmeasure q[0] -> c[0];\nmeasure q[1] -> c[1];\nmeasure q[2] -> c[2];\n",
+  "counts": {
+    "000": 341,
+    "001": 0,
+    "010": 142,
+    "011": 0,
+    "100": 0,
+    "101": 140,
+    "110": 0,
+    "111": 376
+  },
+  "probabilities": {
+    "000": 0.3411824,
+    "001": 6.8e-06,
+    "010": 0.1423943,
+    "011": 0.0002508,
+    "100": 1.6e-06,
+    "101": 0.1396345,
+    "110": 0.0001964,
+    "111": 0.376333
+  },
+  "counts_note": "counts 由平台概率换算（若有）"
+}

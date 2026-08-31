@@ -1,0 +1,23 @@
+.DS_Store
+.DStore
+**/ .DS_Store
+**/.DS_Store
+**/.DStore
+__pycache__/
+*.py[cod]
+*.egg-info/
+.env
+
+# 虚拟环境不进仓库
+venv/
+starter_kit/venv/
+starter_kit/spinq_env/
+starter_kit/spinq_runner.py
+
+# 评测输出
+report.json
+starter_kit/report.json
+.nfs.*
+
+# 设计参考素材，非本人作品，不进仓库
+starter_kit/qm-kitty-yeung/

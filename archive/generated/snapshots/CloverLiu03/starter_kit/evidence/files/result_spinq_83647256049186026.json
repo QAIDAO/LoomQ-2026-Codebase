@@ -1,0 +1,18 @@
+{
+  "backend": "spinq_cloud_gemini_vp",
+  "job_id": "83647256049186026",
+  "shots": 8192,
+  "counts": {
+    "00": 3464,
+    "11": 3483,
+    "01": 1013,
+    "10": 232
+  },
+  "bit_order": "big",
+  "timestamp": "2026-08-25T01:51:48.376513",
+  "meta": {
+    "transpiled_gates": 2,
+    "depth": 2,
+    "qubits_count": 2
+  }
+}

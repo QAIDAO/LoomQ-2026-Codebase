@@ -1,0 +1,27 @@
+contract_version: "1.0"
+starter_kit_version: "1.1.0"
+entrypoint: "adapter.py"
+team_id: "arw131072"
+levels:
+  l1: true
+  l2: true
+  l3: true
+runtime:
+  language: "python"
+  version: "3.10"
+network:
+  required_for_l1: false
+  required_for_l2: false
+  allowed_hosts: []
+l2_runtime:
+  protocol: "openai_chat_completions"
+  configuration_source: "environment"
+  required_environment:
+    - "LOOMQ_LLM_BASE_URL"
+    - "LOOMQ_LLM_API_KEY"
+    - "LOOMQ_LLM_MODEL"
+evidence:
+  - platform: "spinq_gemini_vp"
+    path: "starter_kit/evidence/gemini_vp/result.json"
+    job_id: "G-260821-0003"
+    timestamp: "2026-08-21T11:43:52Z"

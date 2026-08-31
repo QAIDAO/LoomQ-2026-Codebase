@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LoomQ · 真机回放与 Agent</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <p id="demo-banner" class="demo-banner" hidden></p>
+    <header class="top">
+      <div>
+        <p class="kicker">LoomQ · 量子接入平权</p>
+        <h1>真机归档回放 · Agent 入口</h1>
+        <p class="lede">
+          第一屏是赛期量旋真机任务 <code>G-260809-0018</code> / <code>S-260810-0001</code> 的归档柱状图与任务页截图。
+          本源悟空 Bell 亦已通：job <code>724E511297B861472AA2441F90F3D5E6</code>（chipId=180），详情见
+          <code>starter_kit/evidence/</code>。演示不排队上云；下方 Agent 走 <code>agent_chat</code>，电路经本地精确验算后可对照真机主峰。
+        </p>
+      </div>
+      <p id="llm-badge" class="badge">正在检查 Agent…</p>
+    </header>
+
+    <section class="hero" aria-labelledby="chart-title">
+      <div class="hero-copy">
+        <h2 id="chart-title">两枚永远同面的硬币</h2>
+        <p id="chart-plain" class="plain">
+          两枚硬币各自仍是随机的，但几乎从不一面一背。这就是纠缠。
+        </p>
+        <p id="chart-noise" class="noise"></p>
+        <ul id="chart-meta" class="meta"></ul>
+        <div class="row">
+          <button type="button" class="primary" data-experiment="bell"
+            data-prompt="我不会量子。让两枚硬币永远同一面。给我看真机上的结果，用一句话说清我看到了什么。">
+            第一次实验 · 两枚硬币
+          </button>
+          <button type="button" class="ghost" data-experiment="ghz3"
+            data-prompt="生成一个 3 比特的最大纠缠态（GHZ），并全测量。用真机结果说明我看见了什么。">
+            再看三枚硬币
+          </button>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="legend">
+          <span><i class="swatch exp"></i><span id="legend-exp">真机归档</span></span>
+          <span><i class="swatch sim"></i><span id="legend-sim">理想（无噪声）</span></span>
+        </div>
+        <div id="bars" class="bars"></div>
+        <div id="gates" class="gates" aria-label="电路门"></div>
+        <img id="shot" hidden alt="" />
+      </div>
+    </section>
+
+    <section class="agent" aria-labelledby="agent-title">
+      <h2 id="agent-title">L2 评委三项任务</h2>
+      <p class="sub">
+        无模型钥匙时可看真机回放与语法说明；配置 <code>LOOMQ_LLM_*</code> 后同一按钮调用
+        <code>agent_chat</code>，并用本地验算柱状图对照归档真机。
+      </p>
+      <div class="row wrap">
+        <button type="button" class="ghost" data-prompt="生成一个 3 比特 GHZ 态并全测量">
+          任务 1 · 生成 GHZ
+        </button>
+        <button
+          type="button"
+          class="ghost"
+          data-prompt="我想制备一个贝尔态，但这段代码报错了，帮我修好：H q[0]; CX q[0] q[1]"
+        >
+          任务 2 · 修好这段 Bell
+        </button>
+        <button
+          type="button"
+          class="ghost"
+          data-prompt="我需要运行一个 15 比特电路，且零排队等待，选哪个平台？"
+        >
+          任务 3 · 15 比特选后端
+        </button>
+      </div>
+      <aside id="repair" class="repair" hidden>
+        <p>这段新手代码有三处坑，不是量子物理问题：</p>
+        <ul>
+          <li>门名写成了大写 <code>H</code> / <code>CX</code>，OpenQASM 2.0 要小写 <code>h</code> / <code>cx</code></li>
+          <li>没有声明 <code>qreg</code> / <code>creg</code>，比特还不存在</li>
+          <li><code>CX q[0] q[1]</code> 少了逗号，应写成 <code>cx q[0], q[1];</code></li>
+        </ul>
+      </aside>
+      <div id="backend-board" class="board" aria-label="后端能力表"></div>
+      <label for="prompt">你的问题</label>
+      <textarea
+        id="prompt"
+        placeholder="例如：我不会量子。让两枚硬币永远同一面。"
+      ></textarea>
+      <div class="row">
+        <button type="button" class="primary" id="send">让 Agent 说话</button>
+      </div>
+      <p class="status" id="status"></p>
+      <p id="backend" class="backend" hidden></p>
+      <div class="split">
+        <div>
+          <h3>电路（人能看的那几行）</h3>
+          <pre id="qasm">打开页面时已载入真机 Bell 电路。</pre>
+        </div>
+        <div>
+          <h3>Agent 原文</h3>
+          <pre id="output">点任务按钮，或自己打一句话。真机结果不必等这里。</pre>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      启动：仓库根目录 <code>./start_demo.sh</code>
+      · 本页不上传密钥 · 真机 job
+      <code>G-260809-0018</code> /
+      <code>S-260810-0001</code> /
+      本源 <code>724E5112…</code>
+    </footer>
+    <script src="/app.js"></script>
+  </body>
+</html>

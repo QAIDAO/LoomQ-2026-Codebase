@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="LoomQ Pegasus local quantum compiler workbench">
+  <title>LoomQ Pegasus · Local Workbench</title>
+  <link rel="icon" href="/mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <!--
+    Design context: an evidence-first scientific workbench, not a marketing page.
+    Direction: field-notebook rules + dense instrument console; original mark.
+    Truth boundary: target dialect generation and LoomQ local reference execution
+    are shown separately. No vendor SDK/cloud/QPU execution is implied.
+  -->
+  <a class="skip-link" href="#workbench-main" data-i18n="skip">Skip to workbench</a>
+  <div class="app-shell" id="app-shell">
+    <aside class="rail" aria-label="Workbench navigation">
+      <header class="brand-block">
+        <img src="/mark.svg" alt="LoomQ Pegasus" width="46" height="46">
+        <div>
+          <p class="eyebrow">LOOMQ / 2026</p>
+          <h1>PEGASUS</h1>
+          <p class="brand-sub" data-i18n="brandSub">Compiler observatory</p>
+        </div>
+      </header>
+
+      <div class="rail-coordinate" aria-hidden="true">
+        <span>00</span><span>08</span><span>16</span><span>24</span>
+      </div>
+
+      <nav class="rail-nav" aria-label="Workbench sections">
+        <button type="button" class="rail-nav-item is-active" data-scroll="compose">
+          <span class="nav-index">01</span><span data-i18n="navCompose">Compose</span>
+        </button>
+        <button type="button" class="rail-nav-item" data-scroll="inspection">
+          <span class="nav-index">02</span><span data-i18n="navInspect">Inspect</span>
+        </button>
+        <button type="button" class="rail-nav-item" data-scroll="evidence-panel">
+          <span class="nav-index">03</span><span data-i18n="navEvidence">Evidence</span>
+        </button>
+      </nav>
+
+      <section class="rail-section examples-section" aria-labelledby="examples-heading">
+        <div class="section-label-row">
+          <h2 id="examples-heading" data-i18n="examples">Verified starters</h2>
+          <span class="section-count">03</span>
+        </div>
+        <div id="example-list" class="example-list" aria-live="polite">
+          <div class="rail-placeholder" data-i18n="loading">Loading…</div>
+        </div>
+      </section>
+
+      <section class="rail-section history-section" aria-labelledby="history-heading">
+        <div class="section-label-row">
+          <h2 id="history-heading" data-i18n="history">Session history</h2>
+          <button type="button" class="text-button" id="refresh-history" data-i18n="refresh">Refresh</button>
+        </div>
+        <ol id="history-list" class="history-list">
+          <li class="rail-placeholder" data-i18n="noRuns">No local runs yet</li>
+        </ol>
+      </section>
+
+      <section class="rail-status" aria-labelledby="system-heading">
+        <h2 id="system-heading" data-i18n="system">Local systems</h2>
+        <dl id="component-status">
+          <div><dt>Parser</dt><dd><i class="status-dot pending"></i><span data-i18n="checking">Checking</span></dd></div>
+          <div><dt>Runtime</dt><dd><i class="status-dot pending"></i><span data-i18n="checking">Checking</span></dd></div>
+          <div><dt>Agent</dt><dd><i class="status-dot pending"></i><span data-i18n="checking">Checking</span></dd></div>
+          <div><dt>Vendor QPU</dt><dd><i class="status-dot neutral"></i><span data-i18n="notRun">Not run</span></dd></div>
+        </dl>
+        <p class="truth-note" data-i18n="truthNote">Execution uses LoomQ's local reference simulator. Target tabs are dialect artifacts, not vendor jobs.</p>
+      </section>
+    </aside>
+
+    <main class="compose" id="workbench-main">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow" data-i18n="workspaceLabel">LOCAL / REQUEST-SCOPED</p>
+          <p class="topbar-title" data-i18n="workspaceTitle">Quantum compiler workbench</p>
+        </div>
+        <div class="topbar-actions">
+          <span class="runtime-boundary" title="No vendor execution is claimed">
+            <i class="status-dot ready"></i><span data-i18n="localRef">LoomQ local reference</span>
+          </span>
+          <button type="button" id="language-toggle" class="language-toggle" aria-pressed="false" aria-label="Switch language">EN</button>
+        </div>
+      </header>
+
+      <form id="run-form" novalidate>
+        <section class="brief-block" id="compose" aria-labelledby="brief-heading">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">A / INTENT</p>
+              <h2 id="brief-heading" data-i18n="briefTitle">What should the circuit prove?</h2>
+            </div>
+            <span class="newcomer-note" data-i18n="briefHelp">Plain language is optional unless Agent is selected.</span>
+          </div>
+          <label class="sr-only" for="prompt" data-i18n="promptLabel">Prompt</label>
+          <textarea id="prompt" name="prompt" rows="3" maxlength="16000" data-i18n-placeholder="promptPlaceholder" placeholder="例：执行两比特 Bell 态，并检查 00 / 11 相关性。"></textarea>
+          <div class="prompt-meta"><span id="prompt-count">0 / 16000</span><span data-i18n="noCot">Only task metadata is shown; hidden reasoning is never displayed.</span></div>
+        </section>
+
+        <section class="control-strip" aria-label="Run controls">
+          <label>
+            <span data-i18n="task">Task</span>
+            <select id="task" name="task">
+              <option value="simulate" data-i18n="taskSimulate">Compile + simulate</option>
+              <option value="transpile" data-i18n="taskTranspile">Transpile only</option>
+              <option value="hybrid" data-i18n="taskHybrid">Compile Hybrid-QASM</option>
+              <option value="agent" data-i18n="taskAgent">Agent request</option>
+            </select>
+          </label>
+          <label>
+            <span data-i18n="target">Execution target</span>
+            <select id="target" name="target">
+              <option value="spinq">SpinQ dialect</option>
+              <option value="originq">OriginIR dialect</option>
+              <option value="braket">Braket QASM 3</option>
+            </select>
+          </label>
+          <label>
+            <span data-i18n="shots">Shots</span>
+            <input id="shots" name="shots" type="number" min="1" max="100000" step="1" value="1024" inputmode="numeric">
+          </label>
+          <div class="control-readout" aria-label="Runtime policy">
+            <span>ENGINE</span>
+            <strong data-i18n="referenceEngine">LOCAL REF.</strong>
+          </div>
+        </section>
+
+        <section class="editor-block" aria-labelledby="editor-heading">
+          <div class="editor-toolbar">
+            <div>
+              <span class="file-tab is-active" id="editor-heading">circuit.qasm</span>
+              <span class="file-state" id="file-state" data-i18n="unsavedInput">REQUEST INPUT</span>
+            </div>
+            <div class="editor-tools">
+              <button type="button" class="text-button light" id="copy-source" data-i18n="copy">Copy</button>
+              <button type="button" class="text-button light" id="clear-source" data-i18n="clear">Clear</button>
+            </div>
+          </div>
+          <div class="editor-surface">
+            <pre id="line-numbers" aria-hidden="true">1</pre>
+            <label class="sr-only" for="qasm" data-i18n="sourceLabel">OpenQASM or Hybrid-QASM source</label>
+            <textarea id="qasm" name="qasm" spellcheck="false" autocapitalize="off" autocomplete="off" wrap="off" aria-describedby="editor-help diagnostic-message"></textarea>
+          </div>
+          <div class="editor-footer" id="editor-help">
+            <span><kbd>Ctrl</kbd> + <kbd>Enter</kbd> <span data-i18n="shortcutRun">run pipeline</span></span>
+            <span id="source-stats">0 lines · 0 bytes</span>
+          </div>
+        </section>
+
+        <section class="diagnostic is-hidden" id="diagnostic" aria-live="assertive" aria-atomic="true">
+          <div class="diagnostic-code" id="diagnostic-code">SOURCE_ADMISSION_ERROR</div>
+          <div>
+            <p id="diagnostic-message"></p>
+            <p class="diagnostic-suggestion" id="diagnostic-suggestion"></p>
+          </div>
+          <button type="button" id="focus-error" class="text-button" data-i18n="goToError">Go to source</button>
+        </section>
+
+        <section class="action-deck" aria-label="Actions">
+          <button class="primary-action" type="submit" id="run-button">
+            <span class="action-index">RUN</span>
+            <span data-i18n="runPipeline">Run verified pipeline</span>
+          </button>
+          <button class="secondary-action" type="button" id="repair-button">
+            <span class="action-index">FIX</span>
+            <span data-i18n="repair">Conservative repair</span>
+          </button>
+          <button class="secondary-action is-hidden" type="button" id="cancel-button">
+            <span class="action-index">ESC</span>
+            <span data-i18n="cancel">Stop waiting</span>
+          </button>
+          <button class="secondary-action is-hidden" type="button" id="retry-button">
+            <span class="action-index">RERUN</span>
+            <span data-i18n="retry">Run again</span>
+          </button>
+        </section>
+      </form>
+
+      <footer class="compose-footer">
+        <p data-i18n="privacy">Local HTTP only by default · evidence isolated per request · atomic writes</p>
+        <p id="session-label">SESSION / —</p>
+      </footer>
+    </main>
+
+    <aside class="inspector" id="inspection" aria-label="Run inspection">
+      <header class="inspector-head">
+        <div>
+          <p class="eyebrow">OBSERVATORY / OUTPUT</p>
+          <h2 data-i18n="inspectionTitle">Admission & evidence</h2>
+        </div>
+        <output id="run-status" class="run-status idle" aria-live="polite" data-i18n="idle">IDLE</output>
+      </header>
+
+      <section class="workflow-panel inspector-panel" aria-labelledby="workflow-heading">
+        <div class="panel-heading">
+          <h3 id="workflow-heading" data-i18n="workflow">Workflow</h3>
+          <span id="run-id-short">————————</span>
+        </div>
+        <ol id="workflow-list" class="workflow-list">
+          <li data-step="request"><i></i><span data-i18n="wfRequest">Request admitted</span></li>
+          <li data-step="intent"><i></i><span data-i18n="wfIntent">Intent classified</span></li>
+          <li data-step="normalize"><i></i><span data-i18n="wfNormalize">Source normalized</span></li>
+          <li data-step="lower"><i></i><span data-i18n="wfLower">Target dialects generated</span></li>
+          <li data-step="execute"><i></i><span data-i18n="wfExecute">Local runtime / compiler</span></li>
+          <li data-step="verify"><i></i><span data-i18n="wfVerify">Evidence sealed</span></li>
+        </ol>
+      </section>
+
+      <details class="concept-panel inspector-panel" id="concept-panel">
+        <summary>
+          <span><strong data-i18n="conceptTitle">量子概念速查</strong><small data-i18n="conceptSubtitle">新手可展开的 9 个术语</small></span>
+          <span class="concept-count">09 TERMS</span>
+        </summary>
+        <p class="concept-boundary" data-i18n="conceptBoundary">本面板解释界面读数，不推断未测量的量子态。</p>
+        <dl class="concept-grid">
+          <div><dt>Qubit</dt><dd data-i18n="conceptQubit">量子信息的线路单位；电路图的 q0、q1 表示它们的索引。</dd></div>
+          <div><dt>Gate</dt><dd data-i18n="conceptGate">对指定 qubit 的操作；图中的门来自已准入的规范化 IR。</dd></div>
+          <div><dt>Measurement</dt><dd data-i18n="conceptMeasurement">把 qubit 的测量结果写入经典 bit，电路图标为 M 和 cN。</dd></div>
+          <div><dt>Shots</dt><dd data-i18n="conceptShots">同一电路重复采样的次数；它不是门数。</dd></div>
+          <div><dt>Counts</dt><dd data-i18n="conceptCounts">实际观测到的比特串次数；count / shots 是样本频率，不是振幅。</dd></div>
+          <div><dt>Little-endian</dt><dd data-i18n="conceptEndian">较低索引的 c0 是最低有效位，在输出比特串中位于最右侧。</dd></div>
+          <div><dt data-i18n="conceptSimulatorTerm">模拟器 vs 真机</dt><dd data-i18n="conceptSimulator">本地参考模拟器计算数学模型；QPU 有物理噪声、排队和凭据。无硬件证据时不声称真机执行。</dd></div>
+          <div><dt data-i18n="conceptTranspileTerm">转译 vs 执行</dt><dd data-i18n="conceptTranspile">转译生成 SpinQ / OriginIR / Braket 方言；执行才会产生 shots 和 counts。</dd></div>
+          <div><dt>PASSED</dt><dd data-i18n="conceptPassed">表示本地语法、往返语义和结果模式检查通过；不等于算法已被证明或 QPU 已运行。</dd></div>
+        </dl>
+        <a class="local-guide-link" href="/guide/QUANTUM_101.md" target="_blank" rel="noopener" data-i18n="conceptGuide">打开本地 QUANTUM_101.md</a>
+      </details>
+
+      <section class="inspector-panel paired-panel" aria-labelledby="intent-heading">
+        <div class="data-half">
+          <div class="panel-heading"><h3 id="intent-heading" data-i18n="intent">Intent</h3><span>JSON / SAFE</span></div>
+          <dl id="intent-data" class="data-grid">
+            <div><dt data-i18n="task">Task</dt><dd>—</dd></div>
+            <div><dt data-i18n="target">Target</dt><dd>—</dd></div>
+            <div><dt data-i18n="shots">Shots</dt><dd>—</dd></div>
+          </dl>
+        </div>
+        <div class="data-half">
+          <div class="panel-heading"><h3 data-i18n="normalized">Normalized</h3><span>IR / CORE</span></div>
+          <dl id="normalized-data" class="metric-grid">
+            <div><dt>QUBITS</dt><dd>—</dd></div>
+            <div><dt>CBITS</dt><dd>—</dd></div>
+            <div><dt>OPS</dt><dd>—</dd></div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="inspector-panel circuit-panel" aria-labelledby="circuit-heading">
+        <div class="panel-heading">
+          <div><h3 id="circuit-heading" data-i18n="circuitTitle">规范化电路图</h3><p data-i18n="circuitHelp">由已准入操作绘制线、门和测量；不显示未测量量子态。</p></div>
+          <span id="circuit-operation-count">00 OPS</span>
+        </div>
+        <div id="circuit-diagram" class="circuit-diagram" role="img" aria-label="尚无规范化电路">
+          <p class="circuit-empty" data-i18n="circuitEmpty">运行 OpenQASM 后生成本地 SVG 电路图。</p>
+        </div>
+      </section>
+
+      <section class="inspector-panel ir-panel" aria-labelledby="ir-heading">
+        <div class="panel-heading">
+          <div><h3 id="ir-heading" data-i18n="targetArtifacts">Target dialect artifacts</h3><p data-i18n="artifactBoundary">Generated locally; no vendor job is claimed.</p></div>
+          <button type="button" class="text-button" id="copy-ir" data-i18n="copy">Copy</button>
+        </div>
+        <div class="ir-tabs" role="tablist" aria-label="Target dialect">
+          <button type="button" role="tab" aria-selected="true" aria-controls="ir-output" id="tab-spinq" data-ir="spinq">SPINQ / QASM2</button>
+          <button type="button" role="tab" aria-selected="false" aria-controls="ir-output" id="tab-originq" data-ir="originq">ORIGIN / IR</button>
+          <button type="button" role="tab" aria-selected="false" aria-controls="ir-output" id="tab-braket" data-ir="braket">BRAKET / QASM3</button>
+        </div>
+        <pre id="ir-output" class="ir-output" role="tabpanel" aria-labelledby="tab-spinq" tabindex="0"><code data-i18n="noArtifact">Run a source to inspect admitted dialect artifacts.</code></pre>
+      </section>
+
+      <section class="inspector-panel counts-panel" aria-labelledby="counts-heading">
+        <div class="panel-heading">
+          <div><h3 id="counts-heading" data-i18n="counts">Measurement counts</h3><p id="counts-caption" data-i18n="countsEmpty">No local execution result yet.</p></div>
+          <span class="engine-stamp" data-i18n="localRefShort">LOOMQ REF.</span>
+        </div>
+        <div id="counts-chart" class="counts-chart" role="img" aria-label="No measurement counts">
+          <div class="empty-chart"><span>0</span><i></i><span>SHOTS</span></div>
+        </div>
+        <div class="top-states-block">
+          <div class="top-states-heading"><h4 data-i18n="topStates">Top states · 测量态排行</h4><span data-i18n="observedOnly">仅实际观测 counts</span></div>
+          <ol id="top-states" class="top-states-list">
+            <li class="top-states-empty" data-i18n="topStatesEmpty">运行后按实际计数降序显示。</li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="inspector-panel verification-panel" aria-labelledby="verification-heading">
+        <div class="panel-heading"><h3 id="verification-heading" data-i18n="verification">Verification</h3><span id="verification-status">—</span></div>
+        <ul id="verification-list" class="verification-list">
+          <li><i class="check-mark pending"></i><span data-i18n="verificationEmpty">Checks appear after a run.</span></li>
+        </ul>
+      </section>
+
+      <section class="inspector-panel evidence-panel" id="evidence-panel" aria-labelledby="evidence-heading">
+        <div class="panel-heading">
+          <div><h3 id="evidence-heading" data-i18n="evidence">Evidence ledger</h3><p data-i18n="evidenceHelp">SHA-256 sealed, request-scoped files.</p></div>
+          <span id="artifact-count">00 FILES</span>
+        </div>
+        <div id="artifact-list" class="artifact-list">
+          <p class="empty-copy" data-i18n="evidenceEmpty">A manifest will appear after the first admitted or rejected request.</p>
+        </div>
+      </section>
+
+      <footer class="inspector-footer">
+        <span data-i18n="bitOrder">BIT ORDER / LITTLE</span>
+        <span>SCHEMA / V1</span>
+      </footer>
+    </aside>
+  </div>
+
+  <div class="toast-region" id="toast-region" aria-live="polite" aria-atomic="true"></div>
+  <script src="/app.js" defer></script>
+</body>
+</html>

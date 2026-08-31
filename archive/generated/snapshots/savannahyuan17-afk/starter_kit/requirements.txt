@@ -1,0 +1,16 @@
+# LoomQ Submission — Zero external dependencies for L1/L2 core.
+#
+# All core modules (transpiler, simulator, engine, agent, adapter)
+# use ONLY Python standard library (math, cmath, json, re, typing, hashlib, os, uuid, time).
+#
+# No pip install required for L1 (transpile + run) or L2 (agent_chat with rule-based tier).
+#
+# Optional: for L2 LLM tier, install your preferred OpenAI-compatible client:
+# openai>=1.0.0
+#
+# Optional: for L1 real-hardware execution, install platform SDKs:
+# spinqit==<tested-version>
+# amazon-braket-sdk==<tested-version>
+# pyqpanda==<tested-version>
+#
+# The public evaluator and our submission both work with zero pip installs.

@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0",
+  "default_backend_id": "braket_local_simulator",
+  "aliases": {
+    "spinq_taurus_simulator": ["Taurus", "SpinQit Taurus"],
+    "spinq_cloud_qpu": ["SpinQ Cloud", "量旋云真机"],
+    "originq_local_simulator": ["CPUQVM", "pyqpanda 本地模拟器"],
+    "originq_wukong": ["悟空", "Wukong", "real_chip_wukong_72"],
+    "braket_local_simulator": ["Braket LocalSimulator", "Braket Local Simulator"],
+    "braket_cloud": ["Braket Cloud", "AWS Braket 云端"]
+  }
+}

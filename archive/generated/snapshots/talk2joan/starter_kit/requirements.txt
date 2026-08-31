@@ -1,0 +1,7 @@
+# Public evaluator baseline: no third-party dependencies.
+# LoomQ L1 dependencies, pinned exactly as tested (Python 3.10):
+amazon-braket-sdk==1.125.0
+spinqit==0.2.4
+pyqpanda==3.8.5
+antlr4-python3-runtime==4.13.2
+numpy==1.26.4

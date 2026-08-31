@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LoomQ · 量子Kitty</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- ══════════ 开场：像素 Kitty 展开式入场 ══════════ -->
+<div id="intro">
+  <div class="intro-stars" aria-hidden="true"></div>
+  <div class="intro-inner">
+    <canvas id="intro-cat" width="232" height="168"></canvas>
+    <h1 id="intro-title" aria-label="量子Kitty"></h1>
+    <p id="intro-sub">我是量子Kitty，你的量子计算学习搭子～</p>
+    <button id="intro-go">▶ 开始学习</button>
+    <span class="intro-hint">任意处点击可跳过</span>
+  </div>
+</div>
+
+<div class="sky">
+  <header class="topbar">
+    <div class="brand">
+      <div class="mascot" aria-hidden="true">
+        <div class="orb kitty-orb"><canvas id="brand-cat" class="pixel-cat" width="19" height="15"></canvas></div>
+      </div>
+      <div class="brand-text">
+        <h1>LoomQ <em>量子Kitty</em></h1>
+        <p>陪你把人话变成量子魔法 ✨</p>
+      </div>
+    </div>
+    <nav class="site-nav" aria-label="页面导航">
+      <a href="#learn" class="nav-link active">💬 聊天学习</a>
+      <a href="#cards" class="nav-link">🃏 知识卡</a>
+      <a href="#game" class="nav-link">🎮 试炼游戏</a>
+    </nav>
+    <div class="xp-chip" id="xp-chip" title="完成试炼关卡可获得经验值">
+      <span class="xp-rank" id="xp-rank">见习猫</span>
+      <div class="xp-bar"><div class="xp-fill" id="xp-fill"></div></div>
+      <span class="xp-num" id="xp-num">Lv.1</span>
+    </div>
+  </header>
+
+  <main>
+    <!-- ══════════ Banner 1：聊天学习 ══════════ -->
+    <section id="learn" class="band">
+      <div class="band-head">
+        <h2>💬 聊天学习</h2>
+        <p>说出想法 ➜ 看电路织好 ➜ 按下试跑，三步就上手</p>
+      </div>
+      <div class="grid learn-grid">
+        <!-- 左：对话 -->
+        <section class="card chat-card" aria-label="对话区">
+          <div class="chat-head">
+            <h2>和Kitty聊天</h2>
+            <span class="badge">AI 智能体</span>
+          </div>
+          <div id="chat" class="chat" role="log" aria-live="polite">
+            <div class="msg bot">
+              <div class="bubble">你好呀！我是<b>量子Kitty</b> 🐱 一只薛定谔的猫。<br>
+提问之前，我处于「又困又精神」的叠加态哦～不用懂物理，说人话就好：<br>
+「帮我变出一个贝尔态」或「这段代码好像坏了，陪我一起修修」</div>
+            </div>
+          </div>
+          <div class="chips" id="chips">
+            <button class="chip" data-q="帮我生成一个贝尔态电路">🌟 变出贝尔态</button>
+            <button class="chip" data-q="生成3比特GHZ态">🍬 GHZ三胞胎</button>
+            <button class="chip" data-q="我要在真机上跑72比特的电路，用哪个后端？">🏭 72比特去哪台机器跑？</button>
+            <button class="chip" data-q="什么是量子叠加态？我完全没学过物理">📖 什么是叠加态？</button>
+          </div>
+          <form id="ask-form" class="composer">
+            <input id="ask" type="text" autocomplete="off"
+                   placeholder="跟Kitty说说你的愿望吧…">
+            <button type="submit" class="send" aria-label="发送">喵！</button>
+          </form>
+        </section>
+
+        <!-- 右：实验台 -->
+        <section class="lab">
+          <div class="card panel" aria-label="电路可视化">
+            <div class="panel-head">
+              <h2>你的电路</h2><span class="sub">说句话就画出来</span>
+            </div>
+            <div id="circuit" class="circuit empty">
+              <p class="placeholder">Kitty还没接到愿望——<br>先在左边摸摸它，说说你想要什么吧 🌷</p>
+            </div>
+          </div>
+
+          <div class="card panel" aria-label="运行与结果">
+            <div class="panel-head">
+              <h2>试跑一下</h2>
+              <span class="sim-badge" title="真实量旋云 Taurus 模拟后端">量旋云 · Taurus</span>
+              <input type="hidden" id="target" value="spinq">
+            </div>
+            <button id="run" class="run-btn" disabled>🎲 掷 1024 次量子骰子</button>
+            <div id="result" class="result empty">
+              <p class="placeholder">结果会像彩虹一样长出来 🌈</p>
+            </div>
+            <details id="qasm-wrap" class="qasm-wrap" hidden>
+              <summary>🔍 揭开底层的魔法咒语（QASM）</summary>
+              <pre id="qasm-code"></pre>
+            </details>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <!-- ══════════ Banner 2：知识卡 Quiz ══════════ -->
+    <section id="cards" class="band band-alt">
+      <div class="band-head">
+        <h2>🃏 知识卡</h2>
+        <p>翻一张，考考自己——记不住的会再回来找你</p>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-top">
+          <div class="quiz-dots" id="quiz-dots" aria-label="进度"></div>
+          <span class="quiz-score" id="quiz-score">已掌握 0/10</span>
+        </div>
+        <div class="flip-zone" id="flip-zone" title="点击卡片翻面">
+          <div class="kcard" id="kcard">
+            <div class="kface kfront"><span class="ktag" id="k-tag"></span><p id="k-q"></p><span class="k-hint">点我翻面 👆</span></div>
+            <div class="kface kback"><span class="ktag" id="k-tag2"></span><p id="k-a"></p></div>
+          </div>
+        </div>
+        <div class="quiz-actions" id="quiz-actions">
+          <button id="k-again" class="q-btn ghost" type="button">🔁 再看一遍</button>
+          <button id="k-got" class="q-btn go" type="button">✓ 记住了！</button>
+        </div>
+        <div class="quiz-foot">
+          <button id="k-shuffle" class="mini-btn" type="button">🔀 打乱顺序</button>
+          <button id="k-reset" class="mini-btn" type="button">🧹 从头再来</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ Banner 3：量子试炼 ══════════ -->
+    <section id="game" class="band">
+      <div class="band-head">
+        <h2>🎮 量子试炼</h2>
+        <p>学累了？亲手拼几个量子态换换脑子</p>
+      </div>
+      <section class="card quest" aria-label="量子试炼">
+        <div class="panel-head">
+          <h2>选对门，拼出目标态</h2>
+          <span class="sub">六关进阶 · 星级评价</span>
+        </div>
+        <div class="lvl-rail" id="lvl-rail"></div>
+        <div id="quest-body">
+          <p class="q-goal" id="q-goal"></p>
+          <div class="q-target" id="q-target"></div>
+          <div class="q-slots" id="q-slots"></div>
+          <div class="q-pad" id="q-pad"></div>
+          <div class="q-actions">
+            <button id="q-undo" class="q-btn ghost" type="button">↩ 撤销</button>
+            <button id="q-reset" class="q-btn ghost" type="button">⟲ 重来</button>
+            <button id="q-check" class="q-btn go" type="button">⚡ 融合验证</button>
+          </div>
+          <div id="q-bars" class="q-bars"></div>
+          <div id="q-msg" class="q-msg"></div>
+        </div>
+        <div class="badges" id="badges"></div>
+      </section>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <span>LoomQ 2026 · 薛定谔的猫住在这里 · 零基础也能玩</span>
+  </footer>
+</div>
+<!-- 桌宠 Kitty：可拖拽、会说话 -->
+<div id="pet" aria-hidden="true">
+  <div class="pet-bubble" hidden>喵~</div>
+    <canvas id="pet-canvas" class="pet-svg pixel-cat" width="19" height="15"></canvas>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+{
+  "backend": "spinq_cloud_qpu",
+  "job_id": "S-260806-0003",
+  "shots": 1024,
+  "counts": {
+    "000": 215,
+    "110": 66,
+    "011": 98,
+    "100": 82,
+    "001": 90,
+    "111": 252,
+    "101": 119,
+    "010": 102
+  },
+  "bit_order": "little",
+  "timestamp": "2026-08-06T23:45:53+0800",
+  "meta": {
+    "platform_code": "triangulum_vp",
+    "platform_name": "3Qubit核磁量子计算机",
+    "submitted_at": "2026-08-06T23:42:40+0800",
+    "platform_raw_kind": "probabilities",
+    "bit_order_note": "量旋返回的位串是 q0 在左，与赛题规范相反；本文件的 counts 已按规范翻转为 c[n-1]…c[0]。原始未翻转的数据见 platform_raw。",
+    "platform_raw": {
+      "000": 0.20955383,
+      "011": 0.06408402,
+      "110": 0.09613244,
+      "001": 0.08017743,
+      "100": 0.08813293,
+      "111": 0.24566081,
+      "101": 0.11653905,
+      "010": 0.09971949
+    },
+    "submitted_ir": "OpenQASM 2.0（由本提交的中间层输出，spinq 目标）",
+    "emitted_qasm": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[3];\ncreg c[3];\nh q[0];\ncx q[0], q[1];\ncx q[1], q[2];\nmeasure q[0] -> c[0];\nmeasure q[1] -> c[1];\nmeasure q[2] -> c[2];\n"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "task_id": "8575222FE2C04A065B38B9DEE5BA9AEE",
+  "sdk_response": {
+    "errCode": 0,
+    "taskResult": [
+      "{\"value\":[0.2095924,0.277605,0.3016603,0.2111422],\"key\":[\"0x0\",\"0x1\",\"0x2\",\"0x3\"]}"
+    ],
+    "taskType": "sample",
+    "task_status": "finished"
+  }
+}

@@ -1,0 +1,1682 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qat / 喵子</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=IBM+Plex+Mono:wght@400;500&family=Comfortaa:wght@400;500&display=swap');
+        @import url('https://ik.imagekit.io/chinesefonts/packages/mkzyt/dist/猫啃珠圆体/result.css');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #ffffff;
+            --text: #000000;
+            --border: #e8e8e8;
+            --muted: #888;
+            --faint: #bbb;
+            --bubble-ai-bg: #f9f9f9;
+            --bubble-ai-border: #eee;
+            --bubble-user-bg: #111;
+            --bubble-user-text: #f0f0f0;
+            --btn-bg: #000;
+            --btn-text: #fff;
+            --input-border: #ddd;
+            --wave-color: 0, 0, 0;
+            --box-bg: #fafafa;
+            --box-border: #222;
+            --box-lid: #333;
+            --cat-stroke: #222;
+        }
+
+        body.dark {
+            --bg: #050505;
+            --text: #ededed;
+            --border: #2a2a2a;
+            --muted: #888;
+            --faint: #555;
+            --bubble-ai-bg: #171717;
+            --bubble-ai-border: #2a2a2a;
+            --bubble-user-bg: #ededed;
+            --bubble-user-text: #050505;
+            --btn-bg: #ededed;
+            --btn-text: #050505;
+            --input-border: #333;
+            --wave-color: 255, 255, 255;
+            --box-bg: #1a1a1a;
+            --box-border: #ccc;
+            --box-lid: #ddd;
+            --cat-stroke: #eee;
+            --bar-bg: #2a2a2a;
+            --bar-fill: #ededed;
+            --tile-grey: #0e0e0e;
+        }
+
+        :root {
+            --bar-bg: #f0f0f0;
+            --bar-fill: #111;
+            --tile-grey: #f4f4f4;
+        }
+
+        body {
+            font-family: 'Comfortaa', 'MaokenZhuyuanTi', sans-serif;
+            font-size: 17px;
+            background: var(--bg);
+            color: var(--text);
+            overflow: hidden;
+            height: 100vh;
+            transition: background 0.4s ease, color 0.4s ease;
+        }
+
+        /* Theme toggle button */
+        .theme-toggle, .lang-toggle, .sound-toggle {
+            position: fixed;
+            top: 20px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1.5px solid var(--text);
+            background: transparent;
+            color: var(--text);
+            cursor: inherit;
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+            font-family: 'Comfortaa', 'MaokenZhuyuanTi', sans-serif;
+        }
+        .theme-toggle { right: 20px; }
+        .lang-toggle { right: 68px; font-size: 0.7em; letter-spacing: 0.5px; }
+        .sound-toggle { right: 116px; font-size: 1em; line-height: 1; padding: 0 0 3px 1px; }
+
+        .credits-btn {
+            position: fixed; top: 20px; left: 20px;
+            width: 36px; height: 36px; border-radius: 50%;
+            border: 1.5px solid var(--text);
+            background: transparent; color: var(--text);
+            cursor: inherit; z-index: 200;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.1em; transition: all 0.3s ease;
+        }
+        .credits-btn:hover { background: var(--text); color: var(--bg); }
+
+        .credits-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.25); z-index: 300;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+        }
+        .credits-overlay.visible { opacity: 1; pointer-events: all; }
+
+        .credits-card {
+            background: var(--bg); border: 1px solid var(--border);
+            padding: 30px 36px; text-align: center; max-width: 340px;
+            border-radius: 12px;
+            font-family: 'Comfortaa', 'MaokenZhuyuanTi', sans-serif;
+        }
+        .credits-card h3 {
+            font-family: 'Bodoni Moda', 'MaokenZhuyuanTi', sans-serif;
+            font-size: 1.6em; margin-bottom: 12px; font-weight: 400;
+        }
+        .credits-card p { color: var(--muted); font-size: 0.85em; line-height: 1.8; margin-bottom: 8px; }
+        .credits-card a { color: var(--text); text-decoration: none; border-bottom: 1px solid var(--border); }
+        .credits-card a:hover { border-color: var(--text); }
+
+        .theme-toggle:hover, .lang-toggle:hover, .sound-toggle:hover {
+            background: var(--text);
+            color: var(--bg);
+        }
+
+        /* Diagonal cat cursor — sharp ears, smooth cheeks */
+        .cat-cursor, .cat-cursor *, .cat-cursor a, .cat-cursor button, .cat-cursor input {
+            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='28' viewBox='-2 -2 24 28'%3E%3Cg transform='rotate(155 10 13)'%3E%3Cpath d='M3 8 L5 1 L9 7 L11 7 L15 1 L17 8 Q18 16 10 23 Q2 16 3 8 Z' fill='%23333'/%3E%3Ccircle cx='7.5' cy='12' r='1.2' fill='%23fff'/%3E%3Ccircle cx='12.5' cy='12' r='1.2' fill='%23fff'/%3E%3C/g%3E%3C/svg%3E") 3 2, auto;
+        }
+
+        #landing {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            z-index: 100; transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        #landing::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 50;
+            box-shadow: inset 0 0 80px 20px rgba(255, 255, 255, 0.6);
+        }
+        body.dark #landing::after {
+            box-shadow: inset 0 0 80px 20px rgba(0, 0, 0, 0.5);
+        }
+        #landing.collapsed { opacity: 0; transform: scale(0.97); pointer-events: none; }
+
+        #waveCanvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+        .landing-text { position: relative; z-index: 10; text-align: center; pointer-events: none; }
+        .landing-title { font-family: 'Bodoni Moda', Georgia, serif; font-size: 5.5em; font-weight: 400; letter-spacing: 4px; }
+        .landing-subtitle { font-family: 'Comfortaa', 'MaokenZhuyuanTi', sans-serif; font-size: 1.2em; color: var(--text); letter-spacing: 10px; margin-top: 4px; opacity: 0.5; }
+        .landing-tagline { font-family: 'Comfortaa', 'MaokenZhuyuanTi', sans-serif; font-size: 0.85em; color: var(--faint); letter-spacing: 2px; margin-top: 24px; }
+        .landing-hint { position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%); font-size: 0.75em; color: var(--faint); letter-spacing: 3px; z-index: 10; animation: fade-pulse 3s ease-in-out infinite; }
+        @keyframes fade-pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.9; } }
+
+        #chatPage {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; justify-content: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.6s ease 0.5s;
+        }
+        #chatPage.visible { opacity: 1; pointer-events: all; }
+
+        .container {
+            width: 100%;
+            max-width: 640px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            border-left: 1px solid var(--border);
+            border-right: 1px solid var(--border);
+            background: var(--bg);
+        }
+        .header { padding: 16px 20px; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--border); gap: 12px; position: relative; }
+        .header-logo { font-family: 'Bodoni Moda', Georgia, serif; font-size: 1.5em; letter-spacing: 2px; }
+        .header-sep { color: var(--faint); }
+        .header-cn { font-family: 'MaokenZhuyuanTi', 'Comfortaa', sans-serif; font-size: 0.95em; color: var(--text); letter-spacing: 6px; opacity: 0.7; }
+
+        .help-btn {
+            position: absolute; right: 16px;
+            width: 26px; height: 26px; border-radius: 50%;
+            border: 1px solid var(--border); background: transparent;
+            color: var(--muted); font-family: 'Bodoni Moda', Georgia, serif;
+            font-size: 0.85em; cursor: inherit;
+            display: none; align-items: center; justify-content: center;
+            transition: all 0.2s ease;
+        }
+        .help-btn.visible { display: flex; }
+        .help-btn:hover { background: var(--tile-grey); color: var(--text); border-color: var(--muted); }
+
+        .chat-area { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+        .message { max-width: 82%; display: flex; flex-direction: column; gap: 5px; }
+        .message.ai { align-self: flex-start; } .message.user { align-self: flex-end; }
+        .message-label { font-size: 0.68em; color: var(--muted); padding: 0 4px; letter-spacing: 1px; }
+        .message.user .message-label { text-align: right; }
+        .bubble { padding: 12px 16px; line-height: 1.7; font-size: 0.88em; white-space: pre-wrap; word-wrap: break-word; }
+        .message.ai .bubble { background: var(--bubble-ai-bg); border: 1px solid var(--bubble-ai-border); border-radius: 2px 10px 10px 10px; }
+        .message.user .bubble { background: var(--bubble-user-bg); color: var(--bubble-user-text); border-radius: 10px 2px 10px 10px; }
+        .code-block { background: #0e0e0e; color: #d4d4d4; padding: 14px; border-radius: 4px 4px 0 0; margin: 8px 0 0 0; font-family: 'IBM Plex Mono', 'Courier New', monospace; font-size: 0.82em; white-space: pre; overflow-x: auto; line-height: 1.5; border: 2px solid transparent; }
+        .code-wrapper { margin: 8px 0; }
+        .code-wrapper.selected .code-block { border-color: #666; }
+
+        .code-actions {
+            display: flex; gap: 4px; align-items: center;
+            background: #1a1a1a;
+            padding: 6px 10px;
+            border-radius: 0 0 4px 4px;
+        }
+        .code-actions .action-btn {
+            background: #2a2a2a;
+            color: #aaa;
+            border-color: #333;
+        }
+        .code-actions .action-btn:hover {
+            background: #3a3a3a;
+            color: #fff;
+            border-color: #555;
+        }
+        .code-wrapper.selected .code-actions .select-btn {
+            background: #fff;
+            color: #000;
+            border-color: #fff;
+        }
+        .code-idx {
+            color: #666;
+            font-size: 0.7em;
+            font-family: 'Comfortaa', 'MaokenZhuyuanTi', sans-serif;
+            margin-left: auto;
+            letter-spacing: 1px;
+        }
+        .actions { display: flex; gap: 5px; padding: 0 4px; }
+        .message.user .actions { justify-content: flex-end; }
+        .action-btn { padding: 3px 10px; border: 1px solid var(--input-border); border-radius: 3px; background: var(--bg); color: var(--muted); font-size: 0.65em; font-family: 'Comfortaa', 'MaokenZhuyuanTi', sans-serif; cursor: inherit; letter-spacing: 0.5px; }
+        .action-btn:hover { background: var(--bubble-ai-bg); color: var(--text); border-color: var(--muted); }
+        .input-area { padding: 14px 20px; border-top: 1px solid var(--border); display: flex; gap: 10px; }
+        .input-area input { flex: 1; padding: 11px 14px; border: 1px solid var(--input-border); border-radius: 6px; font-size: 0.88em; font-family: 'Comfortaa', 'MaokenZhuyuanTi', sans-serif; outline: none; background: var(--bg); color: var(--text); }
+        .input-area input:focus { border-color: var(--text); }
+        .input-area input::placeholder { color: var(--faint); }
+        .send-btn { padding: 11px 20px; border: 1px solid var(--btn-bg); border-radius: 6px; background: var(--btn-bg); color: var(--btn-text); font-size: 0.85em; font-family: 'Comfortaa', 'MaokenZhuyuanTi', sans-serif; font-weight: 500; cursor: inherit; letter-spacing: 1px; }
+        .send-btn:hover { opacity: 0.85; }
+        .send-btn:disabled { background: var(--faint); border-color: var(--faint); }
+        .welcome {
+            border: 1px solid var(--border);
+            padding: 16px 18px;
+            margin-bottom: 12px;
+            font-size: 0.75em;
+            line-height: 1.6;
+            color: var(--text);
+            font-family: 'Comfortaa', 'MaokenZhuyuanTi', sans-serif;
+            background: var(--bubble-ai-bg);
+            max-height: 800px; opacity: 1; overflow: hidden;
+            transition: max-height 0.6s ease, opacity 0.4s ease, padding 0.6s ease, margin 0.6s ease, border-color 0.4s ease;
+        }
+        .welcome.collapsing {
+            position: fixed;
+            z-index: 250;
+            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+                        opacity 0.7s ease,
+                        width 0.7s ease,
+                        height 0.7s ease;
+        }
+
+        .help-btn.appear {
+            animation: btn-appear 0.6s ease forwards;
+        }
+
+        @keyframes btn-appear {
+            0% { transform: scale(0); opacity: 0; }
+            60% { transform: scale(1.15); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .welcome-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.25); z-index: 300;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+        }
+        .welcome-overlay.visible { opacity: 1; pointer-events: all; }
+        .welcome-overlay .welcome-popup {
+            max-width: 520px; width: 90%; background: var(--bg);
+            border: 1px solid var(--border); padding: 28px 24px;
+            font-size: 0.82em; line-height: 1.9; color: var(--text);
+            font-family: 'Comfortaa', 'MaokenZhuyuanTi', sans-serif;
+            max-height: 80vh; overflow-y: auto;
+        }
+
+        .welcome h3 {
+            font-family: 'Bodoni Moda', 'MaokenZhuyuanTi', sans-serif;
+            font-size: 1.2em;
+            font-weight: 400;
+            margin-bottom: 6px;
+            color: var(--text);
+        }
+
+        .welcome p {
+            margin-bottom: 5px;
+            color: var(--muted);
+        }
+
+        .welcome .highlight {
+            color: var(--text);
+        }
+
+        .welcome-divider {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 6px 0;
+        }
+
+        .try-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .try-btn {
+            padding: 7px 16px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.3);
+            color: var(--muted);
+            font-family: 'Comfortaa', 'MaokenZhuyuanTi', sans-serif;
+            font-size: 0.85em;
+            cursor: inherit;
+            transition: all 0.2s ease;
+        }
+
+        body.dark .try-btn {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .try-btn:hover {
+            background: rgba(255, 255, 255, 0.8);
+            color: var(--text);
+            
+            border-color: var(--muted);
+        }
+
+        body.dark .try-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        /* Simple 2D Schrödinger box */
+        .box-container { display: flex; flex-direction: column; align-items: center; padding: 80px 0 24px; }
+
+        .box-scene {
+            width: 180px; height: 180px; position: relative;
+        }
+
+        /* Box body — the main square */
+        .box-body {
+            position: absolute; top: 55px; left: 30px;
+            width: 120px; height: 100px;
+            background: #fafafa;
+            border: 2.5px solid #222;
+            border-top: none;
+            display: flex; align-items: flex-end; justify-content: center;
+            padding-bottom: 8px;
+        }
+
+        .box-label {
+            font-family: 'Comfortaa', 'MaokenZhuyuanTi', sans-serif; font-size: 0.55em;
+            color: #bbb; letter-spacing: 3px;
+            text-transform: uppercase;
+            pointer-events: none;
+        }
+
+        /* Top lid — closed position: flat rectangle */
+        .box-lid {
+            position: absolute; top: 40px; left: 30px;
+            width: 120px; height: 18px;
+            background: #333;
+            border: 2.5px solid #222;
+            transform-origin: left bottom;
+            transition: transform 0.8s cubic-bezier(0.4, 1.4, 0.6, 1);
+            z-index: 5;
+        }
+
+        .box-lid.open {
+            transform: rotate(-95deg);
+        }
+
+        /* Question mark on top of box while closed */
+        .box-q {
+            position: absolute; z-index: 20;
+            font-family: 'Bodoni Moda', Georgia, serif;
+            font-size: 2.5em; color: #000; font-weight: 700;
+            top: 50%; left: 50%; transform: translate(-50%, -50%);
+            transition: opacity 0.3s ease;
+        }
+
+        /* Cat inside — sits at bottom of box body */
+        .box-cat-svg {
+            position: absolute;
+            top: 70px; left: 50%;
+            transform: translateX(-50%);
+            z-index: 3; opacity: 0;
+            transition: opacity 0.5s ease 0.5s;
+        }
+
+        .box-cat-svg.visible { opacity: 1; }
+
+        .shaking { animation: shake 0.12s infinite alternate; }
+
+        @keyframes shake {
+            0% { transform: translate(-3px, 0) rotate(-1deg); }
+            50% { transform: translate(3px, -2px) rotate(1deg); }
+            100% { transform: translate(-2px, 2px) rotate(-0.5deg); }
+        }
+
+        .cat-bounce { animation: bounce 0.5s ease 2; }
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-6px); }
+        }
+
+        .box-status {
+            margin-top: 14px; font-size: 0.75em; color: #999;
+            letter-spacing: 1px; min-height: 18px;
+        }
+
+        .run-progress {
+            width: 120px; height: 3px;
+            background: var(--border); border-radius: 2px;
+            margin-top: 10px; overflow: hidden;
+        }
+        .run-progress-fill {
+            height: 100%; width: 0%;
+            background: var(--text); border-radius: 2px;
+        }
+        .run-progress-fill.running {
+            animation: progress-fill 3s ease-out forwards;
+        }
+        .run-progress-fill.done {
+            width: 100% !important; animation: none;
+            transition: width 0.3s ease;
+        }
+        @keyframes progress-fill {
+            0% { width: 0%; }
+            30% { width: 40%; }
+            60% { width: 65%; }
+            80% { width: 80%; }
+            95% { width: 88%; }
+            100% { width: 90%; }
+        }
+
+        .results-bars { width: 100%; max-width: 280px; margin-top: 16px; }
+
+        .result-row {
+            display: flex; align-items: center; gap: 10px;
+            margin-bottom: 6px; font-size: 0.8em;
+            font-family: 'Comfortaa', 'MaokenZhuyuanTi', sans-serif;
+        }
+
+        .result-state { width: 50px; text-align: right; font-weight: 500; }
+
+        .result-bar-bg {
+            flex: 1; height: 14px; background: var(--bar-bg);
+            border-radius: 2px; overflow: hidden;
+        }
+
+        .result-bar-fill {
+            height: 100%; background: var(--bar-fill); border-radius: 2px;
+            transition: width 0.8s ease;
+        }
+
+        .result-pct { width: 50px; color: var(--muted); font-size: 0.85em; }
+
+        .result-explain {
+            margin-top: 14px;
+            padding: 10px 14px;
+            border-left: 2px solid var(--border);
+            font-family: 'Comfortaa', 'MaokenZhuyuanTi', sans-serif;
+            font-size: 0.75em;
+            color: var(--muted);
+            line-height: 1.7;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .result-explain.visible { opacity: 1; }
+        /* ===== Control Panel Sidebar ===== */
+        /* ===== Spaceship Control Panel Sidebar ===== */
+        .side-panel {
+            position: fixed;
+            top: 0;
+            height: 100vh;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 40px 20px;
+            gap: 0;
+        }
+        .side-left { left: 0; width: calc(50% - 320px); align-items: flex-end; }
+        .side-right { right: 0; width: calc(50% - 320px); align-items: flex-start; }
+
+        .panel-group {
+            width: 160px;
+        }
+
+        .panel-header {
+            font-family: 'Comfortaa', 'MaokenZhuyuanTi', sans-serif;
+            font-size: 0.75em;
+            color: var(--muted);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            padding: 6px 14px;
+            margin-bottom: 8px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            text-align: center;
+            position: relative;
+        }
+
+        /* Cat ears on panel header */
+        .panel-header::before, .panel-header::after {
+            content: '';
+            position: absolute;
+            top: -6px;
+            width: 10px;
+            height: 8px;
+            background: var(--bg);
+            border-left: 1px solid var(--border);
+            border-right: 1px solid var(--border);
+            border-top: 1px solid var(--border);
+        }
+        .panel-header::before {
+            left: 20%;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            background: var(--border);
+        }
+        .panel-header::after {
+            right: 20%;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            background: var(--border);
+        }
+
+        .panel-btn {
+            display: block;
+            width: 100%;
+            padding: 10px 0;
+            border: none;
+            background: transparent;
+            color: var(--muted);
+            font-family: 'Comfortaa', 'MaokenZhuyuanTi', sans-serif;
+            font-size: 0.78em;
+            text-align: left;
+            cursor: inherit;
+            transition: color 0.2s ease, padding-left 0.2s ease;
+            border-bottom: 1px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Paw print flash on click */
+        .panel-btn .paw-flash {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2.2em;
+            opacity: 0;
+            pointer-events: none;
+            animation: paw-appear 0.6s ease forwards;
+        }
+
+        @keyframes paw-appear {
+            0% { opacity: 0.5; transform: translate(-50%, -50%) scale(0.5); }
+            30% { opacity: 0.3; transform: translate(-50%, -50%) scale(1.1); }
+            100% { opacity: 0; transform: translate(-50%, -50%) scale(1.3); }
+        }
+
+        .side-right .panel-btn { text-align: right; }
+        .side-right .panel-header { text-align: center; }
+
+        .panel-btn:hover {
+            color: var(--text);
+            padding-left: 6px;
+        }
+
+        .side-right .panel-btn:hover {
+            padding-left: 0;
+            padding-right: 6px;
+        }
+
+        .panel-dot { display: none; }
+
+        .panel-spacer {
+            height: 24px;
+        }
+
+        @media (max-width: 900px) {
+            .side-panel { display: none; }
+        }
+
+        /* Bloch sphere decorations */
+        .bloch-container {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.2;
+        }
+
+        .bloch-left-1 { top: 3%; left: 1%; }
+        .bloch-left-2 { bottom: 8%; left: calc(50% - 380px); }
+        .bloch-left-3 { top: 55%; left: 0%; }
+        .bloch-right-1 { top: 5%; right: 0%; }
+        .bloch-right-2 { bottom: 6%; right: calc(50% - 400px); }
+        .bloch-right-3 { top: 65%; right: 1%; }
+
+        .bloch-sphere { animation: bloch-rotate 12s linear infinite; }
+        .bloch-sphere-slow { animation: bloch-rotate 20s linear infinite reverse; }
+        .bloch-dot { animation: bloch-orbit 8s ease-in-out infinite; }
+        .bloch-dot-slow { animation: bloch-orbit 14s ease-in-out infinite reverse; }
+
+        @keyframes bloch-rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes bloch-orbit {
+            0% { transform: rotate(0deg) translateX(22px) rotate(0deg); }
+            100% { transform: rotate(360deg) translateX(22px) rotate(-360deg); }
+        }
+
+        /* Floating cats */
+        .float-cat {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.12;
+        }
+
+        .float-cat-1 { top: 30%; left: calc(50% - 400px); animation: cat-drift-1 18s ease-in-out infinite; }
+        .float-cat-2 { bottom: 15%; right: 1%; animation: cat-drift-2 22s ease-in-out infinite; }
+        .float-cat-3 { top: 85%; left: 1%; animation: cat-drift-3 16s ease-in-out infinite; }
+        .float-cat-4 { top: 10%; right: calc(50% - 390px); animation: cat-drift-1 20s ease-in-out infinite reverse; }
+
+        @keyframes cat-drift-1 {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(15px, -20px) rotate(4deg); }
+            50% { transform: translate(-10px, -35px) rotate(-3deg); }
+            75% { transform: translate(18px, -12px) rotate(3deg); }
+        }
+        @keyframes cat-drift-2 {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(-18px, 15px) rotate(-4deg); }
+            50% { transform: translate(12px, 28px) rotate(3deg); }
+            75% { transform: translate(-14px, 10px) rotate(-2deg); }
+        }
+        @keyframes cat-drift-3 {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(20px, -18px) rotate(5deg); }
+            66% { transform: translate(-15px, 14px) rotate(-4deg); }
+        }
+
+        @media (max-width: 900px) {
+            .bloch-container, .float-cat { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="credits-btn" onclick="toggleCredits()" title="About Qat">🐾</button>
+    <button class="sound-toggle" id="soundToggle" onclick="toggleSound()" title="Toggle sound">♪</button>
+    <button class="lang-toggle" id="langToggle" onclick="toggleLang()" title="Toggle language">EN</button>
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle theme">☾</button>
+
+    <div id="landing">
+        <canvas id="waveCanvas"></canvas>
+        <div class="landing-text">
+            <div class="landing-title">Qat</div>
+            <div class="landing-subtitle">喵 子</div>
+            <div class="landing-tagline" data-i18n="tagline">跟喵子聊聊，玩转量子</div>
+        </div>
+        <div class="landing-hint" data-i18n="observe">点击任意位置以观测</div>
+    </div>
+
+    <div id="chatPage">
+
+        <!-- Bloch spheres — spread across sides -->
+        <div class="bloch-container bloch-left-1">
+            <svg width="90" height="90" viewBox="0 0 60 60"><g class="bloch-sphere"><circle cx="30" cy="30" r="24" fill="none" stroke="currentColor" stroke-width="0.8"/><ellipse cx="30" cy="30" rx="24" ry="8" fill="none" stroke="currentColor" stroke-width="0.5" stroke-dasharray="2 2"/><line x1="30" y1="6" x2="30" y2="54" stroke="currentColor" stroke-width="0.5" stroke-dasharray="2 2"/></g><g class="bloch-dot" style="transform-origin:30px 30px"><circle cx="30" cy="30" r="3" fill="currentColor"/></g></svg>
+        </div>
+        <div class="bloch-container bloch-left-2">
+            <svg width="70" height="70" viewBox="0 0 60 60"><g class="bloch-sphere-slow"><circle cx="30" cy="30" r="24" fill="none" stroke="currentColor" stroke-width="0.8"/><ellipse cx="30" cy="30" rx="24" ry="8" fill="none" stroke="currentColor" stroke-width="0.5" stroke-dasharray="2 2"/><ellipse cx="30" cy="30" rx="8" ry="24" fill="none" stroke="currentColor" stroke-width="0.5" stroke-dasharray="2 2"/></g><g class="bloch-dot-slow" style="transform-origin:30px 30px"><circle cx="30" cy="30" r="3" fill="currentColor"/></g></svg>
+        </div>
+        <div class="bloch-container bloch-left-3">
+            <svg width="55" height="55" viewBox="0 0 60 60"><g class="bloch-sphere"><circle cx="30" cy="30" r="24" fill="none" stroke="currentColor" stroke-width="0.8"/><ellipse cx="30" cy="30" rx="24" ry="8" fill="none" stroke="currentColor" stroke-width="0.5" stroke-dasharray="2 2"/></g><g class="bloch-dot" style="transform-origin:30px 30px"><circle cx="30" cy="30" r="3" fill="currentColor"/></g></svg>
+        </div>
+        <div class="bloch-container bloch-right-1">
+            <svg width="80" height="80" viewBox="0 0 60 60"><g class="bloch-sphere-slow"><circle cx="30" cy="30" r="24" fill="none" stroke="currentColor" stroke-width="0.8"/><ellipse cx="30" cy="30" rx="24" ry="8" fill="none" stroke="currentColor" stroke-width="0.5" stroke-dasharray="2 2"/><line x1="30" y1="6" x2="30" y2="54" stroke="currentColor" stroke-width="0.5" stroke-dasharray="2 2"/></g><g class="bloch-dot" style="transform-origin:30px 30px"><circle cx="30" cy="30" r="3" fill="currentColor"/></g></svg>
+        </div>
+        <div class="bloch-container bloch-right-2">
+            <svg width="100" height="100" viewBox="0 0 60 60"><g class="bloch-sphere"><circle cx="30" cy="30" r="24" fill="none" stroke="currentColor" stroke-width="0.8"/><ellipse cx="30" cy="30" rx="24" ry="8" fill="none" stroke="currentColor" stroke-width="0.5" stroke-dasharray="2 2"/><ellipse cx="30" cy="30" rx="8" ry="24" fill="none" stroke="currentColor" stroke-width="0.5" stroke-dasharray="2 2"/></g><g class="bloch-dot-slow" style="transform-origin:30px 30px"><circle cx="30" cy="30" r="3" fill="currentColor"/></g></svg>
+        </div>
+        <div class="bloch-container bloch-right-3">
+            <svg width="60" height="60" viewBox="0 0 60 60"><g class="bloch-sphere"><circle cx="30" cy="30" r="24" fill="none" stroke="currentColor" stroke-width="0.8"/><ellipse cx="30" cy="30" rx="24" ry="8" fill="none" stroke="currentColor" stroke-width="0.5" stroke-dasharray="2 2"/></g><g class="bloch-dot-slow" style="transform-origin:30px 30px"><circle cx="30" cy="30" r="3" fill="currentColor"/></g></svg>
+        </div>
+
+        <!-- Floating cats -->
+        <svg class="float-cat float-cat-1" width="65" height="48" viewBox="0 0 80 60">
+            <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <ellipse cx="40" cy="38" rx="28" ry="16"/><path d="M18 28 L21 14 L30 26"/><path d="M50 26 L59 14 L62 28"/><path d="M30 35 L36 35"/><path d="M46 35 L52 35"/><path d="M38 39 Q40 41 42 39"/>
+            </g>
+        </svg>
+        <svg class="float-cat float-cat-2" width="55" height="65" viewBox="0 0 70 80">
+            <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <path d="M15 25 L20 8 L28 23"/><path d="M42 23 L50 8 L55 25"/><path d="M13 30 Q10 50 18 65 Q28 78 35 78 Q42 78 52 65 Q60 50 57 30"/><circle cx="27" cy="40" r="2.5" fill="currentColor"/><circle cx="43" cy="40" r="2.5" fill="currentColor"/><path d="M33 46 Q35 49 37 46"/>
+            </g>
+        </svg>
+        <svg class="float-cat float-cat-3" width="50" height="38" viewBox="0 0 80 60">
+            <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <ellipse cx="40" cy="38" rx="28" ry="16"/><path d="M18 28 L21 14 L30 26"/><path d="M50 26 L59 14 L62 28"/><path d="M30 35 L36 35"/><path d="M46 35 L52 35"/><path d="M38 39 Q40 41 42 39"/><path d="M64 33 Q74 28 80 22"/>
+            </g>
+        </svg>
+        <svg class="float-cat float-cat-4" width="52" height="58" viewBox="0 0 70 80">
+            <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <path d="M15 25 L20 8 L28 23"/><path d="M42 23 L50 8 L55 25"/><path d="M13 30 Q10 50 18 65 Q28 78 35 78 Q42 78 52 65 Q60 50 57 30"/><circle cx="27" cy="40" r="2.5" fill="currentColor"/><circle cx="43" cy="40" r="2.5" fill="currentColor"/><path d="M33 46 Q35 49 37 46"/><path d="M57 35 Q67 25 72 15"/>
+            </g>
+        </svg>
+
+        <!-- Left panel: Learn -->
+        <div class="side-panel side-left">
+            <div class="panel-group">
+                <div class="panel-header" data-i18n="panelLearn">了解概念</div>
+                <button class="panel-btn" onclick="askChat('qubit')"><span class="panel-dot"></span><span data-i18n="btnQubit">量子比特 Qubit</span></button>
+                <button class="panel-btn" onclick="askChat('superposition')"><span class="panel-dot"></span><span data-i18n="btnSuperposition">叠加态</span></button>
+                <button class="panel-btn" onclick="askChat('measurement')"><span class="panel-dot"></span><span data-i18n="btnMeasurement">测量与坍缩</span></button>
+                <button class="panel-btn" onclick="askChat('entanglement')"><span class="panel-dot"></span><span data-i18n="btnEntanglement">量子纠缠</span></button>
+                <button class="panel-btn" onclick="askChat('probability')"><span class="panel-dot"></span><span data-i18n="btnProbability">概率与确定性</span></button>
+                <button class="panel-btn" onclick="askChat('advantage')"><span class="panel-dot"></span><span data-i18n="btnAdvantage">量子优势</span></button>
+                <button class="panel-btn" onclick="askChat('cat')"><span class="panel-dot"></span><span data-i18n="btnCat">薛定谔的猫</span></button>
+            </div>
+            <div class="panel-spacer"></div>
+            <div class="panel-group">
+                <div class="panel-header" data-i18n="panelTry">试一试</div>
+                <button class="panel-btn" onclick="askChat('coin')"><span class="panel-dot"></span><span data-i18n="btnCoin">量子硬币</span></button>
+                <button class="panel-btn" onclick="askChat('bell')"><span class="panel-dot"></span><span data-i18n="btnBell">贝尔态</span></button>
+                <button class="panel-btn" onclick="askChat('random')"><span class="panel-dot"></span><span data-i18n="btnRandom">量子随机数</span></button>
+                <button class="panel-btn" onclick="askChat('fixcode')"><span class="panel-dot"></span><span data-i18n="btnFixCode">修复代码</span></button>
+            </div>
+        </div>
+
+        <!-- Right panel: Tools -->
+        <div class="side-panel side-right">
+            <div class="panel-group">
+                <div class="panel-header" data-i18n="panelTools">工具手册</div>
+                <button class="panel-btn" onclick="askChat('hgate')"><span class="panel-dot"></span><span data-i18n="btnHGate">H 门</span></button>
+                <button class="panel-btn" onclick="askChat('xgate')"><span class="panel-dot"></span><span data-i18n="btnXGate">X 门</span></button>
+                <button class="panel-btn" onclick="askChat('cnot')"><span class="panel-dot"></span><span data-i18n="btnCNOT">CNOT 门</span></button>
+                <button class="panel-btn" onclick="askChat('circuit')"><span class="panel-dot"></span><span data-i18n="btnCircuit">量子电路</span></button>
+                <button class="panel-btn" onclick="askChat('qasm')"><span class="panel-dot"></span><span data-i18n="btnQASM">QASM 语言</span></button>
+                <button class="panel-btn" onclick="askChat('shots')"><span class="panel-dot"></span><span data-i18n="btnShots">Shots 采样</span></button>
+            </div>
+            <div class="panel-spacer"></div>
+            <div class="panel-group">
+                <div class="panel-header" data-i18n="panelExperiment">快速实验</div>
+                <button class="panel-btn" onclick="askChat('ghz')"><span class="panel-dot"></span><span data-i18n="btnGHZ">GHZ 态</span></button>
+                <button class="panel-btn" onclick="askChat('certain')"><span class="panel-dot"></span><span data-i18n="btnCertain">确定结果</span></button>
+                <button class="panel-btn" onclick="askChat('teleport')"><span class="panel-dot"></span><span data-i18n="btnTeleport">量子隐形传态</span></button>
+                <button class="panel-btn" onclick="askChat('backend')"><span class="panel-dot"></span><span data-i18n="btnBackend">选择后端</span></button>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="header">
+                <span class="header-logo">Qat</span>
+                <span class="header-sep">/</span>
+                <span class="header-cn">喵子</span>
+                <button class="help-btn" id="helpBtn" onclick="toggleHelp()">?</button>
+            </div>
+            <div class="chat-area" id="chatArea">
+                <div class="welcome" id="welcomeCard">
+                    <h3 data-i18n="welcomeTitle">Qat / 喵子</h3>
+                    <p data-i18n-html="welcomeIntro1">你用的手机和电脑，所有信息都是用 0 和 1 表示的。每一个 0 或 1 叫一个「比特」。</p>
+                    <p data-i18n-html="welcomeIntro2">量子计算机不一样——它用的是「量子比特」。量子比特可以同时是 0 和 1，直到你去看它才变成其中一个。这种性质叫「叠加」。靠它，量子计算机能在密码破解、药物研发等领域，做到普通计算机做不到的事。</p>
+                    <p data-i18n-html="welcomeIntro3">操作量子比特需要写一种叫 <span class="highlight">QASM</span> 的专用代码——大多数人在这一步就被挡在了门外。更麻烦的是，不同的量子计算机说不同的"方言"，同一个程序要翻译成三种格式才能在三台机器上跑。</p>
+                    <hr class="welcome-divider">
+                    <p data-i18n-html="welcomeIntro4"><span class="highlight">喵子是你的量子翻译官。</span>它能帮你做三件事：</p>
+                    <p data-i18n-html="welcomeFunc1"><span class="highlight">① 生成代码</span> — 用人话描述实验，喵子写好代码并运行</p>
+                    <div class="try-buttons" style="margin-bottom: 10px;">
+                        <button class="try-btn" onclick="askChat('coin')" data-i18n="tryCoin">抛一枚量子硬币</button>
+                        <button class="try-btn" onclick="askChat('bell')" data-i18n="tryBell">创造纠缠粒子</button>
+                    </div>
+                    <p data-i18n-html="welcomeFunc2"><span class="highlight">② 修复代码</span> — QASM 写错了？发给喵子，它帮你修</p>
+                    <div class="try-buttons" style="margin-bottom: 10px;">
+                        <button class="try-btn" onclick="askChat('fixcode')" data-i18n="tryFix">修复一段错误代码</button>
+                    </div>
+                    <p data-i18n-html="welcomeFunc3"><span class="highlight">③ 选择平台</span> — 不知道用哪台量子计算机？告诉喵子你的需求</p>
+                    <div class="try-buttons" style="margin-bottom: 10px;">
+                        <button class="try-btn" onclick="askChat('backend')" data-i18n="tryBackend">帮我选一个量子平台</button>
+                    </div>
+                    <hr class="welcome-divider">
+                    <p data-i18n="welcomeIntro5">不需要学编程。不需要懂物理。说人话就行。</p>
+                    <p data-i18n-html="welcomeIntro6" class="highlight">别忘了点击代码下方的「运行」按钮，看喵子为你揭晓结果。</p>
+                    <p class="highlight" style="font-size: 0.85em; margin-top: 10px;">「右上角切换语言、主题和音效 / Switch language, theme & sound in the top right」</p>
+                </div>
+            </div>
+            <div class="input-area">
+                <input type="text" id="prompt" data-i18n-placeholder="placeholder" placeholder="试着跟喵子说：帮我生成一个贝尔态电路" />
+                <button class="send-btn" id="sendBtn" data-i18n="send" onclick="sendChat()">发送</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Credits overlay -->
+    <div class="credits-overlay" id="creditsOverlay" onclick="if(event.target===this)toggleCredits()">
+        <div class="credits-card">
+            <h3>Qat / 喵子</h3>
+            <p>薛定谔打开了盒子，我们打开了门。<br>好奇心不该被代码挡住——无论你是人还是猫。</p>
+            <p style="font-size: 0.9em; color: var(--faint);">Schrödinger opened the box. We opened the door.<br>Curiosity should never be locked out by code.</p>
+            <p style="margin-top: 16px; font-size: 0.8em;">
+                crafted with 🐾<br>
+                由 <a href="https://github.com/tale03" target="_blank">tale03</a> 倾情制作<br>
+                <span style="margin-top: 6px; display: inline-block;">LoomQ · SheNicest 2026</span>
+            </p>
+        </div>
+    </div>
+
+    <!-- Welcome overlay (shown when ? is clicked) -->
+    <div class="welcome-overlay" id="welcomeOverlay" onclick="if(event.target===this)toggleHelp()">
+        <div class="welcome-popup" id="welcomePopup"></div>
+    </div>
+
+    <script>
+        // ===== Translations =====
+        const translations = {
+            zh: {
+                observe: "点击任意位置以观测",
+                tagline: "跟喵子聊聊，玩转量子",
+                tile1name: "量子比特\nQubit",
+                tile1detail: "经典比特只能是0或1。量子比特可以同时处于两种状态——直到被测量。",
+                tile2name: "叠加\nSuperposition",
+                tile2detail: "一个量子比特在被观测之前，同时存在于所有可能的状态中。这是量子计算的算力来源。",
+                tile3name: "测量\nMeasurement",
+                tile3detail: "观测会迫使量子态坍缩为一个确定的结果。每次测量的结果可能不同，但概率是确定的。",
+                tile4name: "纠缠\nEntanglement",
+                tile4detail: "两个粒子建立关联后，测量其中一个，另一个的状态立刻确定。无论相隔多远。",
+                tile5name: "量子门\nGate",
+                tile5detail: "对量子比特施加的操作。改变它的状态和概率分布。量子计算的基本指令。",
+                tile6name: "量子电路\nCircuit",
+                tile6detail: "将量子门按顺序组合，构成一个完整的量子程序。输入量子态，输出测量结果。",
+                tile7name: "Shots\n采样次数",
+                tile7detail: "量子测量具有随机性。重复运行数千次，用统计分布还原量子态的真实概率。",
+                tile8name: "H 门\nHadamard",
+                tile8detail: "将确定态变为等概率叠加态。量子计算中最基础也最重要的操作。",
+                tile9name: "CNOT\n受控非门",
+                tile9detail: "根据一个量子比特的状态，决定是否翻转另一个。这是创建纠缠的关键操作。",
+                tile10name: "QASM\n量子汇编",
+                tile10detail: "描述量子电路的标准语言。喵子将你的自然语言转译为 QASM，再交给量子计算机执行。",
+                tile11name: "模拟器\nSimulator",
+                tile11detail: "在经典计算机上模拟量子行为。无需真机，即可验证你的量子程序是否正确。",
+                tile12name: "薛定谔的猫\nSchrödinger's Cat",
+                tile12detail: "1935年的思想实验：猫在盒中，既死又活，直到你打开盒子。量子叠加最著名的隐喻。",
+                flipHint: "点击卡片翻转",
+                panelLearn: "了解概念",
+                panelTry: "试一试",
+                panelTools: "工具手册",
+                panelExperiment: "快速实验",
+                btnQubit: "量子比特 Qubit",
+                btnSuperposition: "叠加态",
+                btnMeasurement: "测量与坍缩",
+                btnEntanglement: "量子纠缠",
+                btnProbability: "概率与确定性",
+                btnAdvantage: "量子优势",
+                btnCat: "薛定谔的猫",
+                btnCoin: "量子硬币",
+                btnBell: "贝尔态",
+                btnRandom: "量子随机数",
+                btnFixCode: "修复代码",
+                btnHGate: "H 门",
+                btnXGate: "X 门",
+                btnCNOT: "CNOT 门",
+                btnCircuit: "量子电路",
+                btnQASM: "QASM 语言",
+                btnShots: "Shots 采样",
+                btnGHZ: "GHZ 态",
+                btnCertain: "确定结果",
+                btnTeleport: "量子隐形传态",
+                btnBackend: "选择后端",
+                promptQubit: "用简单的语言解释什么是量子比特，它跟经典比特有什么区别？",
+                promptSuperposition: "用简单的语言解释什么是量子叠加态？",
+                promptMeasurement: "用简单的语言解释量子测量和波函数坍缩是什么？为什么观测会改变量子态？",
+                promptEntanglement: "用简单的语言解释量子纠缠是什么？它有什么实际应用？",
+                promptProbability: "用简单的语言解释量子计算中的概率是什么意思？为什么量子结果是概率性的而不是确定的？",
+                promptAdvantage: "用简单的语言解释什么是量子优势（quantum advantage）？量子计算机在哪些问题上比经典计算机强？举一些例子。",
+                promptCat: "用简单的语言解释薛定谔的猫这个思想实验。它跟量子叠加和量子测量有什么关系？为什么物理学家用一只猫来解释量子力学？",
+                promptCoin: "生成一个量子硬币电路：对一个量子比特施加 H 门然后测量",
+                promptBell: "生成一个贝尔态电路并测量",
+                promptRandom: "生成一个 3 比特的量子随机数发生器电路",
+                promptHGate: "用简单的语言解释 Hadamard 门（H 门）的作用",
+                promptXGate: "用简单的语言解释 X 门（量子非门 / Pauli-X gate）的作用，它跟经典的 NOT 门有什么关系？",
+                promptCNOT: "用简单的语言解释 CNOT 门的作用，以及它如何创造纠缠",
+                promptCircuit: "用简单的语言解释什么是量子电路？它由哪些部分组成？怎么读懂一个量子电路图？",
+                promptQASM: "用简单的语言解释什么是 OpenQASM，它的基本语法是什么样的？写一个简单的例子",
+                promptShots: "用简单的语言解释量子计算中 shots（采样次数）是什么意思？为什么需要多次运行？",
+                promptGHZ: "生成一个 3 比特的 GHZ 态电路并测量",
+                promptCertain: "生成一个测量结果 100% 确定为 11 的电路",
+                promptTeleport: "用简单的语言解释量子隐形传态是什么？然后生成一个量子隐形传态的电路",
+                promptFixCode: "我想制备一个贝尔态，但这段代码报错了，帮我修好：\n```\nQASM 2.0;\nqreg q[2];\ncreg c[2];\nH q[0];\nCX q[0] q[1];\nmeasure q -> c;\n```\n（提示：门名大小写错误，QASM版本声明有问题）",
+                promptBackend: "我需要运行一个 15 比特的量子电路，而且不想排队等待。请根据后端能力表，推荐最适合的量子计算平台，并给出精确的后端标识符。",
+                explainCertain: (state) => `量子态完全坍缩——每次测量都得到 ${state}。这是一个确定性结果，没有量子不确定性。`,
+                explainEntangled: (n) => `${n} 个量子比特发生了纠缠——它们的状态完全关联。测量其中一个，其余的结果立刻确定。这就是量子纠缠。`,
+                explainTwoEqual: (s1, s2) => `两个结果 ${s1} 和 ${s2} 的概率几乎相等——量子叠加态在测量时均匀坍缩。`,
+                explainTwoBiased: (s1, p1, s2, p2) => `结果 ${s1}（${p1}%）出现的概率明显高于 ${s2}（${p2}%）——量子态的概率分布不均匀。`,
+                explainUniform: (n) => `${n} 种结果的概率几乎相等——量子叠加态被均匀保持，没有明显的偏向。`,
+                explainMixed: (state, pct) => `结果 ${state} 以 ${pct}% 的概率占主导——量子态在测量时倾向于坍缩到这个状态。`,
+                welcome: "输入你想做的量子实验<br>比如「生成一个贝尔态电路」",
+                welcomeTitle: "Qat / 喵子",
+                welcomeIntro1: "你用的手机和电脑，所有信息都是用 0 和 1 表示的。每一个 0 或 1 叫一个「比特」。",
+                welcomeIntro2: '量子计算机不一样——它用的是「量子比特」。<br>量子比特可以同时是 0 和 1，直到你去看它才变成其中一个。这种性质叫「叠加」。<br>靠它，量子计算机能在密码破解、药物研发等领域，做到普通计算机做不到的事。',
+                welcomeIntro3: '操作量子比特需要写一种叫 <span class="highlight">QASM</span> 的专用代码——大多数人在这一步就被挡在了门外。更麻烦的是，不同的量子计算机说不同的"方言"，同一个程序要翻译成三种格式才能在三台机器上跑。',
+                welcomeIntro4: '<span class="highlight">喵子是你的量子翻译官。</span>它能帮你做三件事：',
+                welcomeFunc1: '<span class="highlight">① 生成代码</span> — 用人话描述实验，喵子写好代码并运行',
+                welcomeFunc2: '<span class="highlight">② 修复代码</span> — QASM 写错了？发给喵子，它帮你修',
+                welcomeFunc3: '<span class="highlight">③ 选择平台</span> — 不知道用哪台量子计算机？告诉喵子你的需求',
+                tryFix: "修复一段错误代码",
+                tryBackend: "帮我选一个量子平台",
+                welcomeIntro5: "不需要学编程。不需要懂物理。说人话就行。",
+                welcomeIntro6: "别忘了点击代码下方的「运行」按钮，看喵子为你揭晓结果。",
+                welcomeTry: "试试看：",
+                tryCoin: "抛一枚量子硬币",
+                tryBell: "创造纠缠粒子",
+                tryCertain: "生成确定结果",
+                placeholder: "试着跟喵子说：帮我生成一个贝尔态电路",
+                send: "发送",
+                you: "你",
+                copy: "复制",
+                copied: "已复制",
+                run: "运行",
+                retry: "重试",
+                edit: "编辑",
+                select: "选择",
+                selectCode: "请选择代码",
+                running: "运行中...",
+                thinking: "喵子正在计算中...",
+                observing: "量子态展开中...",
+                shotsObserved: (n) => `观测了 ${n} 次`,
+                runFailed: (err) => "喵...出了点问题：" + err,
+                error: (err) => "喵...出错了：" + err,
+                codeIdx: (i, n) => `#${i} / ${n}`,
+            },
+            en: {
+                observe: "click anywhere to observe",
+                tagline: "Talk to Qat. Play with quantum.",
+                tile1name: "Qubit\n量子比特",
+                tile1detail: "Classical bits are 0 or 1. Qubits exist in both states simultaneously — until measured.",
+                tile2name: "Superposition\n叠加",
+                tile2detail: "Before observation, a qubit exists in all possible states at once. This is the source of quantum computing's power.",
+                tile3name: "Measurement\n测量",
+                tile3detail: "Observation forces a quantum state to collapse into a definite result. Each measurement may differ, but probabilities are fixed.",
+                tile4name: "Entanglement\n纠缠",
+                tile4detail: "Once two particles are correlated, measuring one instantly determines the other. Regardless of distance.",
+                tile5name: "Gate\n量子门",
+                tile5detail: "An operation applied to qubits. Changes their state and probability distribution. The basic instruction of quantum computing.",
+                tile6name: "Circuit\n量子电路",
+                tile6detail: "Gates arranged in sequence to form a quantum program. Input: quantum states. Output: measurement results.",
+                tile7name: "Shots\n采样次数",
+                tile7detail: "Quantum measurement is probabilistic. Run thousands of times to reveal the true probability distribution.",
+                tile8name: "H Gate\nHadamard",
+                tile8detail: "Transforms a definite state into equal superposition. The most fundamental operation in quantum computing.",
+                tile9name: "CNOT\n受控非门",
+                tile9detail: "Flips one qubit based on another's state. The key operation for creating entanglement.",
+                tile10name: "QASM\n量子汇编",
+                tile10detail: "The standard language for describing quantum circuits. Qat translates your words into QASM for execution.",
+                tile11name: "Simulator\n模拟器",
+                tile11detail: "Simulates quantum behavior on a classical computer. No real machine needed to verify your program.",
+                tile12name: "Schrödinger's Cat\n薛定谔的猫",
+                tile12detail: "His 1935 thought experiment: a cat in a box, both dead and alive, until you open it. The most famous metaphor for superposition.",
+                flipHint: "click to flip",
+                panelLearn: "concepts",
+                panelTry: "try it",
+                panelTools: "toolkit",
+                panelExperiment: "experiments",
+                btnQubit: "Qubit",
+                btnSuperposition: "Superposition",
+                btnMeasurement: "Measurement",
+                btnEntanglement: "Entanglement",
+                btnProbability: "Probability",
+                btnAdvantage: "Quantum Advantage",
+                btnCat: "Schrödinger's Cat",
+                btnCoin: "Quantum coin",
+                btnBell: "Bell state",
+                btnRandom: "Random number",
+                btnFixCode: "Fix code",
+                btnHGate: "H Gate",
+                btnXGate: "X Gate",
+                btnCNOT: "CNOT Gate",
+                btnCircuit: "Quantum circuit",
+                btnQASM: "QASM language",
+                btnShots: "Shots",
+                btnGHZ: "GHZ state",
+                btnCertain: "Certain result",
+                btnTeleport: "Teleportation",
+                btnBackend: "Choose backend",
+                promptQubit: "Explain what a qubit is in simple terms, and how it differs from a classical bit.",
+                promptSuperposition: "Explain quantum superposition in simple terms.",
+                promptMeasurement: "Explain quantum measurement and wave function collapse in simple terms. Why does observation change the quantum state?",
+                promptEntanglement: "Explain quantum entanglement in simple terms. What are its real-world applications?",
+                promptProbability: "Explain what probability means in quantum computing in simple terms. Why are quantum results probabilistic rather than deterministic?",
+                promptAdvantage: "Explain what quantum advantage is in simple terms. What problems can quantum computers solve better than classical ones? Give some examples.",
+                promptCat: "Explain Schrödinger's cat thought experiment in simple terms. How does it relate to quantum superposition and measurement? Why did a physicist use a cat to explain quantum mechanics?",
+                promptCoin: "Generate a quantum coin flip circuit: apply H gate to one qubit then measure.",
+                promptBell: "Generate a Bell state circuit and measure it.",
+                promptRandom: "Generate a 3-qubit quantum random number generator circuit.",
+                promptHGate: "Explain what the Hadamard gate (H gate) does in simple terms.",
+                promptXGate: "Explain what the X gate (quantum NOT gate / Pauli-X) does in simple terms. How does it relate to the classical NOT gate?",
+                promptCNOT: "Explain what the CNOT gate does and how it creates entanglement, in simple terms.",
+                promptCircuit: "Explain what a quantum circuit is in simple terms. What are its components? How do you read a quantum circuit diagram?",
+                promptQASM: "Explain what OpenQASM is and what its basic syntax looks like, in simple terms. Write a simple example.",
+                promptShots: "Explain what 'shots' means in quantum computing in simple terms. Why do we need to run multiple times?",
+                promptGHZ: "Generate a 3-qubit GHZ state circuit and measure it.",
+                promptCertain: "Generate a circuit where the measurement result is 100% certain to be 11.",
+                promptTeleport: "Explain quantum teleportation in simple terms, then generate a quantum teleportation circuit.",
+                promptFixCode: "I want to prepare a Bell state, but this code has errors. Please fix it:\n```\nQASM 2.0;\nqreg q[2];\ncreg c[2];\nH q[0];\nCX q[0] q[1];\nmeasure q -> c;\n```\n(Hint: gate names have wrong capitalization, QASM version declaration is incorrect)",
+                promptBackend: "I need to run a 15-qubit quantum circuit with no queue wait time. Based on the backend capability table, which quantum computing platform is the best fit? Please give the exact backend identifier.",
+                explainCertain: (state) => `Complete collapse — every measurement yields ${state}. A deterministic result with no quantum uncertainty.`,
+                explainEntangled: (n) => `${n} qubits are entangled — their states are fully correlated. Measure one, and the rest are instantly determined. This is quantum entanglement.`,
+                explainTwoEqual: (s1, s2) => `Results ${s1} and ${s2} appear with roughly equal probability — the superposition collapses evenly upon measurement.`,
+                explainTwoBiased: (s1, p1, s2, p2) => `Result ${s1} (${p1}%) dominates over ${s2} (${p2}%) — the quantum state's probability distribution is uneven.`,
+                explainUniform: (n) => `All ${n} outcomes appear with nearly equal probability — superposition is maintained uniformly with no clear bias.`,
+                explainMixed: (state, pct) => `Result ${state} dominates at ${pct}% — the quantum state tends to collapse toward this outcome upon measurement.`,
+                welcome: "Type a quantum experiment<br>e.g. \"generate a Bell state circuit\"",
+                welcomeTitle: "Qat / 喵子",
+                welcomeIntro1: "Computers represent everything in 0s and 1s — each is a \"bit.\"",
+                welcomeIntro2: 'Quantum computers use "qubits" that can be 0 and 1 simultaneously until observed. This "superposition" lets them solve problems in cryptography and drug discovery that classical computers can\'t.',
+                welcomeIntro3: 'Qubits need <span class="highlight">QASM</span> code to operate — most people get locked out here. Worse, each quantum computer speaks a different "dialect," so the same program needs three translations for three machines.',
+                welcomeIntro4: '<span class="highlight">Qat is your quantum translator.</span> Three things it does:',
+                welcomeFunc1: '<span class="highlight">① Generate code</span> — describe an experiment, Qat writes and runs it',
+                welcomeFunc2: '<span class="highlight">② Fix code</span> — broken QASM? Qat fixes it',
+                welcomeFunc3: '<span class="highlight">③ Pick a platform</span> — Qat recommends the right quantum computer',
+                tryFix: "Fix a broken code",
+                tryBackend: "Help me pick a platform",
+                welcomeIntro5: "No coding. No physics. Just talk.",
+                welcomeIntro6: "Don't forget to click \"run\" below the code to see Qat reveal the result.",
+                welcomeTry: "Try it:",
+                tryCoin: "Flip a quantum coin",
+                tryBell: "Create entanglement",
+                tryCertain: "Certain result",
+                placeholder: "Try telling Qat: generate a Bell state circuit",
+                send: "send",
+                you: "You",
+                copy: "copy",
+                copied: "copied",
+                run: "run",
+                retry: "retry",
+                edit: "edit",
+                select: "select",
+                selectCode: "select a code",
+                running: "running...",
+                thinking: "Qat is thinking...",
+                observing: "unfolding quantum state...",
+                shotsObserved: (n) => `${n} shots observed`,
+                runFailed: (err) => "Meow... something went wrong: " + err,
+                error: (err) => "Meow... an error occurred: " + err,
+                codeIdx: (i, n) => `#${i} of ${n}`,
+            }
+        };
+
+        let currentLang = 'zh';
+        function t(key, ...args) {
+            const val = translations[currentLang][key];
+            if (typeof val === 'function') return val(...args);
+            return val || key;
+        }
+
+        function applyLanguage() {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const val = t(el.getAttribute('data-i18n'));
+                if (val.includes('\n')) el.innerHTML = val.replace(/\n/g, '<br>');
+                else el.textContent = val;
+            });
+            document.querySelectorAll('[data-i18n-html]').forEach(el => {
+                el.innerHTML = t(el.getAttribute('data-i18n-html'));
+            });
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                el.placeholder = t(el.getAttribute('data-i18n-placeholder'));
+            });
+        }
+
+        function toggleLang() {
+            currentLang = currentLang === 'zh' ? 'en' : 'zh';
+            document.getElementById('langToggle').textContent = currentLang === 'zh' ? 'EN' : '中';
+            applyLanguage();
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark');
+            const btn = document.getElementById('themeToggle');
+            btn.textContent = document.body.classList.contains('dark') ? '☀' : '☾';
+        }
+
+        let welcomeCollapsed = false;
+
+        function collapseWelcome() {
+            if (welcomeCollapsed) return;
+            welcomeCollapsed = true;
+            const card = document.getElementById("welcomeCard");
+            const btn = document.getElementById("helpBtn");
+            if (!card) return;
+
+            // Save content for overlay
+            document.getElementById("welcomePopup").innerHTML = card.innerHTML;
+
+            // Briefly show button invisibly to get its position
+            btn.style.display = "flex";
+            btn.style.opacity = "0";
+            const btnRect = btn.getBoundingClientRect();
+            btn.style.display = "none";
+            btn.style.opacity = "";
+
+            const cardRect = card.getBoundingClientRect();
+
+            // Fix the card in place
+            card.style.position = "fixed";
+            card.style.top = cardRect.top + "px";
+            card.style.left = cardRect.left + "px";
+            card.style.width = cardRect.width + "px";
+            card.style.height = cardRect.height + "px";
+            card.style.margin = "0";
+            card.style.zIndex = "250";
+            card.style.background = "var(--bg)";
+
+            // Force reflow
+            card.offsetHeight;
+
+            // Fly toward the button
+            const targetX = btnRect.left + btnRect.width / 2 - cardRect.left - cardRect.width / 2;
+            const targetY = btnRect.top + btnRect.height / 2 - cardRect.top - cardRect.height / 2;
+
+            card.style.transition = "all 0.7s cubic-bezier(0.4, 0, 0.2, 1)";
+            card.style.transform = `translate(${targetX}px, ${targetY}px) scale(0.03)`;
+            card.style.opacity = "0";
+            card.style.borderRadius = "50%";
+
+            // After animation: hide card, show button
+            setTimeout(() => {
+                card.style.display = "none";
+                btn.style.display = "";
+                btn.style.opacity = "";
+                btn.classList.add("visible");
+                btn.classList.add("appear");
+            }, 700);
+        }
+
+        function toggleHelp() {
+            const overlay = document.getElementById("welcomeOverlay");
+            overlay.classList.toggle("visible");
+        }
+
+        const canvas = document.getElementById('waveCanvas');
+        const ctx = canvas.getContext('2d');
+        let mouseX = -1000, mouseY = -1000;
+        let done = false;
+
+        const catOutline = [
+            [0.22, 0.05], [0.26, 0.15], [0.30, 0.22], [0.33, 0.27],
+            [0.38, 0.24], [0.44, 0.22], [0.50, 0.21], [0.56, 0.22], [0.62, 0.24],
+            [0.67, 0.27], [0.70, 0.22], [0.74, 0.15], [0.78, 0.05],
+            [0.82, 0.22], [0.85, 0.35], [0.86, 0.48],
+            [0.84, 0.60], [0.78, 0.72], [0.68, 0.80], [0.56, 0.86], [0.50, 0.88],
+            [0.44, 0.86], [0.32, 0.80], [0.22, 0.72],
+            [0.16, 0.60], [0.14, 0.48], [0.15, 0.35], [0.18, 0.22],
+        ];
+
+        function distToEdge(px, py) {
+            let minDist = 999;
+            const n = catOutline.length;
+            for (let i = 0, j = n - 1; i < n; j = i++) {
+                const x1 = catOutline[i][0], y1 = catOutline[i][1];
+                const x2 = catOutline[j][0], y2 = catOutline[j][1];
+                const dx = x2 - x1, dy = y2 - y1;
+                const len2 = dx * dx + dy * dy;
+                let t = len2 > 0 ? ((px - x1) * dx + (py - y1) * dy) / len2 : 0;
+                t = Math.max(0, Math.min(1, t));
+                const cx = x1 + t * dx, cy = y1 + t * dy;
+                const d = Math.sqrt((px - cx) * (px - cx) + (py - cy) * (py - cy));
+                if (d < minDist) minDist = d;
+            }
+            return minDist;
+        }
+
+        function insideCat(px, py) {
+            let inside = false;
+            const n = catOutline.length;
+            for (let i = 0, j = n - 1; i < n; j = i++) {
+                const xi = catOutline[i][0], yi = catOutline[i][1];
+                const xj = catOutline[j][0], yj = catOutline[j][1];
+                if ((yi > py) !== (yj > py) && px < (xj - xi) * (py - yi) / (yj - yi) + xi)
+                    inside = !inside;
+            }
+            return inside;
+        }
+
+        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+
+        // Pseudo-random noise function (deterministic per position)
+        function noise(x, y) {
+            let n = Math.sin(x * 127.1 + y * 311.7) * 43758.5453;
+            return n - Math.floor(n);
+        }
+        function smoothNoise(x, y) {
+            const ix = Math.floor(x), iy = Math.floor(y);
+            const fx = x - ix, fy = y - iy;
+            const a = noise(ix, iy), b = noise(ix + 1, iy);
+            const c = noise(ix, iy + 1), d = noise(ix + 1, iy + 1);
+            const ux = fx * fx * (3 - 2 * fx), uy = fy * fy * (3 - 2 * fy);
+            return a + (b - a) * ux + (c - a) * uy + (a - b - c + d) * ux * uy;
+        }
+
+        function animate() {
+            if (done) return;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const time = Date.now() * 0.002;
+            const w = canvas.width;
+            const h = canvas.height;
+            const numWaves = 150;
+            const gap = h / numWaves;
+            const catSize = 400;
+            const radius = catSize * 1.05;
+            const edgeBand = 0.035;
+
+            for (let i = 0; i < numWaves; i++) {
+                const baseY = i * gap + gap * 0.5;
+
+                // Build points first
+                const points = [];
+                for (let j = 0; j <= 500; j++) {
+                    const x = (j / 500) * w;
+                    const dx = x - mouseX;
+                    const dy = baseY - mouseY;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    const base = Math.sin(x * 0.007 + time * 0.8 + i * 0.12) * 0.4
+                        + (smoothNoise(x * 0.015 + time * 0.5, i * 0.8) - 0.5) * 1.5
+                        + (smoothNoise(x * 0.04 + time * 0.2, i * 1.5 + 100) - 0.5) * 0.6;
+                    let y = baseY + base;
+
+                    if (dist < radius) {
+                        const p = 1 - dist / radius;
+                        const p2 = p * p;
+
+                        const nx = (x - mouseX) / catSize + 0.5;
+                        const ny = (baseY - mouseY) / catSize + 0.5;
+
+                        const wave = Math.sin(x * 0.025 + time * 1.8 + i * 0.2) * p * 4;
+
+                        const inside = insideCat(nx, ny);
+                        const eDist = distToEdge(nx, ny);
+
+                        let catDisp = 0;
+                        let catGlow = 0;
+                        if (inside) {
+                            const centerDist = Math.sqrt(Math.pow(nx - 0.5, 2) + Math.pow(ny - 0.45, 2));
+                            catDisp = gap * 2.5 * Math.max(0, 1 - centerDist * 2);
+                            catGlow = 0.5;
+                            if (eDist < edgeBand) {
+                                catDisp = gap * 4;
+                                catGlow = 0.75;
+                            }
+                        } else if (eDist < edgeBand * 0.6) {
+                            catDisp = gap * 1.5 * (1 - eDist / (edgeBand * 0.6));
+                            catGlow = 0.6 * (1 - eDist / (edgeBand * 0.6));
+                        } else if (eDist < edgeBand * 2) {
+                            catGlow = 0.25 * (1 - eDist / (edgeBand * 2));
+                        }
+
+                        y = baseY - wave * (1 - p2) - catDisp * p2;
+                    }
+
+                    points.push({ x, y, dist, catGlow: typeof catGlow !== 'undefined' ? catGlow : 0 });
+                }
+
+                // Draw in segments with varying alpha based on 2D distance
+                const waveColor = getComputedStyle(document.body).getPropertyValue('--wave-color').trim() || '0, 0, 0';
+                const segLen = 5;
+                for (let s = 0; s < points.length - 1; s += segLen) {
+                    const end = Math.min(s + segLen, points.length - 1);
+                    const midIdx = Math.floor((s + end) / 2);
+                    const d = points[midIdx].dist;
+                    const glow = points[midIdx].catGlow;
+                    let alpha = 0.09;
+                    if (d < radius) {
+                        const t = 1 - d / radius;
+                        alpha = 0.09 + t * 0.4 + glow;
+                    }
+                    ctx.beginPath();
+                    ctx.moveTo(points[s].x, points[s].y);
+                    for (let k = s + 1; k <= end; k++) {
+                        ctx.lineTo(points[k].x, points[k].y);
+                    }
+                    ctx.strokeStyle = `rgba(${waveColor}, ${alpha})`;
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        canvas.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
+        canvas.addEventListener('mouseleave', () => { mouseX = -1000; mouseY = -1000; });
+        canvas.addEventListener('click', () => {
+            playMeow();
+            done = true;
+            document.getElementById('landing').classList.add('collapsed');
+            document.getElementById('chatPage').classList.add('visible');
+            document.body.classList.add('cat-cursor');
+            document.body.style.overflow = 'auto';
+        });
+
+        window.addEventListener('resize', resize);
+        resize();
+        animate();
+
+        function escapeHtml(t) { const d = document.createElement("div"); d.textContent = t; return d.innerHTML; }
+
+        function renderMarkdown(text) {
+            // Escape HTML first, then apply markdown
+            let html = escapeHtml(text);
+            // **bold**
+            html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+            // - list items → bullet points
+            html = html.replace(/^- (.+)$/gm, '• $1');
+            return html;
+        }
+
+        // Renders a Schrödinger box animation with results into an existing message bubble
+        function renderQuantumResult(scene, body, lid, qMark, catSvg, status, barsDiv, explainDiv, data) {
+            const counts = data.counts;
+            const total = Object.values(counts).reduce((a, b) => a + b, 0);
+            const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+
+            // Sleepy if all observed states are roughly equal (uniform distribution)
+            // Energetic if there's clear structure (some states much bigger than others)
+            const values = sorted.map(([_, v]) => v);
+            const avg = values.reduce((a, b) => a + b, 0) / values.length;
+            const maxDiff = Math.max(...values) - Math.min(...values);
+            const isUniform = values.length > 1 && (maxDiff / avg < 0.3);
+            const isEnergetic = !isUniform;
+
+            scene.classList.remove("shaking");
+            qMark.style.opacity = "0";
+            setTimeout(() => { lid.classList.add("open"); }, 200);
+
+            if (isEnergetic) {
+                catSvg.innerHTML = '<svg width="60" height="70" viewBox="0 0 90 100" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#222" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 32 L26 10 L34 30"/><path d="M56 30 L64 10 L70 32"/><path d="M18 38 Q14 60 22 78 Q32 92 45 92 Q58 92 68 78 Q76 60 72 38"/><circle cx="34" cy="48" r="3" fill="#222"/><circle cx="56" cy="48" r="3" fill="#222"/><path d="M42 56 Q45 59 48 56"/><path d="M28 54 L14 51"/><path d="M28 57 L14 60"/><path d="M62 54 L76 51"/><path d="M62 57 L76 60"/><path d="M72 45 Q82 32 88 15"/></g></svg>';
+                setTimeout(() => { catSvg.classList.add("visible"); setTimeout(() => catSvg.classList.add("cat-bounce"), 100); }, 700);
+            } else {
+                catSvg.innerHTML = '<svg width="70" height="50" viewBox="0 0 100 70" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#222" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="50" cy="45" rx="38" ry="20"/><path d="M20 32 L23 15 L33 30"/><path d="M60 30 L70 15 L73 32"/><path d="M35 42 L42 42"/><path d="M56 42 L63 42"/><path d="M46 47 Q49 49 52 47"/><path d="M82 40 Q92 35 96 28"/><text x="70" y="18" font-family="Georgia" font-size="12" fill="#888" font-style="italic">z z z</text></g></svg>';
+                setTimeout(() => { catSvg.classList.add("visible"); }, 700);
+            }
+
+            status.textContent = t("shotsObserved", data.shots);
+
+            // Generate explanation based on result patterns
+            const numQubits = sorted[0][0].length;
+            const topState = sorted[0][0];
+            const topPct = (sorted[0][1] / total * 100).toFixed(0);
+            let explanation = "";
+
+            if (sorted.length === 1) {
+                // 100% one result
+                explanation = t("explainCertain", topState);
+            } else if (sorted.length === 2) {
+                const s1 = sorted[0][0], s2 = sorted[1][0];
+                const p1 = (sorted[0][1] / total * 100).toFixed(0);
+                const p2 = (sorted[1][1] / total * 100).toFixed(0);
+                // Check for entanglement pattern (e.g. 00 and 11)
+                const allSame1 = s1.split("").every(c => c === s1[0]);
+                const allSame2 = s2.split("").every(c => c === s2[0]);
+                if (allSame1 && allSame2 && numQubits >= 2 && Math.abs(p1 - p2) < 15) {
+                    explanation = t("explainEntangled", numQubits);
+                } else if (Math.abs(p1 - p2) < 15) {
+                    explanation = t("explainTwoEqual", s1, s2);
+                } else {
+                    explanation = t("explainTwoBiased", s1, p1, s2, p2);
+                }
+            } else if (isUniform) {
+                explanation = t("explainUniform", sorted.length);
+            } else {
+                explanation = t("explainMixed", topState, topPct);
+            }
+
+            setTimeout(() => {
+                for (const [state, count] of sorted) {
+                    const pct = (count / total * 100).toFixed(1);
+                    const row = document.createElement("div"); row.className = "result-row";
+                    const stateEl = document.createElement("div"); stateEl.className = "result-state"; stateEl.textContent = state;
+                    const barBg = document.createElement("div"); barBg.className = "result-bar-bg";
+                    const barFill = document.createElement("div"); barFill.className = "result-bar-fill"; barFill.style.width = "0%";
+                    barBg.appendChild(barFill);
+                    const pctEl = document.createElement("div"); pctEl.className = "result-pct"; pctEl.textContent = pct + "%";
+                    row.appendChild(stateEl); row.appendChild(barBg); row.appendChild(pctEl);
+                    barsDiv.appendChild(row);
+                    setTimeout(() => { barFill.style.width = pct + "%"; }, 50);
+                }
+                // Show explanation after bars animate
+                setTimeout(() => {
+                    explainDiv.textContent = explanation;
+                    explainDiv.classList.add("visible");
+                    document.getElementById("chatArea").scrollTop = document.getElementById("chatArea").scrollHeight;
+                }, 900);
+            }, 1500);
+        }
+
+        async function runQasm(qasmCode) {
+            const chatArea = document.getElementById("chatArea");
+            const boxMsg = document.createElement("div"); boxMsg.className = "message ai";
+            const boxLabel = document.createElement("div"); boxLabel.className = "message-label"; boxLabel.textContent = "喵子 Qat";
+            const boxBubble = document.createElement("div"); boxBubble.className = "bubble";
+            const boxContainer = document.createElement("div"); boxContainer.className = "box-container";
+
+            const scene = document.createElement("div"); scene.className = "box-scene shaking";
+            playShake();
+            const body = document.createElement("div"); body.className = "box-body";
+            const bodyLabel = document.createElement("div"); bodyLabel.className = "box-label"; bodyLabel.textContent = "quantum";
+            body.appendChild(bodyLabel);
+            const catSvg = document.createElement("div"); catSvg.className = "box-cat-svg";
+            const lid = document.createElement("div"); lid.className = "box-lid";
+            const qMark = document.createElement("div"); qMark.className = "box-q"; qMark.textContent = "?";
+            scene.appendChild(body); scene.appendChild(catSvg); scene.appendChild(lid); scene.appendChild(qMark);
+
+            const status = document.createElement("div"); status.className = "box-status"; status.textContent = t("observing");
+            const progressBar = document.createElement("div"); progressBar.className = "run-progress";
+            const progressFill = document.createElement("div"); progressFill.className = "run-progress-fill running";
+            progressBar.appendChild(progressFill);
+            const barsDiv = document.createElement("div"); barsDiv.className = "results-bars";
+            const explainDiv = document.createElement("div"); explainDiv.className = "result-explain";
+            boxContainer.appendChild(scene); boxContainer.appendChild(status); boxContainer.appendChild(progressBar); boxContainer.appendChild(barsDiv); boxContainer.appendChild(explainDiv);
+            boxBubble.appendChild(boxContainer);
+            boxMsg.appendChild(boxLabel); boxMsg.appendChild(boxBubble);
+            chatArea.appendChild(boxMsg); chatArea.scrollTop = chatArea.scrollHeight;
+
+            try {
+                const res = await fetch("/run", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ qasm: qasmCode, target: "spinq" })
+                });
+                const data = await res.json();
+                stopShake();
+                progressFill.classList.remove("running");
+                progressFill.classList.add("done");
+                renderQuantumResult(scene, body, lid, qMark, catSvg, status, barsDiv, explainDiv, data);
+            } catch (err) {
+                stopShake();
+                scene.classList.remove("shaking");
+                progressFill.classList.remove("running");
+                progressFill.classList.add("done");
+                status.textContent = t("runFailed", err.message);
+            }
+        }
+
+        function addMessage(role, text) {
+            const chatArea = document.getElementById("chatArea");
+            collapseWelcome();
+            const msg = document.createElement("div"); msg.className = "message " + role;
+            const label = document.createElement("div"); label.className = "message-label"; label.textContent = role === "ai" ? "喵子 Qat" : t("you");
+            const bubble = document.createElement("div"); bubble.className = "bubble";
+
+            // Track code wrappers for selection state
+            const codeWrappers = [];
+            let selectedCode = null;
+
+            if (role === "ai" && text.includes("```")) {
+                // Split text and build code blocks as real DOM elements
+                const parts = text.split(/(```(?:qasm)?\s*\n[\s\S]*?```)/);
+                let codeIdx = 0;
+                const totalBlocks = (text.match(/```(?:qasm)?\s*\n[\s\S]*?```/g) || []).length;
+
+                for (const part of parts) {
+                    const m = part.match(/```(?:qasm)?\s*\n([\s\S]*?)```/);
+                    if (m) {
+                        codeIdx++;
+                        const code = m[1].trim();
+
+                        const wrapper = document.createElement("div"); wrapper.className = "code-wrapper";
+                        const codeBlock = document.createElement("div"); codeBlock.className = "code-block"; codeBlock.textContent = code;
+                        const actionsBar = document.createElement("div"); actionsBar.className = "code-actions";
+
+                        // Only show select button if there are multiple code blocks
+                        if (totalBlocks > 1) {
+                            const selBtn = document.createElement("button"); selBtn.className = "action-btn select-btn"; selBtn.textContent = t("select");
+                            selBtn.onclick = () => {
+                                // Deselect all others
+                                codeWrappers.forEach(w => w.classList.remove("selected"));
+                                wrapper.classList.add("selected");
+                                selectedCode = code;
+                                // Update run button state
+                                if (runBtn) { runBtn.disabled = false; runBtn.textContent = t("run"); }
+                            };
+                            actionsBar.appendChild(selBtn);
+                        }
+
+                        const copyB = document.createElement("button"); copyB.className = "action-btn"; copyB.textContent = t("copy");
+                        copyB.onclick = () => {
+                            navigator.clipboard.writeText(code);
+                            copyB.textContent = t("copied");
+                            setTimeout(() => copyB.textContent = t("copy"), 1200);
+                        };
+                        actionsBar.appendChild(copyB);
+
+                        if (totalBlocks > 1) {
+                            const idxLabel = document.createElement("span"); idxLabel.className = "code-idx"; idxLabel.textContent = t("codeIdx", codeIdx, totalBlocks);
+                            actionsBar.appendChild(idxLabel);
+                        }
+
+                        wrapper.appendChild(codeBlock);
+                        wrapper.appendChild(actionsBar);
+                        bubble.appendChild(wrapper);
+                        codeWrappers.push(wrapper);
+                    } else if (part.trim()) {
+                        const textNode = document.createElement("span");
+                        textNode.style.whiteSpace = "pre-wrap";
+                        textNode.innerHTML = renderMarkdown(part);
+                        bubble.appendChild(textNode);
+                    }
+                }
+            } else if (role === "ai") {
+                bubble.innerHTML = renderMarkdown(text);
+            } else {
+                bubble.textContent = text;
+            }
+
+            const actions = document.createElement("div"); actions.className = "actions";
+            let runBtn = null;
+
+            if (role === "ai") {
+                if (codeWrappers.length > 0) {
+                    runBtn = document.createElement("button"); runBtn.className = "action-btn"; runBtn.textContent = t("run");
+
+                    // If only one code block, auto-select it and enable run
+                    if (codeWrappers.length === 1) {
+                        selectedCode = codeWrappers[0].querySelector(".code-block").textContent;
+                    } else {
+                        runBtn.disabled = true;
+                        runBtn.textContent = t("selectCode");
+                    }
+
+                    runBtn.onclick = async () => {
+                        if (!selectedCode) return;
+                        runBtn.textContent = t("running"); runBtn.disabled = true;
+                        await runQasm(selectedCode);
+                        runBtn.textContent = t("run"); runBtn.disabled = false;
+                    };
+                    actions.appendChild(runBtn);
+                }
+                const retryBtn = document.createElement("button"); retryBtn.className = "action-btn"; retryBtn.textContent = t("retry");
+                retryBtn.onclick = () => { const um = chatArea.querySelectorAll(".message.user .bubble"); if (um.length) { msg.remove(); sendWithText(um[um.length-1].textContent); } };
+                actions.appendChild(retryBtn);
+            } else {
+                const eb = document.createElement("button"); eb.className = "action-btn"; eb.textContent = t("edit");
+                eb.onclick = () => { document.getElementById("prompt").value = bubble.textContent; document.getElementById("prompt").focus(); };
+                actions.appendChild(eb);
+            }
+            msg.appendChild(label); msg.appendChild(bubble); msg.appendChild(actions);
+            chatArea.appendChild(msg); chatArea.scrollTop = chatArea.scrollHeight; return msg;
+        }
+        async function sendWithText(text) {
+            const btn = document.getElementById("sendBtn"); btn.disabled = true;
+            const lm = addMessage("ai", t("thinking"));
+            // Rotate loading phrases
+            const loadingPhrases = currentLang === 'zh'
+                ? ["喵子正在计算中...", "量子态展开中...", "正在观测...", "叠加态分析中..."]
+                : ["Qat is thinking...", "unfolding quantum state...", "observing...", "analyzing superposition..."];
+            let phraseIdx = 0;
+            const phraseInterval = setInterval(() => {
+                phraseIdx = (phraseIdx + 1) % loadingPhrases.length;
+                const bubble = lm.querySelector(".bubble");
+                if (bubble) bubble.textContent = loadingPhrases[phraseIdx];
+            }, 2000);
+            try { const res = await fetch("/chat", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ prompt: text }) }); const data = await res.json(); clearInterval(phraseInterval); lm.remove(); addMessage("ai", data.reply); }
+            catch (err) { clearInterval(phraseInterval); lm.remove(); addMessage("ai", t("error", err.message)); }
+            btn.disabled = false;
+        }
+        let soundEnabled = true;
+
+        function toggleCredits() {
+            const overlay = document.getElementById("creditsOverlay");
+            if (!overlay.classList.contains("visible")) playMeow();
+            overlay.classList.toggle("visible");
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            document.getElementById("soundToggle").innerHTML = soundEnabled ? "♪" : "<span style='position:relative'>♪<span style='position:absolute;left:3px;top:-3px;font-size:1.3em;font-weight:bold'>/</span></span>";
+            document.getElementById("soundToggle").style.opacity = soundEnabled ? "1" : "0.4";
+        }
+
+        let shakeAudio = null;
+
+        function playShake() {
+            if (!soundEnabled) return;
+            shakeAudio = new Audio('/static/shake.mp3');
+            shakeAudio.volume = 0.3;
+            shakeAudio.loop = true;
+            shakeAudio.play().catch(() => {});
+        }
+
+        function stopShake() {
+            if (!shakeAudio) return;
+            const audio = shakeAudio;
+            shakeAudio = null;
+            // Fade out over 0.5s
+            const fade = setInterval(() => {
+                if (audio.volume > 0.05) {
+                    audio.volume = Math.max(0, audio.volume - 0.03);
+                } else {
+                    audio.volume = 0;
+                    audio.pause();
+                    clearInterval(fade);
+                }
+            }, 30);
+        }
+
+        function playMeow() {
+            if (!soundEnabled) return;
+            const audio = new Audio('/static/meow.mp3');
+            audio.volume = 0.3;
+            audio.play().catch(() => {});
+        }
+
+        async function sendChat() { const input = document.getElementById("prompt"); const text = input.value.trim(); if (!text) return; playMeow(); addMessage("user", text); input.value = ""; await sendWithText(text); }
+
+        function askChat(key) {
+            const promptMap = {
+                qubit: "promptQubit",
+                superposition: "promptSuperposition",
+                measurement: "promptMeasurement",
+                entanglement: "promptEntanglement",
+                probability: "promptProbability",
+                advantage: "promptAdvantage",
+                cat: "promptCat",
+                coin: "promptCoin",
+                bell: "promptBell",
+                random: "promptRandom",
+                hgate: "promptHGate",
+                xgate: "promptXGate",
+                cnot: "promptCNOT",
+                circuit: "promptCircuit",
+                qasm: "promptQASM",
+                shots: "promptShots",
+                ghz: "promptGHZ",
+                certain: "promptCertain",
+                teleport: "promptTeleport",
+                fixcode: "promptFixCode",
+                backend: "promptBackend"
+            };
+            const prompt = t(promptMap[key]);
+            addMessage("user", prompt);
+            sendWithText(prompt);
+        }
+
+        function showPaw(btn) {
+            const paw = document.createElement("span");
+            paw.className = "paw-flash";
+            paw.textContent = "🐾";
+            btn.appendChild(paw);
+            setTimeout(() => paw.remove(), 600);
+        }
+
+        // Add paw flash to all sidebar and try buttons
+        document.addEventListener('click', (e) => {
+            const btn = e.target.closest('.panel-btn, .try-btn');
+            if (btn) showPaw(btn);
+        });
+
+        document.getElementById("prompt").addEventListener("keypress", (e) => { if (e.key === "Enter") sendChat(); });
+    </script>
+</body>
+</html>

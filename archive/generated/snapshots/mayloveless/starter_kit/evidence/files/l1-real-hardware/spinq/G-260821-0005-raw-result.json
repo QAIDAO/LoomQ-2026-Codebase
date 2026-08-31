@@ -1,0 +1,16 @@
+{
+  "status": 200,
+  "msg": "",
+  "taskStatus": "S",
+  "taskErrMsg": null,
+  "run": {
+    "realMatrix": null,
+    "imagMatrix": null,
+    "module": [
+      0.45812036,
+      0.02388877,
+      0.01914181,
+      0.49884906
+    ]
+  }
+}

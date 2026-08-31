@@ -1,0 +1,64 @@
+{
+  "platform": "spinq",
+  "circuit": "ghz3.qasm",
+  "submitted_at_utc": "20260823T024417Z",
+  "raw_platform_response": {
+    "task_code": "S-260823-0002",
+    "task_name": "",
+    "platform": "",
+    "counts": {
+      "000": 964,
+      "011": 172,
+      "110": 228,
+      "001": 191,
+      "100": 340,
+      "111": 1424,
+      "101": 489,
+      "010": 289
+    },
+    "probabilities": {
+      "000": 0.23535716,
+      "011": 0.04187024,
+      "110": 0.05557174,
+      "001": 0.04656806,
+      "100": 0.08311585,
+      "111": 0.3477548,
+      "101": 0.11929667,
+      "010": 0.07046548
+    }
+  },
+  "normalized_result": {
+    "backend": "spinq_cloud_qpu",
+    "job_id": "S-260823-0002",
+    "shots": 4096,
+    "counts": {
+      "000": 964,
+      "011": 172,
+      "110": 228,
+      "001": 191,
+      "100": 340,
+      "111": 1424,
+      "101": 489,
+      "010": 289
+    },
+    "bit_order": "little",
+    "timestamp": "2026-08-23T02:44:17Z",
+    "meta": {
+      "platform": "spinq",
+      "circuit": "ghz3.qasm",
+      "dominant_state_check": {
+        "expected_dominant_states": [
+          "000",
+          "111"
+        ],
+        "observed_top_states": [
+          "111",
+          "000"
+        ],
+        "top_k_hit": true,
+        "missing_from_top_k": []
+      },
+      "executor": "real-machine"
+    }
+  }
+}

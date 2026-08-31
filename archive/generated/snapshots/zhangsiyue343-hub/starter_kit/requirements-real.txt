@@ -1,0 +1,10 @@
+# Optional dependencies ONLY for L1 真机证据 (real-machine evidence collection).
+# The automated evaluator runs adapter.py with zero third-party deps; this file
+# is only needed when you run starter_kit/real_backends.py locally to submit
+# circuits to SpinQ Cloud / Origin Cloud and collect traceable result.json.
+#
+# Pin every version exactly (reproducibility requirement). On macOS the
+# spinqit native dylib is loaded via DYLD_LIBRARY_PATH; see ARCHITECTURE.md.
+
+spinqit==0.2.4
+pyqpanda==3.8.5

@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>量子第一步 · LoomQ</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="hero">
+        <div class="hero-copy">
+          <p class="brand-logo">LoomQ</p>
+          <p class="brand-tag">量子第一步 · 量子接入平权计划</p>
+          <h1>让量子计算，离普通人近一点。</h1>
+          <p class="hero-lede">在很多人的印象里，量子计算属于公式、代码和听不懂的“黑话”<br>——LoomQ 想把这段距离缩短。不用任何基础，就能亲眼看一次它在做什么。</p>
+          <a class="hero-cta" href="#workbench">开始你的第一个实验 ↓</a>
+          <p class="hero-footnote">带着问题来？跑不动的步骤、看不懂的结果，这里用大白话帮你解决。</p>
+        </div>
+        <div class="orbit-visual" aria-hidden="true">
+          <span class="orbit o1"></span>
+          <span class="orbit o2"></span>
+          <span class="orbit o3"></span>
+          <span class="nucleus"></span>
+        </div>
+      </header>
+
+      <section class="workbench" id="workbench" aria-label="LoomQ 工作台">
+        <section class="choice-row" aria-label="选择和当前任务">
+          <aside class="start-panel" aria-label="选择开始方式">
+            <p class="section-kicker">你想怎样开始？</p>
+            <div class="start-groups">
+              <section class="entry-group">
+                <h3>从一个问题开始</h3>
+                <div class="subroutes">
+                  <button type="button" class="route-button" data-mode="examples">
+                    <strong>选择一个现成问题</strong>
+                    <span>点击就能体验一次真实实验。</span>
+                  </button>
+                </div>
+              </section>
+
+              <section class="entry-group">
+                <h3>我已经有一个实验任务</h3>
+                <div class="subroutes">
+                  <button type="button" class="route-button" data-mode="generate">
+                    <strong>准备一份实验</strong>
+                    <span>按你的目标生成并运行。</span>
+                  </button>
+                  <button type="button" class="route-button" data-mode="repair">
+                    <strong>修复实验步骤</strong>
+                    <span>保留原意，修正跑不动的地方。</span>
+                  </button>
+                  <button type="button" class="route-button" data-mode="backend">
+                    <strong>选择运行环境</strong>
+                    <span>比较规模、费用、等待和账号要求。</span>
+                  </button>
+                </div>
+              </section>
+            </div>
+          </aside>
+
+          <section class="main-panel" aria-label="当前工作区">
+            <div class="panel-heading">
+              <p class="section-kicker" id="modeKicker">等待选择</p>
+              <h2 id="modeTitle">选择一种开始方式后，这里会显示对应内容。</h2>
+              <p id="modeIntro">左侧入口全部展开可见。你可以先选一个现成问题，也可以直接准备、修复或安排一个实验任务。</p>
+            </div>
+
+            <section class="example-picker" id="examplePicker" aria-label="选择现成问题" hidden>
+              <button type="button" class="example-card" data-example="random">
+                <span class="visual" aria-hidden="true"><i>0</i><b></b><i>1</i></span>
+                <strong>为什么同样的事情，有时会得到不同结果？</strong>
+                <span>重复观察后，看看整体规律怎样出现。</span>
+              </button>
+              <button type="button" class="example-card" data-example="bell">
+                <span class="visual link" aria-hidden="true"><i>A</i><b></b><i>B</i></span>
+                <strong>两个看起来分开的结果，为什么可能呈现共同规律？</strong>
+                <span>比较 00、01、10、11 哪些组合更常出现。</span>
+              </button>
+            </section>
+
+            <section class="input-card idle" id="inputCard" aria-label="输入">
+              <label for="prompt" id="promptLabel">等待选择</label>
+              <textarea id="prompt" rows="3" readonly>请先在左侧选择一种开始方式。</textarea>
+              <p id="promptHelp">选择后，这里会显示当前问题或输入框。</p>
+              <button type="button" id="runButton" class="primary-action" disabled>等待选择</button>
+              <p id="interactionStatus" class="interaction-status" role="status" aria-live="polite">请先选择一种开始方式。</p>
+            </section>
+          </section>
+        </section>
+
+        <section class="experiment-brief" id="experimentBrief" aria-label="实验说明">
+          <div><span>我们会做什么</span><p id="doText">选择入口后，这里会说明 LoomQ 的下一步动作。</p></div>
+          <div><span>你会看到什么</span><p id="seeText">这里会说明你将看到的结果形式。</p></div>
+          <div><span>你会明白什么</span><p id="learnText">这里会说明这次操作的收获。</p></div>
+        </section>
+      </section>
+
+      <section class="result-panel" id="resultPanel" aria-label="结果和解释" aria-live="polite">
+        <div class="result-head">
+          <p class="section-kicker">结果和解释</p>
+          <h2 id="resultTitle">等待开始</h2>
+          <p id="resultIntro">你开始实验后，这里会显示结果、次数和它说明了什么。</p>
+        </div>
+        <div id="resultVisual" class="result-visual empty-visual" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+        <div id="output" class="output empty"><p>这里会显示实验产生了哪些结果、各种结果出现了多少次、这些结果说明什么。</p></div>
+      </section>
+
+      <section class="details-card disabled" id="detailsCard" aria-label="技术细节">
+        <div class="details-heading">
+          <p class="section-kicker">技术细节</p>
+          <h2 class="details-title">看看 LoomQ 实际做了什么</h2>
+          <small id="detailsHint">实验完成后可用。</small>
+        </div>
+        <div class="tech-grid">
+          <div><span>输入问题</span><strong id="techPrompt">等待实验</strong></div>
+          <div><span>检查结果</span><strong id="backendName">等待实验</strong></div>
+          <div><span>运行次数</span><strong id="shotCount">等待实验</strong></div>
+          <div><span>平台版本</span><strong>SpinQ / OriginQ / Braket</strong></div>
+        </div>
+        <pre id="qasm">等待生成机器步骤</pre>
+      </section>
+
+      <section class="platform-section" aria-label="跨平台展示">
+        <div class="platform-copy">
+          <p class="section-kicker">为什么要连接多个平台？</p>
+          <h2>同一份实验，交给不同平台。</h2>
+          <p id="loomqText">每台量子计算机都有自己的“方言”和脾气——同一份实验，在不同芯片上的结果会略有不同。LoomQ 把它写成三家各自的方言、并排放在一起：不用看懂任何一家的规则，就能比较哪些一致、哪些不同。</p>
+        </div>
+        <div class="platform-map" aria-hidden="true">
+          <div class="source-chip">你描述的一次实验</div>
+          <div class="stem"></div>
+          <div class="loomq-chip">LoomQ</div>
+          <div class="fanout"><span></span><span></span><span></span></div>
+        </div>
+        <div id="platformCards" class="platform-grid">
+          <article><strong>SpinQ</strong><span>等待实验</span></article>
+          <article><strong>OriginQ</strong><span>等待实验</span></article>
+          <article><strong>AWS Braket</strong><span>等待实验</span></article>
+        </div>
+        <p class="platform-summary" id="platformSummary">完成实验后，这里会说明三个平台看到的结果是否一致。</p>
+      </section>
+    </main>
+    <script src="./app.js"></script>
+  </body>
+</html>

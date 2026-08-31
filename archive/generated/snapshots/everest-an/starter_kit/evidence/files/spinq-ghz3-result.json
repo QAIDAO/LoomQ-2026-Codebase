@@ -1,0 +1,33 @@
+{
+  "backend": "spinq_cloud_triangulum_vp",
+  "platform": "triangulum_vp",
+  "job_id": "S-260807-0001",
+  "shots": 8192,
+  "counts": {
+    "000": 2465,
+    "011": 346,
+    "110": 524,
+    "001": 385,
+    "100": 303,
+    "111": 2800,
+    "101": 416,
+    "010": 953
+  },
+  "probabilities": {
+    "000": 0.30087826,
+    "011": 0.04220035,
+    "110": 0.06397429,
+    "001": 0.04698026,
+    "100": 0.0370431,
+    "111": 0.34181216,
+    "101": 0.05080023,
+    "010": 0.11631134
+  },
+  "bit_order": "little",
+  "timestamp": "2026-08-06T17:02:28.150714Z",
+  "circuit_file": "starter_kit/circuits/ghz3.qasm",
+  "meta": {
+    "task_name": "loomq-ghz3",
+    "task_desc": "LoomQ submission real-device evidence"
+  }
+}

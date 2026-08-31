@@ -1,0 +1,105 @@
+# Operating-system and editor metadata
+.DS_Store
+.DStore
+**/.DS_Store
+**/.DStore
+Thumbs.db
+Desktop.ini
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Python caches, environments, build outputs, and test artifacts
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+build/
+dist/
+*.egg-info/
+.venv/
+.venv-*/
+venv/
+*.log
+*.tmp
+*.bak
+**/node_modules/
+/.npm-cache/
+/starter_kit/motion/hyperframes/.hyperframes/
+/starter_kit/motion/hyperframes/snapshots/
+/starter_kit/motion/remotion/review/*.png
+/starter_kit/motion/remotion/review/*.webp
+
+# Secrets and machine-specific environment files. Example templates are safe.
+.env
+.env.*
+!.env.example
+!.env.*.example
+/.env.hardware.local
+/local_docs/credentials/
+/starter_kit/.env.l2.local
+starter_kit/.l2-service-*.pid
+local_secrets/
+secrets/
+
+# Internal planning, competitor research, downloads, and scratch work
+/AUTOMATION_HARNESS.md
+/COMPETITION_PLAN.md
+/local_docs/
+/planning/
+/notes/
+/research/
+/competitors/
+/downloads/
+/scratch/
+/tmp/
+
+# Internal development governance. Keep evaluator-facing implementation,
+# architecture, verification reports, tests, and evidence public; keep local
+# planning and process-control documents private.
+/starter_kit/docs/README.md
+/starter_kit/docs/acceptance-matrix.md
+/starter_kit/docs/design-decisions.md
+/starter_kit/docs/requirements.md
+/starter_kit/tests/README.md
+
+# Hardware screenshots are optional and expose platform account identifiers.
+# Raw platform results, normalized results, executed circuits, and job IDs are
+# the authoritative public evidence.
+/starter_kit/evidence/files/spinq-bell-result.png
+/starter_kit/evidence/files/originq-bell-result.png
+
+# Obsolete duplicate of the official underscore-named submission directory
+/starter-kit/
+
+# Local L1 hidden-set surrogate corpus and stress harness. These improve our
+# confidence but are not part of the competition delivery or scoring evidence.
+/starter_kit/circuits/l1_surrogate/
+/starter_kit/docs/L1_HIDDEN_SURROGATE_SUITE.md
+/starter_kit/scripts/verify_l1_extended_native.py
+/starter_kit/tests/test_l1_hidden_surrogate.py
+/starter_kit/tests/generated/
+/starter_kit/tests/corpus/
+
+# Generated local evaluator reports. Do not match evidence/files/result JSON.
+/report.json
+/report-*.json
+/starter_kit/report.json
+/starter_kit/report-*.json
+
+/web_L2
+/web_L2/*
+
+# Live L2 reports and credentials remain local; the corpus, harness, and
+# integrity tests are public so a reviewer can reproduce the semantic campaign.
+
+# Local L3 generated corpus and differential stress harness. These are useful
+# private confidence checks, but are neither evaluator inputs nor evidence.
+/starter_kit/tests/l3_surrogate_corpus.py
+/starter_kit/tests/test_l3_surrogate_stress.py

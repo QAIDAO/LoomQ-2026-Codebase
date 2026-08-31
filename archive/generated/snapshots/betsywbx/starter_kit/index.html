@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LoomQ 量子计算助手</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --panel: #1a1d29;
+    --panel-light: #232634;
+    --border: #2e3244;
+    --accent: #7c9aff;
+    --accent-dim: #4a5a8f;
+    --text: #e8e9ef;
+    --text-dim: #8a8d9f;
+    --user-bubble: #2b3352;
+    --assistant-bubble: #1e2130;
+    --error: #ff6b6b;
+    --success: #5ee6a0;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  header {
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  header h1 {
+    font-size: 17px;
+    font-weight: 600;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  header h1::before {
+    content: "◈";
+    color: var(--accent);
+  }
+  #status-badge {
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 12px;
+    background: var(--panel-light);
+    color: var(--text-dim);
+  }
+  #status-badge.ok { color: var(--success); }
+  #status-badge.error { color: var(--error); }
+
+  #chat {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 820px;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .msg { display: flex; flex-direction: column; max-width: 85%; }
+  .msg.user { align-self: flex-end; align-items: flex-end; }
+  .msg.assistant { align-self: flex-start; align-items: flex-start; }
+  .bubble {
+    padding: 12px 16px;
+    border-radius: 14px;
+    line-height: 1.6;
+    font-size: 14.5px;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .msg.user .bubble {
+    background: var(--user-bubble);
+    border-bottom-right-radius: 4px;
+  }
+  .msg.assistant .bubble {
+    background: var(--assistant-bubble);
+    border: 1px solid var(--border);
+    border-bottom-left-radius: 4px;
+  }
+  .msg.assistant .bubble.error {
+    border-color: var(--error);
+    color: var(--error);
+  }
+  .role-label {
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-bottom: 4px;
+    padding: 0 4px;
+  }
+  pre.codeblock {
+    background: #0a0b10;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin: 8px 0;
+    overflow-x: auto;
+    font-size: 13px;
+    line-height: 1.5;
+    position: relative;
+  }
+  pre.codeblock code {
+    font-family: "SF Mono", Menlo, Consolas, monospace;
+    color: #c9d6ff;
+  }
+  .copy-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: var(--panel-light);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .copy-btn:hover { color: var(--text); border-color: var(--accent-dim); }
+
+  .typing {
+    display: flex;
+    gap: 4px;
+    padding: 14px 16px;
+  }
+  .typing span {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--text-dim);
+    animation: bounce 1.2s infinite ease-in-out;
+  }
+  .typing span:nth-child(2) { animation-delay: 0.15s; }
+  .typing span:nth-child(3) { animation-delay: 0.3s; }
+  @keyframes bounce {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+    30% { transform: translateY(-4px); opacity: 1; }
+  }
+
+  #input-area {
+    border-top: 1px solid var(--border);
+    padding: 16px 24px 20px;
+  }
+  #input-inner {
+    max-width: 820px;
+    margin: 0 auto;
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+  }
+  #prompt-input {
+    flex: 1;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 14px;
+    color: var(--text);
+    font-size: 14.5px;
+    font-family: inherit;
+    resize: none;
+    max-height: 160px;
+    line-height: 1.5;
+  }
+  #prompt-input:focus { outline: none; border-color: var(--accent-dim); }
+  #send-btn {
+    background: var(--accent);
+    color: #0f1117;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  #send-btn:disabled { background: var(--panel-light); color: var(--text-dim); cursor: not-allowed; }
+  #hint {
+    max-width: 820px;
+    margin: 8px auto 0;
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+  #examples {
+    max-width: 820px;
+    margin: 0 auto 12px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .example-chip {
+    font-size: 12.5px;
+    background: var(--panel-light);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    padding: 6px 12px;
+    border-radius: 16px;
+    cursor: pointer;
+  }
+  .example-chip:hover { color: var(--text); border-color: var(--accent-dim); }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>LoomQ 量子计算助手</h1>
+  <span id="status-badge">检查配置中...</span>
+</header>
+
+<div id="chat">
+  <div class="msg assistant">
+    <div class="role-label">助手</div>
+    <div class="bubble">你好！我能帮你：
+1. 用中文描述想要的量子电路，我直接写出 OpenQASM 2.0 代码
+2. 帮你检查、修复电路里的错误
+3. 根据你的需求（比特数、要不要真机、想不想排队）推荐合适的后端
+
+试着问我一句话开始吧。</div>
+  </div>
+</div>
+
+<div id="input-area">
+  <div id="examples">
+    <div class="example-chip" data-text="帮我生成一个3比特GHZ态的电路">生成一个3比特GHZ态</div>
+    <div class="example-chip" data-text="我想跑一个15比特的电路，不想排队，用哪个后端？">选后端：15比特不排队</div>
+    <div class="example-chip" data-text="我想跑一个100比特的电路，用哪个后端？">选后端：100比特（无解场景）</div>
+  </div>
+  <div id="input-inner">
+    <textarea id="prompt-input" rows="1" placeholder="输入你的问题，按 Enter 发送，Shift+Enter 换行..."></textarea>
+    <button id="send-btn">发送</button>
+  </div>
+  <div id="hint">由 LoomQ Agent 驱动 · 本地运行，不会上传到第三方</div>
+</div>
+
+<script>
+const chatEl = document.getElementById('chat');
+const inputEl = document.getElementById('prompt-input');
+const sendBtn = document.getElementById('send-btn');
+const statusBadge = document.getElementById('status-badge');
+
+// 把回复文本里的 ``` 代码块渲染成带复制按钮的代码框,其余部分保留纯文本换行
+function renderContent(text) {
+  const parts = text.split(/```(?:\w*\n)?/);
+  const frag = document.createDocumentFragment();
+  parts.forEach((part, i) => {
+    if (i % 2 === 1) {
+      // 奇数段落 = 代码块内容
+      const pre = document.createElement('pre');
+      pre.className = 'codeblock';
+      const code = document.createElement('code');
+      code.textContent = part.trim();
+      pre.appendChild(code);
+
+      const btn = document.createElement('button');
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.onclick = () => {
+        navigator.clipboard.writeText(part.trim());
+        btn.textContent = '已复制';
+        setTimeout(() => (btn.textContent = '复制'), 1500);
+      };
+      pre.appendChild(btn);
+      frag.appendChild(pre);
+    } else if (part.trim()) {
+      const textNode = document.createElement('div');
+      textNode.style.whiteSpace = 'pre-wrap';
+      textNode.textContent = part.trim();
+      frag.appendChild(textNode);
+    }
+  });
+  return frag;
+}
+
+function addMessage(role, text, isError) {
+  const msgDiv = document.createElement('div');
+  msgDiv.className = 'msg ' + role;
+
+  const label = document.createElement('div');
+  label.className = 'role-label';
+  label.textContent = role === 'user' ? '你' : '助手';
+
+  const bubble = document.createElement('div');
+  bubble.className = 'bubble' + (isError ? ' error' : '');
+  bubble.appendChild(renderContent(text));
+
+  msgDiv.appendChild(label);
+  msgDiv.appendChild(bubble);
+  chatEl.appendChild(msgDiv);
+  chatEl.scrollTop = chatEl.scrollHeight;
+  return msgDiv;
+}
+
+function addTypingIndicator() {
+  const msgDiv = document.createElement('div');
+  msgDiv.className = 'msg assistant';
+  msgDiv.id = 'typing-indicator';
+  const bubble = document.createElement('div');
+  bubble.className = 'bubble typing';
+  bubble.innerHTML = '<span></span><span></span><span></span>';
+  msgDiv.appendChild(bubble);
+  chatEl.appendChild(msgDiv);
+  chatEl.scrollTop = chatEl.scrollHeight;
+}
+
+function removeTypingIndicator() {
+  const el = document.getElementById('typing-indicator');
+  if (el) el.remove();
+}
+
+async function sendMessage() {
+  const text = inputEl.value.trim();
+  if (!text) return;
+
+  addMessage('user', text);
+  inputEl.value = '';
+  inputEl.style.height = 'auto';
+  sendBtn.disabled = true;
+  addTypingIndicator();
+
+  try {
+    const resp = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt: text }),
+    });
+    const data = await resp.json();
+    removeTypingIndicator();
+
+    if (!resp.ok) {
+      addMessage('assistant', data.error || '请求失败', true);
+    } else {
+      addMessage('assistant', data.reply);
+    }
+  } catch (err) {
+    removeTypingIndicator();
+    addMessage('assistant', '网络错误: ' + err.message, true);
+  } finally {
+    sendBtn.disabled = false;
+    inputEl.focus();
+  }
+}
+
+sendBtn.addEventListener('click', sendMessage);
+inputEl.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
+});
+inputEl.addEventListener('input', () => {
+  inputEl.style.height = 'auto';
+  inputEl.style.height = Math.min(inputEl.scrollHeight, 160) + 'px';
+});
+
+document.querySelectorAll('.example-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    inputEl.value = chip.dataset.text;
+    sendMessage();
+  });
+});
+
+// 页面加载时做一次健康检查,提示环境变量是否配置好
+fetch('/api/health')
+  .then(r => r.json())
+  .then(data => {
+    if (data.ok) {
+      statusBadge.textContent = '✓ 已连接';
+      statusBadge.className = 'ok';
+    } else {
+      statusBadge.textContent = '✗ 缺少环境变量: ' + data.missing_env_vars.join(', ');
+      statusBadge.className = 'error';
+    }
+  })
+  .catch(() => {
+    statusBadge.textContent = '无法连接后端';
+    statusBadge.className = 'error';
+  });
+</script>
+
+</body>
+</html>

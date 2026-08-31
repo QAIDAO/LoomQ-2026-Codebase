@@ -1,0 +1,107 @@
+{
+  "provider": "spinq",
+  "task_id": 61461,
+  "task_code": "G-260824-0003",
+  "sanitization": "Removed provider account userId and userName fields.",
+  "task_info_response": {
+    "http_status": 200,
+    "headers": {
+      "vary": "Origin, Access-Control-Request-Method, Access-Control-Request-Headers",
+      "content-type": "application/json;charset=utf-8",
+      "transfer-encoding": "chunked",
+      "date": "Mon, 24 Aug 2026 03:39:53 GMT",
+      "keep-alive": "timeout=60",
+      "connection": "keep-alive"
+    },
+    "body": {
+      "status": 200,
+      "msg": "",
+      "task": {
+        "tid": 61461,
+        "tcode": "G-260824-0003",
+        "tname": "LoomQ-L1-Bell-8192",
+        "bitNum": 2,
+        "clbitNum": 0,
+        "simulator": false,
+        "calcMatrix": false,
+        "runSimu": false,
+        "tstatus": "S",
+        "shots": 8192,
+        "sourceType": "spinqit",
+        "sourceOriginName": null,
+        "sourceAddr": "files-2026-08/G-260824-0003.qasm",
+        "sourceCode": "OPENQASM 2.0; \ninclude \"qelib1.inc\";\nqreg q[2];\n\nh q[0];\ncx q[0],q[1];",
+        "description": "LoomQ L1 real-hardware Bell evidence",
+        "createdTime": "2026-08-24T03:35:39.863+00:00",
+        "startTime": "2026-08-24T03:35:39.885+00:00",
+        "endTime": "2026-08-24T03:37:12.132+00:00",
+        "errorMsg": null,
+        "platformId": 1,
+        "platformName": "2Qubit核磁量子计算机",
+        "platformCode": "gemini_vp",
+        "machineId": 10,
+        "machineCode": "Gemini-pro-1",
+        "timecost": 3.0,
+        "curQueueSize": -1,
+        "percentageFinished": null
+      }
+    }
+  },
+  "task_result_by_code_response": {
+    "http_status": 200,
+    "headers": {
+      "vary": "Origin, Access-Control-Request-Method, Access-Control-Request-Headers",
+      "content-type": "application/json;charset=utf-8",
+      "transfer-encoding": "chunked",
+      "date": "Mon, 24 Aug 2026 03:39:53 GMT",
+      "keep-alive": "timeout=60",
+      "connection": "keep-alive"
+    },
+    "body": {
+      "status": 200,
+      "msg": "",
+      "taskStatus": "S",
+      "taskErrMsg": null,
+      "run": {
+        "realMatrix": null,
+        "imagMatrix": null,
+        "module": [
+          0.42627488,
+          0.07507503,
+          0.027931,
+          0.47071908
+        ]
+      }
+    }
+  },
+  "task_visualization_response": {
+    "http_status": 200,
+    "headers": {
+      "vary": "Origin, Access-Control-Request-Method, Access-Control-Request-Headers",
+      "content-type": "application/json;charset=utf-8",
+      "transfer-encoding": "chunked",
+      "date": "Mon, 24 Aug 2026 03:39:55 GMT",
+      "keep-alive": "timeout=60",
+      "connection": "keep-alive"
+    },
+    "body": {
+      "status": 200,
+      "msg": "",
+      "simulation": {
+        "realMatrix": null,
+        "imagMatrix": null,
+        "module": null
+      },
+      "run": {
+        "realMatrix": null,
+        "imagMatrix": null,
+        "module": {
+          "00": 0.42627488,
+          "11": 0.47071908,
+          "01": 0.07507503,
+          "10": 0.027931
+        }
+      }
+    }
+  }
+}

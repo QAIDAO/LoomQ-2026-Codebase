@@ -1,0 +1,16 @@
+# OPTIONAL hardware dependency: Origin Quantum Cloud QPanda3 Runtime path.
+#
+# This file is NOT part of the core evaluator dependency surface.
+# The core evaluator (L1/L2/L3, SpinQ, Braket, RISC-V) does not require these.
+# Install this file ONLY when reproducing the modern Origin Wukong 180-2
+# Runtime evidence path (starter_kit/hardware/originq_runtime_real.py).
+#
+#   pip install -r requirements-originq-runtime.txt
+#
+# Versions are pinned to the exact set that produced the 2026-08-22
+# WK_C180_2 evidence (Bell / GHZ-3 / Multi). The high-level
+# RuntimeService.sample() returned None on QPanda3 Runtime 1.0.2 with this
+# environment, so the runner uses the lower-level circuit_chunking_submit +
+# query_task flow as an explicit compatibility workaround.
+qpanda3-runtime==1.0.2
+pyqpanda3==0.4.1

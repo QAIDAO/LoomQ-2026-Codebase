@@ -1,0 +1,47 @@
+{
+  "platform": "SpinQ Cloud",
+  "backend": "gemini_vp",
+  "job_id": "G-260807-0011",
+  "website": "https://cloud.spinq.cn/circuitDesign/taskResult/61182",
+  "timestamp": "2026-08-07T09:37:30.832+0000",
+  "task_status": "S",
+  "start_time": "2026-08-07T09:37:30.852+0000",
+  "end_time": "2026-08-07T09:39:05.887+0000",
+  "shots": 1024,
+  "counts": {
+    "00": 360,
+    "01": 114,
+    "10": 87,
+    "11": 463
+  },
+  "counts_source": "derived_from_raw_probabilities_using_shots",
+  "bit_order": "little",
+  "circuit": "starter_kit/evidence/files/spinq-bell-executed.qasm",
+  "raw_result": "starter_kit/evidence/files/spinq-bell-raw-result.json",
+  "top_k_states": [
+    "11",
+    "00"
+  ],
+  "expected_top_k_states": [
+    "00",
+    "11"
+  ],
+  "top_k_match": true,
+  "source": "adapter.transpile(qasm, 'spinq') plus SpinQ automatic measurement",
+  "executed_qasm_sha256": "1654dd4d2a30109db7c4051f3fdb1656f8528d8a540621e145022b7672bf33a3",
+  "raw_result_sha256": "8d8f440765d4860c645348984e0fa2208e942ccc9894f631cd694f641d19f288",
+  "original_output_in_website": {
+    "taskCode": "G-260807-0011",
+    "platformCode": "gemini",
+    "bitNum": 2,
+    "status": "S",
+    "startTime": "2026-08-07 17:37:30",
+    "endTime": "2026-08-07 17:39:05",
+    "result": {
+      "10": 0.08493512,
+      "11": 0.45242226,
+      "00": 0.35110299,
+      "01": 0.11153963
+    }
+  }
+}

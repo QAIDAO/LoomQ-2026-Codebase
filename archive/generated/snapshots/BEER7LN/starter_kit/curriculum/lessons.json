@@ -1,0 +1,239 @@
+{
+  "schema_version": "1.0",
+  "locale": "zh-CN",
+  "lessons": [
+    {
+      "id": "bit-vs-qubit",
+      "order": 1,
+      "title": "bit 与 qubit",
+      "hook": "同样是保存一个 0 或 1，为什么量子计算机会在按下测量前保留两条可能路线？",
+      "plain_goal": "亲眼看到普通开关只走一条路，而 qubit 可以先让两条路线同时参与，最后才读出一个结果。",
+      "animation": "paths",
+      "duration_minutes": 1,
+      "summary": "从信息、门和读出三个共同点出发，观察 qubit 在测量前如何用振幅表示多条可能路径。",
+      "goal": "能说出经典 bit 与 qubit 的一个共同点和一个关键区别。",
+      "concepts": ["bit", "qubit", "振幅", "H 门", "测量"],
+      "prerequisites": [],
+      "experiments": [
+        {
+          "id": "x-flip",
+          "title": "确定翻转：X 门",
+          "plain_title": "普通开关：一定从 0 翻到 1",
+          "plain_prompt": "把它想成墙上的开关。每次从 0 开始，按一下都确定变成 1。",
+          "result_hint": "如果所有记录都是 1，说明这是一种确定操作：重复次数变多，只会让同一个答案被记录更多次。",
+          "prompt": "先运行 X|0⟩，观察它是否每次都得到 1，再与量子硬币比较。",
+          "engine": "l1_statevector",
+          "default_shots": 32,
+          "qasm": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[1];\ncreg c[1];\nx q[0];\nmeasure q[0] -> c[0];\n"
+        },
+        {
+          "id": "hadamard-measure",
+          "title": "制备并测量一枚量子硬币",
+          "plain_title": "量子硬币：测量前保留两条路线",
+          "plain_prompt": "每一次都重新准备同样的 qubit，再测量一次。重复后会看到 0 和 1 都出现。",
+          "result_hint": "50%/50% 描述的是反复重新准备和测量后的长期比例；一次测量仍然只得到一个 0 或一个 1。",
+          "prompt": "先预测结果，再反复制备 H|0⟩ 并测量。",
+          "engine": "l1_statevector",
+          "default_shots": 1,
+          "qasm": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[1];\ncreg c[1];\nh q[0];\nmeasure q[0] -> c[0];\n"
+        }
+      ]
+    },
+    {
+      "id": "quantum-randomness",
+      "order": 2,
+      "title": "第一次量子随机",
+      "hook": "直方图里的 256 个结果，是一枚 qubit 同时给出 256 个答案，还是实验被重新做了 256 次？",
+      "plain_goal": "看着每一次新运行落下一颗结果点，理解 shots 是重新准备、运行、测量的次数，counts 只是把这些单次结果累计起来。",
+      "animation": "shots",
+      "duration_minutes": 2,
+      "summary": "比较 X 门的确定翻转和 H 门的概率读出，理解一次测量与多次 shots 的关系。",
+      "goal": "能解释 counts 是同一电路重复运行后的直方图，而不是一个量子态同时给出许多答案。",
+      "concepts": ["X 门", "H 门", "shots", "counts", "概率"],
+      "prerequisites": ["bit-vs-qubit"],
+      "experiments": [
+        {
+          "id": "deterministic-baseline",
+          "title": "先看确定结果",
+          "plain_title": "重复按同一个开关",
+          "plain_prompt": "每一次都重新从 0 开始并翻转。看看 256 次记录是否仍然全部是 1。",
+          "result_hint": "每一个计数都来自一次独立运行。确定操作的 256 次运行会累积成 counts: {1: 256}。",
+          "prompt": "用 X 门反复运行，确认 shots 增加不会把确定结果变成随机。",
+          "engine": "l1_statevector",
+          "default_shots": 256,
+          "qasm": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[1];\ncreg c[1];\nx q[0];\nmeasure q[0] -> c[0];\n"
+        },
+        {
+          "id": "randomness-histogram",
+          "title": "把单次随机积累成分布",
+          "plain_title": "重新投很多枚同样的量子硬币",
+          "plain_prompt": "先选 1 次，再选 32、256 次。每增加一个 shot，就相当于重新准备并测量一次。",
+          "result_hint": "直方图不是一个 qubit 同时吐出许多答案。它像实验记录表：每做完一次，只在 0 或 1 那一栏加一票。",
+          "prompt": "改变 shots，观察 0/1 比例如何逐渐靠近各一半。",
+          "engine": "l1_statevector",
+          "default_shots": 256,
+          "qasm": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[1];\ncreg c[1];\nh q[0];\nmeasure q[0] -> c[0];\n"
+        }
+      ]
+    },
+    {
+      "id": "bell-correlation",
+      "order": 3,
+      "title": "两枚量子硬币",
+      "hook": "两枚硬币各自看都像随机的，怎样让它们测量后却总是同面？",
+      "plain_goal": "先看两枚各玩各的，再打开连接，让你直接看到四种结果如何缩成主要只有 00 和 11。",
+      "animation": "pair",
+      "duration_minutes": 2,
+      "summary": "用 H 和 CX 制备 Bell 态，区分每枚的随机性与两枚之间的关联。",
+      "goal": "能根据 counts 识别 00/11 主导，并避免把纠缠解释成两枚硬币预先约好答案。",
+      "concepts": ["CX 门", "Bell 态", "纠缠", "联合分布"],
+      "prerequisites": ["bit-vs-qubit", "quantum-randomness"],
+      "experiments": [
+        {
+          "id": "independent-pair",
+          "title": "两枚各自随机的量子硬币",
+          "plain_title": "断开连接：两枚各玩各的",
+          "plain_prompt": "两枚 qubit 分别产生随机结果，所以 00、01、10、11 都有机会出现。",
+          "result_hint": "四种组合都常见，说明知道第一枚的结果并不能帮你预测第二枚。",
+          "prompt": "先让两枚 qubit 分别经过 H，观察 00、01、10、11 是否都会出现。",
+          "engine": "l1_statevector",
+          "default_shots": 1024,
+          "qasm": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[2];\ncreg c[2];\nh q[0];\nh q[1];\nmeasure q[0] -> c[0];\nmeasure q[1] -> c[1];\n"
+        },
+        {
+          "id": "bell-state",
+          "title": "制备 Bell 关联",
+          "plain_title": "打开连接：两枚一起变化",
+          "plain_prompt": "第一枚产生两条可能路线，再把第二枚接到它上面；测量后主要只留下 00 和 11。",
+          "result_hint": "每一枚单独看仍接近一半 0、一半 1，但把两枚放在一起看时结果强相关，这就是本实验要观察的 Bell 关联。",
+          "prompt": "预测四个结果中哪些会出现，再运行 1024 shots 检验。",
+          "engine": "l1_statevector",
+          "default_shots": 1024,
+          "qasm": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[2];\ncreg c[2];\nh q[0];\ncx q[0],q[1];\nmeasure q[0] -> c[0];\nmeasure q[1] -> c[1];\n"
+        }
+      ]
+    },
+    {
+      "id": "phase-interference",
+      "order": 4,
+      "title": "看不见的相位",
+      "hook": "如果测量前有两条路线，它们汇合时为什么有时互相增强，有时互相抵消？",
+      "plain_goal": "把相位先理解成路线箭头的朝向：同向会相加，反向会抵消。拖动不同条件，先看动画再认识 RZ 和 π。",
+      "animation": "phase",
+      "duration_minutes": 3,
+      "summary": "相位不会直接出现在一次测量里，却能通过干涉把概率从 |0⟩ 推向 |1⟩。",
+      "goal": "能用路径相长或相消解释为什么 H–RZ(π)–H 得到 |1⟩。",
+      "concepts": ["相位", "RZ 门", "干涉", "相对相位"],
+      "prerequisites": ["bit-vs-qubit", "quantum-randomness"],
+      "experiments": [
+        {
+          "id": "phase-zero",
+          "title": "相位为 0：两条路径相长",
+          "plain_title": "两支箭头同方向：一起推向 0",
+          "plain_prompt": "两条路线的箭头同向，汇合时力量相加，最终结果集中到 0。",
+          "result_hint": "这里的“相长”就是同方向的振幅相加。π、RZ 只是控制箭头转动多少的数学写法。",
+          "prompt": "比较 H–RZ(0)–H，观察第二个 H 如何把振幅重新汇聚到 |0⟩。",
+          "engine": "l1_statevector",
+          "default_shots": 256,
+          "qasm": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[1];\ncreg c[1];\nh q[0];\nrz(0) q[0];\nh q[0];\nmeasure q[0] -> c[0];\n"
+        },
+        {
+          "id": "phase-half",
+          "title": "相位为 π/2：处在中间",
+          "plain_title": "一支箭头转四分之一圈",
+          "plain_prompt": "两支箭头既不同向也不反向，所以汇合后 0 和 1 都保留一部分机会。",
+          "result_hint": "π/2 表示转四分之一圈。两条路线没有完全增强或完全抵消，因此测量概率处于中间。",
+          "prompt": "把相位改成 π/2，观察最终概率如何处在两个极端之间。",
+          "engine": "l1_statevector",
+          "default_shots": 256,
+          "qasm": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[1];\ncreg c[1];\nh q[0];\nrz(pi/2) q[0];\nh q[0];\nmeasure q[0] -> c[0];\n"
+        },
+        {
+          "id": "phase-flip",
+          "title": "让相位变成可见结果",
+          "plain_title": "一支箭头转半圈：原来的 0 被抵消",
+          "plain_prompt": "把一条路线的箭头转到反方向，再让两条路线汇合，观察结果怎样从 0 移到 1。",
+          "result_hint": "π 表示转半圈。H–RZ(π)–H 的含义是：先分路、把一条路线转反、再汇合；通往 0 的振幅抵消，通往 1 的振幅相加。",
+          "prompt": "比较第一个 H 后的 50/50 与第二个 H 后的确定结果。",
+          "engine": "l1_statevector",
+          "default_shots": 256,
+          "qasm": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[1];\ncreg c[1];\nh q[0];\nrz(pi) q[0];\nh q[0];\nmeasure q[0] -> c[0];\n"
+        }
+      ]
+    },
+    {
+      "id": "ghz-three",
+      "order": 5,
+      "title": "三枚一起变化",
+      "hook": "已经让两枚一起变化了，能否像传递接力一样，把这种关联传给第三枚？",
+      "plain_goal": "观看连接脉冲从第一枚传到第二枚、再传到第三枚，比较两体 Bell 和三体 GHZ 的结果。",
+      "animation": "chain",
+      "duration_minutes": 3,
+      "summary": "把 Bell 关联扩展到三枚 qubit，观察 GHZ-3 的 000/111 支持集。",
+      "goal": "能从电路结构预测 GHZ-3 的主导态，并说明它与三个独立随机 bit 不同。",
+      "concepts": ["GHZ 态", "多体纠缠", "支持集"],
+      "prerequisites": ["bell-correlation"],
+      "experiments": [
+        {
+          "id": "bell-2-baseline",
+          "title": "先运行两体 Bell 基线",
+          "plain_title": "先连接两枚",
+          "plain_prompt": "第一枚和第二枚建立关联，主要结果是 00 和 11。",
+          "result_hint": "这是两节点关联的基线。下一项会再增加一个连接，把相同规律传给第三枚。",
+          "prompt": "先观察 2 qubit 的 00/11，再增加第三枚比较支持集如何扩展。",
+          "engine": "l1_statevector",
+          "default_shots": 1024,
+          "qasm": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[2];\ncreg c[2];\nh q[0];\ncx q[0],q[1];\nmeasure q[0] -> c[0];\nmeasure q[1] -> c[1];\n"
+        },
+        {
+          "id": "ghz-3",
+          "title": "把关联传给第三枚 qubit",
+          "plain_title": "再把第三枚接入队伍",
+          "plain_prompt": "第二枚把关联继续传给第三枚，测量后主要只看到 000 和 111。",
+          "result_hint": "三个独立随机 bit 通常会出现八种组合；这里只集中在 000/111，说明三枚不是各自独立变化。",
+          "prompt": "在 Bell 电路后再加一层 CX，预测测量直方图。",
+          "engine": "l1_statevector",
+          "default_shots": 1024,
+          "qasm": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[3];\ncreg c[3];\nh q[0];\ncx q[0],q[1];\ncx q[1],q[2];\nmeasure q[0] -> c[0];\nmeasure q[1] -> c[1];\nmeasure q[2] -> c[2];\n"
+        }
+      ]
+    },
+    {
+      "id": "hardware-noise",
+      "order": 6,
+      "title": "真机为什么有噪声",
+      "hook": "电脑模拟里只有 00 和 11，为什么同一电路在真实芯片上会混入少量 01 和 10？",
+      "plain_goal": "把理想模拟和已经完成的本源、SpinQ 真机记录并排比较，分清主规律与硬件噪声，并知道 job_id 为什么能证明实验确实运行过。",
+      "animation": "noise",
+      "duration_minutes": 3,
+      "summary": "先生成 Bell 态的理想基线，再与真实设备 counts 对照，分清算法分布和硬件噪声。",
+      "goal": "能指出真机少量 01/10 不等于实验失败，并知道 job_id 和原始结果是可追溯证据。",
+      "concepts": ["噪声", "保真度", "模拟基线", "job_id", "实验留证"],
+      "prerequisites": ["bell-correlation", "ghz-three"],
+      "experiments": [
+        {
+          "id": "ideal-bell-baseline",
+          "title": "生成真机对照基线",
+          "plain_title": "电脑里的无噪声 Bell 基准",
+          "plain_prompt": "先让理想模拟器给出只有 00/11 的基准，再与页面加载的历史真机 counts 比较。",
+          "result_hint": "理想模拟器没有退相干、门误差和读出误差，所以不会凭空出现 01/10；它是比较真机的基准，不是真机结果。",
+          "prompt": "先保存无噪声模拟结果，再比较同一电路的真机主导态。",
+          "engine": "l1_statevector",
+          "default_shots": 1024,
+          "qasm": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[2];\ncreg c[2];\nh q[0];\ncx q[0],q[1];\nmeasure q[0] -> c[0];\nmeasure q[1] -> c[1];\n"
+        },
+        {
+          "id": "ideal-ghz-baseline",
+          "title": "生成三体真机对照基线",
+          "plain_title": "把电路加长：三枚联动的理想基准",
+          "plain_prompt": "增加一枚 qubit 和一个连接，观察理想结果仍集中在 000/111，并思考更多操作为何更容易积累误差。",
+          "result_hint": "真实芯片上的每个门和每次读出都可能带来一点误差。电路越长，这些小误差越可能累积。",
+          "prompt": "运行 GHZ-3 理想基线，思考 qubit 和门增加后真机噪声可能怎样变化。",
+          "engine": "l1_statevector",
+          "default_shots": 1024,
+          "qasm": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[3];\ncreg c[3];\nh q[0];\ncx q[0],q[1];\ncx q[1],q[2];\nmeasure q[0] -> c[0];\nmeasure q[1] -> c[1];\nmeasure q[2] -> c[2];\n"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+# LoomQ runtime dependencies. Every version is pinned exactly, as the rules
+# require. Python 3.10, matching the official base image (spinqit only ships
+# cp310 wheels).
+#
+# --- why torch is pinned to the CPU wheel ---
+#
+# spinqit pulls in torch, and on Linux pip resolves torch to the CUDA build.
+# Measured by building the official Dockerfile on Ubuntu:
+#
+#   default (PyPI, CUDA torch)   8.65 GB image, 256 s build
+#   CPU-only wheel               2.11 GB image, 132 s build
+#
+# 3.4 GB of that difference is NVIDIA CUDA libraries that nothing in this
+# project touches. Both variants are functionally identical: L1 6/6 on all
+# three backends, L3 passing, and the full 106-test suite green inside the
+# image. The cost of the CPU wheel is one extra package host that has to be
+# reachable at build time; if a build environment cannot reach
+# download.pytorch.org, comment out the two torch lines below and the build
+# falls back to the PyPI resolution.
+#
+# --- why these exact vendor versions ---
+#
+# The three SDKs do not install together at their latest versions. spinqit and
+# amazon-braket-default-simulator both hard-pin antlr4-python3-runtime, to
+# incompatible releases, and each one's antlr-generated parser fails at
+# *import* time under the other's runtime:
+#
+#   spinqit 0.2.4                          -> antlr4-python3-runtime==4.9.2
+#   amazon-braket-default-simulator >=1.28 -> antlr4-python3-runtime==4.13.2
+#
+# 1.27.0 is the last Braket simulator on the 4.9.2 line, and 1.97.0 is the SDK
+# released alongside it. That combination is what makes all three backends
+# importable in one interpreter. Do not bump Braket without re-running the
+# test suite.
+
+--extra-index-url https://download.pytorch.org/whl/cpu
+
+amazon-braket-sdk==1.97.0
+amazon-braket-default-simulator==1.27.0
+antlr4-python3-runtime==4.9.2
+
+spinqit==0.2.4
+
+pyqpanda==3.8.5
+
+torch==2.13.0+cpu

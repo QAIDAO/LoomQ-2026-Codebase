@@ -1,0 +1,18 @@
+.DS_Store
+.DStore
+**/ .DS_Store
+**/.DS_Store
+**/.DStore
+__pycache__/
+*.py[cod]
+
+.learnings/
+report.json
+l1-report-check.json
+
+.env
+.env.*
+node_modules/
+
+# Office lock/temp files
+~$*

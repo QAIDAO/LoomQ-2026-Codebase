@@ -1,0 +1,13 @@
+services:
+  loomq-playground:
+    build:
+      context: .
+      dockerfile: Dockerfile.playground
+    ports:
+      - "4173:4173"
+    environment:
+      # A clean evaluator machine starts with local-only execution. Remote
+      # credentials can be supplied explicitly when a real provider is being
+      # demonstrated; they are never part of this compose file.
+      LOOMQ_REMOTE_FALLBACK: ${LOOMQ_REMOTE_FALLBACK:-local}
+    restart: unless-stopped

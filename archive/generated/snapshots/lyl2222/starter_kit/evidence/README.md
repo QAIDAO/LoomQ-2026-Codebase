@@ -1,0 +1,113 @@
+# LoomQ 人工评分证据
+
+这份文件是人工评分材料的统一入口。请直接编辑它，只填写要申报的项目。截图、原始结果或图表统一放在 `starter_kit/evidence/files/`，也可以引用 `starter_kit/` 中已有的代码和文档。
+
+证据包是可选的。没有申报某项人工分时，留空即可，不影响自动评分。
+
+## 提交前填写
+
+把要申报项目的方框改成 `[x]`，并填写对应内容：
+
+- [x] L1 真机
+- [x] L2 交互体验
+- [x] 工程与产品化
+- [ ] 自定义量子 RISC-V Bonus
+- [x] 新手引导与视觉叙事 Bonus
+
+## L1 真机
+
+每个有效真机平台计 5 分，最多两个平台。模拟器不计真机分。每个平台复制并填写一次下面的信息：
+
+```text
+平台名称：量旋云 2比特核磁量子计算机
+平台 job ID：G-260817-0006
+运行时间：2026-08-17 16:22:40 CST（结束 16:24:13 CST）
+shots：平台导出未提供 shot 计数；原始结果为投影概率
+实际执行的 QASM：evidence/files/spinq-circuit.qasm
+平台返回的原始结果：evidence/files/task_result_G-260817-0006.msgpack
+解码后的可读结果：evidence/files/spinq-result.json
+任务页截图：evidence/files/spinq-screenshot.png
+电路图截图：evidence/files/spinq-circuit-diagram.png
+主导态：00（0.46999718）、11（0.3981883）；01/10 为真机噪声
+```
+
+```text
+平台名称：本源悟空 180 超导真机
+平台 job ID：9DFE2160F08B6E9D53137E8F28A117A3
+运行时间：2026-08-18 10:18:34.394 CST（结束 10:18:38.793 CST）
+shots：1000
+实际执行的 QASM：evidence/files/originq-circuit.qasm
+平台返回的原始结果：evidence/files/9DFE2160F08B6E9D53137E8F28A117A3_probability.txt
+解码后的可读结果：evidence/files/originq-result.json
+任务页截图：evidence/files/originq-screenshot.png
+逻辑电路截图：evidence/files/originq-logical-circuit.png
+映射后芯片线路：evidence/files/originq-mapped-circuit.png
+图形化编程页：evidence/files/originq-composer.png
+主导态：00（0.522）、11（0.340）；01/10 为真机噪声
+```
+
+未采用更早的本源任务 `9A2D003526D16751AC7386CEDDCC96F4`：该次主峰为 `00`/`01`，CNOT 方向错误，不是贝尔态。
+
+量旋云网页导出为 MessagePack，本源导出为概率 txt。均保留平台原始文件，另附解码 JSON 便于核验。
+
+工作人员会核对 job ID、运行时间、电路、shots 和原始结果。截图只能辅助说明，不能代替 job ID 和原始结果。
+
+## L2 交互体验
+
+请填写：
+
+```text
+启动界面或 CLI 的命令：`python3 web_app.py`（完整环境一键验证见 `make verify`）
+测试入口或页面地址：`http://127.0.0.1:8000`
+适合现场体验的 3 个用户任务：
+1. “让两枚量子硬币总是一起开出相同的一面，并全部测量”——从生活语言生成、试跑到图形化解释。
+2. “我需要运行一个 15 比特电路，要求免费、零排队、无需账号”——验证规范后端推荐。
+3. “我想制备贝尔态，但代码写坏了：H q[0]; CX q[0] q[1]”——验证纠错、自验和通俗说明。
+截图或演示视频：页面实现见 `web/index.html`、`web/styles.css` 和 `web/app.js`；提交前补录现场视频。
+```
+
+工作人员会在组委会统一模型环境中运行最终代码，测试新手是否看得懂、出错后能否得到有效帮助、结果是否清楚，以及多轮回答是否一致。选手自己的对话截图只用于说明产品流程，不直接证明得分。
+
+## 工程与产品化
+
+已有内容可以直接引用主 README 或其他项目文档，不必复制到本目录。
+
+```text
+干净环境中的构建和启动命令：`make verify`；Web 启动见 `README.md` 的“给第一次接触量子计算的人”。
+架构说明：`loomq/circuit.py` 负责统一中间表示，`loomq/targets.py` 负责三种目标 IR，`loomq/execution.py` 与隔离的 `loomq/sdk_worker.py` 负责执行和位序归一化，`loomq/agent.py` 负责 LLM → 确定性解析 → 模拟执行 → 失败重试闭环，`web_app.py` 提供零依赖 Web API。
+目标用户和使用场景：能描述自己想观察的关系、但没学过量子物理、QASM 或厂商 SDK 的产品经理、设计师、内容创作者和跨领域开发者；让他们在五分钟内完成第一个可执行实验，并看懂重复测量呈现的模式。
+完整使用流程：阅读页面的 60 秒三概念入门 → 完成 H 对照实验 → 用日常语言描述目标或选示例 → Agent 生成并由 L1 试跑 → 阅读通俗回答 → 按需展开 QASM → 切换任一平台模拟器 → 对照本次采样与理想分布。实现与复现步骤见 `README.md`。
+```
+
+工作人员会按最终 commit 实际构建和启动，并检查文档与代码是否一致、产品是否真的降低了量子计算的使用门槛。
+
+## 自定义量子 RISC-V Bonus
+
+以下三项必须齐全且测试通过，才获得 8 分：
+
+```text
+指令编码规格：[填写文档路径]
+模拟器扩展实现：[填写代码路径]
+端到端测试命令：[填写命令或文档路径]
+```
+
+## 新手引导与视觉叙事 Bonus
+
+请填写已有材料的路径，不要求为评分另写一套文档：
+
+```text
+零基础首次运行指南：`web/index.html` 的首页主路径与 `README.md`“给第一次接触量子计算的人”。
+量子概念解释：`web/index.html` 的“60 秒入门”，只介绍量子位、操作、测量三个完成首个实验所需概念。
+结果可视化：`web/app.js` 的分组条形图（本次采样 vs 理想分布）、运行元信息，以及 `loomq/interpret.py` 生成的实验解读（电路在做什么，后端 / shots / 量子位等参数含义）；原始 QASM 默认折叠。
+错误恢复或无障碍引导：`loomq/agent.py` 将确定性错误反馈给模型并重试；页面提供可见焦点、状态播报、错误提示、键盘发送和减少动画偏好支持。
+```
+
+以上四项各 1 分。普通项目 README 完整不代表自动获得 Bonus。
+
+## 提交规则
+
+- 所有材料都要在截止前进入最终提交的 commit，工作人员不接受截止后补交。
+- 外部视频可以用稳定只读链接，源码、原始结果和复现命令应保存在仓库中。
+- 整个 fork commit 的归档包不得超过 100 MiB。
+- 不要提交 API Key、Token、Cookie、个人身份信息或平台账户隐私。
+- 如申报 L1 真机分，在最终提交 Issue 的 `Hardware evidence` 中填写 `starter_kit/evidence/README.md`。

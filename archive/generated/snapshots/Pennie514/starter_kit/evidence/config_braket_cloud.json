@@ -1,0 +1,8 @@
+{
+  "platform": "braket_cloud",
+  "backend": "braket_cloud",
+  "shots": 8192,
+  "device_arn": "arn:aws:braket:::device/quantum-simulator/amazon/sv1",
+  "task_name": "LoomQ-2026-Bell",
+  "timeout_seconds": 3600
+}

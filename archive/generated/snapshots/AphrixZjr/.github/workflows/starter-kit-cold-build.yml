@@ -1,0 +1,143 @@
+name: Starter kit cold build and end-to-end
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: starter-kit-cold-build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  cold-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: starter_kit
+        shell: bash
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+
+      - name: Prepare out-of-context CI log directory
+        run: |
+          log_dir="$RUNNER_TEMP/loomq-starter-kit-ci-logs"
+          mkdir -p "$log_dir"
+          echo "LOOMQ_CI_LOG_DIR=$log_dir" >> "$GITHUB_ENV"
+
+      - name: Use Node.js 22 for dependency-free browser checks
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+
+      - name: Cold-build the Python 3.10 image
+        run: |
+          set -o pipefail
+          docker compose build --pull --no-cache 2>&1 | tee "$LOOMQ_CI_LOG_DIR/01-cold-build.log"
+
+      - name: Run the complete container suite with read-only evidence fixtures
+        run: |
+          set -o pipefail
+          docker compose run --rm \
+            -v "$PWD/evidence:/workspace/submission/evidence:ro" \
+            loomq python -m unittest discover -s tests -v \
+            2>&1 | tee "$LOOMQ_CI_LOG_DIR/02-container-unittest.log"
+
+      - name: Run L1 regression and public evaluators
+        run: |
+          set -o pipefail
+          docker compose run --rm loomq python l1_regression.py --target spinq,originq,braket 2>&1 | tee "$LOOMQ_CI_LOG_DIR/03-l1-regression.log"
+          docker compose run --rm loomq python evaluator.py --level l1 --target spinq,originq,braket 2>&1 | tee "$LOOMQ_CI_LOG_DIR/04-evaluator-l1.log"
+          docker compose run --rm loomq python evaluator.py --level l3 2>&1 | tee "$LOOMQ_CI_LOG_DIR/05-evaluator-l3.log"
+
+      - name: Start Web and verify archived hardware replay
+        run: |
+          set -o pipefail
+          docker compose up -d --no-build
+          healthy=false
+          for attempt in {1..30}; do
+            if curl --fail --silent http://127.0.0.1:8765/api/health | tee "$LOOMQ_CI_LOG_DIR/06-health.json"; then
+              healthy=true
+              break
+            fi
+            sleep 2
+          done
+          if [[ "$healthy" != true ]]; then
+            docker compose logs loomq | tee "$LOOMQ_CI_LOG_DIR/06-web-failure.log"
+            exit 1
+          fi
+
+          curl --fail --silent http://127.0.0.1:8765/api/hardware-evidence \
+            | tee "$LOOMQ_CI_LOG_DIR/07-hardware-evidence.json"
+          python3 - "$LOOMQ_CI_LOG_DIR/07-hardware-evidence.json" <<'PY'
+          import json
+          import sys
+
+          with open(sys.argv[1], encoding="utf-8") as handle:
+              value = json.load(handle)
+          assert value.get("missing") == [], value.get("missing")
+          assert value.get("rejected") == [], value.get("rejected")
+          circuits = {item.get("id"): item for item in value.get("circuits", [])}
+          assert set(circuits) == {"bell", "ghz3"}, sorted(circuits)
+          expected = {"Ideal", "SpinQ", "OriginQ"}
+          for circuit_id, circuit in circuits.items():
+              providers = {item.get("provider") for item in circuit.get("series", [])}
+              assert providers == expected, (circuit_id, sorted(providers))
+          PY
+
+      - name: Run responsive and full eight-stage browser checks
+        run: |
+          set -o pipefail
+          chrome_bin="$(command -v google-chrome || true)"
+          if [[ -z "$chrome_bin" ]]; then
+            echo "google-chrome is not installed on this runner" | tee "$LOOMQ_CI_LOG_DIR/08-chrome.log"
+            exit 1
+          fi
+          node --version | tee "$LOOMQ_CI_LOG_DIR/08-node-version.log"
+          "$chrome_bin" --version | tee "$LOOMQ_CI_LOG_DIR/08-chrome-version.log"
+          "$chrome_bin" --headless=new --no-sandbox --disable-gpu \
+            --no-first-run --no-default-browser-check \
+            --remote-debugging-address=127.0.0.1 --remote-debugging-port=9333 \
+            --user-data-dir="$RUNNER_TEMP/loomq-chrome" about:blank \
+            >"$LOOMQ_CI_LOG_DIR/08-chrome.log" 2>&1 &
+          chrome_pid=$!
+          trap 'kill "$chrome_pid" 2>/dev/null || true' EXIT
+          cdp_ready=false
+          for attempt in {1..30}; do
+            if curl --fail --silent http://127.0.0.1:9333/json/version > /dev/null; then
+              cdp_ready=true
+              break
+            fi
+            sleep 1
+          done
+          if [[ "$cdp_ready" != true ]]; then
+            echo "Chrome DevTools endpoint did not become ready" >&2
+            cat "$LOOMQ_CI_LOG_DIR/08-chrome.log" >&2
+            exit 1
+          fi
+          node browser_responsive_check.mjs 2>&1 | tee "$LOOMQ_CI_LOG_DIR/09-browser-responsive.json"
+          node browser_agent_flow_check.mjs 2>&1 | tee "$LOOMQ_CI_LOG_DIR/10-browser-agent-flow.json"
+
+      - name: Capture container logs
+        if: always()
+        run: docker compose logs --no-color loomq > "$LOOMQ_CI_LOG_DIR/11-container.log" 2>&1 || true
+
+      - name: Upload immutable CI logs
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: starter-kit-cold-build-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/loomq-starter-kit-ci-logs/
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Stop containers
+        if: always()
+        run: docker compose down --volumes

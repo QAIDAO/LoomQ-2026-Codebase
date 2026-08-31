@@ -1,0 +1,128 @@
+{
+    "generated_at_utc":  "2026-08-10T17:25:10.6817957Z",
+    "browser":  {
+                    "name":  "Microsoft Edge headless via Chrome DevTools Protocol",
+                    "version":  "151.0.4129.72"
+                },
+    "server":  {
+                   "entrypoint":  "docker compose -f starter_kit/compose.yaml up -d",
+                   "image_id":  "sha256:f597adbde7a36676a197fa6307bced61f80ec17cfec8ce5d5d444954e93cad37",
+                   "health_status":  "ok",
+                   "agent_configured":  false,
+                   "connected_local_backends":  [
+                                                    "spinq_taurus_simulator",
+                                                    "originq_local_simulator",
+                                                    "braket_local_simulator"
+                                                ]
+               },
+    "checker":  {
+                    "script":  "browser_agent_flow_check.mjs",
+                    "command":  "node starter_kit/browser_agent_flow_check.mjs",
+                    "app_url":  "http://127.0.0.1:8765/",
+                    "cdp_endpoint":  "http://127.0.0.1:9333",
+                    "expected_mode":  "LLM environment absent; exact current Bell preset only",
+                    "prerequisite":  "Start a Chromium-family browser with --remote-debugging-port=9333 and a temporary --user-data-dir."
+                },
+    "passed":  true,
+    "checks":  [
+                   {
+                       "name":  "health_reports_agent_unconfigured",
+                       "passed":  true
+                   },
+                   {
+                       "name":  "button_label_is_fill_instruction",
+                       "passed":  true
+                   },
+                   {
+                       "name":  "initial_agent_input_is_empty",
+                       "passed":  true
+                   },
+                   {
+                       "name":  "tutorial_does_not_prefill_agent_input",
+                       "passed":  true
+                   },
+                   {
+                       "name":  "button_fills_exact_current_preset",
+                       "passed":  true
+                   },
+                   {
+                       "name":  "button_focuses_agent_input",
+                       "passed":  true
+                   },
+                   {
+                       "name":  "button_does_not_advance_stage",
+                       "passed":  true
+                   },
+                   {
+                       "name":  "button_does_not_change_circuit_revision",
+                       "passed":  true
+                   },
+                   {
+                       "name":  "button_does_not_change_qasm",
+                       "passed":  true
+                   },
+                   {
+                       "name":  "send_advances_exactly_one_stage",
+                       "passed":  true
+                   },
+                   {
+                       "name":  "fallback_status_is_explicit",
+                       "passed":  true
+                   },
+                   {
+                       "name":  "fallback_reply_is_explicit",
+                       "passed":  true
+                   },
+                   {
+                       "name":  "fallback_has_no_model_understanding_label",
+                       "passed":  true
+                   },
+                   {
+                       "name":  "send_refocuses_agent_input",
+                       "passed":  true
+                   },
+                   {
+                       "name":  "no_error_overlay",
+                       "passed":  true
+                   },
+                   {
+                       "name":  "no_runtime_errors",
+                       "passed":  true
+                   }
+               ],
+    "observations":  {
+                         "initial":  {
+                                         "button_label":  "填入本阶段指令",
+                                         "input_value":  "",
+                                         "tutorial_active":  false,
+                                         "guide_index":  "1 / 8"
+                                     },
+                         "after_tutorial":  {
+                                                "input_value":  "",
+                                                "guide_index":  "1 / 8"
+                                            },
+                         "after_fill":  {
+                                            "input_value":  "请开始 Bell 引导：设定制备两比特 Bell 态并比较 Z 基测量结果的实验目标。",
+                                            "focused_element":  "agent-input",
+                                            "guide_index":  "1 / 8",
+                                            "revision_label":  "版本 1"
+                                        },
+                         "after_send":  {
+                                            "status_text":  "本地预置回退 · 未调用模型",
+                                            "status_class":  "agent-status fallback",
+                                            "focused_element":  "agent-input",
+                                            "guide_index":  "2 / 8",
+                                            "error_overlay":  false,
+                                            "understanding_label_present":  false,
+                                            "last_reply":  "【本地预置回复｜未调用模型】Agent 当前未配置；实验目标已设为制备两比特 Bell 态，并比较 Z 基测量中的 00 与 11。 下一阶段仍需先点击“填入本阶段指令”，再从 Agent 对话框发送。"
+                                        },
+                         "guide_stage_before":  0,
+                         "guide_stage_after_fill":  0,
+                         "guide_stage_after_send":  1,
+                         "circuit_revision_before":  1,
+                         "circuit_revision_after_fill":  1
+                     },
+    "runtime_errors":  [
+
+                       ]
+}

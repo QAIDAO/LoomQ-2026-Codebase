@@ -1,0 +1,23 @@
+{
+  "attempt": 2,
+  "backend": "WK_C180_2",
+  "input_kind": "corrected measured Bell Phi+ tomography input",
+  "job_id": "F7287E16E8478E4DB5051105468DB638",
+  "logical_input_sha256": "ae0cd142574796138ef95bd28378ae0a56b611999e3e31369cdacefe51a7b825",
+  "provider_status": "JobStatus.FINISHED",
+  "provider_timing_info": {
+    "cirExecuteTime": "null",
+    "pulseTime": "null",
+    "qpuRunTime": "2754",
+    "startTime": "1787386320094",
+    "totalTime": "0"
+  },
+  "raw_provider_response_sha256": "a56b4e20039fb6106d0915f3e897eb7494a9e29f74b6d692b21896dfd6544d6b",
+  "requested_physical_qubits": [
+    49,
+    58
+  ],
+  "shots": 1000,
+  "user_confirmed_free_quota_seconds": 118.76,
+  "user_confirmed_no_paid_charge": true
+}

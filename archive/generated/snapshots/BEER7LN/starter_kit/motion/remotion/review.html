@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>LoomQ 步骤图视觉审计</title>
+  <link rel="stylesheet" href="../../web/motion/loomq-motion.css">
+  <style>
+    *{box-sizing:border-box}body{margin:0;background:#161d2d;color:#eef1f8;font:16px/1.5 "Microsoft YaHei",sans-serif}body>header{position:sticky;top:0;z-index:3;padding:18px 28px;background:#161d2def;border-bottom:1px solid #4c5873;backdrop-filter:blur(12px)}body>header h1{margin:0;font-size:23px}body>header p{margin:4px 0 0;color:#b6c0d4}.review-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;padding:24px}.review-card{overflow:hidden;border:1px solid #4c5873;background:#222b40}.review-card>h2{margin:0;padding:12px 15px;font-size:16px}.mount{aspect-ratio:16/9;background:#f4f0e8}@media(max-width:900px){.review-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <header><h1>LoomQ · 全部关键状态</h1><p id="summary">正在载入……</p></header>
+  <main class="review-grid" id="reviewGrid"></main>
+  <script src="../../web/motion/loomq-motion.iife.js"></script>
+  <script>
+    const experiments = {
+      "x-flip":5,"hadamard-measure":5,"deterministic-baseline":6,"randomness-histogram":6,
+      "independent-pair":5,"bell-state":5,"phase-zero":5,"phase-half":5,"phase-flip":5,
+      "bell-2-baseline":5,"ghz-3":5,"ideal-bell-baseline":5,"ideal-ghz-baseline":5
+    };
+    const grid=document.querySelector('#reviewGrid');let total=0;
+    Object.entries(experiments).forEach(([experimentId,count])=>{
+      for(let stepIndex=0;stepIndex<count;stepIndex+=1){
+        const card=document.createElement('article');card.className='review-card';card.dataset.experiment=experimentId;card.dataset.step=stepIndex;
+        const title=document.createElement('h2');title.textContent=`${experimentId} · step ${stepIndex+1}/${count}`;
+        const mount=document.createElement('div');mount.className='mount';card.append(title,mount);grid.append(card);
+        globalThis.LoomQMotion.mount(mount,{experimentId,stepIndex,compact:false});total+=1;
+      }
+    });
+    document.querySelector('#summary').textContent=`13 个实验 · ${total} 张离散步骤图 · 禁止过渡中间态`;
+  </script>
+</body>
+</html>

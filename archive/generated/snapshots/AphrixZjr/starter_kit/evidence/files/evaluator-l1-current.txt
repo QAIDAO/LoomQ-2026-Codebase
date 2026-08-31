@@ -1,0 +1,7 @@
+[PASS] l1:bell.qasm:spinq: fidelity threshold met
+[PASS] l1:bell.qasm:originq: fidelity threshold met
+[PASS] l1:bell.qasm:braket: fidelity threshold met
+[PASS] l1:ghz3.qasm:spinq: fidelity threshold met
+[PASS] l1:ghz3.qasm:originq: fidelity threshold met
+[PASS] l1:ghz3.qasm:braket: fidelity threshold met
+{"passed": 6, "failed": 0, "total": 6}

@@ -1,0 +1,6 @@
+numpy<2.0.0
+spinqit>=0.2.3
+pyqpanda3>=0.4.0
+amazon-braket-sdk>=1.80.0
+openai>=1.0.0
+pyyaml>=6.0

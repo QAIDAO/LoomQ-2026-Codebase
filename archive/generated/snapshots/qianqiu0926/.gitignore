@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+.DS_Store
+.DStore
+**/ .DS_Store
+**/.DS_Store
+**/.DStore
+report.json
+*.egg-info/
+.pytest_cache/

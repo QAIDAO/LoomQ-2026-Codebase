@@ -1,0 +1,93 @@
+{
+  "backend": "spinq_cloud_gemini_vp",
+  "task_code": "G-260822-0024",
+  "tid": 61428,
+  "machine": {
+    "platformCode": "gemini_vp",
+    "platformName": "2Qubit核磁量子计算机",
+    "machineCode": "Gemini-pro-1",
+    "simulator": false
+  },
+  "shots": 1000,
+  "qasm_submitted": "OPENQASM 2.0; \ninclude \"qelib1.inc\";\nqreg q[2];\ncreg q[2];\n\nh q[0];\ncx q[0],q[1];",
+  "createdTime": "2026-08-22T09:59:51.101+00:00",
+  "startTime": "2026-08-22T09:59:51.121+00:00",
+  "endTime": "2026-08-22T10:01:24.195+00:00",
+  "timecost_sec": 3.0,
+  "user_id": null,
+  "ideal_distribution": {
+    "00": 0.5,
+    "11": 0.5
+  },
+  "real_machine_probabilities": {
+    "00": 0.42531736,
+    "11": 0.51522599,
+    "01": 0.02297782,
+    "10": 0.03647883
+  },
+  "top2_states": [
+    [
+      "11",
+      0.51522599
+    ],
+    [
+      "00",
+      0.42531736
+    ]
+  ],
+  "ideal_support_mass": 0.940543,
+  "hellinger_fidelity": 0.93839,
+  "raw_task_entity": {
+    "status": 200,
+    "msg": "",
+    "task": {
+      "tid": 61428,
+      "tcode": "G-260822-0024",
+      "tname": "Untitled Task",
+      "bitNum": 2,
+      "clbitNum": 2,
+      "simulator": false,
+      "calcMatrix": false,
+      "runSimu": false,
+      "tstatus": "S",
+      "shots": 1000,
+      "sourceType": "spinqit",
+      "sourceOriginName": null,
+      "sourceAddr": "files-2026-08/G-260822-0024.qasm",
+      "sourceCode": "OPENQASM 2.0; \ninclude \"qelib1.inc\";\nqreg q[2];\ncreg q[2];\n\nh q[0];\ncx q[0],q[1];",
+      "description": null,
+      "createdTime": "2026-08-22T09:59:51.101+00:00",
+      "startTime": "2026-08-22T09:59:51.121+00:00",
+      "endTime": "2026-08-22T10:01:24.195+00:00",
+      "errorMsg": null,
+      "platformId": 1,
+      "platformName": "2Qubit核磁量子计算机",
+      "platformCode": "gemini_vp",
+      "machineId": 10,
+      "machineCode": "Gemini-pro-1",
+      "userId": 6558,
+      "userName": "[已脱敏-scrubbed]",
+      "timecost": 3.0,
+      "curQueueSize": -1,
+      "percentageFinished": null
+    }
+  },
+  "raw_task_result": {
+    "status": 200,
+    "msg": "",
+    "taskStatus": "S",
+    "taskErrMsg": null,
+    "run": {
+      "realMatrix": null,
+      "imagMatrix": null,
+      "module": {
+        "00": 0.42531736,
+        "11": 0.51522599,
+        "01": 0.02297782,
+        "10": 0.03647883
+      }
+    },
+    "shots": 1000
+  },
+  "harvested_at": "2026-08-23T10:19:47+0800"
+}

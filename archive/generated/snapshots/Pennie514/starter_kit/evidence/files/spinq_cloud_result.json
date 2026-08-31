@@ -1,0 +1,26 @@
+{
+  "submission_schema": {
+    "backend": "spinq_cloud_qpu",
+    "job_id": "G-260824-0002",
+    "shots": 8192,
+    "counts": {
+      "00": 4028,
+      "11": 2174,
+      "10": 1938,
+      "01": 52
+    },
+    "bit_order": "little",
+    "timestamp": "2026-08-24T03:27:39Z",
+    "meta": {
+      "platform_code": "gemini_vp",
+      "transpiled_gates": 2,
+      "trace_url": "https://cloud.spinq.cn (task_code=G-260824-0002)"
+    }
+  },
+  "platform_raw": {
+    "task_code": "G-260824-0002",
+    "task_name": null,
+    "platform": null
+  },
+  "evidence_note": "job_id/task_code 可在平台控制台溯源；此文件为赛题 L1 真机加分项证据。"
+}

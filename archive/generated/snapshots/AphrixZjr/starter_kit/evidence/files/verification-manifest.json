@@ -1,0 +1,667 @@
+{
+  "artifacts": [
+    {
+      "bytes": 563,
+      "path": "starter_kit/.dockerignore",
+      "sha256": "699892cf5305ab0c9e651829213e84e5fd8359b1030f9b8c7b5425c400fca32b",
+      "status": "ok"
+    },
+    {
+      "bytes": 540,
+      "path": "starter_kit/.gitignore",
+      "sha256": "5ab466907ea7d5beb428c12b4fd9a6e763367886d42a22a178766f9a2cba2355",
+      "status": "ok"
+    },
+    {
+      "bytes": 33,
+      "path": "starter_kit/__init__.py",
+      "sha256": "682546728453641206c9ff422ac2e4c8b7ef4740e76b78a349f6ddbc7725542a",
+      "status": "ok"
+    },
+    {
+      "bytes": 1842,
+      "path": "starter_kit/adapter.py",
+      "sha256": "eb7e540ca8c97ef82f155a71ec000d73d74728a044ac580be7ee90db13848829",
+      "status": "ok"
+    },
+    {
+      "bytes": 9933,
+      "path": "starter_kit/browser_agent_flow_check.mjs",
+      "sha256": "b57d0aa011e9a2648a0d7e4bb64bf2c0c5d24e12507d6e3232e6614b12bb66b2",
+      "status": "ok"
+    },
+    {
+      "bytes": 6367,
+      "path": "starter_kit/browser_responsive_check.mjs",
+      "sha256": "98d56f0e10442655e419f82c2ff7829e4cdf6025dfa3a22386937815c2fd194d",
+      "status": "ok"
+    },
+    {
+      "bytes": 1247,
+      "path": "starter_kit/CHANGELOG.md",
+      "sha256": "4071ee6d8fe3ed3e26a6ec1c9891b963f07fa434482cf5044d904e48b35a6318",
+      "status": "ok"
+    },
+    {
+      "bytes": 437,
+      "path": "starter_kit/compose.yaml",
+      "sha256": "a9fc3cc2416d802c3e736df3e8e337489a4131364977db73d1a2a1da4f9ca94c",
+      "status": "ok"
+    },
+    {
+      "bytes": 1394,
+      "path": "starter_kit/Dockerfile",
+      "sha256": "158a74a5bb43b92458ab2a993e7f85550e9285fee896f7ca499221429768d1e6",
+      "status": "ok"
+    },
+    {
+      "bytes": 4768,
+      "path": "starter_kit/docs/acceptance/architecture.md",
+      "sha256": "c06134f05a8cf05fcd888d1ccb6f80ed777b02829fba668c2bd613f904606af7",
+      "status": "ok"
+    },
+    {
+      "bytes": 2509,
+      "path": "starter_kit/docs/acceptance/bonus-rationale.md",
+      "sha256": "fbf5816224b0b92e70c3f68a88ab63dad64c0c89702d7df723ea89dbc3d90910",
+      "status": "ok"
+    },
+    {
+      "bytes": 5228,
+      "path": "starter_kit/docs/acceptance/l2-experience.md",
+      "sha256": "0bea052b259220b2e61e86d0b4d3fb04f3f07f1459fa19bf01bfc820494a0f9a",
+      "status": "ok"
+    },
+    {
+      "bytes": 3288,
+      "path": "starter_kit/docs/acceptance/productization.md",
+      "sha256": "920c33da0d36f4b446a98eb0450378961f0d80c4955849c2faadadde3d8692d3",
+      "status": "ok"
+    },
+    {
+      "bytes": 6575,
+      "path": "starter_kit/docs/acceptance/verification.md",
+      "sha256": "6bc8d52c9e4b73278c0cdbf400217c6185d896a3e44d21834676cda94d9e9ad3",
+      "status": "ok"
+    },
+    {
+      "bytes": 33528,
+      "path": "starter_kit/docs/development/LoomQ_static_audit_d0900670.md",
+      "sha256": "8153b179179eba9ec66320a580a2a5574c7046d7ce244e895a1466aa3791a7e0",
+      "status": "ok"
+    },
+    {
+      "bytes": 13215,
+      "path": "starter_kit/docs/hardware_L1.md",
+      "sha256": "b7bdbd77d6647b2da419d2d58ba6da054af52dddac78bd8c038846aaf215a693",
+      "status": "ok"
+    },
+    {
+      "bytes": 2535,
+      "path": "starter_kit/docs/loomq_qisa_v1.md",
+      "sha256": "763beb4fda232a662b71760ab958634767d8cbd73f58a0f04a5bb5d5a0bae0be",
+      "status": "ok"
+    },
+    {
+      "bytes": 8703,
+      "path": "starter_kit/evaluator.py",
+      "sha256": "1f9c8eaf550b2d174e64154284537ad4e050ca4ca79c39c113d452340670cc31",
+      "status": "ok"
+    },
+    {
+      "bytes": 6265,
+      "path": "starter_kit/evidence/files/browser-agent-flow-current.json",
+      "sha256": "f11f774160f41d76ee0f4065525071d256c16d835bc4eebc456036fe1938987d",
+      "status": "ok"
+    },
+    {
+      "bytes": 14042,
+      "path": "starter_kit/evidence/files/browser-responsive-current.json",
+      "sha256": "41632ba94e5abb94449ef4757da3c4c343b9edd5d57bd68750606a48cae0d1f0",
+      "status": "ok"
+    },
+    {
+      "bytes": 1382,
+      "path": "starter_kit/evidence/files/l2-live-benchmark-current.json",
+      "sha256": "80890a85e86d11c9fa33578990ac9a40e4d609b91483395a10d9edfc617af026",
+      "status": "ok"
+    },
+    {
+      "bytes": 2245,
+      "path": "starter_kit/evidence/files/l2-raw-prompt-stress-current.json",
+      "sha256": "a97687a467b4c02314696db0d497622368ed388ae2316c8df9e70af117e14636",
+      "status": "ok"
+    },
+    {
+      "bytes": 296858,
+      "path": "starter_kit/evidence/files/l2-ui-bell-results.png",
+      "sha256": "34c44fd2f3a928189ed69d602628d12de34e945f7ed1be2e6dd74e378ab92c6d",
+      "status": "ok"
+    },
+    {
+      "bytes": 209260,
+      "path": "starter_kit/evidence/files/l2-ui-guide.png",
+      "sha256": "170411a308af33833d8cb02840b1603207bee2ce3e974fe23637cc5322269a64",
+      "status": "ok"
+    },
+    {
+      "bytes": 111945,
+      "path": "starter_kit/evidence/files/l2-ui-workbench.png",
+      "sha256": "4fdd1917cd0cadd89ef980fdd552927d6dedfaf40ab5b3eaf9e05c1673500827",
+      "status": "ok"
+    },
+    {
+      "bytes": 1594,
+      "path": "starter_kit/evidence/files/hardware/spinq/spinq-formal-bell-S-260811-0004.json",
+      "sha256": "49c79b7a9508e11db48d4b81034d3ab14442841c824089760145cc5bcfddc671",
+      "status": "ok"
+    },
+    {
+      "bytes": 80,
+      "path": "starter_kit/evidence/files/hardware/spinq/spinq-formal-bell-S-260811-0004.qasm",
+      "sha256": "6648fba6510dca0e4a025b7e69f2ca50d4c7aec70c27f1f7659d201b0a515068",
+      "status": "ok"
+    },
+    {
+      "bytes": 1846,
+      "path": "starter_kit/evidence/files/hardware/spinq/spinq-formal-ghz3-S-260811-0005.json",
+      "sha256": "1cfcdf830314699331b450b40320c72bcb76e52c88fcee36839c9294e3315252",
+      "status": "ok"
+    },
+    {
+      "bytes": 94,
+      "path": "starter_kit/evidence/files/hardware/spinq/spinq-formal-ghz3-S-260811-0005.qasm",
+      "sha256": "2fc4afc51fc9426ff8c9dbe6798e8460ca3c62f3a39a98fa152b728301853814",
+      "status": "ok"
+    },
+    {
+      "bytes": 2901,
+      "path": "starter_kit/evidence/files/hardware/spinq/spinq-hardware-analysis.json",
+      "sha256": "6fce1584808817d8adf1faa2dd07f86a164b6dafeb5b99c160baceac6c530a81",
+      "status": "ok"
+    },
+    {
+      "bytes": 1691,
+      "path": "starter_kit/evidence/files/hardware/spinq/spinq-resume-bit_order-S-260811-0003.json",
+      "sha256": "1b5c0909396bcbfce585aa145658878687374fcc7df7705a7cf64e048380adf9",
+      "status": "ok"
+    },
+    {
+      "bytes": 74,
+      "path": "starter_kit/evidence/files/hardware/spinq/spinq-resume-bit_order-S-260811-0003.qasm",
+      "sha256": "cb3b1bf9b858c4d854ede87cae9dae5c0c4a2cfa5cd583926ae88dae92a3c5ce",
+      "status": "ok"
+    },
+    {
+      "bytes": 1497,
+      "path": "starter_kit/evidence/files/hardware/spinq/spinq-smoke-bell-S-260811-0002.json",
+      "sha256": "f48ef3d4b10c750db18d08e19ecfa633172b2579b6c4b3d4c7c567c58c22ef0a",
+      "status": "ok"
+    },
+    {
+      "bytes": 80,
+      "path": "starter_kit/evidence/files/hardware/spinq/spinq-smoke-bell-S-260811-0002.qasm",
+      "sha256": "6648fba6510dca0e4a025b7e69f2ca50d4c7aec70c27f1f7659d201b0a515068",
+      "status": "ok"
+    },
+    {
+      "bytes": 913,
+      "path": "starter_kit/evidence/files/hardware/spinq/spinq-task-metadata.json",
+      "sha256": "dd24069d1a8c25946e57371f04eeea4794dac6cffaf5c6bb266271fe435d515b",
+      "status": "ok"
+    },
+    {
+      "bytes": 16666,
+      "path": "starter_kit/evidence/README.md",
+      "sha256": "370c94fd5a38bbf5bc7f3a43020c65ff093f39a7fb2d34b10d67eb0caec3885d",
+      "status": "ok"
+    },
+    {
+      "bytes": 19108,
+      "path": "starter_kit/generate_verification_manifest.py",
+      "sha256": "696bc102c4c288ff9f473fbd5daf256004f4cfa5c4f970b483df27438381147d",
+      "status": "ok"
+    },
+    {
+      "bytes": 1394,
+      "path": "starter_kit/hardware.env.example",
+      "sha256": "54bdeb9d463a9a3151671328efc88d47f96107bd05b4fb33e90ad7ce5cf1350b",
+      "status": "ok"
+    },
+    {
+      "bytes": 24273,
+      "path": "starter_kit/l1_spinq_hardware.py",
+      "sha256": "62acf76d0e2930ae55803305e41a366a25d3f2ed17b8c0b42f6ab36458b3d035",
+      "status": "ok"
+    },
+    {
+      "bytes": 319,
+      "path": "starter_kit/l2_policy.json",
+      "sha256": "dd478c2120a79b36869a300705f6a5c5dc035f51987be87fc9cb516cc81f7bef",
+      "status": "ok"
+    },
+    {
+      "bytes": 3801,
+      "path": "starter_kit/llm_client.py",
+      "sha256": "50fe5bd8904736ca66e0da4c1551f70053ff7c53be7c661e266b8c46df931edf",
+      "status": "ok"
+    },
+    {
+      "bytes": 13326,
+      "path": "starter_kit/loomq_l1.py",
+      "sha256": "00e3b6955d9a03a97d2d90139b6b1c9583226f476634ebfd433940bf21eda183",
+      "status": "ok"
+    },
+    {
+      "bytes": 33195,
+      "path": "starter_kit/loomq_l2.py",
+      "sha256": "7c0d1272f19616475470082f6cc3962bece6785481d796d22fdfaa602a341db5",
+      "status": "ok"
+    },
+    {
+      "bytes": 11901,
+      "path": "starter_kit/loomq_l3.py",
+      "sha256": "763da82f8d043d39f95d7e8a94be74e786f7679b8fbd82147a1f8dd0b6778d30",
+      "status": "ok"
+    },
+    {
+      "bytes": 3475,
+      "path": "starter_kit/prepare_submission.py",
+      "sha256": "701dd974290223113211eb6c7dddbaf95d48cd6f11c6221a127ecddd4015e121",
+      "status": "ok"
+    },
+    {
+      "bytes": 861,
+      "path": "starter_kit/quantum_riscv.py",
+      "sha256": "46c08932fd68b2773af138f74c5a1e546ba4f619ccf48b2822b2880929f3b249",
+      "status": "ok"
+    },
+    {
+      "bytes": 12146,
+      "path": "starter_kit/README.md",
+      "sha256": "4bbe4c15159394abe16b82b4690e9ec3ac3f288b15958f9a7daae86afae4714c",
+      "status": "ok"
+    },
+    {
+      "bytes": 1628,
+      "path": "starter_kit/requirements.txt",
+      "sha256": "616c9ee232f972c18e5a983ba566caae7922674c1b40a339ec7efde9164c39da",
+      "status": "ok"
+    },
+    {
+      "bytes": 25230,
+      "path": "starter_kit/riscv_emulator.py",
+      "sha256": "9d765c45cae04ab15cdaccd04ae46c9fa52eadd1a9fd99d0e8c97b836b26c1d3",
+      "status": "ok"
+    },
+    {
+      "bytes": 11407,
+      "path": "starter_kit/run_spinq_hardware.py",
+      "sha256": "aa1ebb411ca414332a0d1d965c443f356673477d05c08b063c4557090ed89198",
+      "status": "ok"
+    },
+    {
+      "bytes": 434,
+      "path": "starter_kit/submission.yaml",
+      "sha256": "881144f55a19171f831ef748ecac3e02ec3603debd49c791aaccb0eb2ccdb0d3",
+      "status": "ok"
+    },
+    {
+      "bytes": 3270,
+      "path": "starter_kit/tests/test_archive_isolation.py",
+      "sha256": "e85bdc6e305b36f04089ff5486a76cff651e79925c466b0fe9c3673b9da8d5c4",
+      "status": "ok"
+    },
+    {
+      "bytes": 23282,
+      "path": "starter_kit/tests/test_l1_spinq_hardware.py",
+      "sha256": "46b9b950679ee902fca20c8546eaf5f1a6cb0a304550f63aafdd8f9af84e6752",
+      "status": "ok"
+    },
+    {
+      "bytes": 22907,
+      "path": "starter_kit/tests/test_l2_audit_regressions.py",
+      "sha256": "420c67765c7d34eac7ed6b643d27a998b4e0029cd2de64f7588db8d3748c3bfc",
+      "status": "ok"
+    },
+    {
+      "bytes": 28839,
+      "path": "starter_kit/tests/test_l2_web.py",
+      "sha256": "9a380f21ab276fc970f178cfd3329349d47c3ff526050c48487fc98955b71bf9",
+      "status": "ok"
+    },
+    {
+      "bytes": 11993,
+      "path": "starter_kit/tests/test_l3_differential.py",
+      "sha256": "c86e01c9dbd6bf4344642fc47e0cec68fed6a8d86875807a5d5882ade0878334",
+      "status": "ok"
+    },
+    {
+      "bytes": 3024,
+      "path": "starter_kit/tests/test_quantum_riscv_e2e.py",
+      "sha256": "ba5eeee2775a1cc48b9af6fe0a73db9a1459e79590f0e511bac8bcdae3e8c750",
+      "status": "ok"
+    },
+    {
+      "bytes": 10296,
+      "path": "starter_kit/tests/test_verification_manifest.py",
+      "sha256": "0232409113385bbb1d5b0bf25deeed1f8eb2f21ac615248674dbcb75d739c6c5",
+      "status": "ok"
+    },
+    {
+      "bytes": 59624,
+      "path": "starter_kit/web/app.py",
+      "sha256": "b1d6684da4ced9ccfcc77236ee7d0f0042fb37ca73e04a05cadb8b165baaa9cc",
+      "status": "ok"
+    },
+    {
+      "bytes": 7256,
+      "path": "starter_kit/web/README.md",
+      "sha256": "2e515fc56b3458432f4d82098e304ac798253d2688ba33639c1d6268c746fb31",
+      "status": "ok"
+    },
+    {
+      "bytes": 7447,
+      "path": "starter_kit/web/server.py",
+      "sha256": "9f48500ecfa1b2cde8399a330e11dc7c5d7c828fd24263388bc5c67d378e3b16",
+      "status": "ok"
+    },
+    {
+      "bytes": 24812,
+      "path": "starter_kit/web/static/app.js",
+      "sha256": "91a78961f2acda6005731b530f5e657b26169821b761afa69932568089425fa4",
+      "status": "ok"
+    },
+    {
+      "bytes": 9278,
+      "path": "starter_kit/web/static/index.html",
+      "sha256": "a463d3a20a1f22bca8b5c86445aac5cc735298ae0375f3dbb7592eb36b81bf00",
+      "status": "ok"
+    },
+    {
+      "bytes": 19087,
+      "path": "starter_kit/web/static/styles.css",
+      "sha256": "388996e6de4066636f2d0dd9580a89812b57e88059a3acdec461c91b4a8767b4",
+      "status": "ok"
+    },
+    {
+      "bytes": 3474,
+      "path": "tests/test_l2_contract.py",
+      "sha256": "573f6b2cfd1c9d9dc221a58e14de8aa0016e22e62af7c949cde46caf98c54d2a",
+      "status": "ok"
+    },
+    {
+      "bytes": 602,
+      "path": "tests/test_starter_archive.py",
+      "sha256": "7fe5c4153fa84677f12af4db62f3a174bd9759b177d5a811a82a51c4593ffbae",
+      "status": "ok"
+    },
+    {
+      "bytes": 16387,
+      "path": "tests/test_submission_tools.py",
+      "sha256": "b16cf5c6512cf0da145674b18d18828c5b12512660e727237ee95f7c6d71c4fc",
+      "status": "ok"
+    }
+  ],
+  "commands": [
+    {
+      "argv": [
+        "python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "starter_kit/tests",
+        "-v"
+      ],
+      "duration_seconds": 19.813137,
+      "name": "unittest",
+      "output_bytes": 26805,
+      "output_file": "unittest-current.txt",
+      "output_sha256": "636989446380c8868e151f32399024318d3d1630deec8672a346820d883de8c7",
+      "return_code": 0,
+      "started_at_utc": "2026-08-11T07:19:34.857205Z",
+      "timed_out": false
+    },
+    {
+      "argv": [
+        "python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "duration_seconds": 20.29857,
+      "name": "repository-unittest",
+      "output_bytes": 30858,
+      "output_file": "repository-unittest-current.txt",
+      "output_sha256": "b7c4ce43e0bde7c034087ff801fcce2858cde5b7477c11cfbe52c217a72e4768",
+      "return_code": 0,
+      "started_at_utc": "2026-08-11T07:19:54.671100Z",
+      "timed_out": false
+    },
+    {
+      "argv": [
+        "python",
+        "-B",
+        "-m",
+        "compileall",
+        "-q",
+        "competition",
+        "starter_kit"
+      ],
+      "duration_seconds": 0.151026,
+      "name": "python-compile",
+      "output_bytes": 0,
+      "output_file": "python-compile-current.txt",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "return_code": 0,
+      "started_at_utc": "2026-08-11T07:20:14.968788Z",
+      "timed_out": false
+    },
+    {
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "loomq-all-levels:local",
+        "python",
+        "l1_regression.py",
+        "--target",
+        "spinq,originq,braket"
+      ],
+      "duration_seconds": 11.555547,
+      "name": "l1-regression",
+      "output_bytes": 4818,
+      "output_file": "l1-regression-current.txt",
+      "output_sha256": "fd7670182e7fba8c93fac37c9ccf4a313d37c37901d05f15c741300a781aeddc",
+      "return_code": 0,
+      "started_at_utc": "2026-08-11T07:20:15.120841Z",
+      "timed_out": false
+    },
+    {
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "loomq-all-levels:local",
+        "python",
+        "evaluator.py",
+        "--level",
+        "l1",
+        "--target",
+        "spinq,originq,braket"
+      ],
+      "duration_seconds": 4.449855,
+      "name": "evaluator-l1",
+      "output_bytes": 345,
+      "output_file": "evaluator-l1-current.txt",
+      "output_sha256": "400a5784729dc4e3a617dd9ab34fa588a6c786c76cd0402cb0cfdc53d235c1dd",
+      "return_code": 0,
+      "started_at_utc": "2026-08-11T07:20:26.676391Z",
+      "timed_out": false
+    },
+    {
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "loomq-all-levels:local",
+        "python",
+        "evaluator.py",
+        "--level",
+        "l3"
+      ],
+      "duration_seconds": 0.984315,
+      "name": "evaluator-l3",
+      "output_bytes": 95,
+      "output_file": "evaluator-l3-current.txt",
+      "output_sha256": "9463d50fcb242f46e9552cc8f27a8678080331336a98682bb33bae6c05fc8b09",
+      "return_code": 0,
+      "started_at_utc": "2026-08-11T07:20:31.126378Z",
+      "timed_out": false
+    },
+    {
+      "argv": [
+        "node",
+        "--check",
+        "starter_kit/web/static/app.js"
+      ],
+      "duration_seconds": 0.159255,
+      "name": "node-check",
+      "output_bytes": 0,
+      "output_file": "node-check-current.txt",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "return_code": 0,
+      "started_at_utc": "2026-08-11T07:20:32.111367Z",
+      "timed_out": false
+    },
+    {
+      "argv": [
+        "node",
+        "--check",
+        "starter_kit/browser_responsive_check.mjs"
+      ],
+      "duration_seconds": 0.049537,
+      "name": "browser-responsive-node-check",
+      "output_bytes": 0,
+      "output_file": "browser-responsive-node-check-current.txt",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "return_code": 0,
+      "started_at_utc": "2026-08-11T07:20:32.270047Z",
+      "timed_out": false
+    },
+    {
+      "argv": [
+        "node",
+        "--check",
+        "starter_kit/browser_agent_flow_check.mjs"
+      ],
+      "duration_seconds": 0.048031,
+      "name": "browser-agent-node-check",
+      "output_bytes": 0,
+      "output_file": "browser-agent-node-check-current.txt",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "return_code": 0,
+      "started_at_utc": "2026-08-11T07:20:32.320196Z",
+      "timed_out": false
+    },
+    {
+      "argv": [
+        "docker-compose",
+        "-f",
+        "starter_kit/compose.yaml",
+        "config",
+        "--quiet"
+      ],
+      "duration_seconds": 0.091855,
+      "name": "compose-config",
+      "output_bytes": 0,
+      "output_file": "compose-config-current.txt",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "return_code": 0,
+      "started_at_utc": "2026-08-11T07:20:32.368517Z",
+      "timed_out": false
+    },
+    {
+      "argv": [
+        "docker",
+        "image",
+        "inspect",
+        "loomq-all-levels:local",
+        "--format={{.Id}}"
+      ],
+      "duration_seconds": 0.096567,
+      "name": "docker-image",
+      "output_bytes": 72,
+      "output_file": "docker-image-current.txt",
+      "output_sha256": "6e74685802675078f1536a17fca4c39176e9711cbbd2e90dfcefb9c75df33ac8",
+      "return_code": 0,
+      "started_at_utc": "2026-08-11T07:20:32.460240Z",
+      "timed_out": false
+    },
+    {
+      "argv": [
+        "git",
+        "-c",
+        "safe.directory=D:/LoomQ-2026",
+        "diff",
+        "--check"
+      ],
+      "duration_seconds": 0.054892,
+      "name": "git-diff-check",
+      "output_bytes": 0,
+      "output_file": "git-diff-check-current.txt",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "return_code": 0,
+      "started_at_utc": "2026-08-11T07:20:32.556969Z",
+      "timed_out": false
+    }
+  ],
+  "environment": {
+    "architecture": {
+      "machine": "AMD64",
+      "pointer_bits": 64
+    },
+    "docker": {
+      "available": true,
+      "version": "Docker version 29.6.2, build dfc4efb"
+    },
+    "node": {
+      "available": true,
+      "version": "v22.14.0"
+    },
+    "os": {
+      "release": "10",
+      "system": "Windows",
+      "version": "10.0.26200"
+    },
+    "python": {
+      "implementation": "CPython",
+      "version": "3.10.11"
+    }
+  },
+  "execution_policy": {
+    "automatic_commit": false,
+    "child_environment": "sanitized_allowlist_values_not_recorded",
+    "default_l2_live": false,
+    "default_network_access": false,
+    "evidence_outputs_mutate_worktree": true,
+    "tracked_evidence_finalization": "two_phase_evidence_only_commit"
+  },
+  "generated_at_utc": "2026-08-11T07:19:34.857205Z",
+  "repository": {
+    "available": true,
+    "captured_before_commands": true,
+    "captured_before_evidence_write": true,
+    "dirty": false,
+    "head": "0a88c8cfd485137a13996ef39d920c69e8fc6e23",
+    "head_role": "source_snapshot"
+  },
+  "schema_version": 1,
+  "success": true
+}

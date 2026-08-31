@@ -1,0 +1,3 @@
+# Optional remote hardware support.  The base competition requirements remain
+# unchanged so the formal evaluator never attempts a paid/cloud submission.
+spinqit-mcp-tools==0.0.1

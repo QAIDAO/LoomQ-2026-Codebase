@@ -1,0 +1,55 @@
+{
+  "platform": "spinq",
+  "circuit": "bell.qasm",
+  "submitted_at_utc": "20260823T025138Z",
+  "raw_platform_response": {
+    "task_code": "G-260823-0012",
+    "task_name": "",
+    "platform": "",
+    "counts": {
+      "00": 8257,
+      "11": 8859,
+      "01": 1168,
+      "10": 1716
+    },
+    "probabilities": {
+      "00": 0.41282671,
+      "11": 0.44297047,
+      "01": 0.05837828,
+      "10": 0.08582454
+    }
+  },
+  "normalized_result": {
+    "backend": "spinq_cloud_qpu",
+    "job_id": "G-260823-0012",
+    "shots": 20000,
+    "counts": {
+      "00": 8257,
+      "11": 8859,
+      "01": 1168,
+      "10": 1716
+    },
+    "bit_order": "little",
+    "timestamp": "2026-08-23T02:51:38Z",
+    "meta": {
+      "platform": "spinq",
+      "circuit": "bell.qasm",
+      "dominant_state_check": {
+        "expected_dominant_states": [
+          "00",
+          "11"
+        ],
+        "observed_top_states": [
+          "11",
+          "00",
+          "10",
+          "01"
+        ],
+        "top_k_hit": true,
+        "missing_from_top_k": []
+      },
+      "platform_code": "gemini_vp",
+      "executor": "real-machine"
+    }
+  }
+}

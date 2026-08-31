@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>LoomQ — your first quantum experiment</title>
+<style>
+  :root {
+    --bg:#f6f7fb; --card:#fff; --ink:#1a1d29; --muted:#5b6072;
+    --accent:#6a5cff; --accent-soft:#eceaff; --border:#e6e8f0;
+    --ok:#17b26a; --bar:#6a5cff; --code-bg:#f2f3f8; --err:#e5484d;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:#0f1117; --card:#171a23; --ink:#eceef5; --muted:#9aa0b4;
+      --accent:#8b7dff; --accent-soft:#23203a; --border:#262a38;
+      --ok:#3ddc97; --bar:#8b7dff; --code-bg:#0c0e14; --err:#ff6b6e;
+    }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink);
+         font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,sans-serif; }
+  .wrap { max-width:800px; margin:0 auto; padding:32px 20px 80px; }
+  header h1 { font-size:1.7rem; margin:0 0 6px; letter-spacing:-.02em; }
+  header p { color:var(--muted); margin:0 0 22px; }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:14px;
+          padding:18px; margin:14px 0; box-shadow:0 1px 2px rgba(0,0,0,.03); }
+  .label { font-size:.78rem; text-transform:uppercase; letter-spacing:.06em;
+           color:var(--muted); margin-bottom:10px; }
+  .chips { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:8px; }
+  .chip { border:1px solid var(--border); background:var(--card); color:var(--ink);
+          border-radius:999px; padding:8px 14px; font-size:.9rem; cursor:pointer;
+          transition:background .15s,border-color .15s; }
+  .chip:hover { background:var(--accent-soft); border-color:var(--accent); }
+  .hint { color:var(--muted); font-size:.85rem; margin:0 0 14px; }
+  .inputrow { display:flex; gap:10px; align-items:flex-start; }
+  textarea { flex:1; resize:vertical; min-height:56px; padding:12px 14px;
+             border:1px solid var(--border); border-radius:12px; background:var(--card);
+             color:var(--ink); font:inherit; }
+  .btncol { display:flex; flex-direction:column; gap:8px; }
+  button { font:inherit; cursor:pointer; }
+  button.primary { border:0; background:var(--accent); color:#fff; font-weight:600;
+                   padding:12px 20px; border-radius:12px; font-size:.95rem; }
+  button.ghost { border:1px solid var(--border); background:transparent; color:var(--muted);
+                 padding:8px 14px; border-radius:12px; }
+  button:disabled { opacity:.5; cursor:default; }
+  button.run { margin-top:16px; border:0; background:var(--ok); color:#fff; font-weight:600;
+               padding:11px 18px; border-radius:10px; }
+  .run-hint { color:var(--muted); font-size:.85rem; margin:8px 0 0; }
+  /* rendered markdown */
+  .md p { margin:.5em 0; } .md ul { margin:.5em 0; padding-left:1.3em; }
+  .md li { margin:.25em 0; } .md strong { color:var(--ink); }
+  .md h3,.md h4 { margin:.8em 0 .3em; font-size:1rem; }
+  .md code { background:var(--code-bg); padding:1px 5px; border-radius:5px;
+             font:13px ui-monospace,Menlo,monospace; }
+  .md pre { background:var(--code-bg); border:1px solid var(--border); border-radius:10px;
+            padding:14px; overflow-x:auto; margin:.6em 0; }
+  .md pre code { background:none; padding:0; font-size:13px; }
+  /* skeleton loader */
+  .sk { height:12px; border-radius:6px; margin:9px 0;
+        background:linear-gradient(90deg,var(--code-bg) 25%,var(--border) 37%,var(--code-bg) 63%);
+        background-size:400% 100%; animation:sh 1.2s ease infinite; }
+  @keyframes sh { 0%{background-position:100% 0} 100%{background-position:0 0} }
+  /* circuit diagram */
+  .diagram-wrap { margin-top:16px; padding-top:14px; border-top:1px solid var(--border); }
+  .diagram { width:100%; height:auto; overflow-x:auto; }
+  .wire { stroke:var(--border); stroke-width:2; }
+  .qlabel { fill:var(--muted); font:600 13px ui-monospace,monospace; }
+  .gbox { fill:var(--accent); }
+  .gtext { fill:#fff; font:700 12px system-ui; }
+  .ctrl { fill:var(--ink); }
+  .tgt { fill:var(--card); stroke:var(--accent); stroke-width:2; }
+  .tgtl, .link { stroke:var(--accent); stroke-width:2; }
+  .xg { fill:var(--accent); font:700 20px system-ui; }
+  .mbox { fill:var(--ok); }
+  .marc { fill:none; stroke:#fff; stroke-width:2; }
+  .mneedle { stroke:#fff; stroke-width:2; stroke-linecap:round; }
+  .legend { list-style:none; margin:12px 0 0; padding:0; display:flex; flex-direction:column; gap:7px; }
+  .legend li { color:var(--muted); font-size:.9rem; display:flex; gap:10px; align-items:baseline; }
+  .legend .sym { display:inline-grid; place-items:center; min-width:30px; height:24px; padding:0 6px;
+                 border-radius:6px; background:var(--accent); color:#fff; font:700 12px system-ui; }
+  .legend .sym.m { background:var(--ok); }
+  .hl { fill:var(--accent-soft); opacity:0; transition:x .35s ease, opacity .25s; }
+  .walk-caption { color:var(--muted); min-height:1.5em; margin-top:8px; }
+  .walk-caption strong { color:var(--ink); }
+  details { margin-top:12px; } summary { cursor:pointer; color:var(--muted); font-size:.88rem; }
+  /* single-qubit state dial */
+  .viz { display:flex; flex-direction:column; align-items:center; gap:10px; margin:6px 0 18px; }
+  .dial { width:170px; height:170px; }
+  .dial .ring { fill:none; stroke:var(--border); stroke-width:2; }
+  .dial .lbl { fill:var(--muted); font:600 13px system-ui; }
+  .needle { stroke:var(--accent); stroke-width:4; stroke-linecap:round;
+            transform-origin:85px 85px; transition:transform .35s cubic-bezier(.2,.8,.2,1); }
+  .dial .hub { fill:var(--accent); }
+  .viz-caption { color:var(--muted); text-align:center; min-height:3em; max-width:440px; }
+  .viz-caption strong { color:var(--ink); }
+  /* bars */
+  .bars { display:flex; flex-direction:column; gap:8px; margin-top:6px; }
+  .barrow { display:grid; grid-template-columns:70px 1fr 82px; align-items:center; gap:10px; }
+  .barrow code { font:13px ui-monospace,monospace; color:var(--muted); }
+  .bartrack { background:var(--code-bg); border-radius:6px; height:24px; overflow:hidden; }
+  .barfill { background:var(--bar); height:100%; width:0; border-radius:6px; transition:width .9s cubic-bezier(.2,.8,.2,1); }
+  .barpct { text-align:right; color:var(--muted); font-variant-numeric:tabular-nums; font-size:.9rem; }
+  .muted { color:var(--muted); } .err { color:var(--err); }
+  .hidden { display:none; }
+  .spin { display:inline-block; width:14px; height:14px; border:2px solid currentColor;
+          border-top-color:transparent; border-radius:50%; animation:s .7s linear infinite; vertical-align:-2px; }
+  @keyframes s { to { transform:rotate(360deg); } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>🧵 LoomQ</h1>
+    <p>Run your first real quantum experiment — no code, no physics degree. Describe what you're curious about, and I'll build it, draw it, run it, and explain it.</p>
+  </header>
+
+  <div class="label">Try one</div>
+  <div class="chips" id="chips">
+    <button class="chip" data-p="Show me two particles becoming linked, and explain entanglement simply.">🔗 See particles get linked</button>
+    <button class="chip" data-p="Make a truly random bit using quantum, and explain why it's random.">🎲 Flip a quantum coin</button>
+    <button class="chip" data-p="Put a particle in two states at once and show me what that means.">🌀 Two states at once</button>
+    <button class="chip" data-p="I've never coded and know nothing about quantum. Show me something amazing I can run.">✨ I'm totally new</button>
+  </div>
+  <p class="hint">…or type your own question below (a domain question like "I'm a biologist — can quantum help my research?" works too).</p>
+
+  <div class="inputrow">
+    <textarea id="prompt" placeholder="Ask anything about quantum…"></textarea>
+    <div class="btncol">
+      <button class="primary" id="ask">Ask</button>
+      <button class="ghost" id="clear">Clear</button>
+    </div>
+  </div>
+
+  <div id="reply-card" class="card hidden">
+    <div class="label">LoomQ says</div>
+    <div class="md" id="reply"></div>
+
+    <div id="diagram-wrap" class="diagram-wrap hidden">
+      <div class="label">The circuit, as a picture</div>
+      <div class="diagram" id="diagram"></div>
+      <ul class="legend" id="legend"></ul>
+      <button class="ghost" id="walk" style="margin-top:12px">▶ Walk me through it, step by step</button>
+      <div class="walk-caption" id="walk-caption"></div>
+      <details><summary>See the raw code</summary>
+        <pre class="md" style="margin-top:8px"><code id="code"></code></pre>
+      </details>
+    </div>
+
+    <button class="run hidden" id="run">▶ Run it on a real simulator</button>
+    <p class="run-hint hidden" id="run-hint">This executes the circuit above on a quantum simulator 1024 times and tallies what the qubits measured — real quantum sampling, not a fixed answer.</p>
+  </div>
+
+  <div id="results-card" class="card hidden">
+    <div class="label">Results — <span id="backend" class="muted"></span></div>
+    <div id="viz" class="viz hidden">
+      <svg class="dial" viewBox="0 0 170 170" aria-hidden="true">
+        <circle class="ring" cx="85" cy="85" r="70"></circle>
+        <text class="lbl" x="85" y="18" text-anchor="middle">|0⟩</text>
+        <text class="lbl" x="85" y="164" text-anchor="middle">|1⟩</text>
+        <line id="needle" class="needle" x1="85" y1="85" x2="85" y2="22"></line>
+        <circle class="hub" cx="85" cy="85" r="5"></circle>
+      </svg>
+      <div class="viz-caption" id="viz-caption"></div>
+    </div>
+    <div class="bars" id="bars"></div>
+    <p class="muted" id="results-note" style="margin-bottom:0"></p>
+  </div>
+</div>
+
+<script>
+  const $ = (id) => document.getElementById(id);
+  const wait = (ms) => new Promise(r => setTimeout(r, ms));
+  let currentQasm = null;
+  let diagram = null;  // {ops, colX} of the last drawn circuit, for the walkthrough
+  let walkStep = -1;   // current step in the self-paced walkthrough (-1 = not started)
+
+  // --- markdown (escape, then a safe subset); code blocks are shown as a diagram instead ---
+  function esc(s){ return s.replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
+  function stripCode(s){ return s.replace(/```[\s\S]*?```/g, '').replace(/\n{3,}/g, '\n\n').trim(); }
+  function md(src){
+    src = esc(src);
+    const lines = src.split('\n'); let html = '', list = false;
+    const flush = () => { if(list){ html += '</ul>'; list = false; } };
+    for (let line of lines){
+      if (/^\s*[-*]\s+/.test(line)){ if(!list){ html+='<ul>'; list=true; }
+        html += '<li>' + inline(line.replace(/^\s*[-*]\s+/,'')) + '</li>'; continue; }
+      if (/^#{2,4}\s+/.test(line)){ flush(); html += '<h4>' + inline(line.replace(/^#{2,4}\s+/,'')) + '</h4>'; continue; }
+      if (line.trim() === ''){ flush(); continue; }
+      flush(); html += '<p>' + inline(line) + '</p>';
+    }
+    flush(); return html;
+  }
+  function inline(s){ return s.replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>').replace(/`([^`]+)`/g,'<code>$1</code>'); }
+
+  async function post(url, body){
+    const res = await fetch(url, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body)});
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || ('HTTP '+res.status));
+    return data;
+  }
+  const skeleton = () => '<div class="sk" style="width:92%"></div><div class="sk" style="width:80%"></div><div class="sk" style="width:88%"></div><div class="sk" style="width:60%"></div>';
+
+  async function ask(prompt){
+    if (!prompt.trim()) return;
+    $('ask').disabled = true;
+    $('reply-card').classList.remove('hidden');
+    $('reply').innerHTML = skeleton();
+    $('diagram-wrap').classList.add('hidden');
+    $('run').classList.add('hidden'); $('run-hint').classList.add('hidden');
+    $('results-card').classList.add('hidden');
+    try {
+      const { reply, qasm, circuit } = await post('/api/chat', { prompt });
+      $('reply').innerHTML = md(stripCode(reply));
+      currentQasm = qasm;
+      if (circuit && circuit.ops.length){ drawDiagram(circuit, qasm); $('diagram-wrap').classList.remove('hidden'); }
+      if (qasm){ $('run').classList.remove('hidden'); $('run-hint').classList.remove('hidden'); }
+    } catch(e){ $('reply').innerHTML = '<p class="err">⚠ '+e.message+'</p>'; }
+    finally { $('ask').disabled = false; }
+  }
+
+  // ---------- circuit diagram (SVG) ----------
+  const GATE_DESC = {
+    h:'Hadamard — creates superposition (both 0 and 1 at once)',
+    x:'NOT — flips the qubit (0 ↔ 1)',
+    cx:'CNOT — entangles: flips the target when the control is 1',
+    ccx:'Toffoli — flips the target when both controls are 1',
+    swap:'Swap — exchanges two qubits',
+    phase:'Phase (S / T) — nudges the quantum phase',
+    rot:'Rotation — rotates the qubit by an angle',
+    cu1:'Controlled phase — a phase nudge conditioned on another qubit',
+    measure:'Measure — reads the qubit out as a 0 or 1',
+  };
+  const legendKey = (g) => (['s','t','sdg','tdg'].includes(g) ? 'phase' : ['rz','ry'].includes(g) ? 'rot' : g);
+  const dot = (x,y)=>`<circle cx="${x}" cy="${y}" r="5" class="ctrl"/>`;
+  const xg  = (x,y)=>`<text x="${x}" y="${y+7}" class="xg" text-anchor="middle">×</text>`;
+  const target = (x,y)=>`<circle cx="${x}" cy="${y}" r="11" class="tgt"/><line x1="${x-11}" y1="${y}" x2="${x+11}" y2="${y}" class="tgtl"/><line x1="${x}" y1="${y-11}" x2="${x}" y2="${y+11}" class="tgtl"/>`;
+  function gbox(x,y,label){ const w=Math.max(30,label.length*9); return `<rect x="${x-w/2}" y="${y-15}" width="${w}" height="30" rx="7" class="gbox"/><text x="${x}" y="${y+4}" class="gtext" text-anchor="middle">${label}</text>`; }
+  const meter=(x,y)=>`<rect x="${x-15}" y="${y-15}" width="30" height="30" rx="7" class="mbox"/><path d="M ${x-8} ${y+4} A 8 8 0 0 1 ${x+8} ${y+4}" class="marc"/><line x1="${x}" y1="${y+4}" x2="${x+6}" y2="${y-5}" class="mneedle"/>`;
+
+  function drawDiagram(circ, qasm){
+    const nq = circ.qubits, ops = circ.ops;
+    const rowH=48, colW=48, padL=52, padT=16;
+    const W = padL + (ops.length+0.5)*colW + 14, H = padT + nq*rowH + 6;
+    const yq = i => padT + i*rowH + rowH/2;
+    let s = `<svg viewBox="0 0 ${W} ${H}" style="min-width:${Math.min(W,760)}px" role="img" aria-label="quantum circuit diagram">`;
+    s += `<rect id="hl" class="hl" x="0" y="${padT-4}" width="0" height="${nq*rowH+8}" rx="8"/>`;
+    for (let i=0;i<nq;i++){
+      s += `<text x="10" y="${yq(i)+4}" class="qlabel">q${i}</text>`;
+      s += `<line x1="${padL}" y1="${yq(i)}" x2="${W-8}" y2="${yq(i)}" class="wire"/>`;
+    }
+    ops.forEach((op,c) => {
+      const x = padL + (c+0.5)*colW, qs = op.qubits;
+      if (op.gate === 'measure'){ s += meter(x, yq(qs[0])); return; }
+      if (qs.length >= 2){
+        const ys = qs.map(yq); s += `<line x1="${x}" y1="${Math.min(...ys)}" x2="${x}" y2="${Math.max(...ys)}" class="link"/>`;
+        if (op.gate === 'swap'){ qs.forEach(q => s += xg(x, yq(q))); }
+        else { qs.slice(0,-1).forEach(q => s += dot(x, yq(q))); s += target(x, yq(qs[qs.length-1])); }
+      } else {
+        s += gbox(x, yq(qs[0]), op.gate.toUpperCase());
+      }
+    });
+    s += '</svg>';
+    $('diagram').innerHTML = s;
+    // legend: one line per distinct concept present
+    const seen = [], items = [];
+    ops.forEach(op => { const k = legendKey(op.gate);
+      if (!seen.includes(k)){ seen.push(k);
+        const sym = op.gate === 'measure' ? '<span class="sym m">📏</span>'
+                  : ['cx','ccx'].includes(op.gate) ? '<span class="sym">●⊕</span>'
+                  : `<span class="sym">${op.gate.toUpperCase()}</span>`;
+        items.push(`<li>${sym}<span>${GATE_DESC[k] || op.gate}</span></li>`); } });
+    $('legend').innerHTML = items.join('');
+    $('code').textContent = qasm;
+    diagram = { ops, colX: ops.map((_, c) => padL + (c + 0.5) * colW) };
+    walkStep = -1;
+    $('walk-caption').innerHTML = '';
+    $('walk').textContent = '▶ Walk me through it, step by step';
+  }
+
+  // Sweep a highlight across the diagram, explaining each gate in plain words.
+  function stepCaption(op){
+    const q = op.qubits, up = op.gate.toUpperCase();
+    if (op.gate === 'measure') return `<strong>Measure q${q[0]}.</strong> Read this qubit out as a definite 0 or 1.`;
+    if (op.gate === 'h') return `<strong>H on q${q[0]}.</strong> Put it into superposition — both 0 and 1 at once.`;
+    if (op.gate === 'x') return `<strong>X on q${q[0]}.</strong> Flip it: 0 becomes 1, or 1 becomes 0.`;
+    if (op.gate === 'cx') return `<strong>CNOT: q${q[0]} → q${q[1]}.</strong> Entangle them — q${q[1]} flips when q${q[0]} is 1, so their outcomes become linked.`;
+    if (op.gate === 'ccx') return `<strong>Toffoli.</strong> Flip q${q[q.length-1]} only when q${q[0]} and q${q[1]} are both 1.`;
+    if (op.gate === 'swap') return `<strong>Swap q${q[0]} ↔ q${q[1]}.</strong> Exchange the two qubits' states.`;
+    if (['rz','ry'].includes(op.gate)) return `<strong>${up} on q${q[0]}.</strong> Rotate the qubit by a set angle.`;
+    if (['s','t','sdg','tdg'].includes(op.gate)) return `<strong>${up} on q${q[0]}.</strong> Nudge the qubit's quantum phase.`;
+    if (op.gate === 'cu1') return `<strong>Controlled phase on q${q[0]}, q${q[1]}.</strong> A phase nudge on one qubit, conditioned on the other.`;
+    return `<strong>${up}.</strong>`;
+  }
+
+  function showStep(i){
+    const hl = document.getElementById('hl'), cap = $('walk-caption');
+    const n = diagram.ops.length;
+    if (i >= n){  // finished
+      hl.style.opacity = 0;
+      cap.innerHTML = '<strong>That’s the whole circuit.</strong> Now hit “Run it” below to actually execute it and see what the qubits do.';
+      $('walk').textContent = '↻ Walk through again';
+      walkStep = -1;
+      return;
+    }
+    hl.style.opacity = 1; hl.setAttribute('width', 44); hl.setAttribute('x', diagram.colX[i] - 22);
+    cap.innerHTML = `<span class="muted">Step ${i + 1} of ${n}</span><br>${stepCaption(diagram.ops[i])}`;
+    $('walk').textContent = (i === n - 1) ? 'Finish ✓' : 'Next →';
+    walkStep = i;
+  }
+
+  // Advance the self-paced walkthrough one gate per click.
+  function walkNext(){ if (diagram) showStep(walkStep + 1); }
+
+  // ---------- run + results ----------
+  async function runCircuit(){
+    if (!currentQasm) return;
+    $('run').disabled = true; $('run').textContent = 'Running…';
+    $('results-card').classList.remove('hidden');
+    const singleQubit = /qreg\s+\w+\[1\]/.test(currentQasm);
+    $('viz').classList.toggle('hidden', !singleQubit);
+    $('bars').innerHTML = '<span class="spin"></span> Sampling the quantum state 1024 times…';
+    $('results-note').textContent = '';
+    try {
+      const { counts, backend } = await post('/api/run', { qasm: currentQasm, shots: 1024 });
+      $('backend').textContent = backend;
+      if (singleQubit) await playDial(counts);
+      renderBars(counts);
+      $('results-note').innerHTML = explain(counts);
+    } catch(e){ $('bars').innerHTML = '<p class="err">⚠ '+e.message+'</p>'; $('viz').classList.add('hidden'); }
+    finally { $('run').disabled = false; $('run').textContent = '▶ Run it again'; }
+  }
+
+  const setNeedle = (deg) => { $('needle').style.transform = `rotate(${deg}deg)`; };
+  async function playDial(counts){
+    const cap = $('viz-caption');
+    setNeedle(0); cap.innerHTML = '<strong>Step 1.</strong> The qubit starts as <strong>0</strong> — the needle points up.';
+    await wait(850);
+    setNeedle(90); cap.innerHTML = '<strong>Step 2.</strong> The <code>h</code> gate turns it sideways: now it is <strong>both 0 and 1 at once</strong> (superposition).';
+    await wait(1150);
+    cap.innerHTML = '<strong>Step 3.</strong> Measuring forces a choice — watch it collapse, over and over…';
+    for (let i=0;i<14;i++){ setNeedle(Math.random()<0.5?0:180); await wait(85); }
+    const zero = counts['0']||0, one = counts['1']||0;
+    setNeedle(zero>=one?0:180);
+    cap.innerHTML = `<strong>Done.</strong> Across 1024 measurements it landed <strong>0</strong> ${zero} times and <strong>1</strong> ${one} times — about 50/50. That randomness is genuinely quantum.`;
+  }
+
+  function renderBars(counts){
+    const total = Object.values(counts).reduce((a,b)=>a+b,0)||1;
+    const rows = Object.entries(counts).sort((a,b)=>b[1]-a[1]);
+    const max = rows.length ? rows[0][1] : 1;
+    $('bars').innerHTML = rows.map(([state,n]) => {
+      const pct = ((n/total)*100).toFixed(1);
+      return `<div class="barrow"><code>|${state}⟩</code>
+        <div class="bartrack"><div class="barfill" data-w="${((n/max)*100).toFixed(1)}"></div></div>
+        <span class="barpct">${pct}%</span></div>`;
+    }).join('');
+    requestAnimationFrame(() => document.querySelectorAll('.barfill').forEach(b => b.style.width = b.dataset.w + '%'));
+  }
+
+  function explain(counts){
+    const total = Object.values(counts).reduce((a,b)=>a+b,0)||1;
+    const states = Object.keys(counts);
+    const even = states.length > 1 && states.every(s => Math.abs(counts[s]/total - 1/states.length) < 0.08);
+    let msg = 'Across 1024 runs, the qubits measured these combinations. ';
+    if (even && states.length === 2){
+      msg += `They split ~50/50 between <code>${states[0]}</code> and <code>${states[1]}</code> — quantum randomness (and for two-qubit results like <code>00</code>/<code>11</code>, entanglement: the qubits always agree, never a mismatch).`;
+    } else { msg += 'Taller bars are the outcomes the quantum state prefers.'; }
+    return msg;
+  }
+
+  function clearAll(){
+    $('prompt').value = ''; currentQasm = null;
+    $('reply-card').classList.add('hidden'); $('results-card').classList.add('hidden');
+    $('prompt').focus();
+  }
+
+  $('ask').onclick = () => ask($('prompt').value);
+  $('clear').onclick = clearAll;
+  $('run').onclick = runCircuit;
+  $('walk').onclick = walkNext;
+  $('prompt').addEventListener('keydown', e => { if (e.key==='Enter' && (e.metaKey||e.ctrlKey)) ask($('prompt').value); });
+  $('chips').addEventListener('click', e => { const c = e.target.closest('.chip'); if (c){ $('prompt').value = c.dataset.p; ask(c.dataset.p); } });
+</script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+{
+  "captured_at": "2026-08-21T08:28:38.4729781+08:00",
+  "browser": {
+    "name": "Google Chrome",
+    "version": "151.0.7922.138",
+    "automation": "Playwright 1.62.1 using the installed Chrome channel"
+  },
+  "desktop_interaction": {
+    "viewport": "1440x900",
+    "console_errors": [],
+    "action": "Loaded the Bell starter and clicked Run verified pipeline",
+    "run_status": "completed",
+    "verification_status": "PASSED",
+    "artifact_rows": 10,
+    "result_caption": "LOOMQ 参考模拟 / spinq dialect · 1024 shots",
+    "normalized_svg_gate_groups": 2,
+    "normalized_svg_measurements": 2,
+    "observed_top_state_rows": 2,
+    "concept_terms": 9,
+    "local_quantum_101_status": 200
+  },
+  "mobile_layout": {
+    "viewport": "390x844",
+    "document_scroll_width": 390,
+    "window_inner_width": 390,
+    "horizontal_page_overflow": false,
+    "open_concept_panel_scroll_width": 390,
+    "button_count": 19
+  },
+  "screenshots": [
+    {
+      "name": "workbench-1440x900.png",
+      "bytes": 118486,
+      "sha256": "77dd1fecec0ce2097cdc3ebe9022f42b15f7dbad67a7fda0ad5d45e8cc59ab0e"
+    },
+    {
+      "name": "workbench-390x844.png",
+      "bytes": 99871,
+      "sha256": "9248d1bfaff73a85a837cb1c50cb000acdee7900fd263e11e2116ee679f778c0"
+    },
+    {
+      "name": "workbench-run-1440x900.png",
+      "bytes": 126572,
+      "sha256": "0139ca41a98d0b660b6948b0222e8c4b8909d46a1c59a089891db68cd8c175bc"
+    }
+  ],
+  "truth_boundary": "The SVG draws admitted normalized operations only, Top states ranks observed counts only, and the UI labels execution as LoomQ local reference simulation. No unmeasured quantum state, vendor SDK, cloud, or QPU execution is claimed."
+}

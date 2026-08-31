@@ -1,0 +1,32 @@
+[
+  {
+    "name": "bell",
+    "task_id": "G-260806-0003",
+    "shots": 1024,
+    "platform_code": "gemini_vp",
+    "platform_name": "2Qubit核磁量子计算机",
+    "qasm": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[2];\ncreg c[2];\nh q[0];\ncx q[0], q[1];\nmeasure q -> c;\n",
+    "emitted_qasm": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[2];\ncreg c[2];\nh q[0];\ncx q[0], q[1];\nmeasure q[0] -> c[0];\nmeasure q[1] -> c[1];\n",
+    "submitted_at": "2026-08-06T23:39:51+0800"
+  },
+  {
+    "name": "ghz3",
+    "task_id": "S-260806-0003",
+    "shots": 1024,
+    "platform_code": "triangulum_vp",
+    "platform_name": "3Qubit核磁量子计算机",
+    "qasm": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[3];\ncreg c[3];\nh q[0];\ncx q[0],q[1];\ncx q[1],q[2];\nmeasure q -> c;\n",
+    "emitted_qasm": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[3];\ncreg c[3];\nh q[0];\ncx q[0], q[1];\ncx q[1], q[2];\nmeasure q[0] -> c[0];\nmeasure q[1] -> c[1];\nmeasure q[2] -> c[2];\n",
+    "submitted_at": "2026-08-06T23:42:40+0800"
+  },
+  {
+    "name": "bitorder",
+    "task_id": "G-260806-0004",
+    "shots": 1024,
+    "platform_code": "gemini_vp",
+    "platform_name": "2Qubit核磁量子计算机",
+    "qasm": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[2];\ncreg c[2];\nx q[0];\nmeasure q[0] -> c[0];\nmeasure q[1] -> c[1];\n",
+    "emitted_qasm": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[2];\ncreg c[2];\nx q[0];\nmeasure q[0] -> c[0];\nmeasure q[1] -> c[1];\n",
+    "submitted_at": "2026-08-06T23:42:42+0800"
+  }
+]

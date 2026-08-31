@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>QuantumHelper · 线路结果</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+.chartbox{padding:22px;border:1px solid var(--primary-line);border-radius:17px;background:linear-gradient(180deg,rgba(94,99,182,.05),rgba(255,255,255,.84))}
+.chart{height:260px;display:grid;grid-template-columns:repeat(4,1fr);gap:20px;align-items:end;padding:18px 12px 38px}.barwrap{position:relative;height:100%;display:flex;align-items:flex-end;justify-content:center}.bar{width:58%;min-height:3px;border-radius:10px 10px 4px 4px;background:rgba(94,99,182,.18)}.bar.major{background:linear-gradient(180deg,#767bc8,var(--primary));box-shadow:0 10px 22px rgba(94,99,182,.15)}.lab{position:absolute;bottom:-26px;font-size:12px;font-weight:760}
+.reading{display:grid;grid-template-columns:1.2fr .8fr;gap:12px;margin-top:16px}.reading>div{padding:17px;border:1px solid rgba(25,26,30,.07);border-radius:14px;background:rgba(255,255,255,.64)}.reading .main{border-color:var(--primary-line);background:var(--primary-soft)}.reading strong{display:block;margin-bottom:6px;font-size:15px}.reading span{color:var(--text);font-size:13px;line-height:1.6}
+@media(max-width:760px){.reading{grid-template-columns:1fr}.chart{gap:10px}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header class="topbar">
+  <a class="brand" href="index.html"><div class="logo"><span></span></div>QuantumHelper</a>
+  <div class="top-meta"><span>已有量子线路</span><span class="mode"><i class="mode-dot"></i>任务引导</span></div>
+</header><nav class="progress cols-5" aria-label="流程"><div class="progress-step done"><i>✓</i>导入线路</div><div class="progress-step done"><i>✓</i>检查线路</div><div class="progress-step done"><i>✓</i>选择后端</div><div class="progress-step done"><i>✓</i>运行</div><div class="progress-step active"><i>5</i>结果</div></nav>
+
+<section class="hero">
+  <div class="eyebrow">结果</div>
+  <h1>真实结果返回后，<span class="hero-em">在这里读取分布</span></h1>
+  <p class="hero-text">页面只展示线路实际得到的测量输出；没有真实数据时保持空态。</p>
+</section>
+<main><section class="layout"><article class="card main-card"><div class="section-head"><div class="kicker">测量分布</div><h2 class="section-title">尚无真实运行结果</h2></div><div class="section-body"><div class="chartbox"><div class="chart"><p class="small-copy">请先完成线路运行；真实 counts 返回后将在这里生成图表。</p></div></div><div class="reading"><div class="main"><strong>结果说明</strong><span>真实结果返回后，QuantumHelper 会根据实际测量分布说明可以直接观察到什么。</span></div><div><strong>本次后端</strong><span id="backend3">—</span></div></div></div></article><aside class="card side-card"><div class="kicker">运行摘要</div><h2 class="side-title">等待真实数据</h2><div class="summary-list"><div class="summary-item"><span class="summary-name">shots</span><span class="summary-value">—</span></div><div class="summary-item"><span class="summary-name">状态</span><span class="summary-value">尚未运行</span></div></div><div class="action-block"><a class="btn primary" href="circuit-run.html">返回运行线路 →</a><a class="btn secondary" href="index.html">返回首页</a></div></aside></section></main></div>
+</body>
+</html>

@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>量子计算互动游戏 · LoomQ</title>
+<link rel="stylesheet" href="/static/style.css?v=79">
+</head>
+<body>
+
+<main id="stage">
+
+  <!-- ============ 开场：先玩谜题 ============ -->
+  <section class="act" id="act-boot">
+    <h1 class="slogan">先来玩一次简单的游戏</h1>
+    <button class="primary big" type="button" id="to-box">开始</button>
+  </section>
+
+  <!-- ============ 第二页：黑盒和摇杆 ============ -->
+  <section class="act" id="act-box" hidden>
+    <p class="lead center" id="box-note">此时盒子内部空空如也，输入什么就会输出什么。</p>
+    <div class="box-rig">
+      <div class="lever-col">
+        <div class="lever-tag">1</div>
+        <div class="lever" id="lever" data-bit="0" role="button" aria-label="摇杆">
+          <div class="lever-bracket"></div>
+          <div class="lever-hub"></div>
+          <div class="lever-arm">
+            <div class="lever-shaft"></div>
+            <div class="lever-ball"></div>
+          </div>
+        </div>
+        <div class="lever-tag">0</div>
+      </div>
+      <div class="black-box">
+        <span>黑盒</span>
+      </div>
+      <div class="box-wire"></div>
+      <div class="out-screen lit-zero" id="out-screen">
+        <span id="out-digit">0</span>
+      </div>
+    </div>
+    <button class="primary big" type="button" id="box-action">点一下摇杆</button>
+  </section>
+
+  <!-- ============ 第三页：发四张牌 ============ -->
+  <section class="act" id="act-deal" hidden>
+    <div class="deal-stage">
+      <p class="deal-lead">我们将在这个黑盒内加入四个程序。并根据其多次输出结果的相同和不同将其分为两组。</p>
+      <p class="deal-hint" id="deal-hint">点一下屏幕</p>
+      <div class="deal-hand" id="deal-hand">
+      <div class="card-frame diff" style="--g:0">
+        <div class="frame-theme">前后两次输出<b>不一样</b></div>
+        <div class="frame-cards">
+          <article class="play-card" style="--i:0; --tilt:-3deg">
+            <div class="play-mark">F1</div>
+            <div class="play-body">拨 0 出 0<br>拨 1 出 1</div>
+          </article>
+          <article class="play-card" style="--i:1; --tilt:-1deg">
+            <div class="play-mark">F2</div>
+            <div class="play-body">拨 0 出 1<br>拨 1 出 0</div>
+          </article>
+        </div>
+      </div>
+      <div class="card-frame same" style="--g:1">
+        <div class="frame-theme">前后两次输出<b>一样</b></div>
+        <div class="frame-cards">
+          <article class="play-card" style="--i:2; --tilt:1deg">
+            <div class="play-mark">F3</div>
+            <div class="play-body">拨什么<br>都出 0</div>
+          </article>
+          <article class="play-card" style="--i:3; --tilt:3deg">
+            <div class="play-mark">F4</div>
+            <div class="play-body">拨什么<br>都出 1</div>
+          </article>
+        </div>
+      </div>
+    </div>
+    <button class="primary big" type="button" id="to-drop" hidden>下一步</button>
+    </div>
+  </section>
+
+  <!-- ============ 第四页：牌掉进黑盒 ============ -->
+  <section class="act" id="act-drop" hidden>
+    <div class="drop-stage" id="drop-stage">
+      <div class="drop-well">
+        <div class="drop-card" style="--i:0; --x:-58px; --r:-14deg">F1</div>
+        <div class="drop-card" style="--i:1; --x:-18px; --r:-5deg">F2</div>
+        <div class="drop-card" style="--i:2; --x:18px; --r:5deg">F3</div>
+        <div class="drop-card" style="--i:3; --x:58px; --r:14deg">F4</div>
+        <div class="drop-box" id="drop-box">
+          <div class="drop-slot"></div>
+          <span>黑盒</span>
+        </div>
+      </div>
+    </div>
+    <button class="primary big" type="button" id="to-recall" hidden>下一步</button>
+  </section>
+
+  <!-- ============ 第五页：还记得分组吗 ============ -->
+  <section class="act" id="act-recall" hidden>
+    <p class="lead center" id="recall-q">还记得我们对这四个程序进行的分组吗？</p>
+    <div class="deal-hand" id="recall-hand">
+      <div class="card-frame diff" style="--g:0">
+        <div class="frame-theme">前后两次输出<b>不一样</b></div>
+        <div class="frame-cards">
+          <article class="play-card" style="--i:0; --tilt:-3deg">
+            <div class="play-mark">F1</div>
+            <div class="play-body">拨 0 出 0<br>拨 1 出 1</div>
+          </article>
+          <article class="play-card" style="--i:1; --tilt:-1deg">
+            <div class="play-mark">F2</div>
+            <div class="play-body">拨 0 出 1<br>拨 1 出 0</div>
+          </article>
+        </div>
+      </div>
+      <div class="card-frame same" style="--g:1">
+        <div class="frame-theme">前后两次输出<b>一样</b></div>
+        <div class="frame-cards">
+          <article class="play-card" style="--i:2; --tilt:1deg">
+            <div class="play-mark">F3</div>
+            <div class="play-body">拨什么<br>都出 0</div>
+          </article>
+          <article class="play-card" style="--i:3; --tilt:3deg">
+            <div class="play-mark">F4</div>
+            <div class="play-body">拨什么<br>都出 1</div>
+          </article>
+        </div>
+      </div>
+    </div>
+    <p class="lead center" id="recall-why">分组看的不是「吐出 0 还是 1」，而是：把 0 和 1 都拨一遍，两次结果相不相等。上面一组两次不一样，下面一组两次一样。</p>
+    <button class="primary big" type="button" id="to-loaded">下一步</button>
+  </section>
+
+  <!-- ============ 第六页：盒子里已经有程序 ============ -->
+  <section class="act" id="act-loaded" hidden>
+    <p class="lead center" id="loaded-note">盒子里已经有一个程序。输入什么，输出不一定还是什么。</p>
+    <div class="box-rig">
+      <div class="lever-col">
+        <div class="lever-tag">1</div>
+        <div class="lever" id="loaded-lever" data-bit="0" role="button" aria-label="摇杆">
+          <div class="lever-bracket"></div>
+          <div class="lever-hub"></div>
+          <div class="lever-arm">
+            <div class="lever-shaft"></div>
+            <div class="lever-ball"></div>
+          </div>
+        </div>
+        <div class="lever-tag">0</div>
+      </div>
+      <div class="black-box gilded">
+        <span class="gold-leaf" aria-hidden="true"></span>
+        <span>黑盒</span>
+      </div>
+      <div class="box-wire"></div>
+      <div class="out-screen" id="loaded-screen">
+        <span id="loaded-digit">?</span>
+      </div>
+    </div>
+    <button class="primary big" type="button" id="loaded-action">点一下摇杆</button>
+  </section>
+
+  <!-- ============ 第七页：要拨几次 ============ -->
+  <section class="act" id="act-ask" hidden>
+    <h1 class="slogan" id="ask-q">我们需要拨动几次摇杆，才能够知道这个程序是一样组还是不一样组？</h1>
+    <button class="primary big" type="button" id="to-try">下一步</button>
+  </section>
+
+  <!-- ============ 第八页：我们一起来试 ============ -->
+  <section class="act" id="act-try" hidden>
+    <h1 class="slogan" id="try-title">我们一起来试</h1>
+    <p class="lead center" id="try-note">自己拨一拨摇杆。拨完以后，选一选：要知道是一样组还是不一样组，得拨几次？</p>
+    <div class="try-row">
+      <aside class="group-def diff" id="try-def-diff">
+        <div class="group-def-name">不一样组</div>
+        <p>拨 0 和拨 1，两次输出<b>不一样</b>。</p>
+        <p class="group-def-ex">F1、F2</p>
+      </aside>
+      <div class="box-rig">
+        <div class="lever-col">
+          <div class="lever-tag">1</div>
+          <div class="lever" id="try-lever" data-bit="0" role="button" aria-label="摇杆">
+            <div class="lever-bracket"></div>
+            <div class="lever-hub"></div>
+            <div class="lever-arm">
+              <div class="lever-shaft"></div>
+              <div class="lever-ball"></div>
+            </div>
+          </div>
+          <div class="lever-tag">0</div>
+        </div>
+        <div class="black-box gilded">
+          <span class="gold-leaf" aria-hidden="true"></span>
+          <span>黑盒</span>
+        </div>
+        <div class="box-wire"></div>
+        <div class="out-screen" id="try-screen">
+          <span id="try-digit">?</span>
+        </div>
+      </div>
+      <aside class="group-def same" id="try-def-same">
+        <div class="group-def-name">一样组</div>
+        <p>拨 0 和拨 1，两次输出<b>一样</b>。</p>
+        <p class="group-def-ex">F3、F4</p>
+      </aside>
+    </div>
+    <p class="counter" id="try-count-line">已经拨了 <b id="try-count">0</b> 次</p>
+    <button class="primary big" type="button" id="try-action">点一下摇杆</button>
+    <div class="quiz" id="try-quiz" hidden>
+      <p class="quiz-q">要知道是一样组还是不一样组，需要拨几次？</p>
+      <div class="quiz-options" id="try-options">
+        <button class="opt" type="button" data-value="1">1 次</button>
+        <button class="opt" type="button" data-value="2">2 次</button>
+      </div>
+      <div class="quiz-feedback" id="try-feedback" hidden></div>
+    </div>
+    <button class="primary big" type="button" id="to-limit" hidden>下一步</button>
+  </section>
+
+  <!-- ============ 第九页：经典的局限 ============ -->
+  <section class="act" id="act-limit" hidden>
+    <h1 class="slogan" id="limit-title">你发现了吗？</h1>
+    <p class="lead center" id="limit-body">我们必须输入两次数据，才能够知道这两次输入的结果是不是一样的。这就是经典计算机的局限。</p>
+    <button class="primary big" type="button" id="to-build">那么量子计算机是如何解决这个问题的呢？</button>
+  </section>
+
+  <!-- ============ 第十页：先搭机器 ============ -->
+  <section class="act" id="act-0" hidden>
+    <h1 class="slogan" id="build-title">让我们先一起搭建一台简易的量子计算机</h1>
+    <button class="primary big" type="button" id="build-next">先放一支激光笔</button>
+    <button class="primary big" type="button" id="to-1" hidden>玩玩试试</button>
+
+    <div class="optical-bench" id="optical-bench" data-step="0">
+      <div class="rail"></div>
+      <div class="beam beam-a"></div>
+      <div class="beam beam-b"></div>
+
+      <div class="lab-item">
+        <div class="ghost" id="ghost-laser"></div>
+        <div class="part-laser" id="part-laser" hidden></div>
+        <span class="lab-name">激光笔</span>
+      </div>
+      <div class="lab-item">
+        <div class="ghost diamond" id="ghost-glass"></div>
+        <div class="part-glass" id="part-glass" hidden></div>
+        <span class="lab-name">玻璃</span>
+      </div>
+      <div class="lab-item">
+        <div class="ghost round" id="ghost-lamp"></div>
+        <div class="part-lamp" id="part-lamp" hidden><span></span></div>
+        <span class="lab-name">灯</span>
+      </div>
+    </div>
+
+    <p class="build-line" id="build-line" hidden></p>
+  </section>
+
+  <!-- ============ 第十一页：盒子放进光路 ============ -->
+  <section class="act" id="act-path" hidden>
+    <p class="lead center" id="path-note">让我们把刚才那个盒子放到机器中间。</p>
+    <div class="path-bench" id="path-bench">
+      <div class="rail"></div>
+      <span class="path-beam in"></span>
+      <span class="path-beam up"><i>1</i></span>
+      <span class="path-beam down"><i>0</i></span>
+      <span class="path-beam out"></span>
+      <div class="lab-item laser-item">
+        <div class="part-laser"></div>
+        <span class="lab-name">激光笔</span>
+      </div>
+      <div class="lab-item glass-item">
+        <div class="part-glass"></div>
+        <span class="lab-name">玻璃</span>
+      </div>
+      <div class="lab-item path-box-slot">
+        <div class="path-slot-ghost" id="path-slot-ghost">放这里</div>
+        <div class="black-box gilded path-box" id="path-box">
+          <span class="gold-leaf" aria-hidden="true"></span>
+          <span>黑盒</span>
+        </div>
+      </div>
+      <div class="lab-item">
+        <div class="part-lamp" id="path-lamp"></div>
+        <span class="lab-name">灯</span>
+      </div>
+    </div>
+    <p class="path-glass-why" id="path-glass-why" hidden>
+      <b>这块玻璃会干什么？</b>
+      激光笔只射出一束光。玻璃把它劈成两束：上面一束当 1，下面一束当 0。以前我们一次只能对盒子输入一个数，操作两次之后，我们才能够确定盒子里的程序是一样组还是不一样组。有了它，我们只需要对盒子操作一次，答案就能揭晓。
+    </p>
+    <button class="primary big" type="button" id="path-laser" hidden>打开激光灯</button>
+    <button class="primary big" type="button" id="path-run" hidden>让 0 和 1 一起穿过去</button>
+    <p class="lead center" id="path-result" hidden></p>
+    <button class="primary big" type="button" id="to-guess" hidden>灯的亮或灭意味着什么</button>
+  </section>
+
+  <!-- ============ 第一幕：谜面 ============ -->
+  <section class="act" id="act-1" hidden>
+    <p class="eyebrow">谜面</p>
+    <h1>机器有了。中间放一个盒子。</h1>
+    <p class="lead">
+      盒子上只有一个开关，拨到 <b>0</b> 或 <b>1</b>，它吐出一个数字。
+      里面永远是下面四条规则之一，但你看不见是哪一条。
+    </p>
+
+    <div class="rules">
+      <div class="rule">
+        <div class="rule-name">规则 1</div>
+        <div class="rule-body">拨 0 出 0，拨 1 出 1</div>
+        <div class="rule-kind">前后两次输出<b>不一样</b></div>
+      </div>
+      <div class="rule">
+        <div class="rule-name">规则 2</div>
+        <div class="rule-body">拨 0 出 1，拨 1 出 0</div>
+        <div class="rule-kind">前后两次输出<b>不一样</b></div>
+      </div>
+      <div class="rule">
+        <div class="rule-name">规则 3</div>
+        <div class="rule-body">拨什么都出 0</div>
+        <div class="rule-kind">前后两次输出<b>一样</b></div>
+      </div>
+      <div class="rule">
+        <div class="rule-name">规则 4</div>
+        <div class="rule-body">拨什么都出 1</div>
+        <div class="rule-kind">前后两次输出<b>一样</b></div>
+      </div>
+    </div>
+
+    <div class="ask-box">
+      <p class="ask-q">对方不问「到底是哪一条」——那太难了。</p>
+      <p class="ask-big">只问一句：<b>前后两次输出，是一样还是不一样？</b></p>
+    </div>
+
+    <div class="quiz">
+      <p class="quiz-q">要百分之百答对，你至少得用几次这个盒子？</p>
+      <div class="quiz-options" id="hook-options">
+        <button class="opt" data-value="1">1 次</button>
+        <button class="opt" data-value="2">2 次</button>
+        <button class="opt" data-value="0">说不准</button>
+      </div>
+      <div class="quiz-feedback" id="hook-feedback" hidden></div>
+    </div>
+
+    <button class="primary" id="to-2" hidden>不信，亲手试试 →</button>
+  </section>
+
+  <!-- ============ 第二幕：经典要两次 ============ -->
+  <section class="act" id="act-2" hidden>
+    <p class="eyebrow">普通办法</p>
+    <h1>你只能一次拨一个数。</h1>
+    <p class="lead">盒子已经藏好了。你数着次数。</p>
+
+    <div class="bench">
+      <div class="table"></div>
+      <div class="box" id="classic-box">
+        <div class="box-lamp" id="classic-lamp"><span>?</span></div>
+        <div class="box-btns">
+          <button class="face" id="press-0">拨 0</button>
+          <button class="face" id="press-1">拨 1</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="counter">已经用了 <b id="classic-count">0</b> 次</div>
+    <div class="quiz-feedback" id="classic-feedback" hidden></div>
+    <button class="primary" id="to-3" hidden>那如果只准用一次呢？ →</button>
+  </section>
+
+  <!-- ============ 第三幕：只准一次 ============ -->
+  <section class="act" id="act-3" hidden>
+    <p class="eyebrow">规矩改了</p>
+    <h1>现在，这个盒子只准用一次。</h1>
+    <p class="lead">
+      你刚才是拨 0 一次、拨 1 一次。现在先试试只拨一次，看够不够。
+    </p>
+
+    <div class="bench">
+      <div class="table"></div>
+      <div class="box" id="once-box">
+        <div class="box-lamp" id="once-lamp"><span>?</span></div>
+        <div class="box-btns">
+          <button class="face" id="once-0">拨 0</button>
+          <button class="face" id="once-1">拨 1</button>
+        </div>
+      </div>
+    </div>
+    <div class="quiz-feedback" id="once-feedback" hidden></div>
+
+    <div class="tilt" id="tilt-block" hidden>
+      <p class="lead">
+        一次确实不够。但还有另一件事可以做：<b>把开关斜过来</b>——
+        不把 0 或 1 单独送进去，而是让两样同时进盒子，再看最后那一盏灯。
+      </p>
+      <div class="bench">
+        <div class="table"></div>
+        <div class="beamline">
+          <div class="splitter silver"></div>
+          <div class="box" id="quantum-box">
+            <div class="box-lamp" id="quantum-lamp"><span>?</span></div>
+          </div>
+          <div class="splitter silver"></div>
+          <div class="meter" id="quantum-meter"><span>灯</span></div>
+        </div>
+      </div>
+      <button class="primary" id="quantum-run">把开关斜过来，只问一次 →</button>
+      <div class="quiz-feedback" id="quantum-feedback" hidden></div>
+      <button class="primary" id="to-4" hidden>换一个新盒子，自己猜 →</button>
+    </div>
+  </section>
+
+  <!-- ============ 最后一步：新盒子只看灯 ============ -->
+  <section class="act" id="act-4" hidden>
+    <p class="lead center" id="final-note">再试一次</p>
+    <div class="try-row final-row">
+      <aside class="group-def diff" id="final-def-diff" data-value="balanced">
+        <div class="group-def-name">不一样组</div>
+        <p>拨 0 和拨 1，两次输出<b>不一样</b>。</p>
+        <p class="group-def-ex">F1、F2</p>
+      </aside>
+      <div class="path-bench" id="final-bench">
+        <div class="rail"></div>
+        <span class="path-beam in"></span>
+        <span class="path-beam up"><i>1</i></span>
+        <span class="path-beam down"><i>0</i></span>
+        <span class="path-beam out"></span>
+        <div class="lab-item">
+          <div class="part-laser"></div>
+          <span class="lab-name">激光笔</span>
+        </div>
+        <div class="lab-item">
+          <div class="part-glass"></div>
+          <span class="lab-name">斜玻璃</span>
+        </div>
+        <div class="lab-item path-box-slot">
+          <div class="black-box gilded path-box" id="final-box">
+            <span class="gold-leaf" aria-hidden="true"></span>
+            <span>黑盒</span>
+          </div>
+        </div>
+        <div class="lab-item">
+          <div class="part-lamp" id="final-lamp"></div>
+          <span class="lab-name">灯</span>
+        </div>
+      </div>
+      <aside class="group-def same" id="final-def-same" data-value="constant">
+        <div class="group-def-name">一样组</div>
+        <p>拨 0 和拨 1，两次输出<b>一样</b>。</p>
+        <p class="group-def-ex">F3、F4</p>
+      </aside>
+    </div>
+    <button class="primary big" type="button" id="final-run">让 0 和 1 一起穿过去</button>
+    <p class="lead center" id="final-ask" hidden>根据灯的亮灭，选择你认为盒子里是什么的那一组</p>
+    <div class="quiz-feedback" id="final-feedback" hidden></div>
+    <button class="primary big" type="button" id="to-meaning" hidden>下一步</button>
+  </section>
+
+  <!-- ============ 灯亮灯不亮是什么意思 ============ -->
+  <section class="act" id="act-meaning" hidden>
+    <h1 class="slogan" id="meaning-title">灯亮和灯不亮，到底在说什么？</h1>
+    <div class="meaning-pair">
+      <div class="meaning-card on">
+        <div class="part-lamp same" aria-hidden="true"></div>
+        <p class="meaning-name">灯亮</p>
+        <p>两束光在灯那里还能<strong>对上</strong>。盒子对 0 和对 1 做的是同一件事，所以是<strong>一样组</strong>。</p>
+      </div>
+      <div class="meaning-card off">
+        <div class="part-lamp diff" aria-hidden="true"></div>
+        <p class="meaning-name">灯不亮</p>
+        <p>两束光<strong>对不上</strong>了。盒子把两路改得不一样，所以是<strong>不一样组</strong>。</p>
+      </div>
+    </div>
+    <div class="lead" id="meaning-why">
+      <p>刚才那一幕，不是我们编出来的戏法。</p>
+      <p>1985 年，物理学家大卫·多伊奇（David Deutsch）问过同一个问题：一个只会回答 0 或 1 的黑盒，想知道它对两次输入的回答是不是一样，普通计算机必须问两次。他想出的办法是：让两种输入一起走进盒子，只问一次，看两路能不能对上。这就是 <strong>Deutsch–Jozsa 算法</strong>。</p>
+      <p>尽管 Deutsch–Jozsa 算法有很明显的人工构造痕迹，实际价值不明显。但是它清楚地显示了量子计算可以在某些特定的场景下远远超过经典计算，从而为寻找更有价值的量子算法提供了线索。</p>
+    </div>
+    <button class="primary big" type="button" id="to-lab">试试在真实的量子计算机上运行它</button>
+  </section>
+
+  <!-- ============ 桌上的零件写成电路 ============ -->
+  <section class="act" id="act-lab" hidden>
+    <h1 class="slogan" id="lab-title">桌上的零件，写成电路是什么样</h1>
+    <p class="lead center" id="lab-caption">
+      量子电路，我们可以理解为驱动量子计算机的语言。刚才那台简易光学量子计算机，每一件东西在真正的量子电路里都有对应的代码。试着按顺序点下去。
+    </p>
+    <div class="qasm-parts" id="qasm-parts">
+      <div class="qasm-part wait" data-i="0">激光笔</div>
+      <div class="qasm-part" data-i="1">分束镜</div>
+      <div class="qasm-part" data-i="2">黑盒</div>
+      <div class="qasm-part" data-i="3">灯</div>
+    </div>
+    <button class="primary big" type="button" id="qasm-next">写下激光笔</button>
+    <div class="code-panel qasm-sheet">
+      <div class="code-head">量子电路 · OpenQASM 2.0</div>
+      <pre id="qasm-build"></pre>
+    </div>
+    <p class="lead center" id="qasm-done" hidden>
+      这四段合在一起，就是刚才那台机器的电路。Deutsch 算法写在纸上，就是这个样子。
+    </p>
+    <button class="primary big" type="button" id="qasm-run" hidden>运行这个电路</button>
+  </section>
+
+  <!-- ============ 祝贺 ============ -->
+  <section class="act" id="act-cheer" hidden>
+    <h1 class="slogan" id="cheer-title">恭喜你第一次在量子计算机上运行了量子电路！</h1>
+    <p class="lead center" id="cheer-hint">点击屏幕查看运行结果</p>
+  </section>
+
+  <!-- ============ 运行电路，只展示结果 ============ -->
+  <section class="act" id="act-run" hidden>
+    <p class="lead center" id="run-status">正在运行这个电路…</p>
+    <div id="run-chart"></div>
+    <p class="lead center" id="run-verdict" hidden></p>
+    <p class="lead center" id="run-legend" hidden>
+      测到 0 = 对上了 = 灯亮 = 一样组<br>
+      测到 1 = 对不上 = 灯不亮 = 不一样组
+    </p>
+    <button class="primary big" type="button" id="to-end" hidden>下一步</button>
+  </section>
+
+  <!-- ============ 结束语 ============ -->
+  <section class="act" id="act-end" hidden>
+    <h1 class="slogan" id="end-title">量子计算就是如此神奇，也并非那么高不可攀。</h1>
+    <p class="lead center" id="end-body">希望这个游戏能够成为你开始理解量子计算的一个契机。</p>
+    <button class="primary big" type="button" id="open-end-agent">问问AI小助手</button>
+  </section>
+
+</main>
+
+<button class="assistant-fab" id="assistant-fab" hidden aria-label="打开量子计算AI小助手">我不懂，问一下</button>
+
+<aside class="assistant-panel" id="assistant-panel" hidden aria-label="量子计算AI小助手">
+  <div class="assistant-head">
+    <span>量子计算AI小助手</span>
+    <button class="icon-btn" id="assistant-close" aria-label="关闭">×</button>
+  </div>
+  <div class="assistant-note" id="assistant-health">正在确认助手能不能说话…</div>
+  <div class="assistant-log" id="assistant-log"></div>
+  <div class="assistant-presets" id="assistant-presets">
+    <button class="chip" type="button" data-preset="context">这一步在讲什么？</button>
+    <button class="chip" type="button" data-preset="hello">写一条最简单的电路</button>
+    <button class="chip danger" type="button" data-preset="w">帮我生成一个 3 比特 W 态并全部测量</button>
+    <button class="chip danger" type="button" data-preset="fix">修好这段电路：h q[0]; cx q[0] q[1]; measure q -&gt; c;</button>
+  </div>
+  <div class="assistant-input">
+    <textarea id="assistant-text" rows="2" placeholder="随便问，看不懂哪里就问哪里"></textarea>
+    <button class="primary" type="button" id="assistant-send">发送</button>
+  </div>
+</aside>
+
+<script src="/static/main.js?v=80"></script>
+</body>
+</html>

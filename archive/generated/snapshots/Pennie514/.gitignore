@@ -1,0 +1,43 @@
+# Python 虚拟环境（本地 999 MB，绝不能进归档：上限 100 MiB）
+.venv/
+venv/
+env/
+
+# Python 缓存与构建产物
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+build/
+dist/
+
+# 测试与覆盖率
+.pytest_cache/
+.coverage
+htmlcov/
+*.report.json
+
+# 凭据：真机接入产生的密钥与 token 绝不入库
+*.pem
+*.key
+!*.pub
+.env
+.env.*
+secrets.json
+spinq_credentials*
+originq_token*
+
+# 编辑器与操作系统
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# 本地自测输出
+/self_check*.json
+
+# 本地提交流程辅助（保留在本机使用，不入库、不推送）
+/starter_kit/submit.sh
+/starter_kit/SUBMISSION.md
+/starter_kit/final_check.sh

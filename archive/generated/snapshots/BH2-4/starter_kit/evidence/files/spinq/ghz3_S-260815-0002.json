@@ -1,0 +1,23 @@
+{
+  "platform": "spinq_cloud_qpu",
+  "platform_code": "triangulum_vp",
+  "job_id": "S-260815-0002",
+  "submitted_at_utc": "2026-08-15T03:00:15.767041+00:00",
+  "retrieved_at_utc": "2026-08-15T03:02:45.786276+00:00",
+  "shots": 1000,
+  "qasm_source": "starter_kit/circuits/ghz3.qasm",
+  "qasm_contract_output": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[3];\ncreg c[3];\nh q[0];\ncx q[0], q[1];\ncx q[1], q[2];\nmeasure q[0] -> c[0];\nmeasure q[1] -> c[1];\nmeasure q[2] -> c[2];\n",
+  "qasm_cloud_submitted": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[3];\ncreg c[3];\nh q[0];\ncx q[0], q[1];\ncx q[1], q[2];\n",
+  "counts": null,
+  "probabilities": {
+    "000": 0.32031406,
+    "011": 0.07550189,
+    "110": 0.07515841,
+    "001": 0.10717859,
+    "100": 0.05077431,
+    "111": 0.24771669,
+    "101": 0.03378657,
+    "010": 0.08956948
+  },
+  "raw_task_code": "S-260815-0002"
+}

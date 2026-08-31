@@ -1,0 +1,36 @@
+{
+  "backend": "originq_wukong",
+  "job_id": "731D7567CEB49509DA142F74B40CE084",
+  "shots": 1000,
+  "counts": {
+    "00": 381,
+    "01": 0,
+    "10": 19,
+    "11": 599
+  },
+  "bit_order": "little",
+  "timestamp": "2026-08-06T23:10:05+0800",
+  "meta": {
+    "backend_name": "WK_C180",
+    "chip": "本源悟空 180（第四代超导，180 计算比特）",
+    "submitted_at": "2026-08-06T22:59:27+0800",
+    "platform_raw_kind": "probabilities",
+    "platform_raw": {
+      "00": 0.3813125,
+      "01": 0.0003856,
+      "10": 0.0188321,
+      "11": 0.5994695
+    },
+    "platform_origin_data": "{\"success\":true,\"code\":10000,\"message\":\"success\",\"obj\":{\"taskId\":\"731D7567CEB49509DA142F74B40CE084\",\"chipId\":\"WK_C180\",\"taskCalMethod\":\"2\",\"taskFrom\":\"4\",\"pilotTaskId\":\"D3F2BF610D2242589BB1A43EF9DC73DE\",\"errCode\":0,\"startTime\":1786028367717,\"taskState\":\"3\",\"measureQubitSize\":[2],\"aioTimeStamp\":\"9:1786028371413;8:1786028369705;7:1786028369432;2:1786028369974;\",\"requiredCore\":\"0\",\"taskType\":\"0\",\"taskResult\":[\"{\\\"value\\\":[0.3813125,0.0003856,0.0188321,0.5994695],\\\"key\\\":[\\\"0x0\\\",\\\"0x1\\\",\\\"0x2\\\",\\\"0x3\\\"]}\"],\"totalTime\":3811,\"qpuRunTime\":319,\"pulseTime\":null,\"cirExecuteTime\":null,\"measureQubits\":[],\"QMachineType\":null,\"QProg\":[null]}}",
+    "platform_timing_info": {
+      "aioTimeStamp": "9:1786028371413;8:1786028369705;7:1786028369432;2:1786028369974;",
+      "cirExecuteTime": "null",
+      "pulseTime": "null",
+      "qpuRunTime": "319",
+      "startTime": "1786028367717",
+      "totalTime": "3811"
+    },
+    "submitted_ir": "OriginIR（由本提交的中间层从 OpenQASM 2.0 转译）",
+    "originir": "QINIT 2\nCREG 2\nH q[0]\nCNOT q[0], q[1]\nMEASURE q[0], c[0]\nMEASURE q[1], c[1]\n"
+  }
+}

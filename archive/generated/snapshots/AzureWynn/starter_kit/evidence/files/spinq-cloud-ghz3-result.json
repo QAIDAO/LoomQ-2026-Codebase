@@ -1,0 +1,19 @@
+{
+  "backend": "spinq_cloud_qpu",
+  "platform": "triangulum_vp",
+  "circuit": "ghz3",
+  "job_id": "S-260817-0002",
+  "shots": 1024,
+  "counts": {
+    "000": 398,
+    "011": 24,
+    "110": 14,
+    "001": 28,
+    "100": 14,
+    "111": 474,
+    "101": 26,
+    "010": 47
+  },
+  "timestamp": "2026-08-17T08:16:09.403464+00:00",
+  "note": "raw result from SpinQ Cloud; task_code traceable on platform console"
+}

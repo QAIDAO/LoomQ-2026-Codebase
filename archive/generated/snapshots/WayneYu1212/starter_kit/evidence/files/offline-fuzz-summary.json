@@ -1,0 +1,34 @@
+{
+  "seed": 20260822,
+  "failures": [],
+  "l1_general": {
+    "cases": 10000,
+    "passed": 10000,
+    "failures": 0
+  },
+  "measurement": {
+    "cases": 5000,
+    "passed": 5000,
+    "failures": 0
+  },
+  "parameters": {
+    "cases": 5000,
+    "passed": 5000,
+    "failures": 0
+  },
+  "l3_hybrid": {
+    "cases": 5000,
+    "passed": 5000,
+    "failures": 0
+  },
+  "custom_riscv": {
+    "cases": 5000,
+    "passed": 5000,
+    "failures": 0
+  },
+  "security_parser": {
+    "cases": 5000,
+    "passed": 5000,
+    "failures": 0
+  }
+}

@@ -1,0 +1,275 @@
+test_full_suite_runs_after_only_starter_kit_is_copied (test_archive_isolation.ArchiveIsolationTests) ... ok
+test_submission_tree_contains_the_scoring_regressions (test_archive_isolation.ArchiveIsolationTests) ... ok
+test_invalid_counts_are_rejected (test_l1_braket.BraketRunnerTests) ... ok
+test_local_source_decomposes_unsupported_standard_gates (test_l1_braket.BraketRunnerTests) ... ok
+test_maps_partial_measurements_to_classical_indices (test_l1_braket.BraketRunnerTests) ... ok
+test_missing_sdk_is_explicit (test_l1_braket.BraketRunnerTests) ... ok
+test_runner_executes_program_and_normalizes_bit_order (test_l1_braket.BraketRunnerTests) ... ok
+test_all_local_preflights_finish_before_submission (test_l1_braket_hardware.BraketHardwareTests) ... local preflight passed: bell
+local preflight passed: bit_order
+hardware evidence passed: bell (bell)
+hardware evidence passed: bit_order (bit_order)
+ok
+test_ambiguous_submission_failure_still_writes_failure_evidence (test_l1_braket_hardware.BraketHardwareTests) ... local preflight passed: bell
+ok
+test_boto3_wrapper_pins_endpoint_policy_and_request_fields (test_l1_braket_hardware.BraketHardwareTests) ... ok
+test_check_is_read_only (test_l1_braket_hardware.BraketHardwareTests) ... ok
+test_check_rejects_bucket_in_another_region (test_l1_braket_hardware.BraketHardwareTests) ... ok
+test_cli_client_initialization_failure_has_no_traceback_or_path (test_l1_braket_hardware.BraketHardwareTests) ... ok
+test_cli_plan_is_offline_and_describes_four_tasks (test_l1_braket_hardware.BraketHardwareTests) ... ok
+test_client_initialization_hides_profile_and_credentials_path (test_l1_braket_hardware.BraketHardwareTests) ... ok
+test_client_rejects_configured_service_endpoint (test_l1_braket_hardware.BraketHardwareTests) ... ok
+test_config_rejects_placeholders_bad_storage_and_unbounded_values (test_l1_braket_hardware.BraketHardwareTests) ... ok
+test_config_requires_named_profile_and_matching_qpu_region (test_l1_braket_hardware.BraketHardwareTests) ... ok
+test_confirmation_is_checked_before_client_use (test_l1_braket_hardware.BraketHardwareTests) ... ok
+test_credential_template_and_iam_policy_are_least_privilege_placeholders (test_l1_braket_hardware.BraketHardwareTests) ... ok
+test_default_private_receipt_directory_is_ignored_and_not_configurable (test_l1_braket_hardware.BraketHardwareTests) ... ok
+test_downloaded_result_is_retained_safely_when_validation_fails (test_l1_braket_hardware.BraketHardwareTests) ... ok
+test_evidence_bundle_is_exclusive (test_l1_braket_hardware.BraketHardwareTests) ... ok
+test_evidence_job_id_preserves_legitimate_twelve_digit_segment (test_l1_braket_hardware.BraketHardwareTests) ... ok
+test_exclusive_text_and_json_partial_writes_are_removed (test_l1_braket_hardware.BraketHardwareTests) ... ok
+test_failure_and_timeout_preserve_safe_task_id (test_l1_braket_hardware.BraketHardwareTests) ... ok
+test_polling_retries_are_bounded_and_never_resubmit (test_l1_braket_hardware.BraketHardwareTests) ... ok
+test_prepared_receipt_rejects_hash_identity_escape_symlink_and_size (test_l1_braket_hardware.BraketHardwareTests) ... ok
+test_private_receipt_duplicate_keys_and_schema_v1_are_rejected (test_l1_braket_hardware.BraketHardwareTests) ... ok
+test_private_receipts_are_isolated_from_custom_public_output (test_l1_braket_hardware.BraketHardwareTests) ... ok
+test_private_root_and_parent_reparse_fail_before_submission (test_l1_braket_hardware.BraketHardwareTests) ... ok
+test_probability_result_uses_largest_remainder (test_l1_braket_hardware.BraketHardwareTests) ... ok
+test_redaction_removes_aws_credentials_and_request_metadata (test_l1_braket_hardware.BraketHardwareTests) ... ok
+test_result_must_match_task_shots_and_device (test_l1_braket_hardware.BraketHardwareTests) ... ok
+test_resume_by_task_arn_skips_paid_submission (test_l1_braket_hardware.BraketHardwareTests) ... ok
+test_resume_cli_validation_requires_recovery_fields (test_l1_braket_hardware.BraketHardwareTests) ... ok
+test_retry_client_token_cannot_move_between_circuits (test_l1_braket_hardware.BraketHardwareTests) ... ok
+test_retry_prepared_accepts_identical_existing_submitted_receipt_only (test_l1_braket_hardware.BraketHardwareTests) ... local preflight passed: bit_order
+AWS Braket task identified for bit_order: 11111111-2222-3333-4444-555555555555
+hardware evidence passed: bit_order (11111111-2222-3333-4444-555555555555)
+local preflight passed: bit_order
+AWS Braket task identified for bit_order: 11111111-2222-3333-4444-555555555555
+hardware evidence passed: bit_order (11111111-2222-3333-4444-555555555555)
+local preflight passed: bit_order
+ok
+test_retry_prepared_reuses_token_and_submits_exactly_once (test_l1_braket_hardware.BraketHardwareTests) ... local preflight passed: bit_order
+AWS Braket task identified for bit_order: 11111111-2222-3333-4444-555555555555
+hardware evidence passed: bit_order (11111111-2222-3333-4444-555555555555)
+ok
+test_retry_submitted_fingerprint_cannot_move_to_a_different_task (test_l1_braket_hardware.BraketHardwareTests) ... ok
+test_single_task_cli_dispatches_one_item_without_exposed_token (test_l1_braket_hardware.BraketHardwareTests) ... ok
+test_single_task_modes_require_explicit_bounded_arguments (test_l1_braket_hardware.BraketHardwareTests) ... ok
+test_smoke_order_and_limit (test_l1_braket_hardware.BraketHardwareTests) ... usage: run_braket_hardware.py [-h] [--confirm-submit SUBMIT]
+                              [--task-arn TASK_ARN]
+                              [--client-token CLIENT_TOKEN]
+                              [--circuit {bell,bit_order,ghz3}]
+                              [--shots SHOTS]
+                              [--prepared-receipt PREPARED_RECEIPT]
+                              [--output-dir OUTPUT_DIR]
+                              {plan,check,smoke,formal,submit-one,retry-prepared,resume}
+run_braket_hardware.py: error: smoke mode is limited to at most 256 shots per circuit
+ok
+test_state_machine_maps_nontrivial_bit_order_and_closes (test_l1_braket_hardware.BraketHardwareTests) ... ok
+test_submit_transport_failure_is_marked_ambiguous (test_l1_braket_hardware.BraketHardwareTests) ... ok
+test_unknown_state_fails_closed (test_l1_braket_hardware.BraketHardwareTests) ... ok
+test_emitters_are_complete_and_deterministic (test_l1_core.EmitterTests) ... ok
+test_invalid_target_and_qasm_propagate (test_l1_core.EmitterTests) ... ok
+test_target_specific_headers_and_gate_names (test_l1_core.EmitterTests) ... ok
+test_parses_all_gates_and_angles (test_l1_core.ParserTests) ... ok
+test_rejects_invalid_inputs_with_context (test_l1_core.ParserTests) ... ok
+test_normalizes_supported_keys (test_l1_core.ResultTests) ... ok
+test_rejects_bad_counts_and_shots (test_l1_core.ResultTests) ... ok
+test_run_dispatch_and_schema (test_l1_core.ResultTests) ... ok
+test_uninstalled_runner_fails_explicitly (test_l1_core.ResultTests) ... ok
+test_finalizes_after_execution_failure (test_l1_originq.OriginQRunnerTests) ... ok
+test_runner_converts_executes_and_finalizes (test_l1_originq.OriginQRunnerTests) ... ok
+test_reads_documented_environment_fields_without_exposing_token (test_l1_originq_hardware.OriginQHardwareConfigTests) ... ok
+test_rejects_missing_credentials_and_unsafe_url (test_l1_originq_hardware.OriginQHardwareConfigTests) ... ok
+test_uses_forced_https_default_and_rejects_invalid_backend_name (test_l1_originq_hardware.OriginQHardwareConfigTests) ... ok
+test_cli_plan_is_offline_and_submission_needs_exact_confirmation (test_l1_originq_hardware.OriginQHardwareSafetyTests) ... ok
+test_core_submission_requires_exact_confirmation (test_l1_originq_hardware.OriginQHardwareSafetyTests) ... ok
+test_evidence_bundle_contains_sanitized_raw_and_standard_summary (test_l1_originq_hardware.OriginQHardwareSafetyTests) ... ok
+test_evidence_bundle_never_overwrites_an_existing_job (test_l1_originq_hardware.OriginQHardwareSafetyTests) ... ok
+test_exclusive_json_partial_write_is_removed (test_l1_originq_hardware.OriginQHardwareSafetyTests) ... ok
+test_failed_local_preflight_prevents_cloud_submission (test_l1_originq_hardware.OriginQHardwareSafetyTests) ... ok
+test_hardware_validation_requires_both_peaks_and_minimum_support (test_l1_originq_hardware.OriginQHardwareSafetyTests) ... ok
+test_interrupt_after_submission_prints_resume_only_instruction (test_l1_originq_hardware.OriginQHardwareSafetyTests) ... Submitted bell job KNOWN-JOB-7; polling...
+ok
+test_local_preflight_completes_before_cloud_submission (test_l1_originq_hardware.OriginQHardwareSafetyTests) ... Completed bell job job-one
+  raw: C:\Users\root\AppData\Local\Temp\tmpj_bpg94u\originq-bell-job-one-raw.json
+  summary: C:\Users\root\AppData\Local\Temp\tmpj_bpg94u\originq-bell-job-one-summary.json
+ok
+test_recursive_json_sanitization (test_l1_originq_hardware.OriginQHardwareSafetyTests) ... ok
+test_smoke_includes_bell_and_asymmetric_bit_order_probe (test_l1_originq_hardware.OriginQHardwareSafetyTests) ... ok
+test_submit_one_requires_explicit_bounded_single_task (test_l1_originq_hardware.OriginQHardwareSafetyTests) ... ok
+test_four_field_failure_uses_documented_error_info (test_l1_originq_hardware.OriginQHardwareStateMachineTests) ... ok
+test_rejects_unknown_state_and_malformed_result (test_l1_originq_hardware.OriginQHardwareStateMachineTests) ... ok
+test_resume_attaches_to_existing_job_without_submitting (test_l1_originq_hardware.OriginQHardwareStateMachineTests) ... ok
+test_retries_result_queries_without_resubmitting (test_l1_originq_hardware.OriginQHardwareStateMachineTests) ... ok
+test_retries_transient_status_queries_without_resubmitting (test_l1_originq_hardware.OriginQHardwareStateMachineTests) ... ok
+test_status_query_retries_are_bounded_and_never_resubmit (test_l1_originq_hardware.OriginQHardwareStateMachineTests) ... ok
+test_terminal_failure_is_redacted_and_closes_client (test_l1_originq_hardware.OriginQHardwareStateMachineTests) ... ok
+test_times_out_with_last_state_and_closes_client (test_l1_originq_hardware.OriginQHardwareStateMachineTests) ... ok
+test_waits_computes_and_normalizes_finished_probabilities (test_l1_originq_hardware.OriginQHardwareStateMachineTests) ... ok
+test_pyqpanda3_cpuqvm_preflight_uses_originir_converter (test_l1_originq_hardware.PyQPandaQCloudClientTests) ... ok
+test_qcloud_result_retrieval_failure_is_retryable (test_l1_originq_hardware.PyQPandaQCloudClientTests) ... ok
+test_uses_pinned_pyqpanda3_qcloud_contract (test_l1_originq_hardware.PyQPandaQCloudClientTests) ... ok
+test_all_gate_and_angle_cases_are_normalized (test_l1_regression.ReferenceSimulatorTests) ... ok
+test_global_phase_comparison (test_l1_regression.ReferenceSimulatorTests) ... ok
+test_known_distributions_and_classical_bit_order (test_l1_regression.ReferenceSimulatorTests) ... ok
+test_native_gate_decompositions_match_statevectors (test_l1_regression.ReferenceSimulatorTests) ... ok
+test_qft_grover_and_seeded_cases_are_nontrivial (test_l1_regression.ReferenceSimulatorTests) ... ok
+test_every_case_parses_and_emits_deterministically (test_l1_regression.RegressionHarnessTests) ... ok
+test_full_entrypoint_flow_with_in_memory_runner (test_l1_regression.RegressionHarnessTests) ... ok
+test_production_path_has_no_reference_or_case_hardcoding (test_l1_regression.RegressionHarnessTests) ... ok
+test_result_validation_rejects_schema_and_width_errors (test_l1_regression.RegressionHarnessTests) ... ok
+test_maps_sdk_qubit_order_through_noncontiguous_measurements (test_l1_spinq.SpinQRunnerTests) ... ok
+test_missing_sdk_is_explicit (test_l1_spinq.SpinQRunnerTests) ... ok
+test_rejects_sdk_counts_key_with_wrong_qubit_width (test_l1_spinq.SpinQRunnerTests) ... ok
+test_runner_compiles_executes_and_cleans_temporary_file (test_l1_spinq.SpinQRunnerTests) ... ok
+test_confirmed_smoke_writes_qasm_and_redacted_json (test_l1_spinq_hardware.SpinQHardwareCliTests) ... ok
+test_default_dry_run_never_reads_credentials_or_calls_cloud (test_l1_spinq_hardware.SpinQHardwareCliTests) ... ok
+test_git_and_docker_context_exclude_credential_files (test_l1_spinq_hardware.SpinQHardwareCliTests) ... ok
+test_plan_reports_exact_procurement_workload_without_cloud_use (test_l1_spinq_hardware.SpinQHardwareCliTests) ... ok
+test_resume_is_read_only_and_writes_existing_job_evidence (test_l1_spinq_hardware.SpinQHardwareCliTests) ... ok
+test_smoke_rejects_non_smoke_shot_count_before_cloud_use (test_l1_spinq_hardware.SpinQHardwareCliTests) ... ok
+test_smoke_without_literal_confirmation_stops_before_credentials (test_l1_spinq_hardware.SpinQHardwareCliTests) ... ok
+test_environment_loads_without_exposing_secret_repr (test_l1_spinq_hardware.SpinQHardwareSettingsTests) ... ok
+test_host_rejects_embedded_credentials (test_l1_spinq_hardware.SpinQHardwareSettingsTests) ... ok
+test_invalid_key_file_does_not_echo_path (test_l1_spinq_hardware.SpinQHardwareSettingsTests) ... ok
+test_missing_environment_reports_names_without_values (test_l1_spinq_hardware.SpinQHardwareSettingsTests) ... ok
+test_username_and_private_key_use_spinqit_routing_defaults (test_l1_spinq_hardware.SpinQHardwareSettingsTests) ... ok
+test_accepted_submission_requires_job_id (test_l1_spinq_hardware.SpinQHardwareStateMachineTests) ... ok
+test_confirmation_is_checked_before_client_use (test_l1_spinq_hardware.SpinQHardwareStateMachineTests) ... ok
+test_invalid_counts_are_rejected (test_l1_spinq_hardware.SpinQHardwareStateMachineTests) ... ok
+test_pending_task_times_out (test_l1_spinq_hardware.SpinQHardwareStateMachineTests) ... ok
+test_pending_then_success_uses_shared_emitter_and_redacts_raw_result (test_l1_spinq_hardware.SpinQHardwareStateMachineTests) ... ok
+test_probabilities_are_exactly_rounded_and_projected_to_classical_bits (test_l1_spinq_hardware.SpinQHardwareStateMachineTests) ... ok
+test_recovery_reads_existing_job_without_compiling_or_submitting (test_l1_spinq_hardware.SpinQHardwareStateMachineTests) ... ok
+test_saved_but_not_runnable_submission_is_not_success (test_l1_spinq_hardware.SpinQHardwareStateMachineTests) ... ok
+test_terminal_failure_is_reported_with_job_id (test_l1_spinq_hardware.SpinQHardwareStateMachineTests) ... ok
+test_unknown_poll_state_is_rejected (test_l1_spinq_hardware.SpinQHardwareStateMachineTests) ... ok
+test_default_host_is_omitted_from_sdk_factory_call (test_l1_spinq_hardware.SpinQitCloudClientTests) ... ok
+test_sdk_failure_result_maps_to_failed_state_and_stdout_is_suppressed (test_l1_spinq_hardware.SpinQitCloudClientTests) ... ok
+test_sdk_pending_exception_maps_to_pending_state (test_l1_spinq_hardware.SpinQitCloudClientTests) ... ok
+test_verified_sdk_calls_are_configured_and_temp_qasm_is_removed (test_l1_spinq_hardware.SpinQitCloudClientTests) ... ok
+test_backend_constraint_parse_failure_gets_one_correction (test_l2_agent.L2AgentTests) ... ok
+test_backend_constraints_require_prompt_evidence (test_l2_agent.L2AgentTests) ... ok
+test_backend_forbidden_and_no_solution (test_l2_agent.L2AgentTests) ... ok
+test_backend_selection_uses_local_capability_table (test_l2_agent.L2AgentTests) ... ok
+test_backend_solver_matches_independent_exhaustive_oracle (test_l2_agent.L2AgentTests) ... ok
+test_correct_trusted_target_uses_one_call (test_l2_agent.L2AgentTests) ... ok
+test_deep_parameter_expression_is_rejected_before_parser (test_l2_agent.L2AgentTests) ... ok
+test_each_request_has_an_independent_context_and_timeout (test_l2_agent.L2AgentTests) ... ok
+test_equivalent_candidates_deduplicate_but_distinct_candidates_fail (test_l2_agent.L2AgentTests) ... ok
+test_failed_repair_returns_statically_valid_history_best (test_l2_agent.L2AgentTests) ... ok
+test_huge_register_is_rejected_before_parser_expansion (test_l2_agent.L2AgentTests) ... ok
+test_invalid_model_constraint_can_degrade_to_local_prompt_facts (test_l2_agent.L2AgentTests) ... ok
+test_invalid_qasm_is_rejected (test_l2_agent.L2AgentTests) ... ok
+test_json_depth_and_fence_limits_are_bounded (test_l2_agent.L2AgentTests) ... ok
+test_live_model_backend_synonyms_are_normalized (test_l2_agent.L2AgentTests) ... ok
+test_local_openai_compatible_server_end_to_end (test_l2_agent.L2AgentTests) ... ok
+test_missing_or_empty_model_content_fails (test_l2_agent.L2AgentTests) ... ok
+test_parallel_requests_do_not_share_prompt_or_selection (test_l2_agent.L2AgentTests) ... ok
+test_public_evaluator_passes_against_local_compatible_server (test_l2_agent.L2AgentTests) ... ok
+test_qasm_json_is_validated_and_formatted (test_l2_agent.L2AgentTests) ... ok
+test_qasm_qubit_limit_is_checked_after_static_parse (test_l2_agent.L2AgentTests) ... ok
+test_raw_markdown_qasm_is_accepted_and_wrapper_removed (test_l2_agent.L2AgentTests) ... ok
+test_raw_prompt_locally_recovers_omitted_backend_constraints (test_l2_agent.L2AgentTests) ... ok
+test_resource_limits_fail_before_expensive_work (test_l2_agent.L2AgentTests) ... ok
+test_target_parser_handles_common_qubit_variants (test_l2_agent.L2AgentTests) ... ok
+test_too_many_qasm_candidates_are_rejected (test_l2_agent.L2AgentTests) ... ok
+test_trusted_ghz_target_triggers_one_directed_repair (test_l2_agent.L2AgentTests) ... ok
+test_untrusted_open_target_skips_semantic_rejection (test_l2_agent.L2AgentTests) ... ok
+test_429_or_503_gets_one_budgeted_retry_without_real_wait (test_l2_audit_regressions.L2ObjectiveAuditRegressions) ... ok
+test_agent_repairs_a_lossy_measurement_map (test_l2_audit_regressions.L2ObjectiveAuditRegressions) ... ok
+test_controlled_aliases_chinese_numbers_and_readout_synonyms (test_l2_audit_regressions.L2ObjectiveAuditRegressions) ... ok
+test_default_output_budget_is_1500_and_explicit_limit_is_bounded (test_l2_audit_regressions.L2ObjectiveAuditRegressions) ... ok
+test_full_measurement_accepts_multi_register_permutations (test_l2_audit_regressions.L2ObjectiveAuditRegressions) ... ok
+test_full_measurement_requires_a_classical_bijection (test_l2_audit_regressions.L2ObjectiveAuditRegressions) ... ok
+test_without_charge_can_only_mean_free (test_l2_audit_regressions.L2ObjectiveAuditRegressions) ... ok
+test_bell_guide_completes_without_model_configuration (test_l2_audit_regressions.L2WebAuditRegressions) ... ok
+test_concurrent_same_stage_presets_advance_only_once (test_l2_audit_regressions.L2WebAuditRegressions) ... ok
+test_counting_method_and_backend_boundary_are_honest (test_l2_audit_regressions.L2WebAuditRegressions) ... ok
+test_every_guide_stage_has_one_preset_fallback_reply (test_l2_audit_regressions.L2WebAuditRegressions) ... ok
+test_exact_guide_instruction_falls_back_when_model_connection_fails (test_l2_audit_regressions.L2WebAuditRegressions) ... ok
+test_fallback_is_limited_to_the_exact_current_preset (test_l2_audit_regressions.L2WebAuditRegressions) ... ok
+test_invalid_model_tool_arguments_use_preset_not_local_error (test_l2_audit_regressions.L2WebAuditRegressions) ... ok
+test_local_guide_tool_failure_is_not_retried_or_misreported (test_l2_audit_regressions.L2WebAuditRegressions) ... ok
+test_multi_register_identity_survives_web_ir_and_description (test_l2_audit_regressions.L2WebAuditRegressions) ... ok
+test_qasm_creation_preserves_valid_and_invalid_states (test_l2_audit_regressions.L2WebAuditRegressions) ... ok
+test_rejected_qasm_input_does_not_mutate_history_or_revision (test_l2_audit_regressions.L2WebAuditRegressions) ... ok
+test_reply_failure_after_tool_call_does_not_advance_twice (test_l2_audit_regressions.L2WebAuditRegressions) ... ok
+test_stale_guide_request_cannot_overwrite_new_qasm (test_l2_audit_regressions.L2WebAuditRegressions) ... ok
+test_static_client_routes_guide_through_agent_and_has_narrow_layout (test_l2_audit_regressions.L2WebAuditRegressions) ... ok
+test_web_validation_reports_real_target_semantics (test_l2_audit_regressions.L2WebAuditRegressions) ... ok
+test_client_works_with_an_openai_compatible_endpoint (test_l2_contract.PublicL2ContractTests) ... ok
+test_deepseek_request_disables_thinking_and_streaming (test_l2_contract.PublicL2ContractTests) ... ok
+test_formal_request_fields_cannot_be_overridden (test_l2_contract.PublicL2ContractTests) ... ok
+test_http_error_is_not_implicitly_retried (test_l2_contract.PublicL2ContractTests) ... ok
+test_missing_environment_fails_without_echoing_secrets (test_l2_contract.PublicL2ContractTests) ... ok
+test_policy_is_the_published_formal_deepseek_budget (test_l2_contract.PublicL2ContractTests) ... ok
+test_transport_rejects_oversized_response (test_l2_contract.PublicL2ContractTests) ... ok
+test_agent_backend_request_receives_capabilities_and_can_propose (test_l2_web.GuidedExperimentServiceTests) ... ok
+test_agent_proposal_cannot_overwrite_newer_work (test_l2_web.GuidedExperimentServiceTests) ... ok
+test_agent_qasm_proposal_is_validated_and_requires_confirmation (test_l2_web.GuidedExperimentServiceTests) ... ok
+test_agent_recognizes_all_project_action_kinds (test_l2_web.GuidedExperimentServiceTests) ... ok
+test_agent_three_qubit_proposal_applies_as_dynamic_circuit (test_l2_web.GuidedExperimentServiceTests) ... ok
+test_backend_failure_is_non_blocking (test_l2_web.GuidedExperimentServiceTests) ... ok
+test_bell_eight_stage_golden_path (test_l2_web.GuidedExperimentServiceTests) ... ok
+test_bell_guide_uses_eight_agent_presets_and_one_forced_tool_each (test_l2_web.GuidedExperimentServiceTests) ... ok
+test_bell_preset_is_rejected_when_it_is_not_the_current_stage (test_l2_web.GuidedExperimentServiceTests) ... ok
+test_each_connected_local_backend_is_selectable_and_executes (test_l2_web.GuidedExperimentServiceTests) ... ok
+test_general_agent_answer_is_free_text_with_latest_workspace_snapshot (test_l2_web.GuidedExperimentServiceTests) ... ok
+test_general_agent_can_run_with_a_model_tool_call (test_l2_web.GuidedExperimentServiceTests) ... ok
+test_general_agent_can_set_goal_with_a_model_tool_call (test_l2_web.GuidedExperimentServiceTests) ... ok
+test_general_questions_share_one_path_and_receive_five_qubit_and_result_context (test_l2_web.GuidedExperimentServiceTests) ... ok
+test_invalid_qasm_preserves_last_valid_circuit_and_can_repair (test_l2_web.GuidedExperimentServiceTests) ... ok
+test_natural_language_ghz_uses_local_validation (test_l2_web.GuidedExperimentServiceTests) ... ok
+test_repair_of_valid_qasm_is_a_non_action (test_l2_web.GuidedExperimentServiceTests) ... ok
+test_run_snapshot_is_immutable_after_edit (test_l2_web.GuidedExperimentServiceTests) ... ok
+test_stale_revision_cannot_overwrite_newer_edit (test_l2_web.GuidedExperimentServiceTests) ... ok
+test_unconfigured_agent_is_explicit_and_does_not_fake_a_reply (test_l2_web.GuidedExperimentServiceTests) ... ok
+test_agent_http_fallback_is_not_reported_as_a_connected_model (test_l2_web.HTTPContractTests) ... [loomq-web] "POST /api/experiments HTTP/1.1" 200 -
+[loomq-web] "POST /api/experiments/693ad9e2-9c86-45cf-af63-9c0970a41712/agent HTTP/1.1" 200 -
+ok
+test_health_static_and_session_restore (test_l2_web.HTTPContractTests) ... [loomq-web] "GET /api/health HTTP/1.1" 200 -
+[loomq-web] "GET / HTTP/1.1" 200 -
+[loomq-web] "POST /api/experiments HTTP/1.1" 200 -
+[loomq-web] "GET /api/experiments/b0591aeb-c628-4427-8f2c-2c4632297e38 HTTP/1.1" 200 -
+ok
+test_stale_http_update_returns_recovery_conflict (test_l2_web.HTTPContractTests) ... [loomq-web] "POST /api/experiments HTTP/1.1" 200 -
+[loomq-web] "POST /api/experiments/7c65fc6e-5311-499c-bd6f-aa58a84f8b6f/advance HTTP/1.1" 200 -
+[loomq-web] "POST /api/experiments/7c65fc6e-5311-499c-bd6f-aa58a84f8b6f/advance HTTP/1.1" 409 -
+ok
+test_accessible_landmarks_and_equivalents_are_present (test_l2_web.StaticExperienceContractTests) ... ok
+test_agent_is_always_available_as_a_visible_conversation_surface (test_l2_web.StaticExperienceContractTests) ... ok
+test_default_and_color_accessible_themes_are_explicit_and_persistent (test_l2_web.StaticExperienceContractTests) ... ok
+test_focus_layout_is_one_screen_and_secondary_views_are_exclusive (test_l2_web.StaticExperienceContractTests) ... ok
+test_reduced_motion_switch_has_visible_state_and_animation_target (test_l2_web.StaticExperienceContractTests) ... ok
+test_scientific_boundary_and_local_identity_are_fixed_copy (test_l2_web.StaticExperienceContractTests) ... ok
+test_single_route_and_revision_guard (test_l2_web.StaticExperienceContractTests) ... ok
+test_workbench_functions_are_not_locked_behind_tutorial_navigation (test_l2_web.StaticExperienceContractTests) ... ok
+test_compile_and_execute_both_branches (test_l3_and_quantum_riscv.L3Tests) ... ok
+test_rejects_missing_else_and_out_of_range (test_l3_and_quantum_riscv.L3Tests) ... ok
+test_base_encode_decode_and_control_flow (test_l3_and_quantum_riscv.QuantumRISCVTests) ... ok
+test_parameter_gate_q16_16 (test_l3_and_quantum_riscv.QuantumRISCVTests) ... ok
+test_quantum_spy_and_reserved_encoding (test_l3_and_quantum_riscv.QuantumRISCVTests) ... ok
+test_quantum_to_classical_branch_end_to_end (test_l3_and_quantum_riscv.QuantumRISCVTests) ... ok
+test_arbitrary_repeated_target_coefficients (test_l3_differential.L3DifferentialTests) ... ok
+test_c21_is_an_input_not_a_temporary (test_l3_differential.L3DifferentialTests) ... ok
+test_fixed_seed_ast_differential_all_measurements (test_l3_differential.L3DifferentialTests) ... ok
+test_nested_full_linear_conditions_and_negative_constants (test_l3_differential.L3DifferentialTests) ... ok
+test_machine_words_submit_read_and_drive_classical_branch (test_quantum_riscv_e2e.OfficialQuantumRISCVE2ETests) ... ok
+test_official_module_owns_custom_encoding_and_execution (test_quantum_riscv_e2e.OfficialQuantumRISCVE2ETests) ... ok
+test_parameter_gate_reaches_backend_as_q16_16_angle (test_quantum_riscv_e2e.OfficialQuantumRISCVE2ETests) ... ok
+test_tiny_text_emulator_keeps_l3_python_integer_semantics (test_quantum_riscv_e2e.OfficialQuantumRISCVE2ETests) ... ok
+test_custom_command_parsing_and_unique_safe_log_names (test_verification_manifest.VerificationManifestTests) ... ok
+test_default_set_is_offline_and_skip_heavy_has_lightweight_work (test_verification_manifest.VerificationManifestTests) ... ok
+test_execute_command_combines_output_and_hashes_log (test_verification_manifest.VerificationManifestTests) ... ok
+test_extra_artifact_hash_and_missing_artifact_affect_status (test_verification_manifest.VerificationManifestTests) ... ok
+test_failure_still_writes_manifest_and_returns_nonzero (test_verification_manifest.VerificationManifestTests) ... ok
+test_git_probe_finds_parent_repo_and_handles_sandbox_ownership (test_verification_manifest.VerificationManifestTests) ... ok
+test_help_documents_required_controls (test_verification_manifest.VerificationManifestTests) ... ok
+test_sanitized_environment_never_inherits_secrets (test_verification_manifest.VerificationManifestTests) ... ok
+
+----------------------------------------------------------------------
+Ran 233 tests in 15.143s
+
+OK

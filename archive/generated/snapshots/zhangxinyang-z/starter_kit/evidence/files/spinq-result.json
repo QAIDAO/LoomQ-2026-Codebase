@@ -1,0 +1,8 @@
+{
+  "backend": "spinq_cloud_qpu",
+  "job_id": "G-260820-0002",
+  "shots": 1024,
+  "counts": {"00": 441, "11": 458, "01": 63, "10": 62},
+  "bit_order": "little",
+  "timestamp": "2026-08-20T02:13:18.927460+00:00"
+}

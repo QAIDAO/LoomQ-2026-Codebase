@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="LoomQ Playground 本地交互原型" />
+    <title>LoomQ Playground</title>
+    <link rel="stylesheet" href="./styles.css?v=qa-9" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-identity">
+        <a class="brand" href="#explore" aria-label="LoomQ Playground 首页">
+          <svg viewBox="0 0 44 44" aria-hidden="true">
+            <circle cx="22" cy="22" r="15" />
+            <ellipse cx="22" cy="22" rx="8" ry="17" transform="rotate(28 22 22)" />
+            <ellipse cx="22" cy="22" rx="8" ry="17" transform="rotate(-28 22 22)" />
+            <circle cx="22" cy="22" r="2.5" />
+          </svg>
+          <strong>LoomQ</strong>
+        </a>
+        <span class="ready-badge"><i aria-hidden="true"></i>Ready</span>
+      </div>
+      <div class="header-actions">
+        <button class="api-status-button is-loading" id="api-status-button" type="button" aria-haspopup="dialog" aria-controls="api-dialog">
+          <i aria-hidden="true"></i><span id="api-status-label">检查 API…</span>
+        </button>
+        <button class="avatar-button" type="button" aria-label="用户账户">U</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" id="explore" aria-labelledby="explore-title">
+        <div class="section-heading">
+          <span class="hero-spark" aria-hidden="true">✦</span>
+          <div>
+            <h1 id="explore-title">欢迎来到 <span>LoomQ Playground</span></h1>
+            <p class="hero-subtitle">构建量子电路，运行实验，探索量子世界。</p>
+          </div>
+        </div>
+
+        <section class="qa-card" id="qa-card" aria-labelledby="qa-title">
+          <header class="qa-heading">
+            <div>
+              <span class="qa-kicker">QUANTUM PLAYGROUND</span>
+              <h2 id="qa-title">描述实验，或直接问我</h2>
+              <p class="qa-heading-note">我会自动判断你是在生成实验，还是想了解代码、数学和测量结果。</p>
+            </div>
+            <span class="qa-context" id="qa-context">自动参考当前实验、步骤和测量结果</span>
+          </header>
+          <div class="prompt-suggestions" aria-label="常用实验和提问示例">
+            <span class="examples-label">试试：</span>
+            <div class="prompt-suggestion-grid">
+              <div class="example-grid" id="examples">
+                <button class="example-chip" type="button" data-example data-prompt="抛一枚量子硬币，让我看看量子如何同时保留多种可能">量子硬币</button>
+                <button class="example-chip" type="button" data-example data-prompt="让我看看两个量子比特为什么会表现得像绑在一起，用 Bell 纠缠态演示">量子纠缠</button>
+                <button class="example-chip" type="button" data-example data-prompt="生成一个包含 H 和相位门的两比特相位干涉实验，让我看到相位如何通过干涉改变测量概率">相位干涉</button>
+                <button class="example-chip" type="button" data-example data-prompt="生成一个 3 比特 GHZ 态，并对三个量子比特全部测量">L2-1 GHZ 生成</button>
+                <button class="example-chip" type="button" data-example data-prompt="我想制备一个 Bell 态，但这段 OpenQASM 代码报错了，请修复它：H q[0]; CX q[0] q[1]。目标是修复后通过 Fidelity 验证。">L2-2 QASM 修复</button>
+                <button class="example-chip" type="button" data-example data-prompt="我需要运行一个 15 比特电路，而且零排队等待，请推荐一个满足约束的官方 backend_id，并说明理由。">L2-3 智能选后端</button>
+              </div>
+              <div class="first-visit-row">
+                <button class="first-visit-button" id="first-visit" type="button" data-prompt="抛一枚量子硬币，让我看看量子如何同时保留多种可能"><span aria-hidden="true">✦</span>我完全不懂量子计算，带我体验一次</button>
+              </div>
+              <div class="question-grid" id="questions">
+                <button class="question-chip" type="button" data-question data-prompt="什么是量子纠缠？请用零基础也能听懂的方式解释，并给一个 Bell 态的数学例子。">什么是量子纠缠？</button>
+                <button class="question-chip" type="button" data-question data-prompt="这个实验里发生了什么？请结合当前电路的量子门、状态变化和测量结果解释。">这个实验里发生了什么？</button>
+                <button class="question-chip" type="button" data-question data-prompt="H 门和 CX 门的数学逻辑是什么？请先讲直觉，再写出关键公式。">H / CX 的数学逻辑</button>
+              </div>
+            </div>
+          </div>
+          <form class="prompt-form qa-input-form" id="prompt-form">
+            <label class="sr-only" for="prompt">输入实验描述或问题</label>
+            <div class="prompt-shell">
+              <textarea id="prompt" rows="3" placeholder="例如：生成一个 Bell 态；或者问：什么是量子纠缠？" required></textarea>
+              <div class="prompt-actions">
+                <button class="generate-button" id="generate-experiment" type="submit">
+                  <span aria-hidden="true">✦</span>
+                  <span id="generate-label">发送</span>
+                </button>
+              </div>
+            </div>
+            <p class="field-error" id="prompt-error" hidden>先输入实验描述或问题。</p>
+            <p class="service-notice" id="service-notice" role="alert" hidden></p>
+            <p class="prompt-status" id="prompt-status" role="status" aria-live="polite" hidden>内容已准备好，正在自动判断下一步</p>
+          </form>
+          <p class="qa-status" id="qa-status" role="status" aria-live="polite" hidden></p>
+          <div class="qa-messages" id="qa-messages" aria-label="导师对话记录，可上下滚动查看" aria-live="polite">
+            <div class="qa-empty" id="qa-empty">
+              <strong>还没有问题</strong>
+              <span>你可以先问“什么是量子纠缠”，生成实验后再追问“这个实验里发生了什么”。</span>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section class="workspace is-empty" id="workspace" aria-labelledby="workspace-title">
+        <div class="workspace-grid">
+          <article class="surface circuit-card">
+            <header class="editor-header">
+              <div class="editor-identity">
+                <h2>电路预览</h2>
+                <span class="experiment-tag" id="workspace-title">等待生成实验</span>
+                <span class="sr-only" id="workspace-status">尚未生成方案</span>
+              </div>
+            </header>
+            <div class="view-switcher">
+              <div class="tabs" role="tablist" aria-label="实验内容视图">
+                <button id="circuit-tab" data-experiment-tab data-panel-id="circuit-panel" role="tab" aria-selected="true" aria-controls="circuit-panel">电路预览</button>
+                <button id="qasm-tab" data-experiment-tab data-panel-id="qasm-panel" role="tab" aria-selected="false" aria-controls="qasm-panel">QASM 代码</button>
+              </div>
+            </div>
+
+            <div id="circuit-panel" class="tab-panel" role="tabpanel" aria-labelledby="circuit-tab">
+              <div class="circuit-canvas">
+                <p class="state-order-note" id="state-order">状态顺序：生成实验后显示</p>
+                <svg class="circuit" id="circuit-svg" viewBox="0 0 760 250" role="img" aria-labelledby="circuit-title circuit-desc"></svg>
+                <div class="circuit-empty" id="circuit-empty"><strong>电路将在这里出现</strong><span>连接 API 并生成实验后，QASM 会驱动真实电路预览。</span></div>
+                <aside class="gate-quick-card" id="gate-quick-card" aria-live="polite" hidden>
+                  <div class="quick-card-heading"><strong id="gate-quick-title"></strong><code id="gate-quick-target"></code></div>
+                  <section><span>门的作用</span><p id="gate-quick-change"></p></section>
+                  <section class="quick-card-example" id="gate-quick-example" hidden><span>例子（计算基态）</span><p id="gate-quick-example-text"></p></section>
+                  <section class="quick-card-experiment" id="gate-quick-experiment" hidden><span>在本实验中（作用于 Bell 态）</span><p id="gate-quick-experiment-text"></p></section>
+                  <small>点击量子门，看完整解释</small>
+                </aside>
+                <div class="gate-palette" id="gate-palette" aria-label="支持的量子操作">
+                  <button type="button" data-tooltip="Hadamard 门：创建可发生干涉的叠加">H</button>
+                  <button type="button" data-tooltip="Pauli-X 门：翻转 |0⟩ 与 |1⟩">X</button>
+                  <button type="button" data-tooltip="S 相位门：给 |1⟩ 增加 π/2 相位">S</button>
+                  <button type="button" data-tooltip="T 相位门：给 |1⟩ 增加 π/4 相位">T</button>
+                  <button type="button" data-tooltip="CX 受控非门：控制位为 1 时翻转目标位">CX</button>
+                  <button type="button" data-tooltip="CCX 门：两个控制位都为 1 时翻转目标位">CCX</button>
+                  <button class="gate-whitelist-trigger" id="gate-whitelist-trigger" type="button" aria-expanded="false" aria-controls="gate-whitelist-popover" aria-label="查看其余 6 个支持的量子门">+6</button>
+                  <div class="gate-whitelist-popover" id="gate-whitelist-popover" role="group" aria-label="正式量子门白名单" hidden>
+                    <p>其余支持的量子门</p>
+                    <div class="gate-whitelist-grid">
+                      <button type="button" data-tooltip="S† 门：撤销 S 门加入的相位">S†</button>
+                      <button type="button" data-tooltip="T† 门：撤销 T 门加入的相位">T†</button>
+                      <button type="button" data-tooltip="RZ 旋转门：调整量子态的相对相位">RZ</button>
+                      <button type="button" data-tooltip="RY 旋转门：按角度重新分配 0/1 测量概率">RY</button>
+                      <button type="button" data-tooltip="CU1 受控相位门：条件满足时加入指定相位">CU1</button>
+                      <button type="button" data-tooltip="SWAP 门：交换两个量子比特承载的状态">SWAP</button>
+                    </div>
+                  </div>
+                  <button class="measure-tool" type="button" data-tooltip="测量：把量子状态读取为经典的 0 或 1" aria-label="测量 M">M</button>
+                </div>
+              </div>
+              <aside class="gate-card" id="gate-card" aria-live="polite" hidden>
+                <div class="gate-card-heading"><div><span id="gate-card-concept"></span><strong id="gate-card-technical"></strong></div><button id="gate-card-close" type="button" aria-label="关闭量子门解释">×</button></div>
+                <div class="gate-card-layers">
+                  <section class="gate-math gate-math-featured" id="gate-math" aria-labelledby="gate-math-label">
+                    <div class="gate-math-heading"><div><span>FORMAL DEFINITION</span><h4 id="gate-math-label">数学形式</h4></div><small>优先查看矩阵或态变换</small></div>
+                    <div class="gate-math-content" id="gate-card-math"></div>
+                  </section>
+                  <section class="gate-definition"><h4>门的定义与作用</h4><p id="gate-card-rule"></p></section>
+                  <section class="current-change"><h4>当前态矢的变换</h4><div class="state-transition" id="gate-card-transition"><div><span>作用前</span><div class="state-expression" id="gate-card-before"></div></div><b aria-hidden="true">→</b><div><span>作用后</span><div class="state-expression" id="gate-card-after"></div></div></div><p id="gate-card-current"></p></section>
+                  <section class="bloch-panel" id="gate-bloch" aria-labelledby="gate-bloch-title" hidden>
+                    <div class="bloch-heading"><div><span>BLOCH REPRESENTATION</span><h4 id="gate-bloch-title">Bloch 球：局部态轨迹</h4></div><small>拖拽蓝色向量查看 α、β 与相对相位</small></div>
+                    <p class="bloch-note">单比特纯态位于球面；多比特门显示受影响量子比特的局部约化态，纠缠时向量可以落在球内。拖拽是本地探索，不会改写当前实验。</p>
+                    <div class="bloch-flow" id="gate-card-bloch"></div>
+                  </section>
+                </div>
+              </aside>
+              <details class="steps-panel">
+                <summary id="steps-title">查看电路步骤解释</summary>
+                <ol class="circuit-steps" id="circuit-steps"></ol>
+              </details>
+            </div>
+
+            <div id="qasm-panel" class="tab-panel qasm-panel" role="tabpanel" aria-labelledby="qasm-tab" hidden>
+              <div class="code-heading"><span>OpenQASM 2.0</span><span>真实 L2 生成 · 已经 L1 校验</span></div>
+              <pre><code id="qasm-code">生成实验后将在这里显示 OpenQASM 2.0。</code></pre>
+            </div>
+          </article>
+
+          <aside class="surface run-card" aria-labelledby="backend-title">
+            <div class="run-card-heading"><h2>推荐运行后端</h2></div>
+            <details class="backend-picker" id="backend-picker">
+              <summary class="backend-row" id="selected-backend-card">
+                <span class="backend-mark" id="backend-mark" aria-hidden="true">—</span>
+                <span><strong id="backend-title">正在读取后端能力…</strong></span>
+                <span class="recommend" id="backend-recommend-badge">AI 推荐</span>
+              </summary>
+              <div class="backend-options" id="backend-options" role="radiogroup" aria-label="选择运行后端"></div>
+            </details>
+            <p class="backend-line" id="backend-summary">读取后端能力后显示运行方式与约束</p>
+            <p class="backend-line" id="backend-capacity">最大量子比特数以官方能力表为准</p>
+            <label class="shots-label" for="shots"><span>Shots</span><small>采样次数</small></label>
+            <select id="shots">
+              <option value="100">100</option>
+              <option value="512">512</option>
+              <option value="1000">1000</option>
+              <option value="1024">1024</option>
+              <option value="2048">2048</option>
+              <option value="4096">4096</option>
+              <option value="8192">8192</option>
+            </select>
+            <button class="run-button" id="run-experiment" type="button" disabled>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 7 8 5-8 5V7Z" /></svg>
+              <span id="run-label">Run Experiment</span>
+            </button>
+            <p class="run-status" id="run-status" role="status" aria-live="polite">生成实验后即可在所选本地或云端后端运行。</p>
+            <details class="advanced-options">
+              <summary>高级选项</summary>
+              <p id="backend-reason"></p>
+              <dl class="backend-facts" id="backend-facts"></dl>
+            </details>
+          </aside>
+        </div>
+      </section>
+
+      <section class="panel results is-empty" id="results" aria-labelledby="results-title">
+        <div class="results-heading"><span aria-hidden="true">▥</span><div><h2 id="results-title">等待运行结果</h2><p>运行实验后显示真实模拟器 counts</p></div></div>
+        <div class="results-grid">
+          <article class="surface status-card">
+            <span class="success-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m7 12 3 3 7-7" /></svg></span>
+            <div><p class="success-text" id="result-status-text">尚未运行实验</p><p id="result-source">生成电路并运行后，结果会显示在这里。</p></div>
+            <dl class="result-meta">
+              <div><dt>Backend</dt><dd id="result-backend">—</dd></div>
+              <div><dt>Job ID</dt><dd id="result-job-id">—</dd></div>
+              <div><dt>Shots</dt><dd id="result-shots">—</dd></div>
+              <div><dt>执行耗时</dt><dd id="result-elapsed">—</dd></div>
+            </dl>
+          </article>
+
+          <article class="surface chart-card">
+            <div class="card-heading"><div><h3 id="result-chart-title">测量结果</h3><p>采样次数：<span id="chart-shots">—</span></p></div><span>概率</span></div>
+            <p class="bit-order-note" id="result-bit-order">结果位序：c[n-1]...c0，c0 在最右侧</p>
+            <div class="chart" id="result-chart" role="img" aria-label="测量结果分布">
+              <div class="axis"><span>100%</span><span>50%</span><span>0</span></div>
+              <div class="bars" id="result-bars"><p class="chart-empty">暂无测量数据</p></div>
+            </div>
+          </article>
+
+          <article class="surface explanation-card">
+            <div class="result-explanation-heading">
+              <span class="qa-kicker">RESULT TUTOR</span>
+              <h3>把这次测量读懂</h3>
+              <p>先看实际 counts，再把概率、量子门和下一步观察连起来。</p>
+            </div>
+            <div class="result-explanation-block"><strong>你看到了什么</strong><p id="result-summary">运行后会根据真实 counts 总结测量现象。</p></div>
+            <div class="result-explanation-block"><strong>为什么会这样</strong><p id="result-meaning">这里会把结果与当前电路联系起来。</p><p id="result-why"></p></div>
+            <div class="result-explanation-block"><strong>下一步可以观察</strong><p id="result-next">运行后会给出更具体的比较方法。</p></div>
+            <div class="gate-references" id="gate-references"></div>
+            <section class="key-formulas" id="key-formulas" hidden>
+              <h3>关键公式</h3>
+              <div class="formula-row">
+                <div><span>Bell 态：</span><strong>(|00⟩ + |11⟩) / √2</strong></div>
+                <div class="h-formula"><span>H：</span><strong>1/√2</strong><span class="mini-matrix"><i>1</i><i>1</i><i>1</i><i>−1</i></span></div>
+              </div>
+            </section>
+            <details id="raw-counts-details"><summary>Raw counts</summary><p class="raw-bit-order" id="raw-bit-order">结果位序：c[n-1]...c0，c0 在最右侧</p><pre id="raw-counts"></pre></details>
+          </article>
+        </div>
+      </section>
+
+    </main>
+
+    <dialog class="api-dialog" id="api-dialog" aria-labelledby="api-dialog-title">
+      <form class="api-dialog-card" id="api-config-form">
+        <header>
+          <div><span>LLM 接入</span><h2 id="api-dialog-title">连接自己的 API</h2></div>
+          <button class="dialog-close" id="api-dialog-close" type="button" aria-label="关闭">×</button>
+        </header>
+        <p class="api-dialog-intro">LoomQ 使用 OpenAI-compatible API 生成量子电路并回答量子问题。Key 只保存在当前 Product Service 的浏览器会话中。</p>
+        <label for="api-base-url">Base URL<input id="api-base-url" name="base_url" type="url" value="https://api.deepseek.com" autocomplete="url" required /></label>
+        <label for="api-key">API Key<input id="api-key" name="api_key" type="password" autocomplete="off" spellcheck="false" placeholder="请输入你自己的 API Key" required /></label>
+        <label for="api-model">Model<input id="api-model" name="model" type="text" value="deepseek-v4-flash" autocomplete="off" spellcheck="false" required /></label>
+        <p class="api-config-message" id="api-config-message" role="status" aria-live="polite">填写后先测试连接，再应用到当前会话。</p>
+        <div class="api-dialog-actions">
+          <button class="secondary-action" id="api-test" type="button">测试连接</button>
+          <button class="primary-action" id="api-apply" type="submit" disabled>应用</button>
+          <button class="text-action" id="api-cancel" type="button">取消</button>
+        </div>
+      </form>
+    </dialog>
+
+    <footer><span>LoomQ Playground</span><span>Real L2 generation · L1 multi-backend local execution</span></footer>
+    <script>
+      if (window.location.protocol === "file:") {
+        const message = "LoomQ Product Service 未连接。请通过 http://127.0.0.1:4173/ 打开 Playground。";
+        const notice = document.getElementById("service-notice");
+        const status = document.getElementById("api-status-button");
+        notice.hidden = false;
+        notice.textContent = message;
+        status.classList.remove("is-loading");
+        status.classList.add("is-error");
+        document.getElementById("api-status-label").textContent = "API 异常";
+        document.getElementById("generate-experiment").disabled = true;
+        document.getElementById("api-config-message").textContent = message;
+        document.getElementById("api-config-message").classList.add("is-error");
+        document.getElementById("api-test").disabled = true;
+        status.addEventListener("click", () => document.getElementById("api-dialog").showModal());
+        document.getElementById("api-dialog-close").addEventListener("click", () => document.getElementById("api-dialog").close());
+        document.getElementById("api-cancel").addEventListener("click", () => document.getElementById("api-dialog").close());
+      }
+    </script>
+    <script>
+      if (window.location.protocol !== "file:") {
+        const appScript = document.createElement("script");
+        appScript.type = "module";
+      appScript.src = "./app.js?v=qa-11";
+        document.body.appendChild(appScript);
+      }
+    </script>
+  </body>
+</html>

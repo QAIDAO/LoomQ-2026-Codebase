@@ -1,0 +1,10 @@
+# Public evaluator baseline: no third-party dependencies.
+# Add project dependencies below and pin every version exactly, for example:
+# amazon-braket-sdk==<tested-version>
+# spinqit==<tested-version>
+# pyqpanda==<tested-version>
+#
+# L1 + L2 (this submission): the transpiler, the noise-free simulator, and the
+# L2 agent (environment-driven OpenAI-compatible client) in adapter.py are all
+# implemented with the Python standard library only, so no third-party
+# dependency is required for evaluation.

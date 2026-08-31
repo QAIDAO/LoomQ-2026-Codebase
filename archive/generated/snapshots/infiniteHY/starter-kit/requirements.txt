@@ -1,0 +1,4 @@
+amazon-braket-sdk==1.124.3
+pyqpanda3==0.4.0
+# spinqit 从 SpinQ 官方渠道安装，PyPI 不可用
+# adapter.py spinqit 缺失时自动 fallback 到 originq

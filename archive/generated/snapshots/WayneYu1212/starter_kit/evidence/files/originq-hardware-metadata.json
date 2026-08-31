@@ -1,0 +1,29 @@
+{
+  "provider": "originq",
+  "platform": "Origin Quantum Cloud",
+  "device": "Origin Wukong 180-2",
+  "job_id": "D0C7F490B43D9B04FDF19ABF3DB8B342",
+  "task_url": "https://console.originqc.com.cn/zh/jobs/D0C7F490B43D9B04FDF19ABF3DB8B342",
+  "shots": 1000,
+  "logical_qubits": 2,
+  "physical_qubits": [49, 58],
+  "submitted_at": "2026-08-20T20:29:51.026+08:00",
+  "completed_at": "2026-08-20T21:16:43.073+08:00",
+  "task_elapsed_seconds": 0.613,
+  "chip_execution_seconds": 0.313,
+  "qasm_path": "evidence/files/originq-hardware-bell.qasm",
+  "raw_result_path": "evidence/files/originq-hardware-result.raw.json",
+  "raw_csv_path": "evidence/files/originq-hardware-result.raw.csv",
+  "normalized_result_path": "evidence/files/originq-hardware-result.normalized.json",
+  "task_screenshot_path": "evidence/files/originq-hardware-task.png",
+  "logical_circuit_svg_path": "evidence/files/originq-hardware-circuit-logical.svg",
+  "physical_circuit_svg_path": "evidence/files/originq-hardware-circuit-physical.svg",
+  "circuit_provenance": "Faithful OpenQASM reconstruction from the exported logical SVG: H(q0), H(q1), CZ(q0,q1), H(q1), then measurements. The physical SVG preserves provider mapping/transpilation.",
+  "source_hashes": {
+    "raw_csv_sha256": "934772c966c3e889d2615d6528ff9012e9e4dc31aa11d614be47510ed3263bb4",
+    "logical_svg_sha256": "eba0d89770e33a1308a5eb6d848cd3d0f347f3cbe908f2de38153ae31a591176",
+    "physical_svg_sha256": "95110dcd1432361e052a786ac5830cb20c29a8c6d826543fbca02f34572a3450",
+    "redacted_task_screenshot_sha256": "bdd5d91c2bd647675c57a9bb677abc224eb5a3345e31368922f644cc2bf1852a"
+  },
+  "test_fixture": false
+}

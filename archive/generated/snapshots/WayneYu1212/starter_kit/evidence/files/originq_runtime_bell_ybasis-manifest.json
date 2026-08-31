@@ -1,0 +1,37 @@
+{
+  "package": "originq_runtime_bell_ybasis",
+  "job_id": "5ABEAE903BE47DDEDCDEFABFBE162904",
+  "device_id": "WK_C180_2",
+  "device": "Origin Wukong 180-2",
+  "physical_qubits": [
+    49,
+    58
+  ],
+  "shots": 1000,
+  "circuit": "Bell Y-basis: H(q0), CX(q0,q1), Sdg(q0), Sdg(q1), H(q0), H(q1), measure",
+  "data_source": "qpanda3_runtime.RuntimeService (2026-08-22)",
+  "missing_provider_exports": "provider CSV: N/A; task screenshot: N/A; exact timestamp: not captured",
+  "experiment_role": "Y-basis leg of the Bell-state fidelity estimate",
+  "files": [
+    {
+      "name": "originq_runtime_bell_ybasis-hardware-bell.qasm",
+      "sha256": "a8a8fba49f0df5fb2039aa01935de1c9dbbea55d7ca21e3ef4b86b429cc9b15e",
+      "size_bytes": 172
+    },
+    {
+      "name": "originq_runtime_bell_ybasis-hardware-metadata.json",
+      "sha256": "ec38ada3713b142dbeb376b30da1380f1bfa9472d6e15aac07f92bf62ea1d057",
+      "size_bytes": 1774
+    },
+    {
+      "name": "originq_runtime_bell_ybasis-hardware-result.normalized.json",
+      "sha256": "e2dd6bc7b5d981dade9c38954852a2c44db48ab69697025a9a4dd7391c6f09ef",
+      "size_bytes": 659
+    },
+    {
+      "name": "originq_runtime_bell_ybasis-hardware-result.raw.json",
+      "sha256": "24e05214fae35dec8cbb169433782637edb3b32d101c9289e0e3a7229e139227",
+      "size_bytes": 834
+    }
+  ]
+}

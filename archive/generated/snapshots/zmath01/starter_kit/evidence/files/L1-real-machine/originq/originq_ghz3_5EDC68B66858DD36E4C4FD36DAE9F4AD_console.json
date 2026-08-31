@@ -1,0 +1,44 @@
+{
+  "platform": "originq",
+  "circuit": "ghz3.qasm",
+  "source": "originq_console",
+  "backend": "本源悟空 180-2 (Wukong 180-2, superconducting)",
+  "submitted_at_utc": "2026-08-23T10:12:48Z",
+  "raw_platform_response": {
+    "taskId": "5EDC68B66858DD36E4C4FD36DAE9F4AD",
+    "status": "Completed",
+    "createTime": "2026-08-23 18:12:48.864",
+    "endTime": "2026-08-23 18:13:01.485",
+    "machineTime": "0.613",
+    "computeBackend": "本源悟空 180-2",
+    "qubits": 4,
+    "shots": 1000,
+    "physicalQubits": ["q[38]", "q[47]"],
+    "result": {
+      "key": ["000", "001", "010", "011", "100", "101", "110", "111"],
+      "value": [0.432, 0.008, 0.023, 0.056, 0.023, 0.032, 0.009, 0.417]
+    }
+  },
+  "normalized_result": {
+    "backend": "originq_wukong180",
+    "job_id": "5EDC68B66858DD36E4C4FD36DAE9F4AD",
+    "shots": 1000,
+    "counts": {"000": 432, "001": 8, "010": 23, "011": 56, "100": 23, "101": 32, "110": 9, "111": 417},
+    "bit_order": "little",
+    "timestamp": "2026-08-23T10:13:01Z",
+    "meta": {
+      "platform": "originq",
+      "circuit": "ghz3.qasm",
+      "dominant_state_check": {
+        "expected_dominant_states": ["000", "111"],
+        "observed_top_states": ["000", "111", "011", "100", "101", "010", "110", "001"],
+        "top_k_hit": true,
+        "missing_from_top_k": []
+      },
+      "platform_code": "wukong180",
+      "source": "originq_console",
+      "executor": "real-machine",
+      "note": "reconstructed from OriginQ console task detail (pyqpanda 3.8.5's real_chip_type is outdated and does not include wukong180/180-2/photonic). counts derived from platform probabilities x 1000 shots."
+    }
+  }
+}

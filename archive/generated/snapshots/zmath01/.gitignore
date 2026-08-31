@@ -1,0 +1,47 @@
+# ---- OS / editor ----
+.DS_Store
+.DStore
+**/.DS_Store
+**/.DStore
+Thumbs.db
+*.swp
+*.swo
+.idea/
+.vscode/
+*.code-workspace
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.venv*/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# ---- Secrets & credentials: NEVER commit ----
+.env
+.env.*
+*.env
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+id_rsa
+id_ed25519
+*.secret
+*.token
+credentials
+credentials.json
+service_account*.json
+aws-credentials
+.aws/
+
+# ---- Local runtime state (regenerated, not evidence) ----
+starter_kit/report.json
+*.local.json

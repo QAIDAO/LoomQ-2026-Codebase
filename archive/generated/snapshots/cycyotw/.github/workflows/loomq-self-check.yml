@@ -1,0 +1,84 @@
+# LoomQ 提交自检 —— 在与评测环境一致的 Linux + Python 3.10 上，从零装依赖并跑全部验收。
+#
+# 为什么必须有这个工作流：
+#
+# 开发是在 macOS + Apple Silicon 上做的，requirements.txt 也是在那台机器上冻出来的。
+# 而正式评测是在**固定的 Linux 容器**里、用 Python 3.10、执行 pip install -r requirements.txt。
+# 只要有一个包在 linux/cp310 下装不上，整份提交会直接构建失败——
+# 这不是掉几分的问题，是**前面全部白做**。
+#
+# 本机没有 Docker，但 GitHub Actions 的 ubuntu + setup-python 3.10 比 Docker
+# 更接近评委的环境，而且免费。所以拿它当"评测环境的哨兵"。
+#
+# 这个工作流不参与评分，纯粹是我们自己的保险。
+
+name: LoomQ 提交自检 (Linux + Python 3.10)
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: 装依赖 + 全量验收
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: 检出仓库
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: 安装 Python 3.10（与 submission.yaml 声明的运行时一致）
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: 显示环境
+        run: |
+          python -VV
+          pip --version
+          uname -a
+
+      # ★ 这一步就是本工作流存在的理由：验证锁定的依赖在 Linux 上装得上。
+      - name: 按锁定版本安装依赖
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r starter_kit/requirements.txt
+
+      - name: 确认三个后端库真的能 import（装上 ≠ 能用）
+        run: |
+          python - <<'PY'
+          import braket, pyqpanda, scipy, numpy
+          from braket.devices import LocalSimulator
+          print("braket   ", getattr(braket, "__version__", "?"))
+          print("pyqpanda ", getattr(pyqpanda, "__version__", "?"))
+          print("scipy    ", scipy.__version__)
+          print("numpy    ", numpy.__version__)
+          PY
+
+      - name: 官方公开自测 · L1（两个模拟器后端）
+        run: python starter_kit/evaluator.py --level l1 --target braket,originq
+
+      - name: 官方公开自测 · L3
+        run: python starter_kit/evaluator.py --level l3
+
+      - name: L1 验收（转译回环 / 位序 / 自逆电路 / 对精确参考 / Schema）
+        run: python starter_kit/tools/verify_l1.py --cases 40
+
+      - name: L2 验收（八节，使用本地桩模型，无需 API Key）
+        run: python starter_kit/tools/verify_l2.py
+
+      - name: L3 随机对拍（5000 道题，穷举注入所有测量值）
+        run: python starter_kit/tools/fuzz_l3.py --cases 5000
+
+      - name: 上游自带的提交工具测试
+        run: |
+          python -m py_compile competition/*.py starter_kit/prepare_submission.py
+          python -m unittest discover -s tests -v

@@ -1,0 +1,13 @@
+.DS_Store
+.DStore
+**/ .DS_Store
+**/.DS_Store
+**/.DStore
+__pycache__/
+*.py[cod]
+
+SpinQit/
+adapter_files/
+.venv*/
+venv*/
+.vscode/

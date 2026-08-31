@@ -1,0 +1,92 @@
+{
+  "model": "deepseek-v4-flash",
+  "endpoint_configured": true,
+  "real_endpoint": true,
+  "generated_at": "2026-08-21T00:00:00+08:00",
+  "generated_by": "participant local real-model stress (LoomQ L2 robustness)",
+  "disclaimer": "This is the participant's own local robustness evidence against a real DeepSeek V4 Flash endpoint. It does NOT replace the organizer's hidden/private L2 evaluation and does NOT claim an official L2 full score.",
+  "rounds": [
+    {
+      "round": 1,
+      "total": 36,
+      "passed": 36,
+      "failed": 0,
+      "mean_latency_ms": 7827.9,
+      "p50_latency_ms": 7688.9,
+      "p95_latency_ms": 9333.2,
+      "breakdown": {"generate": 12, "repair": 12, "backend": 12},
+      "failures": []
+    },
+    {
+      "round": 2,
+      "total": 36,
+      "passed": 36,
+      "failed": 0,
+      "mean_latency_ms": 7915.0,
+      "p50_latency_ms": 7661.1,
+      "p95_latency_ms": 8740.0,
+      "breakdown": {"generate": 12, "repair": 12, "backend": 12},
+      "note": "All prompts reworded vs Round 1 to test generalization.",
+      "failures": []
+    },
+    {
+      "round": 3,
+      "total": 18,
+      "passed": 17,
+      "failed": 1,
+      "mean_latency_ms": 8294.2,
+      "p50_latency_ms": 7626.2,
+      "p95_latency_ms": 9032.2,
+      "breakdown": {"generate": 9, "repair": 4, "backend": 5},
+      "note": "Adversarial: mixed language, typos, colloquial, extra context, reordered requirements.",
+      "failures": [
+        {
+          "case_id": "adv_be_typo1",
+          "category": "backend",
+          "prompt": "我要30个比特的，排队时间要为零",
+          "failure_class": "transient_model_output",
+          "error": "RuntimeError after internal retry",
+          "latency_ms": 17583.5,
+          "retry_observed": true,
+          "reproduced_on_rerun": false
+        }
+      ]
+    },
+    {
+      "round": 4,
+      "total": 12,
+      "passed": 12,
+      "failed": 0,
+      "breakdown": {"generate": 4, "repair": 4, "backend": 4},
+      "note": "Private-prompt-variant smoke: 4 GHZ wording variants, 4 broken-Bell repair variants, 4 backend-recommend constraints. Semantic checks: GHZ P(000)+P(111)~1, Bell P(00)+P(11)~1, recommend set == programmatic canonical.",
+      "failures": []
+    }
+  ],
+  "summary": {
+    "total_cases": 102,
+    "total_passed": 101,
+    "total_failed": 1,
+    "pass_rate": 0.990,
+    "mean_latency_ms": 7946.0,
+    "p50_latency_ms": 7688.9,
+    "p95_latency_ms": 9032.2,
+    "parse_failures": 1,
+    "validation_failures": 0,
+    "semantic_failures": 0,
+    "backend_selection_failures": 1,
+    "network_failures": 0,
+    "http_failures": 0,
+    "transient_model_failures": 1,
+    "retry_rate": 0.0111,
+    "failure_classification": {
+      "A_model_understanding": 0,
+      "B_schema": 0,
+      "C_parser_tolerance": 0,
+      "D_verifier_strictness": 0,
+      "E_retry_policy": 0,
+      "F_backend_capability_reasoning": 0,
+      "G_network_timeout": 0,
+      "H_transient_provider": 1
+    }
+  }
+}

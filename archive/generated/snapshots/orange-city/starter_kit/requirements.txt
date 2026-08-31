@@ -1,0 +1,5 @@
+# LoomQ submission dependencies (pinned for reproducible evaluation)
+numpy==1.26.4
+spinqit==0.2.4
+amazon-braket-sdk==1.86.2
+pyqpanda3==0.2.0

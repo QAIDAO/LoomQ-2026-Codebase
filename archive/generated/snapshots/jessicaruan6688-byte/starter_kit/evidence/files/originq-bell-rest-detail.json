@@ -1,0 +1,63 @@
+{
+  "success": true,
+  "code": 10000,
+  "message": "请求成功!",
+  "obj": {
+    "qcodeTaskNewVo": {
+      "id": null,
+      "encodeId": null,
+      "createTime": null,
+      "userId": "<redacted>",
+      "userName": "<redacted>",
+      "updTime": null,
+      "delFlag": null,
+      "svgPath": null,
+      "initQProg": null,
+      "taskName": null,
+      "taskConfigList": null,
+      "taskResultList": [
+        {
+          "rid": 0,
+          "rTaskId": "724E511297B861472AA2441F90F3D5E6",
+          "qprog": "QINIT 2\nCREG 2\nH q[0]\nCNOT q[0], q[1]\nMEASURE q[0], c[0]\nMEASURE q[1], c[1]\n",
+          "rCreateTime": "2026-08-24 13:14:21.767",
+          "taskState": "3",
+          "taskResult": "{\"value\": [0.5563837,2.361E-4,2.321E-4,0.443148],\"key\": [\"00\",\"01\",\"10\",\"11\"]}",
+          "probCount": "{\"value\":[50,1,4,45],\"key\":[\"0x0\",\"0x1\",\"0x2\",\"0x3\"]}",
+          "rRelationId": 0,
+          "rQMachineType": "5",
+          "startTime": "2026-08-24 13:14:25.809",
+          "endTime": "2026-08-24 13:17:56.779",
+          "rDelFlag": null,
+          "requiredCore": "0",
+          "rUserId": 0,
+          "mappingQProg": "QINIT 2\nCREG 2\nH q[0]\nCNOT q[0],q[1]\nMEASURE q[0],c[0]\nMEASURE q[1],c[1]\n",
+          "timeStr": null,
+          "pulseTime": "120",
+          "circuitExecuteTime": null,
+          "chipExecuteTime": null,
+          "trCircuitOptimization": null,
+          "logicQubit": null,
+          "chipId": 180,
+          "taskName": null,
+          "chipName": null,
+          "chipQubit": null,
+          "errorDetail": null,
+          "errorMessage": "司南系统读取任务失败。",
+          "trMappingFlag": 0,
+          "queueNumber": 0,
+          "actualStartTime": "2026-08-24 13:14:21.929",
+          "qstresult": null,
+          "qstfidelity": null,
+          "mappingQubit": "[157, 166]",
+          "measureQubitSize": [
+            2
+          ]
+        }
+      ],
+      "qMachineType": null,
+      "resultCount": 0,
+      "totalTime": 0
+    }
+  }
+}

@@ -1,0 +1,17 @@
+(base) jjh@DESKTOP-NI1VVHD:/mnt/d/WXL/loom2026zxy$ python -m starter_kit.chat "我需要运行一个15比特电路且零排队等待，推荐哪个后端？"
+根据您的要求（15 比特、零排队等待），我推荐使用 **braket_local_simulator**（AWS Braket LocalSimulator）。
+
+**理由：**
+- 支持最多 25 比特，满足 15 比特需求。
+- 本地运行，**零排队**，无需 AWS 账号或联网。
+- 免费，适合快速验证电路。
+
+**备选方案（同样零排队）：**
+- **spinq_taurus_simulator**（量旋本地模拟器，24 比特，免费，pip 安装即用）。
+- **originq_local_simulator**（本源本地模拟器，30 比特，免费，受本机内存限制）。
+
+**注意：** 若您需要真机（QPU），则无法保证零排队——例如 spinq_cloud_qpu（2–8 比特，排队分钟到小时）或 originq_wukong（72 比特，排队数小时）均不满足零排队要求，且 spinq_cloud_qpu 比特数不足 15。
+
+---
+
+如果您需要我生成一个 15 比特的示例电路（OpenQASM 2.0），请告诉我具体逻辑，我可以帮您编写。

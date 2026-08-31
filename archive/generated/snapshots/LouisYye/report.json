@@ -1,0 +1,59 @@
+{
+  "contract_version": "1.0",
+  "suite": "public",
+  "generated_at": "2026-08-25T01:43:08.927980+00:00",
+  "summary": {
+    "passed": 8,
+    "failed": 0,
+    "total": 8
+  },
+  "cases": [
+    {
+      "case_id": "l1:bell.qasm:spinq",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 1.0
+    },
+    {
+      "case_id": "l1:bell.qasm:originq",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 0.999914
+    },
+    {
+      "case_id": "l1:bell.qasm:braket",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 0.999914
+    },
+    {
+      "case_id": "l1:ghz3.qasm:spinq",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 1.0
+    },
+    {
+      "case_id": "l1:ghz3.qasm:originq",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 0.998705
+    },
+    {
+      "case_id": "l1:ghz3.qasm:braket",
+      "status": "PASS",
+      "reason": "fidelity threshold met",
+      "fidelity": 0.993094
+    },
+    {
+      "case_id": "l2:public-ghz",
+      "status": "PASS",
+      "reason": "response contains parseable QASM"
+    },
+    {
+      "case_id": "l3:public-branch",
+      "status": "PASS",
+      "reason": "public branch semantics passed"
+    }
+  ],
+  "notice": "Public self-check only; this report is not an official score."
+}

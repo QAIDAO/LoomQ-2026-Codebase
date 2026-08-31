@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="990" height="143" viewBox="0 0 990 143">
+<rect width="100%" height="100%" rx="10" fill="#141821"/>
+<rect x="12" y="12" width="966" height="30" rx="6" fill="#232a36"/>
+<circle cx="32" cy="27" r="5.5" fill="#ff5f57"/>
+<circle cx="50" cy="27" r="5.5" fill="#febc2e"/>
+<circle cx="68" cy="27" r="5.5" fill="#28c840"/>
+<text x="86" y="31.5" font-family="Consolas,monospace" font-size="13" fill="#8b98ab">cli-backend-capabilities.py</text>
+<g font-family="Consolas,'Courier New',monospace" font-size="13.5" fill="#d8dee9" xml:space="preserve">
+<text x="24" y="66" fill="#d8dee9">backend id                   kind      qubits  queue          cost</text>
+<text x="24" y="83" fill="#d8dee9">braket_local_simulator       simulator     25  none           free</text>
+<text x="24" y="100" fill="#d8dee9">originq_local_simulator      simulator     30  none           free</text>
+<text x="24" y="117" fill="#d8dee9">spinq_taurus_simulator       simulator     24  none           free</text>
+<text x="24" y="134" fill="#d8dee9">  {&quot;llm&quot;: &quot;absent&quot;, &quot;engine&quot;: {&quot;shots&quot;: 8192, &quot;concurrency&quot;: 4}, &quot;plugins_disabled&quot;: [], &quot;real_machine_credentials&quot;: &quot;none&quot;}</text>
+</g></svg>

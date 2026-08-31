@@ -1,0 +1,69 @@
+{
+  "schema_version": "loomq-spinq-hardware-v1",
+  "sdk_api": "spinqit-0.2.4",
+  "backend": "spinq-cloud-hardware",
+  "device_code": "triangulum_vp",
+  "job_id": "S-260811-0002",
+  "shots": 100,
+  "counts": {
+    "00": 53,
+    "11": 41,
+    "01": 3,
+    "10": 3
+  },
+  "bit_order": "little",
+  "submitted_at": "2026-08-11T06:36:03.773646+00:00",
+  "completed_at": "2026-08-11T06:37:20.616851+00:00",
+  "qasm_sha256": "6648fba6510dca0e4a025b7e69f2ca50d4c7aec70c27f1f7659d201b0a515068",
+  "submission_status": 200,
+  "poll_count": 16,
+  "raw_result": {
+    "task_code": "S-260811-0002",
+    "counts": {
+      "00": 53,
+      "11": 41,
+      "01": 3,
+      "10": 3
+    },
+    "probabilities": {
+      "00": 0.53061785,
+      "11": 0.40956803,
+      "01": 0.028276,
+      "10": 0.03153812
+    },
+    "shots": 100
+  },
+  "mode": "smoke",
+  "circuit": "bell",
+  "local_preflight": {
+    "backend": "spinq-basic-simulator",
+    "counts": {
+      "00": 50,
+      "11": 50
+    },
+    "expected_dominant_states": [
+      "00",
+      "11"
+    ],
+    "observed_dominant_states": [
+      "00",
+      "11"
+    ],
+    "dominant_states_match": true,
+    "expected_state_mass": 1.0,
+    "expected_state_threshold": 0.5,
+    "hardware_validation_passed": true
+  },
+  "expected_dominant_states": [
+    "00",
+    "11"
+  ],
+  "observed_dominant_states": [
+    "00",
+    "11"
+  ],
+  "dominant_states_match": true,
+  "expected_state_mass": 0.94,
+  "expected_state_threshold": 0.5,
+  "hardware_validation_passed": true
+}

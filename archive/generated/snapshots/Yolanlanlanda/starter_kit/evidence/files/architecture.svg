@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="920" viewBox="0 0 1160 920" font-family="'PingFang SC','Microsoft YaHei','Helvetica Neue',Arial,sans-serif">
+  <defs>
+    <linearGradient id="hdr" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#8fc0ef"/>
+      <stop offset="0.5" stop-color="#5b93e0"/>
+      <stop offset="1" stop-color="#2f6fc0"/>
+    </linearGradient>
+    <linearGradient id="band" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#f4f9ff"/>
+    </linearGradient>
+    <linearGradient id="core" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#eaf2fc"/>
+      <stop offset="1" stop-color="#dcebfa"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 背景 -->
+  <rect x="0" y="0" width="1160" height="920" fill="#f6fafe"/>
+
+  <!-- 科技感正弦波细线 -->
+  <g stroke="#cfe1f5" fill="none" stroke-width="1.4" opacity="0.9">
+    <path d="M0 158 C 120 120, 210 200, 320 166 S 540 120, 660 168 S 900 120, 1010 162 S 1120 168 1160 150"/>
+    <path d="M0 470 C 130 430, 230 512, 350 474 S 560 428, 700 478 S 920 428, 1030 470 S 1130 474 1160 456"/>
+  </g>
+
+  <!-- 顶部品牌条 -->
+  <rect x="0" y="0" width="1160" height="92" fill="url(#hdr)"/>
+  <text x="60" y="42" fill="#ffffff" font-size="22" font-weight="700" letter-spacing="2">量语 · QUANTALK</text>
+  <text x="60" y="72" fill="#eaf2fb" font-size="14" letter-spacing="1">用自然语言，使用量子计算机 —— LoomQ 系统架构</text>
+
+  <!-- 图例（右上） -->
+  <g font-size="12" fill="#2f4a6e">
+    <rect x="905" y="116" width="185" height="58" rx="9" fill="#ffffff" stroke="#d6e4f4"/>
+    <rect x="920" y="130" width="13" height="13" rx="3" fill="#5b93e0"/>
+    <text x="941" y="142" fill="#2f4a6e">spinq + originq（内置可跑）</text>
+    <rect x="920" y="152" width="13" height="13" rx="3" fill="#b8ceea" stroke="#9fbbdf"/>
+    <text x="941" y="164" fill="#5a6f8a">braket（需独立环境）</text>
+  </g>
+
+  <!-- ================= 第 1 层：入口 ================= -->
+  <g>
+    <rect x="90" y="122" width="985" height="128" rx="16" fill="url(#band)" stroke="#d6e4f4"/>
+    <rect x="90" y="122" width="150" height="128" rx="16" fill="#5b93e0"/>
+    <rect x="240" y="122" width="0" height="128" fill="#5b93e0"/>
+    <text x="118" y="178" fill="#ffffff" font-size="17" font-weight="700">入口层</text>
+    <text x="118" y="202" fill="#eaf2fb" font-size="12">用户面对的产品</text>
+    <text x="280" y="168" fill="#24476f" font-size="15" font-weight="700">interactive.py · 零依赖网页</text>
+    <text x="280" y="192" fill="#6d7f95" font-size="12">浏览器 ⇄ 内置 http.server · 纯标准库，无需 pip 安装</text>
+    <text x="560" y="168" fill="#24476f" font-size="15" font-weight="700">首页引导</text>
+    <text x="560" y="192" fill="#6d7f95" font-size="12">示例卡片 · 平权文案 · 自然语言输入框</text>
+    <text x="845" y="168" fill="#24476f" font-size="15" font-weight="700">多轮上下文</text>
+    <text x="845" y="192" fill="#6d7f95" font-size="12">服务端拼历史 → 每次调 agent_chat</text>
+  </g>
+  <path d="M180 250 L180 288 L164 288 L180 306 L196 288 L180 288" fill="#7fb0e8"/>
+
+  <!-- ================= 第 2 层：智能 ================= -->
+  <g>
+    <rect x="90" y="310" width="985" height="128" rx="16" fill="url(#band)" stroke="#d6e4f4"/>
+    <rect x="90" y="310" width="150" height="128" rx="16" fill="#5b93e0"/>
+    <text x="118" y="366" fill="#ffffff" font-size="17" font-weight="700">智能层</text>
+    <text x="118" y="390" fill="#eaf2fb" font-size="12">LLM + 意图判定</text>
+    <text x="280" y="356" fill="#24476f" font-size="15" font-weight="700">agent_chat()</text>
+    <text x="280" y="380" fill="#6d7f95" font-size="12">意图 classify：generate / fix / backend（可组合）</text>
+    <text x="560" y="356" fill="#24476f" font-size="15" font-weight="700">llm_client.py</text>
+    <text x="560" y="380" fill="#6d7f95" font-size="12">OpenAI-compatible · 读取 LOOMQ_LLM_* 三环境变量</text>
+    <text x="845" y="356" fill="#24476f" font-size="15" font-weight="700">确定性选后端</text>
+    <text x="845" y="380" fill="#6d7f95" font-size="12">LLM 抽约束 JSON → 遍历 capabilities 精确匹配</text>
+  </g>
+  <path d="M180 438 L180 476 L164 476 L180 494 L196 476 L180 476" fill="#7fb0e8"/>
+
+  <!-- ================= 第 3 层：中间层（核心）================= -->
+  <g>
+    <rect x="90" y="498" width="985" height="128" rx="16" fill="url(#core)" stroke="#c3dbf7"/>
+    <rect x="90" y="498" width="150" height="128" rx="16" fill="#2f6fc0"/>
+    <text x="118" y="554" fill="#ffffff" font-size="17" font-weight="700">中间层</text>
+    <text x="118" y="578" fill="#dff0ff" font-size="12">核心 · 平权之基</text>
+    <text x="280" y="544" fill="#1c3d63" font-size="15" font-weight="700">transpile(qasm, target)</text>
+    <text x="280" y="568" fill="#4f6d8d" font-size="12">OpenQASM 2.0 → spinq / originq / braket 三方言</text>
+    <text x="560" y="544" fill="#1c3d63" font-size="15" font-weight="700">run(qasm, target, shots)</text>
+    <text x="560" y="568" fill="#4f6d8d" font-size="12">本地模拟器 / 真机 · counts 位序向后端归一化</text>
+    <text x="845" y="544" fill="#1c3d63" font-size="15" font-weight="700">backend_capabilities.json</text>
+    <text x="845" y="568" fill="#4f6d8d" font-size="12">按比特数 / 门类型选最优后端并给理由</text>
+  </g>
+  <path d="M180 626 L180 664 L164 664 L180 682 L196 664 L180 664" fill="#7fb0e8"/>
+
+  <!-- ================= 第 4 层：L3 编译 ================= -->
+  <g>
+    <rect x="90" y="686" width="985" height="128" rx="16" fill="url(#band)" stroke="#d6e4f4"/>
+    <rect x="90" y="686" width="150" height="128" rx="16" fill="#5b93e0"/>
+    <text x="118" y="742" fill="#ffffff" font-size="17" font-weight="700">L3 编译</text>
+    <text x="118" y="766" fill="#eaf2fb" font-size="12">经典-量子混合</text>
+    <text x="280" y="732" fill="#24476f" font-size="15" font-weight="700">compile_hybrid(hybrid_qasm)</text>
+    <text x="280" y="756" fill="#6d7f95" font-size="12">→ (quantum_ops, RISC-V 汇编) 二元返回</text>
+    <text x="560" y="732" fill="#24476f" font-size="15" font-weight="700">hybrid_compiler.py</text>
+    <text x="560" y="756" fill="#6d7f95" font-size="12">经典块文法解析 + RISC-V 代码生成（rN→xN）</text>
+    <text x="845" y="732" fill="#24476f" font-size="15" font-weight="700">riscv_emulator.py</text>
+    <text x="845" y="756" fill="#6d7f95" font-size="12">穷举注入测量值，逐对校验寄存器终态</text>
+  </g>
+
+  <!-- 底部平权 tagline -->
+  <text x="580" y="868" text-anchor="middle" fill="#6d7f95" font-size="14" letter-spacing="1">消除「量子黑话」与「多平台」与「上手」三道门槛 —— LoomQ-2026 · SheNicest 夏季黑客松</text>
+</svg>

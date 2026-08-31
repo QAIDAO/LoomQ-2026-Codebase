@@ -1,0 +1,19 @@
+{
+  "platform": "spinq_cloud_qpu",
+  "platform_code": "gemini_vp",
+  "job_id": "G-260815-0001",
+  "submitted_at_utc": "2026-08-15T02:58:13.456249+00:00",
+  "retrieved_at_utc": "2026-08-15T02:59:50.902993+00:00",
+  "shots": 1000,
+  "qasm_source": "starter_kit/circuits/bell.qasm",
+  "qasm_contract_output": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[2];\ncreg c[2];\nh q[0];\ncx q[0], q[1];\nmeasure q[0] -> c[0];\nmeasure q[1] -> c[1];\n",
+  "qasm_cloud_submitted": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\nqreg q[2];\ncreg c[2];\nh q[0];\ncx q[0], q[1];\n",
+  "counts": null,
+  "probabilities": {
+    "00": 0.27084418,
+    "11": 0.60314357,
+    "01": 0.12330603,
+    "10": 0.00270622
+  },
+  "raw_task_code": "G-260815-0001"
+}

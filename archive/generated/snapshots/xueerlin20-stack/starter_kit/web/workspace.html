@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="使用 LoomQ Agent 设计、修改并运行量子电路。">
+  <title>LoomQ 工作台 · 量子电路智能体</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="workspace-page">
+  <div class="ambient ambient-one" aria-hidden="true"></div>
+  <div class="ambient ambient-two" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="返回 LoomQ 主界面">
+      <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span>LoomQ <b>Workspace</b></span>
+    </a>
+    <nav class="workspace-nav" aria-label="工作台导航">
+      <a href="/?open=config">运行配置</a>
+      <a class="back-home" href="/">← 返回主界面</a>
+    </nav>
+  </header>
+
+  <main class="workspace-main">
+    <section class="workspace-heading">
+      <div>
+        <span class="workspace-kicker">QUANTUM AGENT WORKSPACE</span>
+        <h1>从一个问题，<br><em>继续到可运行的电路。</em></h1>
+      </div>
+      <p>这里专注于实验本身。你可以连续追问、修改当前电路，或者开始一项新的设计。</p>
+    </section>
+
+    <div class="journey" aria-label="一次量子实验的四个步骤">
+      <div class="journey-line" aria-hidden="true"><span></span></div>
+      <div class="journey-step is-active" data-journey-step="0"><b>01</b><strong>说出想法</strong><small>自然语言即可</small></div>
+      <div class="journey-step" data-journey-step="1"><b>02</b><strong>编织电路</strong><small>自动生成 QASM</small></div>
+      <div class="journey-step" data-journey-step="2"><b>03</b><strong>真实运行</strong><small>本地模拟验证</small></div>
+      <div class="journey-step" data-journey-step="3"><b>04</b><strong>继续改进</strong><small>上下文不会丢失</small></div>
+    </div>
+
+    <div class="workspace-split">
+      <section class="workspace chat-workspace" aria-label="Agent 对话区">
+        <div class="conversation" id="conversation" aria-live="polite">
+          <article class="message agent-message intro-message">
+            <div class="avatar" aria-hidden="true">LQ</div>
+            <div class="message-body">
+              <div class="message-meta">LoomQ Agent</div>
+              <p>描述一个实验、粘贴一段错误代码，或者继续修改当前电路。我会记住这次讨论中的电路和最近上下文。</p>
+            </div>
+          </article>
+        </div>
+
+        <form class="composer" id="composer">
+          <div class="composer-prompts" aria-label="聊天快捷提示">
+            <button type="button" data-prompt="生成一个 3 比特 GHZ 态并进行全测量">
+              <span>01</span><strong>生成 GHZ 态</strong>
+            </button>
+            <button type="button" data-prompt="我想制备贝尔态，请修复这段代码：H q[0]; CX q[0] q[1]">
+              <span>02</span><strong>修复量子代码</strong>
+            </button>
+            <button type="button" data-prompt="我要运行一个 26 比特电路，必须免费并且不能排队">
+              <span>03</span><strong>筛选运行平台</strong>
+            </button>
+          </div>
+          <div class="conversation-context" id="conversation-context" hidden>
+            <span id="conversation-context-label"></span>
+          </div>
+          <label class="sr-only" for="prompt">描述你的量子计算需求</label>
+          <textarea id="prompt" rows="2" maxlength="12000" placeholder="例如：生成一个 3 比特 GHZ 态并测量全部量子比特…" required></textarea>
+          <div class="composer-footer">
+            <div class="composer-left-actions">
+              <button class="clear-conversation-button" id="clear-conversation" type="button">清空对话 · 重新开始</button>
+              <span><kbd>Enter</kbd> 发送 · <kbd>Shift</kbd> + <kbd>Enter</kbd> 换行</span>
+            </div>
+            <button class="send-button" id="send" type="submit" aria-label="发送需求"><span aria-hidden="true">↗</span></button>
+          </div>
+        </form>
+        <p class="privacy-note">对话与电路上下文仅保存在这台电脑上的 LoomQ 会话中。</p>
+      </section>
+
+      <aside class="circuit-panel" id="circuit-panel" aria-labelledby="circuit-title">
+        <header class="circuit-panel-head">
+          <div>
+            <span>CURRENT CIRCUIT</span>
+            <h2 id="circuit-title">当前电路</h2>
+          </div>
+          <div class="circuit-summary" id="circuit-summary" hidden></div>
+        </header>
+        <div class="circuit-empty" id="circuit-empty">
+          <span aria-hidden="true">|0⟩</span>
+          <strong>等待当前电路</strong>
+        </div>
+        <div class="circuit-view" id="circuit-view" hidden>
+          <div class="circuit-caption">
+            <strong id="circuit-name">量子电路</strong>
+            <span id="circuit-version"></span>
+          </div>
+          <div class="circuit-scroll" id="circuit-scroll" tabindex="0" aria-label="量子电路图"></div>
+          <section class="circuit-runner" id="circuit-runner" aria-labelledby="circuit-runner-title">
+            <div class="circuit-runner-controls">
+              <div>
+                <span>LOCAL SIMULATOR</span>
+                <strong id="circuit-runner-title">本地测量</strong>
+              </div>
+              <label>
+                <span>Shots</span>
+                <select id="circuit-shots" aria-label="测量次数">
+                  <option value="256">256</option>
+                  <option value="1024" selected>1024</option>
+                  <option value="4096">4096</option>
+                </select>
+              </label>
+              <button id="run-current-circuit" type="button">运行测量 <span aria-hidden="true">▶</span></button>
+            </div>
+            <p class="circuit-runner-status" id="circuit-runner-status" aria-live="polite">使用 SpinQ 本地模拟器，不会提交到量子真机。</p>
+            <div class="circuit-runner-results" id="circuit-runner-results" hidden></div>
+          </section>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <template id="loading-template">
+    <article class="message agent-message loading-message">
+      <div class="avatar" aria-hidden="true">LQ</div>
+      <div class="message-body">
+        <div class="message-meta">LoomQ Agent</div>
+        <div class="progress-line"><span></span><span></span><span></span></div>
+        <p class="loading-label">正在理解需求并准备量子实验…</p>
+      </div>
+    </article>
+  </template>
+
+  <script type="module" src="/js/workspace.js"></script>
+</body>
+</html>

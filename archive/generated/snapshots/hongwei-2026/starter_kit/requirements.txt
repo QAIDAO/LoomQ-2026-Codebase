@@ -1,0 +1,5 @@
+# Public evaluator / core middleware: Python standard library only.
+# Optional SDKs (install locally if you want native backend engines):
+# amazon-braket-sdk==1.90.1
+# spinqit==0.2.2
+# pyqpanda==0.3.2.288
