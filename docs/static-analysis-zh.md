@@ -1477,7 +1477,7 @@ JSON。`web_demo.py` 声称默认 `http://127.0.0.1:8000`，洞穴实验可无 K
 - [E-2] `archive/generated/snapshots/yiyuanrvk77/starter_kit/adapter.py`@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L1-L46 — 门面说明与 `transpile`；import `agent_chat`/`compile_hybrid`
 - [E-3] `archive/generated/snapshots/yiyuanrvk77/starter_kit/ARCHITECTURE.md`@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L1-L37 — README 声称分层、本地/真机边界、L2 无 mock
 - [E-4] `archive/generated/snapshots/yiyuanrvk77/starter_kit/web_demo.py`@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L1-L12 — 文档声称 stdlib Web 入口与端口 8000
-- [E-5] `archive/generated/snapshots/yiyuanrvk77/starter_kit/.env.example`@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L1-L17 — 空的 LLM/硬件/AWS 占位，注释禁止把凭证写入仓库
+- [E-5] `archive/generated/snapshots/yiyuanrvk77/starter_kit/.env.example`@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L1-L16 — 空的 LLM/硬件/AWS 占位，注释禁止把凭证写入仓库
 - [E-6] `archive/generated/snapshots/yiyuanrvk77/starter_kit/evidence/README.md`@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L6-L21 — 申报 SpinQ job 与 shots/counts 不一致说明
 - [E-7] `archive/generated/snapshots/yiyuanrvk77/starter_kit/assets/quantum-cave/ballerina-silhouette.mp4`@998cd4e67b1b29f0f1eb8bafdc155072dfda2980 — Git blob mode=100644，oid=`e860c76b0554c3798f034e08d8c023819a72ffd7`，size=6265852；未打开/播放
 
@@ -1701,7 +1701,7 @@ braket SDK 在其环境是否存在，也无法确认该 JSON 是否由本树 `e
 - [E-1] `archive/generated/snapshots/noh1204/starter_kit/submission.yaml`@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L1-L21 — 仅 L1 为 true，L2/L3 false
 - [E-2] `archive/generated/snapshots/noh1204/starter_kit/adapter.py`@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L26-L51 — `transpile` 透传；`_simulate_qasm` 固定 00/11 对半
 - [E-3] `archive/generated/snapshots/noh1204/starter_kit/adapter.py`@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L54-L112 — `run` 的 braket try/except 与 L2/L3 `NotImplementedError`
-- [E-4] `archive/generated/snapshots/noh1204/starter_kit/requirements.txt`@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L1-L6 — 仍为官方空模板注释
+- [E-4] `archive/generated/snapshots/noh1204/starter_kit/requirements.txt`@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L1-L5 — 仍为官方空模板注释
 - [E-5] `archive/generated/snapshots/noh1204/starter_kit/report.json`@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L1-L36 — 公开自测 JSON 含 4 条 PASS 与非正式分数声明
 - [E-6] `archive/generated/snapshots/noh1204/starter_kit/evidence/README.md`@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L11-L16 — 人工评分五项均未勾选
 
@@ -2321,7 +2321,7 @@ L2 `agent_chat` 组合关键词意图与模型分类，电路路径可走 `_gene
 - [E-5] `archive/generated/snapshots/Yolanlanlanda/starter_kit/interactive.py`@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L60-L67 — CORS `*`
 - [E-6] `archive/generated/snapshots/Yolanlanlanda/starter_kit/interactive.py`@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L586-L591 — `TCPServer(("127.0.0.1", PORT), ...)`
 - [E-7] `archive/generated/snapshots/Yolanlanlanda/starter_kit/evidence/README.md`@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L11-L42 — 勾选真机/L2/工程，填写双平台 job
-- [E-8] `archive/generated/snapshots/Yolanlanlanda/starter_kit/requirements.txt`@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L1-L12 — 不装 braket 的原因
+- [E-8] `archive/generated/snapshots/Yolanlanlanda/starter_kit/requirements.txt`@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L1-L11 — 不装 braket 的原因
 - [E-9] `archive/generated/snapshots/Yolanlanlanda/starter_kit/adapter.py`@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L120-L128 — braket 运行时剥离 include
 - [E-10] `archive/generated/snapshots/Yolanlanlanda/starter_kit/evidence/README.md`@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L56-L77 — L2 启动命令与三则现场任务
 
@@ -2868,7 +2868,7 @@ README 声称在官方骨架上实现统一 OpenQASM 中间层、自然语言 Ag
 
 ### 关键证据位置
 
-[E-1] archive/generated/snapshots/jessicaruan6688-byte/starter_kit/submission.yaml@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L1-L22 — 声明 L1/L2/L3、入口 `adapter.py`、L2 需 `LOOMQ_LLM_*`
+[E-1] archive/generated/snapshots/jessicaruan6688-byte/starter_kit/submission.yaml@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L1-L21 — 声明 L1/L2/L3、入口 `adapter.py`、L2 需 `LOOMQ_LLM_*`
 [E-2] archive/generated/snapshots/jessicaruan6688-byte/starter_kit/adapter.py@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L10-L34 — 四接口转发至 `loomq`
 [E-3] archive/generated/snapshots/jessicaruan6688-byte/starter_kit/loomq/pipeline.py@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L14-L29 — `transpile`/`run` 解析后发射并调用后端
 [E-4] archive/generated/snapshots/jessicaruan6688-byte/starter_kit/loomq/parse_qasm.py@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L41-L52 — 角度表达式经过滤后 `eval`
@@ -2929,7 +2929,7 @@ README 声称在官方骨架上实现统一 OpenQASM 中间层、自然语言 Ag
 
 ### 关键证据位置
 
-[E-1] archive/generated/snapshots/wronps/starter_kit/submission.yaml@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L1-L22 — L1/L2/L3 声明与 L2 环境变量
+[E-1] archive/generated/snapshots/wronps/starter_kit/submission.yaml@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L1-L21 — L1/L2/L3 声明与 L2 环境变量
 [E-2] archive/generated/snapshots/wronps/starter_kit/ARCHITECTURE.md@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L6-L48 — 单文件架构、契约 IR 与 native 双 profile
 [E-3] archive/generated/snapshots/wronps/starter_kit/adapter.py@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L1002-L1029 — `transpile`/`run` 走 `_compile_for` 后本地模拟
 [E-4] archive/generated/snapshots/wronps/starter_kit/adapter.py@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L1351-L1390 — `agent_chat` 生成/修复/选后端
@@ -3110,7 +3110,7 @@ README 强调严格解析 → 规范 IR → 精确发射 → 本地 runner → �
 
 ### 关键证据位置
 
-[E-1] archive/generated/snapshots/qwer-asdftg/starter_kit/submission.yaml@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L1-L22 — L2 声明为 true，但 `required_for_l2: false`
+[E-1] archive/generated/snapshots/qwer-asdftg/starter_kit/submission.yaml@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L1-L21 — L2 声明为 true，但 `required_for_l2: false`
 [E-2] archive/generated/snapshots/qwer-asdftg/starter_kit/adapter.py@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L94-L131 — 四契约函数
 [E-3] archive/generated/snapshots/qwer-asdftg/starter_kit/Dockerfile@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L14-L29 — SpinQ 与 Braket 分 venv
 [E-4] archive/generated/snapshots/qwer-asdftg/starter_kit/l2_cli.py@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L49-L70 — `--guide` 不调用模型
@@ -3232,7 +3232,7 @@ Qiskit 解析依赖、worker 隔离与 L2 JSON 协议为高（A）。保真度�
 
 ### 关键证据位置
 
-[E-1] archive/generated/snapshots/betsywbx/starter_kit/submission.yaml@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L1-L22 — L2 为 true 且 `required_for_l2: false`
+[E-1] archive/generated/snapshots/betsywbx/starter_kit/submission.yaml@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L1-L21 — L2 为 true 且 `required_for_l2: false`
 [E-2] archive/generated/snapshots/betsywbx/starter_kit/adapter.py@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L11-L56 — 路由到 targets/l2/compiler
 [E-3] archive/generated/snapshots/betsywbx/starter_kit/app.py@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L22-L63 — Flask `/api/chat` 与 127.0.0.1:5000
 [E-4] archive/generated/snapshots/betsywbx/starter_kit/l2.py@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L69-L117 — 用 adapter.run 自测并重试
@@ -3352,7 +3352,7 @@ Flask 入口、契约网络字段与顶层 SDK 导入为高（A）。自测空�
 
 ### 关键证据位置
 
-[E-1] archive/generated/snapshots/BH2-4/starter_kit/adapter.py@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L29-L71 — 本地 statevector `run` 与 L2/L3 转发
+[E-1] archive/generated/snapshots/BH2-4/starter_kit/adapter.py@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L29-L70 — 本地 statevector `run` 与 L2/L3 转发
 [E-2] archive/generated/snapshots/BH2-4/starter_kit/ARCHITECTURE.md@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L7-L23 — 三层与“模型只出意图 JSON”
 [E-3] archive/generated/snapshots/BH2-4/starter_kit/loomq_l2/__init__.py@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L1-L4 — LLM 不直接写电路
 [E-4] archive/generated/snapshots/BH2-4/starter_kit/chat.py@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L1-L11 — CLI/`--demo` 入口
@@ -3501,7 +3501,7 @@ adapter 与「spinq 转译保留、执行放弃」的双轨说明影响。未运
 [E-6] `archive/generated/snapshots/danjituya/starter_kit/adapter.py`@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L1391-L1414 — `compile_hybrid()` 拆分量子操作与经典汇编。
 [E-7] `archive/generated/snapshots/danjituya/starter_kit/ARCHITECTURE.md`@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L6-L25 — 声称 L1 双模拟器、未申报真机、spinq 因依赖冲突未列入 requirements。
 [E-8] `archive/generated/snapshots/danjituya/starter_kit/webapp.py`@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L483-L487 — Flask 默认绑定 `0.0.0.0:8765`。
-[E-9] `archive/generated/snapshots/danjituya/starter_kit/requirements.txt`@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L1-L13 — 精确锁定四包，注释说明不装 spinqit。
+[E-9] `archive/generated/snapshots/danjituya/starter_kit/requirements.txt`@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L1-L12 — 精确锁定四包，注释说明不装 spinqit。
 [E-10] `archive/generated/snapshots/danjituya/starter_kit/Dockerfile`@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L16-L16 — 默认 evaluator 目标 `braket,originq`。
 [E-11] `archive/generated/snapshots/danjituya/starter_kit/evidence/README.md`@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L5-L17 — 勾选 L2/工程/Bonus，明确未申报 L1 真机。
 
@@ -3739,7 +3739,7 @@ fallback 是主要风险面。`openai` 直连而非官方 `llm_client.py`，超�
 
 ### 关键证据位置
 
-[E-1] `archive/generated/snapshots/casccjy67/starter_kit/submission.yaml`@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L1-L51 — 自定义键名、大写 L1/L2/L3、Python `>=3.11`、team_id `casccjy67`。
+[E-1] `archive/generated/snapshots/casccjy67/starter_kit/submission.yaml`@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L1-L50 — 自定义键名、大写 L1/L2/L3、Python `>=3.11`、team_id `casccjy67`。
 [E-2] `archive/generated/snapshots/casccjy67/starter_kit/adapter.py`@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L10-L18 — `sys.path.insert` 后按包导入 transpiler。
 [E-3] `archive/generated/snapshots/casccjy67/starter_kit/transpiler/parser.py`@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L143-L157 — 参数解析调用 `eval`。
 [E-4] `archive/generated/snapshots/casccjy67/starter_kit/hybrid_compiler/parser.py`@998cd4e67b1b29f0f1eb8bafdc155072dfda2980:L110-L113 — Hybrid 参数同样 `eval`。
