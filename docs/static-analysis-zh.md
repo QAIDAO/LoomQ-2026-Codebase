@@ -608,7 +608,7 @@ README 导航（[`README.md`](../README.md)）与本报告使用同一名单、�
 
 ### 方案概述
 - README 声称（B）：根 README 是选手方案，定位 Beginner Assistant；强调「LLM 输出不等于正确程序」，由确定性代码与 L1 校验。`ARCHITECTURE.md` 用流程图画出 CLI→agent→L1 与独立 L3。
-- 源码静态可见实现（A）：`transpile`/`run` 在 adapter 内完成 parse/emit/simulate。`agent_chat` 转 `l2_agent.agent_chat_impl`：正式模式至少一次 LLM 调用做意图理解，已知任务（Bell/GHZ）与后端选择由确定性逻辑收口；无 LLM 时走本地路径。`compile_hybrid` 转 `l3_hybrid_compiler.compile_hybrid_impl`。`beginner_cli.py` 只调用 `adapter.agent_chat`。
+- 源码静态可见实现（A）：`transpile`/`run` 在 adapter 内完成 parse/emit/simulate。`agent_chat` 转 `l2_agent.agent_chat_impl`：源码静态可见正式模式的 LLM 调用点（意图理解，以及可选的 QASM 修复调用）；已知任务（Bell/GHZ）与后端选择由确定性逻辑收口；无 LLM 配置时走本地路径。未验证模型是否实际接触、请求是否发出或完成。`compile_hybrid` 转 `l3_hybrid_compiler.compile_hybrid_impl`。`beginner_cli.py` 只调用 `adapter.agent_chat`。
 - 静态架构：自然语言 → CLI → `agent_chat` → LLM 理解 + 已知任务生成器/修复 → L1 parser/simulator 校验 → 文本。L1：QASM → CircuitIR → OpenQASM2/3 或 OriginIR / 本地 counts。L3：classical tokenizer/parser → Tiny RISC-V。文档与模块职责一致（B）。
 - L1/L2/L3 实现面可见。证据仅勾选 L2 交互与工程化。不推断得分。
 
@@ -3692,8 +3692,7 @@ Python。实现按包拆分：`transpiler/{parser,ir,base_backend,spinq,originq,
 全是范围约束（`numpy<2`、`spinqit>=0.2.3`、`pyqpanda3>=0.4.0`、`amazon-braket-sdk>=1.80.0`、
 `openai>=1.0.0`、`pyyaml>=6.0`），未钉死。
 
-`setup.py` **不是** setuptools 包装，而是 Windows 安装脚本：硬编码
-`C:\Users\cjy\AppData\Local\Programs\Python\Python312\python.exe`，并用
+`setup.py` **不是** setuptools 包装，而是 Windows 安装脚本：硬编码本机 Python 3.12 解释器绝对路径（提交材料含本机绝对路径残留；此处不复述盘符、用户名或个人目录），并用
 `subprocess.run(..., shell=True)` 装包。`starter_kit/` 有 Dockerfile、`evaluator.py`、
 `submission.yaml`、`prepare_submission.py`、`riscv_emulator.py`，但缺少官方 kit 的
 `llm_client.py`、`l2_policy.json`、`backend_capabilities.json`、`VERSION`、`CHANGELOG.md`、
@@ -3801,7 +3800,7 @@ if/else 与寄存器。
 
 `adapter.py` 仍然过长，教学/真机虽外置，L1/L2/L3 主体仍单文件。`_self_verify` 对「N 比特」做中文正则，语言变化时的行为无法静态确认。
 三 SDK 同锁一份 requirements，官方容器能否同时安装无法静态确认。证据 README 写出量旋用户名环境变量示例（账号标识，非密钥）。
-`HARDWARE_ACCESS.md` 的 token 为占位中文。Web 一键真机在配置了环境变量时会发真实任务，属于副作用面，未执行。`check_*`
+`HARDWARE_ACCESS.md` 的 token 为占位中文。Web 一键真机在配置了环境变量后，代码路径将尝试提交硬件任务；本次未执行，是否真实提交无法静态确认。`check_*`
 探测脚本未运行。
 
 ### 完整性 / 可维护性 / 安全性观察
@@ -3940,7 +3939,7 @@ RISC-V GPU 目录（Kaggle Tesla P100 声称，属文档）。另给出公网演
 ### 优点
 
 把「三 SDK 不能同环境」做成一等设计：分 venv、分 lock、worker 进程隔离。知识层把 QASM 子集与翻译方法写成可审查 spec。
-真机失败被单独诊断而不是只交一份成功 Bell。UI 强制回环。自定义量子指令有 32 位 `custom-0`（opcode `0x0B`）编码模块。仓库测试覆盖 L1
+提交材料、日志或证据包记录了真机失败的单独诊断，而不是只交一份成功 Bell；上述记录的真实性与运行结果未验证。UI 强制回环。自定义量子指令有 32 位 `custom-0`（opcode `0x0B`）编码模块。仓库测试覆盖 L1
 翻译、L2 agent/UI、L3、硬件与 setup workflow。L2 鲁棒性报告自己声明不是官方分数。
 
 ### 质量问题与风险
