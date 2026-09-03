@@ -45,8 +45,6 @@ The table below lists every formal contestant on baseline `998cd4e67b1b29f0f1eb8
 
 Each directory link is a repository-relative path and opens the archived snapshot on GitHub. Stack and entry columns are static identifications (filenames, dependencies, and source features). They do not mean the submission runs, scores, or talks to real hardware.
 
-A separate Chinese static analysis of the same 58 snapshots lives in [`docs/static-analysis-zh.md`](docs/static-analysis-zh.md). README and that report use the same roster, in the same order.
-
 Path note: `infiniteHY` uses `starter-kit/` (hyphen). The other 57 snapshots use `starter_kit/` (underscore). Do not hard-code a single starter directory name.
 
 Excluded / duplicate / empty directories: none on this baseline.
