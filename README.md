@@ -2,6 +2,12 @@
 
 This repository archives all 58 formal LoomQ 2026 submissions. Each entry records the organizer-supplied GitHub HTTPS URL and an exact 40-character commit SHA in `archive/submissions.json`.
 
+## License
+
+The repository-maintained tooling and documentation are licensed under the [Apache License 2.0](LICENSE).
+
+Archived contestant submissions and preserved Git objects under `archive/generated/` are excluded from that grant. They remain subject to the copyright and license terms of their upstream authors; inclusion in this archive does not relicense them.
+
 ## Exactness proof
 
 `archive/generated/snapshots/<contestant_id>/` is the exact root Git tree from the recorded upstream commit. The sync tool grafts that tree object into this repository. It does not copy a checkout, run `git archive`, or rebuild the tree from files.
