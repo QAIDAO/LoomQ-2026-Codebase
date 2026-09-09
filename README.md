@@ -8,9 +8,14 @@ This repository archives all 58 formal LoomQ 2026 submissions. Each entry record
 - **链接：** [archive/generated/snapshots/lil4notfound/starter_kit](archive/generated/snapshots/lil4notfound/starter_kit)
 - **优秀层级：** L1、L2、L3（含 Bonus）
 - **技术方案与亮点：**
-  - **技术方案：** 以强类型 Circuit 统一解析、三平台目标生成和自建模拟执行，Agent、Hybrid 编译与量子 RISC-V 复用同一语义基础。
-  - **亮点 1：** 目标程序生成后重新解析并比较门、参数和操作数，避免控制位与目标位交换后仍被当作正确转换
-  - **亮点 2：** Agent 候选会被实际模拟并与目标分布比较，避免“语法正确但任务做错”的电路进入结果。
+  - **技术方案：**
+    - **L1：** 用统一 Circuit IR 承接 OpenQASM 解析和三种目标表示生成，运行结果由自建模拟器计算。
+    - **L2：** Agent 负责生成候选，本地 parser、模拟器和有限修复流程负责验证与收敛。
+    - **L3：** 用独立 model、parser 和 compiler 将 Hybrid-QASM 编译为经典 RISC-V。
+    - **Bonus：** 用 encoder、decoder、量子态和 emulator 执行量子机器字，并把测量写回经典控制流。
+  - **亮点：**
+    1. 通过目标表示回读验证转换前后的电路语义，避免平台代码能够生成但门、参数或操作数已经改变。
+    2. 通过模拟候选电路并比较目标分布约束 Agent 输出，避免形式合法但没有完成用户任务的电路进入结果。
 
 ---
 
@@ -18,9 +23,14 @@ This repository archives all 58 formal LoomQ 2026 submissions. Each entry record
 - **链接：** [archive/generated/snapshots/AphrixZjr/starter_kit](archive/generated/snapshots/AphrixZjr/starter_kit)
 - **优秀层级：** L1、L2、L3（含 Bonus）
 - **技术方案与亮点：**
-  - **技术方案：** 以共享语义基座连接多平台转换、结构化 Agent 提案、Hybrid 编译和量子指令执行。
-  - **亮点 1：** Agent 修改先形成提案，用户确认后才写入当前实验，避免模型输出直接覆盖有效电路
-  - **亮点 2：** 前端用 circuit revision 绑定异步请求，避免旧响应晚到后覆盖用户刚完成的新编辑。
+  - **技术方案：**
+    - **L1：** 以统一电路语义连接解析、目标生成和平台执行。
+    - **L2：** 将 Agent 输出建模为待验证提案，并用 circuit revision 管理当前实验版本。
+    - **L3：** 采用结构化解析和差分验证保证 Hybrid 编译后的经典控制语义。
+    - **Bonus：** 从机器字进入量子执行后端，并以定点格式传递参数门角度。
+  - **亮点：**
+    1. 通过“提案—验证—确认”的状态边界控制 Agent 修改，避免未经确认的模型输出直接替换有效电路。
+    2. 通过 revision 绑定异步请求和实验状态，避免旧响应覆盖用户已经完成的新修改。
 
 ---
 
@@ -28,9 +38,14 @@ This repository archives all 58 formal LoomQ 2026 submissions. Each entry record
 - **链接：** [archive/generated/snapshots/Duanice/starter_kit](archive/generated/snapshots/Duanice/starter_kit)
 - **优秀层级：** L1、L2、L3（含 Bonus）
 - **技术方案与亮点：**
-  - **技术方案：** 通过独立 worker 隔离不同厂商 SDK，并把真机提交、轮询、终态和结果提取建模为完整任务生命周期。
-  - **亮点 1：** 主进程与 SDK 只通过窄 JSON 接口通信，并设置超时，避免依赖冲突或子进程卡死拖垮整个应用
-  - **亮点 2：** 对错误、日志和任务证据做脱敏，避免真机凭据因调试信息外泄。
+  - **技术方案：**
+    - **L1：** 用共享电路模型生成目标表示，并通过独立 worker 隔离存在依赖冲突的厂商 SDK。
+    - **L2：** 将候选生成、验证、后端选择和结果解释拆成独立组件。
+    - **L3：** 分开返回量子操作与经典 RISC-V，使两部分保持明确接口。
+    - **Bonus：** 在量子态上执行机器指令，将测量结果写回寄存器并驱动经典分支。
+  - **亮点：**
+    1. 通过进程隔离、窄 JSON 协议和超时控制 SDK 运行，避免依赖冲突或后端故障拖垮主应用。
+    2. 通过任务状态管理和错误脱敏覆盖真机提交全过程，避免把异步硬件调用误作同步执行，也避免凭据进入日志。
 
 ---
 
@@ -38,9 +53,14 @@ This repository archives all 58 formal LoomQ 2026 submissions. Each entry record
 - **链接：** [archive/generated/snapshots/qianqiu0926/starter_kit](archive/generated/snapshots/qianqiu0926/starter_kit)
 - **优秀层级：** L1、L2、L3（含 Bonus）
 - **技术方案与亮点：**
-  - **技术方案：** 模型只输出结构化计划，常见电路构造、精确概率计算、目标回读和设备筛选由本地工具完成。
-  - **亮点 1：** 用本地构造器和概率验证裁决候选，避免 Agent 返回能够解析但不符合用户目标的电路
-  - **亮点 2：** 用设备能力表做约束交集，避免模型凭记忆虚构后端或推荐不满足门集要求的设备。
+  - **技术方案：**
+    - **L1：** 用统一 IR 生成三种目标表示，并由本地模拟器计算可验证的概率与采样结果。
+    - **L2：** 模型只输出结构化意图，本地工具负责电路构造、语义检查和设备能力筛选。
+    - **L3：** 用 Hybrid parser/compiler 和差分用例验证经典控制编译结果。
+    - **Bonus：** 实现量子指令编解码、状态演化、测量写回和非法编码检查。
+  - **亮点：**
+    1. 通过把可计算事实交给确定性工具裁决，避免模型同时扮演生成者和验证者而放过错误结果。
+    2. 通过能力表匹配用户约束与设备属性，避免 Agent 凭记忆虚构后端或推荐不具备执行条件的设备。
 
 ---
 
@@ -48,9 +68,14 @@ This repository archives all 58 formal LoomQ 2026 submissions. Each entry record
 - **链接：** [archive/generated/snapshots/BEER7LN/starter_kit](archive/generated/snapshots/BEER7LN/starter_kit)
 - **优秀层级：** L1、L2、L3（含 Bonus）
 - **技术方案与亮点：**
-  - **技术方案：** 课程讲解、理论态和有限 shots 采样共用同一份 QASM；Hybrid 另用独立 oracle 与 stress 用例验证。
-  - **亮点 1：** 理论概率与实际采样来自同一电路，避免教材展示的电路和按钮实际运行的程序不一致
-  - **亮点 2：** oracle 不复用编译器生成的 RISC-V，避免编译器和验证器复制同一错误后互相证明正确。
+  - **技术方案：**
+    - **L1：** 将解析、目标生成、平台运行和本地参考模拟组织为统一执行入口。
+    - **L2：** 课程直接调用 L1 电路与模拟核心，同时生成理论状态和有限采样结果。
+    - **L3：** 用独立 Hybrid oracle 和压力用例比较源程序与编译结果。
+    - **Bonus：** 用 custom 指令、内置量子态和测量反馈完成量子—经典闭环。
+  - **亮点：**
+    1. 通过让课程内容、理论结果和实际采样共享同一电路语义，避免教学说明与真实执行相互脱节。
+    2. 通过独立解释路径验证编译结果，避免编译器与验证器复用同一逻辑后共同掩盖错误。
 
 ---
 
@@ -58,9 +83,14 @@ This repository archives all 58 formal LoomQ 2026 submissions. Each entry record
 - **链接：** [archive/generated/snapshots/2IKK12/starter_kit](archive/generated/snapshots/2IKK12/starter_kit)
 - **优秀层级：** L1、L2、L3（含 Bonus）
 - **技术方案与亮点：**
-  - **技术方案：** 三种目标程序统一交给自建 statevector 执行，多轮对话则从历史中恢复最近一份可解析 QASM。
-  - **亮点 1：** 倒序寻找“最近有效电路”而不是最近代码块，避免解析失败的模型候选污染下一轮修改
-  - **亮点 2：** 对 GHZ 扩展等明确任务采用确定性结构变换，避免重新生成后得到主题相近但并非同一实验的电路。
+  - **技术方案：**
+    - **L1：** 从统一 Circuit 生成三种平台目标表示；目标表示作为转换产物，采样由自建 statevector 模拟统一 Circuit 完成。
+    - **L2：** 从多轮历史中识别最近一份能够通过 parser 的电路，并在该状态上继续修改。
+    - **L3：** 用紧凑 Hybrid compiler 提取量子操作并生成经典 RISC-V。
+    - **Bonus：** 将量子程序编码为机器字，由内置量子态执行测量并反馈经典寄存器。
+  - **亮点：**
+    1. 通过分离平台代码生成与参考执行，避免把“输出了目标程序”误认为“目标 SDK 已经执行成功”。
+    2. 通过只继承经过解析验证的电路状态，避免无效候选污染后续对话和连续修改。
 
 ## 分层亮点
 
@@ -68,9 +98,12 @@ This repository archives all 58 formal LoomQ 2026 submissions. Each entry record
 - **链接：** [archive/generated/snapshots/PHTPSN/starter_kit](archive/generated/snapshots/PHTPSN/starter_kit)
 - **优秀层级：** L1、L2
 - **技术方案与亮点：**
-  - **技术方案：** 用共享 IR、SDK worker 和真机前置检查连接多平台目标生成与执行。
-  - **亮点 1：** 提交前检查活动量子位、门集和有向耦合，避免本地可表示的电路在真实设备上无法路由或执行
-  - **亮点 2：** 将本地模拟与真机任务分开处理，避免把排队中的硬件任务误当作同步调用。
+  - **技术方案：**
+    - **L1：** 以共享 IR 生成平台目标表示，通过 SDK worker 运行厂商环境，并单独管理真机任务。
+    - **L2：** 本地验证 Agent 候选语义，再依据设备能力和任务约束选择后端。
+  - **亮点：**
+    1. 通过在提交前检查活动量子位、门集和有向耦合，把语法转换继续推进到设备可执行性，避免不可路由电路进入真机队列。
+    2. 通过隔离 SDK 环境并保留任务状态，将平台依赖与业务流程解耦，避免运行环境冲突和异步任务失去追踪。
 
 ---
 
@@ -78,9 +111,13 @@ This repository archives all 58 formal LoomQ 2026 submissions. Each entry record
 - **链接：** [archive/generated/snapshots/WilderNoTrack/starter_kit](archive/generated/snapshots/WilderNoTrack/starter_kit)
 - **优秀层级：** L1、L3（含 Bonus）
 - **技术方案与亮点：**
-  - **技术方案：** 采用 parser→IR→pass→emitter→runtime→result 的分层管线，并为 Hybrid 配置 AST、源解释器和量子指令模拟器。
-  - **亮点 1：** 按后端处理键类型、位序和宽度，避免不同 SDK 的 counts 被错误解释为同一经典位顺序
-  - **亮点 2：** 记录执行来源和回退原因，避免用户把参考模拟结果误认为厂商后端的真实返回。
+  - **技术方案：**
+    - **L1：** 建立 parser、IR、lowering pass、emitter、runtime 和 result 的完整多后端管线。
+    - **L3：** 用独立 AST、源解释器和 RISC-V 生成器处理 Hybrid 经典控制。
+    - **Bonus：** 在同一执行循环中维护量子态、执行测量、写回寄存器并驱动经典分支。
+  - **亮点：**
+    1. 通过按后端归一键类型、位序、宽度和测量映射，避免不同平台返回相同外观却代表不同经典位语义。
+    2. 通过记录执行来源、回退原因和原始证据，避免用户把参考模拟结果误认为厂商后端结果。
 
 ---
 
@@ -88,9 +125,13 @@ This repository archives all 58 formal LoomQ 2026 submissions. Each entry record
 - **链接：** [archive/generated/snapshots/xinruliuresearch-maker/starter_kit](archive/generated/snapshots/xinruliuresearch-maker/starter_kit)
 - **优秀层级：** L1、L3（含 Bonus）
 - **技术方案与亮点：**
-  - **技术方案：** L1 使用 lexer/parser/normalize/serialize 分层；Hybrid 使用 AST、寄存器分配器、compiler 和独立解释器。
-  - **亮点 1：** 显式保留测量寄存器并隔离临时寄存器，避免用户变量覆盖量子测量结果
-  - **亮点 2：** 用唯一标签和源程序/目标程序差分，避免嵌套分支跳错位置却只因汇编文本合理而漏检。
+  - **技术方案：**
+    - **L1：** 将词法、解析、规范化、目标序列化和结果归一分层，运行参考来自统一的本地模拟器。
+    - **L3：** 用 AST、寄存器分配器、compiler 和独立解释器完成 Hybrid 编译与差分验证。
+    - **Bonus：** 将 ISA、statevector 和 emulator 分层，并比较源助记符路径与二进制执行路径。
+  - **亮点：**
+    1. 通过显式保留测量寄存器、隔离临时寄存器并生成唯一标签，避免变量覆盖测量值或嵌套控制流跳转错位。
+    2. 通过源语义、目标汇编和机器字执行之间的独立差分，避免单一路径内部自洽却整体语义错误。
 
 ---
 
@@ -98,9 +139,13 @@ This repository archives all 58 formal LoomQ 2026 submissions. Each entry record
 - **链接：** [archive/generated/snapshots/jessicaruan6688-byte/starter_kit](archive/generated/snapshots/jessicaruan6688-byte/starter_kit)
 - **优秀层级：** L1、L3（含 Bonus）
 - **技术方案与亮点：**
-  - **技术方案：** 在当前进程调用三套厂商 SDK，并按测量映射把各 SDK 的原始结果投影到统一经典位。
-  - **亮点 1：** 为不同后端分别处理 bitstring 契约，避免统一反转字符串造成 counts 含义静默错位
-  - **亮点 2：** 将 parser、Circuit、backend 和 result 分层，避免目标语法差异渗入公共电路语义。
+  - **技术方案：**
+    - **L1：** 用共享 Circuit 生成目标表示，在当前进程调用三套厂商 SDK，并由独立 result 层整理返回值。
+    - **L3：** 以紧凑 parser/compiler 生成经典控制代码，并验证嵌套结构和寄存器终态。
+    - **Bonus：** 从机器字驱动内置量子态，完成测量写回和经典反馈。
+  - **亮点：**
+    1. 通过按 SDK 契约和测量映射分别投影结果，避免统一翻转 bitstring 造成静默的经典位错位。
+    2. 通过隔离公共电路语义、平台 emitter 和结果归一，避免目标语法差异反向污染源 Circuit。
 
 ---
 
@@ -108,9 +153,12 @@ This repository archives all 58 formal LoomQ 2026 submissions. Each entry record
 - **链接：** [archive/generated/snapshots/mayloveless/starter_kit](archive/generated/snapshots/mayloveless/starter_kit)
 - **优秀层级：** L1、L3
 - **技术方案与亮点：**
-  - **技术方案：** 分别建模解析、测量映射和结果协议，并以独立 oracle 对照 Hybrid 源语义与目标终态。
-  - **亮点 1：** 验证路径不复用候选实现，避免编译器和验证器带着同一错误互相证明正确
-  - **亮点 2：** Bonus 虽有机器字、写回和经典分支，但测量由外部预置位注入；明确标为接口/控制闭环，避免误称完整量子态闭环。
+  - **技术方案：**
+    - **L1：** 分别建模 IR、解析、测量映射和结果协议，并以隔离运行路径处理平台依赖。
+    - **L3：** 用独立 oracle、差分验证和资源边界检查验证 Hybrid 编译结果。
+  - **亮点：**
+    1. 通过让目标裁决路径独立于候选实现，避免编译器和验证器携带同一缺陷后互相证明正确。
+    2. 通过显式区分外部测量注入与内部量子态执行，避免把接口/控制闭环误报为完整 Bonus 量子闭环。
 
 ---
 
@@ -118,9 +166,11 @@ This repository archives all 58 formal LoomQ 2026 submissions. Each entry record
 - **链接：** [archive/generated/snapshots/0Dionysus0/starter_kit](archive/generated/snapshots/0Dionysus0/starter_kit)
 - **优秀层级：** L1
 - **技术方案与亮点：**
-  - **技术方案：** 用共享 QASM/IR 统一三种目标转换，并在教学演示中让隐藏 oracle 查询经过实际执行。
-  - **亮点 1：** 黑盒内容不会随前端资源直接暴露，避免挑战退化为读取常量答案
-  - **亮点 2：** 执行异常会明确呈现为失败，避免用预设结果或静默回退制造成功假象。
+  - **技术方案：**
+    - **L1：** 用共享 QASM 解析与 Circuit IR 统一三种目标表示和执行入口。
+  - **亮点：**
+    1. 通过让查询进入实际电路执行，避免黑盒交互退化为读取预设答案，并使转换结果与实验行为保持同一语义来源。
+    2. 通过将失败状态直接返回而非伪造成功结果，避免平台异常被静默掩盖。
 
 ---
 
@@ -128,9 +178,13 @@ This repository archives all 58 formal LoomQ 2026 submissions. Each entry record
 - **链接：** [archive/generated/snapshots/JunkaiWang-TheoPhy/starter_kit](archive/generated/snapshots/JunkaiWang-TheoPhy/starter_kit)
 - **优秀层级：** L1、L3（含 Bonus）
 - **技术方案与亮点：**
-  - **技术方案：** 对生成的目标程序做整电路回读，并为转换生成可重算证书和执行轨迹。
-  - **亮点 1：** 回读后比较门、参数和操作数，避免目标文本能够生成却已经改变源电路语义
-  - **亮点 2：** 证书同时记录依据和证明边界，避免只有结论而无法判断证据究竟证明了什么。
+  - **技术方案：**
+    - **L1：** 将解析、共享电路、目标 emitter 和本地执行分层，并对目标表示执行整电路回读。
+    - **L3：** 在 Hybrid 编译之外保留控制路径和执行 trace。
+    - **Bonus：** 从量子机器字进入解码执行，维护量子态、测量结果和机器轨迹。
+  - **亮点：**
+    1. 通过可重算证书关联转换输入、输出和验证依据，避免目标程序只有生成结果而缺乏可审计证据。
+    2. 通过明确区分结构证据、语义证据和运行证据，避免单一检查被夸大为对整体正确性的证明。
 
 ---
 
@@ -138,9 +192,11 @@ This repository archives all 58 formal LoomQ 2026 submissions. Each entry record
 - **链接：** [archive/generated/snapshots/talk2joan/starter_kit](archive/generated/snapshots/talk2joan/starter_kit)
 - **优秀层级：** L2
 - **技术方案与亮点：**
-  - **技术方案：** 用本地 lint、参考模拟和候选自检约束 Agent，再以浏览器模拟器按目标概率判定关卡。
-  - **亮点 1：** 通关由用户门序产生的概率分布决定，避免游戏化退化为点击次数或预设奖励
-  - **亮点 2：** 失败后保留当前门序和计算分布，避免用户被重置后看不到目标与结果的差距。
+  - **技术方案：**
+    - **L2：** 用本地 lint、参考模拟和候选自检约束 Agent，并以浏览器量子模拟器计算关卡结果。
+  - **亮点：**
+    1. 通过让目标、用户操作和计算分布共同决定完成状态，避免游戏化与实际量子语义脱节。
+    2. 通过保留失败后的电路与结果反馈，避免用户失去诊断依据而只能重新开始。
 
 ---
 
@@ -148,9 +204,11 @@ This repository archives all 58 formal LoomQ 2026 submissions. Each entry record
 - **链接：** [archive/generated/snapshots/zmath01/starter_kit](archive/generated/snapshots/zmath01/starter_kit)
 - **优秀层级：** L2
 - **技术方案与亮点：**
-  - **技术方案：** 后端每次直接读取当前编辑器的 QASM，同时把旧 counts、目标表示和解释保留为历史证据。
-  - **亮点 1：** 当前请求文本直接决定下一次运行，避免编辑器已经改变却仍执行缓存电路
-  - **亮点 2：** 历史记录绑定结果、目标表示和解释，避免下一次运行覆盖此前的结果来源；但未保存 QASM，不视为完整实验快照。
+  - **技术方案：**
+    - **L2：** 将当前编辑器内容作为每次运行的直接输入，并把已完成运行的结果证据单独保存。
+  - **亮点：**
+    1. 通过分离当前电路状态与历史结果状态，避免编辑器已经改变却仍运行缓存中的旧电路。
+    2. 通过绑定 counts、目标表示和解释保留结果来源，避免后续运行覆盖此前证据；历史未保存 QASM，因此不将其表述为完整实验快照。
 
 ---
 
@@ -158,9 +216,13 @@ This repository archives all 58 formal LoomQ 2026 submissions. Each entry record
 - **链接：** [archive/generated/snapshots/Pennie514/starter_kit](archive/generated/snapshots/Pennie514/starter_kit)
 - **优秀层级：** L2、L3（含 Bonus）
 - **技术方案与亮点：**
-  - **技术方案：** 教学采用“先预测、再观察、后解释”，Hybrid 则用随机用例比较源程序与目标程序终态。
-  - **亮点 1：** 先固定用户预测再展示实验结果，避免事后产生“本来就知道”的认知错觉
-  - **亮点 2：** 随机生成嵌套分支、负数和连续赋值，避免固定样例漏掉标签或寄存器错误。
+  - **技术方案：**
+    - **L2：** 将预测、执行结果和解释组织为连续学习过程，并在本地验证 Agent 候选。
+    - **L3：** 用随机生成的 Hybrid 程序比较源语义与目标执行终态。
+    - **Bonus：** 实现量子指令编码、状态演化、测量写回和经典分支反馈。
+  - **亮点：**
+    1. 通过在结果出现前固定用户判断，使实验反馈能够暴露真实理解偏差，避免事后合理化。
+    2. 通过随机组合控制结构扩展差分覆盖，避免固定测试样例漏掉寄存器与标签错误。
 
 ---
 
@@ -168,9 +230,11 @@ This repository archives all 58 formal LoomQ 2026 submissions. Each entry record
 - **链接：** [archive/generated/snapshots/WayneYu1212/starter_kit](archive/generated/snapshots/WayneYu1212/starter_kit)
 - **优秀层级：** L2
 - **技术方案与亮点：**
-  - **技术方案：** 用结构化 AgentPlan 和本地 verifier 约束模型输出，界面按“现象—解释—代码证据”渐进展示。
-  - **亮点 1：** 本地 verifier 在结果展示前检查 QASM 和后端约束，避免模型生成的设备名或不可执行代码直接进入实验
-  - **亮点 2：** 通过键盘导航、读屏播报和减少动画支持，避免新手因信息过载或访问障碍无法理解运行状态。
+  - **技术方案：**
+    - **L2：** 将模型输出解析为结构化 AgentPlan，由本地 verifier 检查电路和后端约束，再渐进展示结果与证据。
+  - **亮点：**
+    1. 通过把结果现象、解释和代码证据按认知顺序展开，避免新手在理解实验前先被底层细节淹没。
+    2. 通过键盘导航、读屏状态播报和减少动画支持，避免交互方式成为理解实验的额外障碍。
 
 ## License
 
